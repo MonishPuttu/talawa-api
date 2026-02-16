@@ -1,9 +1,16 @@
 import type { GraphQLContext } from "~/src/graphql/context";
 import { User } from "~/src/graphql/types/User/User";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 import type { ActionItemCategory as ActionItemCategoryType } from "./ActionItemCategory";
 import { ActionItemCategory } from "./ActionItemCategory";
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+import { ActionItemCategory } from "./ActionItemCategory";
+import type { ActionItemCategory as ActionItemCategoryType } from "./ActionItemCategory";
+>>>>>>> upstream
 
 // Export the resolver function so it can be tested
 export const resolveUpdater = async (

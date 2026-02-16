@@ -4,6 +4,7 @@
 ###################################################################
 ###################################################################
 
+<<<<<<< HEAD
 # Centralized scripts downloaded by lefthook
 .github-central-scripts/
 
@@ -31,6 +32,31 @@ images/**
 video/**
 videos/**
 
+=======
+# Keep directories that may have this file
+!.gitignore
+
+# Docusaurus related
+.docusaurus
+
+# Don't upload configuration files
+/.env
+/.env.*
+/.env-*
+/.env_*
+
+# Ignore the deploy compose file
+/compose.deploy.yaml
+
+# Ignore upload directories
+cert/**
+certs/**
+image/**
+images/**
+video/**
+videos/**
+
+>>>>>>> upstream
 # Log files and directories
 logs/**
 log/**
@@ -846,6 +872,7 @@ yarn.lock
 .node-version
 .nvmrc
 
+<<<<<<< HEAD
 
 # Plugin related
 /src/plugin/available/*
@@ -1079,3 +1106,8 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+=======
+# Plugin related
+/src/plugin/available/*
+!/src/plugin/available/readme.md
+>>>>>>> upstream

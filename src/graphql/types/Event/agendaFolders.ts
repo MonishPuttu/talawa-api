@@ -1,15 +1,35 @@
+<<<<<<< HEAD
 import { and, asc, desc, eq, exists, gt, lt, or, type SQL } from "drizzle-orm";
+=======
+import {
+	type SQL,
+	and,
+	asc,
+	desc,
+	eq,
+	exists,
+	gt,
+	isNull,
+	lt,
+	or,
+} from "drizzle-orm";
+>>>>>>> upstream
 import type { z } from "zod";
 import {
 	agendaFoldersTable,
 	agendaFoldersTableInsertSchema,
 } from "~/src/drizzle/tables/agendaFolders";
 import { AgendaFolder } from "~/src/graphql/types/AgendaFolder/AgendaFolder";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+>>>>>>> upstream
 import {
 	defaultGraphQLConnectionArgumentsSchema,
 	transformDefaultGraphQLConnectionArguments,
 	transformToDefaultGraphQLConnection,
+<<<<<<< HEAD
 } from "~/src/utilities/graphqlConnection";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 import { Event } from "./Event";
@@ -18,6 +38,15 @@ const agendaFoldersArgumentsSchema = defaultGraphQLConnectionArgumentsSchema
 	.transform(transformDefaultGraphQLConnectionArguments)
 	.transform((arg, ctx) => {
 		let cursor: z.infer<typeof cursorSchema> | undefined;
+=======
+} from "~/src/utilities/defaultGraphQLConnection";
+import envConfig from "~/src/utilities/graphqLimits";
+import { Event } from "./Event";
+const agendaFoldersArgumentsSchema = defaultGraphQLConnectionArgumentsSchema
+	.transform(transformDefaultGraphQLConnectionArguments)
+	.transform((arg, ctx) => {
+		let cursor: z.infer<typeof cursorSchema> | undefined = undefined;
+>>>>>>> upstream
 
 		try {
 			if (arg.cursor !== undefined) {
@@ -25,7 +54,11 @@ const agendaFoldersArgumentsSchema = defaultGraphQLConnectionArgumentsSchema
 					JSON.parse(Buffer.from(arg.cursor, "base64url").toString("utf-8")),
 				);
 			}
+<<<<<<< HEAD
 		} catch (_error) {
+=======
+		} catch (error) {
+>>>>>>> upstream
 			ctx.addIssue({
 				code: "custom",
 				message: "Not a valid cursor.",
@@ -93,10 +126,18 @@ Event.implement({
 												eq(agendaFoldersTable.eventId, parent.id),
 												eq(agendaFoldersTable.id, cursor.id),
 												eq(agendaFoldersTable.name, cursor.name),
+<<<<<<< HEAD
+=======
+												isNull(agendaFoldersTable.parentFolderId),
+>>>>>>> upstream
 											),
 										),
 								),
 								eq(agendaFoldersTable.eventId, parent.id),
+<<<<<<< HEAD
+=======
+								isNull(agendaFoldersTable.parentFolderId),
+>>>>>>> upstream
 								or(
 									and(
 										eq(agendaFoldersTable.name, cursor.name),
@@ -106,7 +147,14 @@ Event.implement({
 								),
 							);
 						} else {
+<<<<<<< HEAD
 							where = eq(agendaFoldersTable.eventId, parent.id);
+=======
+							where = and(
+								eq(agendaFoldersTable.eventId, parent.id),
+								isNull(agendaFoldersTable.parentFolderId),
+							);
+>>>>>>> upstream
 						}
 					} else {
 						if (cursor !== undefined) {
@@ -120,10 +168,18 @@ Event.implement({
 												eq(agendaFoldersTable.eventId, parent.id),
 												eq(agendaFoldersTable.id, cursor.id),
 												eq(agendaFoldersTable.name, cursor.name),
+<<<<<<< HEAD
+=======
+												isNull(agendaFoldersTable.parentFolderId),
+>>>>>>> upstream
 											),
 										),
 								),
 								eq(agendaFoldersTable.eventId, parent.id),
+<<<<<<< HEAD
+=======
+								isNull(agendaFoldersTable.parentFolderId),
+>>>>>>> upstream
 								or(
 									and(
 										eq(agendaFoldersTable.name, cursor.name),
@@ -133,7 +189,14 @@ Event.implement({
 								),
 							);
 						} else {
+<<<<<<< HEAD
 							where = eq(agendaFoldersTable.eventId, parent.id);
+=======
+							where = and(
+								eq(agendaFoldersTable.eventId, parent.id),
+								isNull(agendaFoldersTable.parentFolderId),
+							);
+>>>>>>> upstream
 						}
 					}
 
@@ -158,10 +221,20 @@ Event.implement({
 					}
 
 					return transformToDefaultGraphQLConnection({
+<<<<<<< HEAD
 						createCursor: (agendaFolder) => ({
 							id: agendaFolder.id,
 							name: agendaFolder.name,
 						}),
+=======
+						createCursor: (agendaFolder) =>
+							Buffer.from(
+								JSON.stringify({
+									id: agendaFolder.id,
+									name: agendaFolder.name,
+								}),
+							).toString("base64url"),
+>>>>>>> upstream
 						createNode: (agendaFolder) => agendaFolder,
 						parsedArgs,
 						rawNodes: agendaFolders,

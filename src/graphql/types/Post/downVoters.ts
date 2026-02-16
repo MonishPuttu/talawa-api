@@ -1,4 +1,8 @@
 import {
+<<<<<<< HEAD
+=======
+	type SQL,
+>>>>>>> upstream
 	and,
 	asc,
 	desc,
@@ -8,7 +12,10 @@ import {
 	isNotNull,
 	lt,
 	or,
+<<<<<<< HEAD
 	type SQL,
+=======
+>>>>>>> upstream
 } from "drizzle-orm";
 import { z } from "zod";
 import {
@@ -16,11 +23,16 @@ import {
 	postVotesTableInsertSchema,
 } from "~/src/drizzle/tables/postVotes";
 import { User } from "~/src/graphql/types/User/User";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+>>>>>>> upstream
 import {
 	defaultGraphQLConnectionArgumentsSchema,
 	transformDefaultGraphQLConnectionArguments,
 	transformToDefaultGraphQLConnection,
+<<<<<<< HEAD
 } from "~/src/utilities/graphqlConnection";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 import { Post } from "./Post";
@@ -29,6 +41,15 @@ const downVotersArgumentsSchema = defaultGraphQLConnectionArgumentsSchema
 	.transform(transformDefaultGraphQLConnectionArguments)
 	.transform((arg, ctx) => {
 		let cursor: z.infer<typeof cursorSchema> | undefined;
+=======
+} from "~/src/utilities/defaultGraphQLConnection";
+import envConfig from "~/src/utilities/graphqLimits";
+import { Post } from "./Post";
+const downVotersArgumentsSchema = defaultGraphQLConnectionArgumentsSchema
+	.transform(transformDefaultGraphQLConnectionArguments)
+	.transform((arg, ctx) => {
+		let cursor: z.infer<typeof cursorSchema> | undefined = undefined;
+>>>>>>> upstream
 
 		try {
 			if (arg.cursor !== undefined) {
@@ -36,7 +57,11 @@ const downVotersArgumentsSchema = defaultGraphQLConnectionArgumentsSchema
 					JSON.parse(Buffer.from(arg.cursor, "base64url").toString("utf-8")),
 				);
 			}
+<<<<<<< HEAD
 		} catch (_error) {
+=======
+		} catch (error) {
+>>>>>>> upstream
 			ctx.addIssue({
 				code: "custom",
 				message: "Not a valid cursor.",
@@ -200,10 +225,20 @@ Post.implement({
 					}
 
 					return transformToDefaultGraphQLConnection({
+<<<<<<< HEAD
 						createCursor: (vote) => ({
 							createdAt: vote.createdAt,
 							creatorId: vote.creatorId ?? "",
 						}),
+=======
+						createCursor: (vote) =>
+							Buffer.from(
+								JSON.stringify({
+									createdAt: vote.createdAt.toISOString(),
+									creatorId: vote.creatorId,
+								}),
+							).toString("base64url"),
+>>>>>>> upstream
 						createNode: (vote) => vote.creator,
 						parsedArgs,
 						// None of the post votes below contain a `creator` field with `null` as the value because of the sql query logic. This filter operation is here just to prevent type errors.

@@ -1,8 +1,13 @@
 import { faker } from "@faker-js/faker";
 import { eq } from "drizzle-orm";
 import { afterEach, beforeAll, expect, suite, test } from "vitest";
+<<<<<<< HEAD
 import { eventsTable } from "~/src/drizzle/tables/events";
 import { eventVolunteersTable } from "~/src/drizzle/tables/eventVolunteers";
+=======
+import { eventVolunteersTable } from "~/src/drizzle/tables/eventVolunteers";
+import { eventsTable } from "~/src/drizzle/tables/events";
+>>>>>>> upstream
 import type {
 	TalawaGraphQLFormattedError,
 	UnauthenticatedExtensions,
@@ -1318,7 +1323,11 @@ suite("Mutation updateEventVolunteer - Integration Tests", () => {
 						issues: expect.arrayContaining([
 							expect.objectContaining({
 								argumentPath: ["data"],
+<<<<<<< HEAD
 								message: expect.stringContaining("expected object"),
+=======
+								message: "Expected object, received null",
+>>>>>>> upstream
 							}),
 						]),
 					}),
@@ -1382,7 +1391,11 @@ suite("Mutation updateEventVolunteer - Integration Tests", () => {
 						issues: expect.arrayContaining([
 							expect.objectContaining({
 								argumentPath: ["data"],
+<<<<<<< HEAD
 								message: expect.stringContaining("expected object"),
+=======
+								message: "Required",
+>>>>>>> upstream
 							}),
 						]),
 					}),

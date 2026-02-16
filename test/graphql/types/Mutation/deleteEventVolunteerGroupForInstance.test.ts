@@ -1,9 +1,15 @@
 import { faker } from "@faker-js/faker";
 import { eq } from "drizzle-orm";
 import { afterEach, beforeAll, expect, suite, test } from "vitest";
+<<<<<<< HEAD
 import { eventsTable } from "~/src/drizzle/tables/events";
 import { eventVolunteerGroupExceptionsTable } from "~/src/drizzle/tables/eventVolunteerGroupExceptions";
 import { eventVolunteerGroupsTable } from "~/src/drizzle/tables/eventVolunteerGroups";
+=======
+import { eventVolunteerGroupExceptionsTable } from "~/src/drizzle/tables/eventVolunteerGroupExceptions";
+import { eventVolunteerGroupsTable } from "~/src/drizzle/tables/eventVolunteerGroups";
+import { eventsTable } from "~/src/drizzle/tables/events";
+>>>>>>> upstream
 import { recurrenceRulesTable } from "~/src/drizzle/tables/recurrenceRules";
 import { recurringEventInstancesTable } from "~/src/drizzle/tables/recurringEventInstances";
 import type {

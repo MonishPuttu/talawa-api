@@ -1,6 +1,10 @@
 import { and, eq } from "drizzle-orm";
 import { createMockGraphQLContext } from "test/_Mocks_/mockContextCreator/mockContextCreator";
+<<<<<<< HEAD
 import { afterEach, describe, expect, it, vi } from "vitest";
+=======
+import { describe, expect, it, vi } from "vitest";
+>>>>>>> upstream
 import { organizationMembershipsTable } from "~/src/drizzle/tables/organizationMemberships";
 import { isMemberResolver } from "~/src/graphql/types/Organization/isMember";
 import {
@@ -9,10 +13,13 @@ import {
 } from "~/src/graphql/types/Organization/membersInfo";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 
+<<<<<<< HEAD
 afterEach(() => {
 	vi.clearAllMocks();
 });
 
+=======
+>>>>>>> upstream
 // Parent organization mock
 const mockParent = {
 	id: "org123",

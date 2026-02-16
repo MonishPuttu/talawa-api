@@ -70,6 +70,7 @@ describe("PluginRegistry", () => {
 			const where = vi.fn().mockRejectedValue(error);
 			const from = vi.fn(() => ({ where }));
 			mockDb.select.mockReturnValue({ from });
+<<<<<<< HEAD
 			const result = await registry.getPluginFromDatabase("fail");
 			expect(result).toBeNull();
 			expect(mockLogger.error).toHaveBeenCalledWith(
@@ -78,6 +79,16 @@ describe("PluginRegistry", () => {
 					err: error,
 				}),
 			);
+=======
+			const spy = vi.spyOn(console, "error").mockImplementation(() => {});
+			const result = await registry.getPluginFromDatabase("fail");
+			expect(result).toBeNull();
+			expect(spy).toHaveBeenCalledWith(
+				"Error fetching plugin from database:",
+				error,
+			);
+			spy.mockRestore();
+>>>>>>> upstream
 		});
 	});
 
@@ -97,6 +108,7 @@ describe("PluginRegistry", () => {
 			const where = vi.fn().mockRejectedValue(error);
 			const set = vi.fn(() => ({ where }));
 			mockDb.update.mockReturnValue({ set });
+<<<<<<< HEAD
 			await expect(
 				registry.updatePluginInDatabase("fail", { isActivated: false }),
 			).rejects.toThrow("Update error");
@@ -106,6 +118,17 @@ describe("PluginRegistry", () => {
 					err: error,
 				}),
 			);
+=======
+			const spy = vi.spyOn(console, "error").mockImplementation(() => {});
+			await expect(
+				registry.updatePluginInDatabase("fail", { isActivated: false }),
+			).rejects.toThrow("Update error");
+			expect(spy).toHaveBeenCalledWith(
+				"Error updating plugin in database:",
+				error,
+			);
+			spy.mockRestore();
+>>>>>>> upstream
 		});
 	});
 });

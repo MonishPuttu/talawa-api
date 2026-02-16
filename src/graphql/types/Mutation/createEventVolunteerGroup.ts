@@ -1,9 +1,16 @@
 import { and, eq, inArray } from "drizzle-orm";
 import { z } from "zod";
+<<<<<<< HEAD
 import { eventsTable } from "~/src/drizzle/tables/events";
 import { eventVolunteerGroupsTable } from "~/src/drizzle/tables/eventVolunteerGroups";
 import { eventVolunteerMembershipsTable } from "~/src/drizzle/tables/eventVolunteerMemberships";
 import { eventVolunteersTable } from "~/src/drizzle/tables/eventVolunteers";
+=======
+import { eventVolunteerGroupsTable } from "~/src/drizzle/tables/eventVolunteerGroups";
+import { eventVolunteerMembershipsTable } from "~/src/drizzle/tables/eventVolunteerMemberships";
+import { eventVolunteersTable } from "~/src/drizzle/tables/eventVolunteers";
+import { eventsTable } from "~/src/drizzle/tables/events";
+>>>>>>> upstream
 import { organizationMembershipsTable } from "~/src/drizzle/tables/organizationMemberships";
 import { recurringEventInstancesTable } from "~/src/drizzle/tables/recurringEventInstances";
 import { usersTable } from "~/src/drizzle/tables/users";
@@ -13,8 +20,13 @@ import {
 	eventVolunteerGroupInputSchema,
 } from "~/src/graphql/inputs/EventVolunteerGroupInput";
 import { EventVolunteerGroup } from "~/src/graphql/types/EventVolunteerGroup/EventVolunteerGroup";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+>>>>>>> upstream
 
 const mutationCreateEventVolunteerGroupArgumentsSchema = z.object({
 	data: eventVolunteerGroupInputSchema,

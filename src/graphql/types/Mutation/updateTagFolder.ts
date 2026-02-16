@@ -7,10 +7,16 @@ import {
 	mutationUpdateTagFolderInputSchema,
 } from "~/src/graphql/inputs/MutationUpdateTagFolderInput";
 import { TagFolder } from "~/src/graphql/types/TagFolder/TagFolder";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { isNotNullish } from "~/src/utilities/isNotNullish";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+import { isNotNullish } from "~/src/utilities/isNotNullish";
+>>>>>>> upstream
 const mutationUpdateTagFolderArgumentsSchema = z.object({
 	input: mutationUpdateTagFolderInputSchema,
 });

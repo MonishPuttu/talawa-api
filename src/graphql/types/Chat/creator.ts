@@ -1,8 +1,14 @@
 import { User } from "~/src/graphql/types/User/User";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 import { Chat } from "./Chat";
 
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+import { Chat } from "./Chat";
+>>>>>>> upstream
 Chat.implement({
 	fields: (t) => ({
 		creator: t.field({

@@ -9,7 +9,11 @@ import { recurringEventInstancesTable } from "~/src/drizzle/tables/recurringEven
  * The main method for the cleanup worker, which processes all organizations
  * and removes instances that have passed their retention period.
  *
+<<<<<<< HEAD
  * @returns - A promise that resolves to an object with statistics about the cleanup process.
+=======
+ * @returns A promise that resolves to an object with statistics about the cleanup process.
+>>>>>>> upstream
  */
 export async function cleanupOldInstances(
 	drizzleClient: NodePgDatabase<typeof schema>,
@@ -70,7 +74,11 @@ export async function cleanupOldInstances(
  * retention policy.
  *
  * @param windowConfig - The materialization window configuration for the organization.
+<<<<<<< HEAD
  * @returns - A promise that resolves to the number of instances deleted for the organization.
+=======
+ * @returns A promise that resolves to the number of instances deleted for the organization.
+>>>>>>> upstream
  */
 async function cleanupOrganizationInstances(
 	windowConfig: typeof eventGenerationWindowsTable.$inferSelect,
@@ -161,7 +169,11 @@ async function updateRetentionStartDate(
  * Manually triggers a cleanup of old instances for a specific organization.
  *
  * @param organizationId - The ID of the organization to clean up.
+<<<<<<< HEAD
  * @returns - A promise that resolves to an object containing the number of deleted instances
+=======
+ * @returns A promise that resolves to an object containing the number of deleted instances
+>>>>>>> upstream
  *          and the retention cutoff date used.
  */
 export async function cleanupSpecificOrganization(
@@ -212,7 +224,11 @@ export async function cleanupSpecificOrganization(
  * eligible for cleanup and the current retention settings.
  *
  * @param organizationId - The ID of the organization to get the status for.
+<<<<<<< HEAD
  * @returns - A promise that resolves to an object with the cleanup status details.
+=======
+ * @returns A promise that resolves to an object with the cleanup status details.
+>>>>>>> upstream
  */
 export async function getOrganizationCleanupStatus(
 	organizationId: string,
@@ -279,7 +295,11 @@ export async function getOrganizationCleanupStatus(
  * bypasses individual retention settings.
  *
  * @param cutoffDate - The date before which all instances will be deleted.
+<<<<<<< HEAD
  * @returns - A promise that resolves to an object with the number of deleted instances
+=======
+ * @returns A promise that resolves to an object with the number of deleted instances
+>>>>>>> upstream
  *          and the number of affected organizations.
  */
 export async function emergencyCleanupBefore(
@@ -327,7 +347,11 @@ export async function emergencyCleanupBefore(
  * Retrieves global statistics about the cleanup process across all organizations,
  * including total instance counts and eligibility for cleanup.
  *
+<<<<<<< HEAD
  * @returns - A promise that resolves to an object with the global cleanup statistics.
+=======
+ * @returns A promise that resolves to an object with the global cleanup statistics.
+>>>>>>> upstream
  */
 export async function getGlobalCleanupStatistics(
 	drizzleClient: NodePgDatabase<typeof schema>,

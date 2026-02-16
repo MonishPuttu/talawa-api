@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { escapeHTML } from "~/src/utilities/sanitizer";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
@@ -72,12 +73,59 @@ export const UserStateResolver = async (
 	}
 };
 
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+import { User } from "./User";
+>>>>>>> upstream
 User.implement({
 	fields: (t) => ({
 		state: t.field({
 			description: "Name of the state the user resides in.",
 			complexity: envConfig.API_GRAPHQL_SCALAR_RESOLVER_FIELD_COST,
+<<<<<<< HEAD
 			resolve: UserStateResolver,
+=======
+			resolve: async (parent, _args, ctx) => {
+				if (!ctx.currentClient.isAuthenticated) {
+					throw new TalawaGraphQLError({
+						extensions: {
+							code: "unauthenticated",
+						},
+					});
+				}
+
+				const currentUserId = ctx.currentClient.user.id;
+
+				const currentUser = await ctx.drizzleClient.query.usersTable.findFirst({
+					columns: {
+						role: true,
+					},
+					where: (fields, operators) => operators.eq(fields.id, currentUserId),
+				});
+
+				if (currentUser === undefined) {
+					throw new TalawaGraphQLError({
+						extensions: {
+							code: "unauthenticated",
+						},
+					});
+				}
+
+				if (
+					currentUser.role !== "administrator" &&
+					parent.id !== currentUserId
+				) {
+					throw new TalawaGraphQLError({
+						extensions: {
+							code: "unauthorized_action",
+						},
+					});
+				}
+
+				return parent.state;
+			},
+>>>>>>> upstream
 			type: "String",
 		}),
 	}),

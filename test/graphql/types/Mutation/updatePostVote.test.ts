@@ -1,5 +1,9 @@
 import { faker } from "@faker-js/faker";
+<<<<<<< HEAD
 import { afterEach, expect, suite, test, vi } from "vitest";
+=======
+import { expect, suite, test, vi } from "vitest";
+>>>>>>> upstream
 import { assertToBeNonNullish } from "../../../helpers";
 import { server } from "../../../server";
 import { mercuriusClient } from "../client";
@@ -11,10 +15,13 @@ import {
 	Mutation_updatePostVote as UPDATE_POST_VOTE,
 } from "../documentNodes";
 
+<<<<<<< HEAD
 afterEach(() => {
 	vi.clearAllMocks();
 });
 
+=======
+>>>>>>> upstream
 const signInResult = await mercuriusClient.query(Query_signIn, {
 	variables: {
 		input: {

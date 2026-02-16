@@ -8,8 +8,13 @@ import {
 	mutationUpdateSingleRecurringEventInstanceInputSchema,
 } from "~/src/graphql/inputs/MutationUpdateSingleRecurringEventInstanceInput";
 import { Event } from "~/src/graphql/types/Event/Event";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+>>>>>>> upstream
 
 const mutationUpdateSingleRecurringEventInstanceArgumentsSchema = z.object({
 	input: mutationUpdateSingleRecurringEventInstanceInputSchema,
@@ -74,7 +79,10 @@ builder.mutationField("updateSingleRecurringEventInstance", (t) =>
 						actualEndTime: true,
 						baseRecurringEventId: true,
 						recurrenceRuleId: true,
+<<<<<<< HEAD
 						originalSeriesId: true,
+=======
+>>>>>>> upstream
 						originalInstanceStartTime: true,
 						organizationId: true,
 						generatedAt: true,
@@ -107,7 +115,10 @@ builder.mutationField("updateSingleRecurringEventInstance", (t) =>
 								allDay: true,
 								isPublic: true,
 								isRegisterable: true,
+<<<<<<< HEAD
 								isInviteOnly: true,
+=======
+>>>>>>> upstream
 								creatorId: true,
 								updaterId: true,
 								createdAt: true,
@@ -237,9 +248,12 @@ builder.mutationField("updateSingleRecurringEventInstance", (t) =>
 				if (parsedArgs.input.isRegisterable !== undefined) {
 					exceptionData.isRegisterable = parsedArgs.input.isRegisterable;
 				}
+<<<<<<< HEAD
 				if (parsedArgs.input.isInviteOnly !== undefined) {
 					exceptionData.isInviteOnly = parsedArgs.input.isInviteOnly;
 				}
+=======
+>>>>>>> upstream
 				if (parsedArgs.input.startAt !== undefined) {
 					exceptionData.startAt = parsedArgs.input.startAt.toISOString();
 				}
@@ -257,6 +271,7 @@ builder.mutationField("updateSingleRecurringEventInstance", (t) =>
 					},
 				);
 
+<<<<<<< HEAD
 				let finalExceptionData = exceptionData;
 
 				if (existingException) {
@@ -293,11 +308,23 @@ builder.mutationField("updateSingleRecurringEventInstance", (t) =>
 				}
 
 				if (existingException) {
+=======
+				if (existingException) {
+					const mergedExceptionData = {
+						...(existingException.exceptionData as Record<string, unknown>),
+						...exceptionData,
+					};
+
+>>>>>>> upstream
 					// Update existing exception
 					await tx
 						.update(eventExceptionsTable)
 						.set({
+<<<<<<< HEAD
 							exceptionData: finalExceptionData,
+=======
+							exceptionData: mergedExceptionData,
+>>>>>>> upstream
 							updaterId: currentUserId,
 							updatedAt: new Date(),
 						})
@@ -354,6 +381,7 @@ builder.mutationField("updateSingleRecurringEventInstance", (t) =>
 					),
 				};
 
+<<<<<<< HEAD
 				// Construct a properly typed ResolvedRecurringEventInstance
 				return {
 					// Core instance metadata
@@ -389,11 +417,25 @@ builder.mutationField("updateSingleRecurringEventInstance", (t) =>
 					createdAt: baseEventData.createdAt,
 					updatedAt: baseEventData.updatedAt,
 					// Exception metadata
+=======
+				return {
+					...existingInstance,
+					...resolvedEventData,
+					...updatedInstance,
+					id: updatedInstance.id,
+					baseRecurringEventId: existingInstance.baseRecurringEventId,
+					startAt: updatedInstance.actualStartTime,
+					endAt: updatedInstance.actualEndTime,
+					// The following fields are required for the GraphQL Event type
+>>>>>>> upstream
 					hasExceptions: true,
 					appliedExceptionData: exceptionData,
 					exceptionCreatedBy: currentUserId,
 					exceptionCreatedAt: new Date(),
+<<<<<<< HEAD
 					// Attachments for Event type
+=======
+>>>>>>> upstream
 					attachments: [], // Recurring event instances don't have direct attachments
 				};
 			});

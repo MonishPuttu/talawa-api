@@ -7,18 +7,27 @@ import {
 	timestamp,
 	uniqueIndex,
 	uuid,
+<<<<<<< HEAD
 	varchar,
 } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { uuidv7 } from "uuidv7";
 import { z } from "zod";
+=======
+} from "drizzle-orm/pg-core";
+import { createInsertSchema } from "drizzle-zod";
+import { uuidv7 } from "uuidv7";
+>>>>>>> upstream
 import { fundCampaignsTable } from "./fundCampaigns";
 import { organizationsTable } from "./organizations";
 import { usersTable } from "./users";
 
+<<<<<<< HEAD
 const uuidRegex =
 	/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
+=======
+>>>>>>> upstream
 /**
  * Drizzle orm postgres table definition for funds.
  */
@@ -51,6 +60,7 @@ export const fundsTable = pgTable(
 		 */
 		isTaxDeductible: boolean("is_tax_deductible").notNull(),
 		/**
+<<<<<<< HEAD
 		 * Boolean to tell if the fund is the default fund.
 		 */
 		isDefault: boolean("is_default").notNull().default(false),
@@ -66,6 +76,11 @@ export const fundsTable = pgTable(
 		 * Name of the fund.
 		 */
 		name: varchar("name", { length: 256 }).notNull(),
+=======
+		 * Name of the fund.
+		 */
+		name: text("name", {}).notNull(),
+>>>>>>> upstream
 		/**
 		 * Foreign key reference to the id of the organization to which the fund is associated to.
 		 */
@@ -93,6 +108,7 @@ export const fundsTable = pgTable(
 			onUpdate: "cascade",
 		}),
 	},
+<<<<<<< HEAD
 	(table) => ({
 		createdAtIndex: index().on(table.createdAt),
 		creatorIdIndex: index().on(table.creatorId),
@@ -100,6 +116,15 @@ export const fundsTable = pgTable(
 		organizationIdIndex: index().on(table.organizationId),
 		uniqueNameOrgIndex: uniqueIndex().on(table.name, table.organizationId),
 	}),
+=======
+	(self) => [
+		index().on(self.createdAt),
+		index().on(self.creatorId),
+		index().on(self.name),
+		index().on(self.organizationId),
+		uniqueIndex().on(self.name, self.organizationId),
+	],
+>>>>>>> upstream
 );
 
 export const fundsTableRelations = relations(fundsTable, ({ one, many }) => ({
@@ -136,6 +161,7 @@ export const fundsTableRelations = relations(fundsTable, ({ one, many }) => ({
 }));
 
 export const fundsTableInsertSchema = createInsertSchema(fundsTable, {
+<<<<<<< HEAD
 	name: () => z.string().min(1).max(256),
 	organizationId: () => z.string().regex(uuidRegex),
 	isTaxDeductible: () => z.boolean(),
@@ -147,4 +173,7 @@ export const fundsTableInsertSchema = createInsertSchema(fundsTable, {
 	updaterId: () => z.string().regex(uuidRegex).nullish(),
 	createdAt: () => z.date().optional(),
 	updatedAt: () => z.date().optional(),
+=======
+	name: (schema) => schema.min(1).max(256),
+>>>>>>> upstream
 });

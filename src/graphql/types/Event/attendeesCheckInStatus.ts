@@ -2,11 +2,19 @@ import { eq, or } from "drizzle-orm";
 import { eventAttendeesTable } from "~/src/drizzle/tables/eventAttendees";
 import { usersTable } from "~/src/drizzle/tables/users";
 import { CheckInStatus } from "~/src/graphql/types/CheckInStatus/CheckInStatus";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 import type { GraphQLContext } from "../../context";
 import type { Event as EventType } from "./Event";
 import { Event } from "./Event";
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+import type { GraphQLContext } from "../../context";
+import { Event } from "./Event";
+import type { Event as EventType } from "./Event";
+>>>>>>> upstream
 
 export const eventAttendeesCheckInStatusResolver = async (
 	parent: EventType,

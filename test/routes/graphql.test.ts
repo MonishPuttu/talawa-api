@@ -1,4 +1,5 @@
 import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
+<<<<<<< HEAD
 import {
 	type ExecutionResult,
 	type GraphQLFormattedError,
@@ -20,6 +21,12 @@ import type { ExplicitAuthenticationTokenPayload } from "~/src/graphql/context";
 import { createContext, graphql } from "~/src/routes/graphql";
 import { ErrorCode } from "~/src/utilities/errors/errorCodes";
 import { createPerformanceTracker } from "~/src/utilities/metrics/performanceTracker";
+=======
+import { GraphQLObjectType, GraphQLSchema, GraphQLString } from "graphql";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import type { ExplicitAuthenticationTokenPayload } from "~/src/graphql/context";
+import { createContext } from "~/src/routes/graphql";
+>>>>>>> upstream
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 
 // Mock dependencies
@@ -31,6 +38,7 @@ vi.mock("~/src/graphql/schemaManager", () => ({
 	default: {
 		buildInitialSchema: vi.fn(),
 		onSchemaUpdate: vi.fn(),
+<<<<<<< HEAD
 		setLogger: vi.fn(),
 	},
 }));
@@ -49,13 +57,28 @@ vi.mock("~/src/utilities/dataloaders", () => ({
 		event: {},
 		actionItem: {},
 	}),
+=======
+	},
+}));
+
+vi.mock("~/src/utilities/leakyBucket", () => ({
+	default: vi.fn(),
+}));
+
+vi.mock("~/src/utilities/TalawaGraphQLError", () => ({
+	TalawaGraphQLError: vi.fn(),
+>>>>>>> upstream
 }));
 
 // Import mocked functions
 import { complexityFromQuery } from "@pothos/plugin-complexity";
 import schemaManager from "~/src/graphql/schemaManager";
+<<<<<<< HEAD
 import { COOKIE_NAMES } from "~/src/utilities/cookieConfig";
 import { complexityLeakyBucket } from "~/src/utilities/leakyBucket";
+=======
+import leakyBucket from "~/src/utilities/leakyBucket";
+>>>>>>> upstream
 
 const iso8601 = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z$/;
 
@@ -71,19 +94,25 @@ describe("GraphQL Routes", () => {
 		// Setup mock fastify instance
 		mockFastify = {
 			drizzleClient: {} as FastifyInstance["drizzleClient"],
+<<<<<<< HEAD
 			cache: {
 				get: vi.fn(),
 				set: vi.fn(),
 				del: vi.fn(),
 				delete: vi.fn(),
 			} as unknown as FastifyInstance["cache"],
+=======
+>>>>>>> upstream
 			envConfig: {
 				API_IS_GRAPHIQL: true,
 				API_GRAPHQL_MUTATION_BASE_COST: 10,
 				API_RATE_LIMIT_BUCKET_CAPACITY: 100,
 				API_RATE_LIMIT_REFILL_RATE: 1,
+<<<<<<< HEAD
 				API_JWT_EXPIRES_IN: 900000,
 				API_REFRESH_TOKEN_EXPIRES_IN: 604800000,
+=======
+>>>>>>> upstream
 			} as FastifyInstance["envConfig"],
 			jwt: {
 				sign: vi.fn().mockReturnValue("signed-jwt-token"),
@@ -92,7 +121,11 @@ describe("GraphQL Routes", () => {
 				info: vi.fn(),
 				error: vi.fn(),
 				warn: () => {},
+<<<<<<< HEAD
 				child: vi.fn().mockReturnThis(),
+=======
+				child: vi.fn(),
+>>>>>>> upstream
 				level: "info",
 				fatal: vi.fn(),
 				debug: vi.fn(),
@@ -106,6 +139,7 @@ describe("GraphQL Routes", () => {
 		mockRequest = {
 			jwtVerify: vi.fn(),
 			ip: "127.0.0.1",
+<<<<<<< HEAD
 			cookies: {},
 			log: mockFastify.log as unknown as FastifyRequest["log"],
 		};
@@ -114,6 +148,12 @@ describe("GraphQL Routes", () => {
 		mockReply = {
 			setCookie: vi.fn(),
 		};
+=======
+		};
+
+		// Setup mock reply
+		mockReply = {};
+>>>>>>> upstream
 
 		// Setup mock socket
 		mockSocket = {};
@@ -142,22 +182,28 @@ describe("GraphQL Routes", () => {
 			});
 
 			expect(context).toEqual({
+<<<<<<< HEAD
 				cache: mockFastify.cache,
 				cookie: {
 					clearAuthCookies: expect.any(Function),
 					getRefreshToken: expect.any(Function),
 					setAuthCookies: expect.any(Function),
 				},
+=======
+>>>>>>> upstream
 				currentClient: {
 					isAuthenticated: true,
 					user: mockJwtPayload.user,
 				},
+<<<<<<< HEAD
 				dataloaders: expect.objectContaining({
 					user: expect.any(Object),
 					organization: expect.any(Object),
 					event: expect.any(Object),
 					actionItem: expect.any(Object),
 				}),
+=======
+>>>>>>> upstream
 				drizzleClient: mockFastify.drizzleClient,
 				envConfig: mockFastify.envConfig,
 				jwt: {
@@ -165,10 +211,13 @@ describe("GraphQL Routes", () => {
 				},
 				log: mockFastify.log,
 				minio: mockFastify.minio,
+<<<<<<< HEAD
 				notification: expect.objectContaining({
 					queue: [],
 				}),
 				perf: undefined,
+=======
+>>>>>>> upstream
 			});
 
 			expect(mockRequest.jwtVerify).toHaveBeenCalled();
@@ -187,6 +236,7 @@ describe("GraphQL Routes", () => {
 			});
 
 			expect(context).toEqual({
+<<<<<<< HEAD
 				cache: mockFastify.cache,
 				cookie: {
 					clearAuthCookies: expect.any(Function),
@@ -202,6 +252,11 @@ describe("GraphQL Routes", () => {
 					event: expect.any(Object),
 					actionItem: expect.any(Object),
 				}),
+=======
+				currentClient: {
+					isAuthenticated: false,
+				},
+>>>>>>> upstream
 				drizzleClient: mockFastify.drizzleClient,
 				envConfig: mockFastify.envConfig,
 				jwt: {
@@ -209,10 +264,13 @@ describe("GraphQL Routes", () => {
 				},
 				log: mockFastify.log,
 				minio: mockFastify.minio,
+<<<<<<< HEAD
 				notification: expect.objectContaining({
 					queue: [],
 				}),
 				perf: undefined,
+=======
+>>>>>>> upstream
 			});
 
 			expect(mockRequest.jwtVerify).toHaveBeenCalled();
@@ -282,6 +340,7 @@ describe("GraphQL Routes", () => {
 			expect(signedToken).toBe("signed-jwt-token");
 			expect(mockFastify.jwt?.sign).toHaveBeenCalledWith(testPayload);
 		});
+<<<<<<< HEAD
 
 		it("should authenticate via cookie when header fails", async () => {
 			mockRequest.jwtVerify = vi.fn().mockRejectedValue(new Error("No header"));
@@ -574,6 +633,11 @@ describe("GraphQL Routes", () => {
 				vi.unstubAllEnvs();
 			}
 		});
+=======
+	});
+
+	describe("GraphQL Plugin Registration", () => {
+>>>>>>> upstream
 		let mockFastifyInstance: {
 			register: ReturnType<typeof vi.fn>;
 			envConfig: {
@@ -635,6 +699,7 @@ describe("GraphQL Routes", () => {
 			});
 
 			vi.mocked(schemaManager.buildInitialSchema).mockResolvedValue(mockSchema);
+<<<<<<< HEAD
 			vi.mocked(schemaManager.onSchemaUpdate).mockImplementation(
 				(callback: (schema: GraphQLSchema) => void) => {
 					// Store the callback for testing
@@ -644,6 +709,17 @@ describe("GraphQL Routes", () => {
 		});
 
 		it("should register mercurius upload with correct configuration", async () => {
+=======
+			vi.mocked(schemaManager.onSchemaUpdate).mockImplementation((callback) => {
+				// Store the callback for testing
+				mockFastifyInstance.schemaUpdateCallback = callback;
+			});
+		});
+
+		it("should register mercurius upload with correct configuration", async () => {
+			const { graphql } = await import("~/src/routes/graphql");
+
+>>>>>>> upstream
 			await graphql(mockFastifyInstance as unknown as FastifyInstance);
 
 			// Check that the first register call is for mercurius upload
@@ -657,6 +733,11 @@ describe("GraphQL Routes", () => {
 		});
 
 		it("should register mercurius with correct configuration", async () => {
+<<<<<<< HEAD
+=======
+			const { graphql } = await import("~/src/routes/graphql");
+
+>>>>>>> upstream
 			await graphql(mockFastifyInstance as unknown as FastifyInstance);
 
 			// Check that the second register call is for mercurius
@@ -682,6 +763,11 @@ describe("GraphQL Routes", () => {
 		});
 
 		it("should handle schema updates successfully", async () => {
+<<<<<<< HEAD
+=======
+			const { graphql } = await import("~/src/routes/graphql");
+
+>>>>>>> upstream
 			await graphql(mockFastifyInstance as unknown as FastifyInstance);
 
 			const newSchema = new GraphQLSchema({
@@ -715,9 +801,57 @@ describe("GraphQL Routes", () => {
 			);
 		});
 
+<<<<<<< HEAD
 		it("should handle non-Error objects in schema update", async () => {
 			await graphql(mockFastifyInstance as unknown as FastifyInstance);
 
+=======
+		it("should handle schema update errors", async () => {
+			const { graphql } = await import("~/src/routes/graphql");
+
+			await graphql(mockFastifyInstance as unknown as FastifyInstance);
+
+			// Make replaceSchema throw an error
+			const testError = new Error("Schema replacement failed");
+			mockFastifyInstance.graphql.replaceSchema.mockImplementation(() => {
+				throw testError;
+			});
+
+			const newSchema = new GraphQLSchema({
+				query: new GraphQLObjectType({
+					name: "Query",
+					fields: {
+						test: {
+							type: GraphQLString,
+							resolve: () => "test",
+						},
+					},
+				}),
+			});
+
+			// Trigger schema update
+			mockFastifyInstance.schemaUpdateCallback?.(newSchema);
+
+			expect(mockFastifyInstance.log.error).toHaveBeenCalledWith(
+				expect.objectContaining({
+					error: {
+						message: testError.message,
+						stack: testError.stack,
+						name: testError.name,
+					},
+					timestamp: expect.any(String),
+				}),
+				"❌ Failed to Update GraphQL Schema",
+			);
+		});
+
+		it("should handle non-Error objects in schema update", async () => {
+			const { graphql } = await import("~/src/routes/graphql");
+
+			await graphql(mockFastifyInstance as unknown as FastifyInstance);
+
+			// Make replaceSchema throw a non-Error object
+>>>>>>> upstream
 			mockFastifyInstance.graphql.replaceSchema.mockImplementation(() => {
 				throw "String error";
 			});
@@ -746,6 +880,7 @@ describe("GraphQL Routes", () => {
 			);
 		});
 
+<<<<<<< HEAD
 		it("should handle Error objects in schema update failure", async () => {
 			await graphql(mockFastifyInstance as unknown as FastifyInstance);
 
@@ -784,6 +919,11 @@ describe("GraphQL Routes", () => {
 		});
 
 		it("should log fields for schema with mutations/subscriptions but no query", async () => {
+=======
+		it("should log fields for schema with mutations/subscriptions but no query", async () => {
+			const { graphql } = await import("~/src/routes/graphql");
+
+>>>>>>> upstream
 			await graphql(mockFastifyInstance as unknown as FastifyInstance);
 
 			const newSchema = new GraphQLSchema({
@@ -852,7 +992,10 @@ describe("GraphQL Routes", () => {
 				request: {
 					ip?: string;
 					jwtVerify: ReturnType<typeof vi.fn>;
+<<<<<<< HEAD
 					log?: unknown;
+=======
+>>>>>>> upstream
 				};
 			};
 		};
@@ -910,7 +1053,10 @@ describe("GraphQL Routes", () => {
 					request: {
 						ip: "192.168.1.1",
 						jwtVerify: vi.fn(),
+<<<<<<< HEAD
 						log: mockFastifyInstance.log,
+=======
+>>>>>>> upstream
 					},
 				},
 			};
@@ -921,11 +1067,19 @@ describe("GraphQL Routes", () => {
 			vi.mocked(schemaManager.onSchemaUpdate).mockImplementation(() => {});
 
 			// Import and register the plugin to capture the hook
+<<<<<<< HEAD
+=======
+			const { graphql } = await import("~/src/routes/graphql");
+>>>>>>> upstream
 			await graphql(mockFastifyInstance as unknown as FastifyInstance);
 
 			// Extract the preExecution hook
 			const addHookCall = mockFastifyInstance.graphql.addHook.mock.calls.find(
+<<<<<<< HEAD
 				(call: unknown[]) => call?.[0] === "preExecution",
+=======
+				(call) => call?.[0] === "preExecution",
+>>>>>>> upstream
 			);
 			preExecutionHook = addHookCall?.[1] as typeof preExecutionHook;
 		});
@@ -941,7 +1095,11 @@ describe("GraphQL Routes", () => {
 			};
 
 			mockDocument.reply.request.jwtVerify.mockResolvedValue(mockJwtPayload);
+<<<<<<< HEAD
 			vi.mocked(complexityLeakyBucket).mockResolvedValue(true);
+=======
+			vi.mocked(leakyBucket).mockResolvedValue(true);
+>>>>>>> upstream
 
 			await preExecutionHook(
 				mockSchema,
@@ -958,12 +1116,17 @@ describe("GraphQL Routes", () => {
 				},
 			);
 
+<<<<<<< HEAD
 			expect(complexityLeakyBucket).toHaveBeenCalledWith(
+=======
+			expect(leakyBucket).toHaveBeenCalledWith(
+>>>>>>> upstream
 				mockFastifyInstance,
 				"rate-limit:user:user-123:192.168.1.1",
 				100,
 				1,
 				5,
+<<<<<<< HEAD
 				mockFastifyInstance.log,
 			);
 		});
@@ -1048,6 +1211,11 @@ describe("GraphQL Routes", () => {
 			).resolves.not.toThrow();
 		});
 
+=======
+			);
+		});
+
+>>>>>>> upstream
 		it("should add mutation base cost for mutations", async () => {
 			const mockComplexity = { complexity: 5, breadth: 1, depth: 1 };
 			vi.mocked(complexityFromQuery).mockReturnValue(mockComplexity);
@@ -1058,7 +1226,11 @@ describe("GraphQL Routes", () => {
 			mockDocument.reply.request.jwtVerify.mockRejectedValue(
 				new Error("No token"),
 			);
+<<<<<<< HEAD
 			vi.mocked(complexityLeakyBucket).mockResolvedValue(true);
+=======
+			vi.mocked(leakyBucket).mockResolvedValue(true);
+>>>>>>> upstream
 
 			await preExecutionHook(
 				mockSchema,
@@ -1067,13 +1239,21 @@ describe("GraphQL Routes", () => {
 				mockVariables,
 			);
 
+<<<<<<< HEAD
 			expect(complexityLeakyBucket).toHaveBeenCalledWith(
+=======
+			expect(leakyBucket).toHaveBeenCalledWith(
+>>>>>>> upstream
 				mockFastifyInstance,
 				"rate-limit:ip:192.168.1.1",
 				100,
 				1,
+<<<<<<< HEAD
 				15,
 				mockFastifyInstance.log,
+=======
+				15, // 5 + 10 (mutation base cost)
+>>>>>>> upstream
 			);
 		});
 
@@ -1084,7 +1264,11 @@ describe("GraphQL Routes", () => {
 			mockDocument.reply.request.jwtVerify.mockRejectedValue(
 				new Error("Invalid token"),
 			);
+<<<<<<< HEAD
 			vi.mocked(complexityLeakyBucket).mockResolvedValue(true);
+=======
+			vi.mocked(leakyBucket).mockResolvedValue(true);
+>>>>>>> upstream
 
 			await preExecutionHook(
 				mockSchema,
@@ -1093,13 +1277,20 @@ describe("GraphQL Routes", () => {
 				mockVariables,
 			);
 
+<<<<<<< HEAD
 			expect(complexityLeakyBucket).toHaveBeenCalledWith(
+=======
+			expect(leakyBucket).toHaveBeenCalledWith(
+>>>>>>> upstream
 				mockFastifyInstance,
 				"rate-limit:ip:192.168.1.1",
 				100,
 				1,
 				3,
+<<<<<<< HEAD
 				mockFastifyInstance.log,
+=======
+>>>>>>> upstream
 			);
 		});
 
@@ -1112,9 +1303,29 @@ describe("GraphQL Routes", () => {
 				new Error("No token"),
 			);
 
+<<<<<<< HEAD
 			await expect(
 				preExecutionHook(mockSchema, mockContext, mockDocument, mockVariables),
 			).rejects.toThrow("IP address is not available for rate limiting");
+=======
+			vi.mocked(TalawaGraphQLError).mockImplementation((config) => {
+				const error = new Error(config.message);
+				(error as Error & { extensions?: unknown }).extensions =
+					config.extensions;
+				return error as TalawaGraphQLError;
+			});
+
+			await expect(
+				preExecutionHook(mockSchema, mockContext, mockDocument, mockVariables),
+			).rejects.toThrow("IP address is not available for rate limiting");
+
+			expect(TalawaGraphQLError).toHaveBeenCalledWith({
+				extensions: {
+					code: "unexpected",
+				},
+				message: "IP address is not available for rate limiting",
+			});
+>>>>>>> upstream
 		});
 
 		it("should throw error when rate limit is exceeded", async () => {
@@ -1124,6 +1335,7 @@ describe("GraphQL Routes", () => {
 			mockDocument.reply.request.jwtVerify.mockRejectedValue(
 				new Error("No token"),
 			);
+<<<<<<< HEAD
 			vi.mocked(complexityLeakyBucket).mockResolvedValue(false);
 
 			try {
@@ -1140,6 +1352,24 @@ describe("GraphQL Routes", () => {
 					ErrorCode.RATE_LIMIT_EXCEEDED,
 				);
 			}
+=======
+			vi.mocked(leakyBucket).mockResolvedValue(false);
+
+			vi.mocked(TalawaGraphQLError).mockImplementation((config) => {
+				const error = new Error("Rate limit exceeded");
+				(error as Error & { extensions?: unknown }).extensions =
+					config.extensions;
+				return error as TalawaGraphQLError;
+			});
+
+			await expect(
+				preExecutionHook(mockSchema, mockContext, mockDocument, mockVariables),
+			).rejects.toThrow("Rate limit exceeded");
+
+			expect(TalawaGraphQLError).toHaveBeenCalledWith({
+				extensions: { code: "too_many_requests" },
+			});
+>>>>>>> upstream
 		});
 
 		it("should handle operation without operation definition", async () => {
@@ -1156,7 +1386,11 @@ describe("GraphQL Routes", () => {
 			mockDocument.reply.request.jwtVerify.mockRejectedValue(
 				new Error("No token"),
 			);
+<<<<<<< HEAD
 			vi.mocked(complexityLeakyBucket).mockResolvedValue(true);
+=======
+			vi.mocked(leakyBucket).mockResolvedValue(true);
+>>>>>>> upstream
 
 			await preExecutionHook(
 				mockSchema,
@@ -1166,13 +1400,20 @@ describe("GraphQL Routes", () => {
 			);
 
 			// Should not add mutation base cost since operation type is undefined
+<<<<<<< HEAD
 			expect(complexityLeakyBucket).toHaveBeenCalledWith(
+=======
+			expect(leakyBucket).toHaveBeenCalledWith(
+>>>>>>> upstream
 				mockFastifyInstance,
 				"rate-limit:ip:192.168.1.1",
 				100,
 				1,
 				5,
+<<<<<<< HEAD
 				mockFastifyInstance.log,
+=======
+>>>>>>> upstream
 			);
 		});
 
@@ -1186,7 +1427,11 @@ describe("GraphQL Routes", () => {
 			mockDocument.reply.request.jwtVerify.mockRejectedValue(
 				new Error("No token"),
 			);
+<<<<<<< HEAD
 			vi.mocked(complexityLeakyBucket).mockResolvedValue(true);
+=======
+			vi.mocked(leakyBucket).mockResolvedValue(true);
+>>>>>>> upstream
 
 			await preExecutionHook(
 				mockSchema,
@@ -1196,15 +1441,47 @@ describe("GraphQL Routes", () => {
 			);
 
 			// Should not add mutation base cost for subscriptions
+<<<<<<< HEAD
 			expect(complexityLeakyBucket).toHaveBeenCalledWith(
+=======
+			expect(leakyBucket).toHaveBeenCalledWith(
+>>>>>>> upstream
 				mockFastifyInstance,
 				"rate-limit:ip:192.168.1.1",
 				100,
 				1,
 				2,
+<<<<<<< HEAD
 				mockFastifyInstance.log,
 			);
 		});
+=======
+			);
+		});
+
+		it("should log complexity for debugging", async () => {
+			const mockComplexity = { complexity: 42, breadth: 1, depth: 1 };
+			vi.mocked(complexityFromQuery).mockReturnValue(mockComplexity);
+
+			mockDocument.reply.request.jwtVerify.mockRejectedValue(
+				new Error("No token"),
+			);
+			vi.mocked(leakyBucket).mockResolvedValue(true);
+
+			const consoleSpy = vi.spyOn(console, "log").mockImplementation(() => {});
+
+			await preExecutionHook(
+				mockSchema,
+				mockContext,
+				mockDocument,
+				mockVariables,
+			);
+
+			expect(consoleSpy).toHaveBeenCalledWith("Complexity: ", 42);
+
+			consoleSpy.mockRestore();
+		});
+>>>>>>> upstream
 	});
 
 	describe("Subscription Configuration", () => {
@@ -1258,11 +1535,20 @@ describe("GraphQL Routes", () => {
 		});
 
 		it("should configure subscription onConnect to reject connections without authorization", async () => {
+<<<<<<< HEAD
 			await graphql(mockFastifyInstance as unknown as FastifyInstance);
 
 			const mercuriusCall = mockFastifyInstance.register.mock.calls.find(
 				(call: unknown[]) =>
 					(call?.[1] as { subscription?: unknown })?.subscription,
+=======
+			const { graphql } = await import("~/src/routes/graphql");
+
+			await graphql(mockFastifyInstance as unknown as FastifyInstance);
+
+			const mercuriusCall = mockFastifyInstance.register.mock.calls.find(
+				(call) => call?.[1]?.subscription,
+>>>>>>> upstream
 			);
 
 			const subscriptionConfig = mercuriusCall?.[1] as {
@@ -1278,6 +1564,11 @@ describe("GraphQL Routes", () => {
 		});
 
 		it("should authorize subscription connections with valid Bearer token", async () => {
+<<<<<<< HEAD
+=======
+			const { graphql } = await import("~/src/routes/graphql");
+
+>>>>>>> upstream
 			// Prepare a fake token and decoded payload
 			const fakeToken = "signed-jwt-token";
 			const decoded = {
@@ -1302,8 +1593,12 @@ describe("GraphQL Routes", () => {
 			await graphql(mockFastifyInstance as unknown as FastifyInstance);
 
 			const mercuriusCall = mockFastifyInstance.register.mock.calls.find(
+<<<<<<< HEAD
 				(call: unknown[]) =>
 					(call?.[1] as { subscription?: unknown })?.subscription,
+=======
+				(call) => call?.[1]?.subscription,
+>>>>>>> upstream
 			);
 
 			const subscriptionConfig = mercuriusCall?.[1] as {
@@ -1323,6 +1618,7 @@ describe("GraphQL Routes", () => {
 			);
 		});
 
+<<<<<<< HEAD
 		it("should extract perf tracker from socket.request.perf in subscription onConnect", async () => {
 			const perfTracker = createPerformanceTracker();
 			const fakeToken = "signed-jwt-token";
@@ -1535,6 +1831,11 @@ describe("GraphQL Routes", () => {
 		});
 
 		it("should reject subscription connections with invalid Bearer token and log error", async () => {
+=======
+		it("should reject subscription connections with invalid Bearer token and log error", async () => {
+			const { graphql } = await import("~/src/routes/graphql");
+
+>>>>>>> upstream
 			// Make fastify.jwt.verify throw to simulate invalid token
 			mockFastifyInstance.jwt = {
 				verify: vi.fn().mockRejectedValue(new Error("Invalid token")),
@@ -1543,8 +1844,12 @@ describe("GraphQL Routes", () => {
 			await graphql(mockFastifyInstance as unknown as FastifyInstance);
 
 			const mercuriusCall = mockFastifyInstance.register.mock.calls.find(
+<<<<<<< HEAD
 				(call: unknown[]) =>
 					(call?.[1] as { subscription?: unknown })?.subscription,
+=======
+				(call) => call?.[1]?.subscription,
+>>>>>>> upstream
 			);
 
 			const subscriptionConfig = mercuriusCall?.[1] as {
@@ -1562,11 +1867,20 @@ describe("GraphQL Routes", () => {
 		});
 
 		it("should configure subscription onDisconnect as no-op", async () => {
+<<<<<<< HEAD
 			await graphql(mockFastifyInstance as unknown as FastifyInstance);
 
 			const mercuriusCall = mockFastifyInstance.register.mock.calls.find(
 				(call: unknown[]) =>
 					(call?.[1] as { subscription?: unknown })?.subscription,
+=======
+			const { graphql } = await import("~/src/routes/graphql");
+
+			await graphql(mockFastifyInstance as unknown as FastifyInstance);
+
+			const mercuriusCall = mockFastifyInstance.register.mock.calls.find(
+				(call) => call?.[1]?.subscription,
+>>>>>>> upstream
 			);
 
 			const subscriptionConfig = mercuriusCall?.[1] as {
@@ -1583,11 +1897,20 @@ describe("GraphQL Routes", () => {
 		});
 
 		it("should configure subscription verifyClient to accept all connections", async () => {
+<<<<<<< HEAD
 			await graphql(mockFastifyInstance as unknown as FastifyInstance);
 
 			const mercuriusCall = mockFastifyInstance.register.mock.calls.find(
 				(call: unknown[]) =>
 					(call?.[1] as { subscription?: unknown })?.subscription,
+=======
+			const { graphql } = await import("~/src/routes/graphql");
+
+			await graphql(mockFastifyInstance as unknown as FastifyInstance);
+
+			const mercuriusCall = mockFastifyInstance.register.mock.calls.find(
+				(call) => call?.[1]?.subscription,
+>>>>>>> upstream
 			);
 
 			const subscriptionConfig = mercuriusCall?.[1] as {
@@ -1604,6 +1927,7 @@ describe("GraphQL Routes", () => {
 
 			expect(mockNext).toHaveBeenCalledWith(true);
 		});
+<<<<<<< HEAD
 
 		it("should include oauthProviderRegistry in subscription context during onConnect (success path)", async () => {
 			// Create a mock OAuth provider registry
@@ -4506,5 +4830,7 @@ describe("GraphQL Routes", () => {
 				ErrorCode.INTERNAL_SERVER_ERROR,
 			);
 		});
+=======
+>>>>>>> upstream
 	});
 });

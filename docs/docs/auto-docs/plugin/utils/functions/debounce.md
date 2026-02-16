@@ -6,7 +6,11 @@
 
 > **debounce**\<`T`\>(`func`, `delay`): (...`args`) => `void`
 
+<<<<<<< HEAD
 Defined in: [src/plugin/utils.ts:180](https://github.com/PalisadoesFoundation/talawa-api/tree/mainsrc/plugin/utils.ts#L180)
+=======
+Defined in: [src/plugin/utils.ts:179](https://github.com/PalisadoesFoundation/talawa-api/tree/mainsrc/plugin/utils.ts#L179)
+>>>>>>> upstream
 
 Debounces a function call
 

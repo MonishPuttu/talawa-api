@@ -1,22 +1,33 @@
 import { z } from "zod";
 import { builder } from "~/src/graphql/builder";
+<<<<<<< HEAD
 import {
 	eventId,
 	orgId,
 	trimmedString,
 	userId,
 } from "~/src/graphql/validators/core";
+=======
+>>>>>>> upstream
 
 /**
  * Zod schema for EventVolunteerGroupWhereInput validation.
  * Based on the old Talawa API EventVolunteerGroupWhereInput structure.
  */
 export const eventVolunteerGroupWhereInputSchema = z.object({
+<<<<<<< HEAD
 	eventId: eventId.optional(),
 	userId: userId.optional(),
 	orgId: orgId.optional(),
 	leaderName: trimmedString.optional(),
 	name_contains: trimmedString.optional(),
+=======
+	eventId: z.string().uuid().optional(),
+	userId: z.string().uuid().optional(),
+	orgId: z.string().uuid().optional(),
+	leaderName: z.string().optional(),
+	name_contains: z.string().optional(),
+>>>>>>> upstream
 });
 
 /**

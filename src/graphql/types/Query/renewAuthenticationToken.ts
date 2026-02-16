@@ -1,9 +1,15 @@
+<<<<<<< HEAD
 // check-sanitization-disable this returns JWT token (system-generated, not user input)
 import { builder } from "~/src/graphql/builder";
 import envConfig from "~/src/utilities/graphqLimits";
 import { escapeHTML } from "~/src/utilities/sanitizer";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 
+=======
+import { builder } from "~/src/graphql/builder";
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+>>>>>>> upstream
 builder.queryField("renewAuthenticationToken", (t) =>
 	t.string({
 		description:
@@ -33,6 +39,7 @@ builder.queryField("renewAuthenticationToken", (t) =>
 				});
 			}
 
+<<<<<<< HEAD
 			return escapeHTML(
 				ctx.jwt.sign({
 					user: {
@@ -40,6 +47,13 @@ builder.queryField("renewAuthenticationToken", (t) =>
 					},
 				}),
 			);
+=======
+			return ctx.jwt.sign({
+				user: {
+					id: currentUser.id,
+				},
+			});
+>>>>>>> upstream
 		},
 	}),
 );

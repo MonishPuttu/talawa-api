@@ -11,7 +11,10 @@ export const mutationUpdateEventInputSchema = z
 		name: eventsTableInsertSchema.shape.name.optional(),
 		startAt: eventsTableInsertSchema.shape.startAt.optional(),
 		allDay: eventsTableInsertSchema.shape.allDay.optional(),
+<<<<<<< HEAD
 		isInviteOnly: eventsTableInsertSchema.shape.isInviteOnly.optional(),
+=======
+>>>>>>> upstream
 		isPublic: eventsTableInsertSchema.shape.isPublic.optional(),
 		isRegisterable: eventsTableInsertSchema.shape.isRegisterable.optional(),
 		location: eventsTableInsertSchema.shape.location.optional(),
@@ -64,10 +67,13 @@ export const MutationUpdateEventInput = builder
 			allDay: t.boolean({
 				description: "Indicates if the event spans the entire day.",
 			}),
+<<<<<<< HEAD
 			isInviteOnly: t.boolean({
 				description: "Indicates if the event is invite-only",
 				required: false,
 			}),
+=======
+>>>>>>> upstream
 			isPublic: t.boolean({
 				description: "Indicates if the event is publicly visible.",
 			}),

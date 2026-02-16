@@ -4,9 +4,14 @@ import type { organizationsTable } from "~/src/drizzle/schema";
 import { builder } from "~/src/graphql/builder";
 import type { GraphQLContext } from "~/src/graphql/context";
 import { Organization } from "~/src/graphql/types/Organization/Organization";
+<<<<<<< HEAD
 import { executeWithMetrics } from "~/src/graphql/utils/withQueryMetrics";
 import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+>>>>>>> upstream
 
 // Define type for organization model
 type OrganizationType = InferSelectModel<typeof organizationsTable>;
@@ -26,6 +31,7 @@ export const resolveOrganizations = async (
 	args: OrganizationsArgs,
 	ctx: GraphQLContext,
 ): Promise<OrganizationType[]> => {
+<<<<<<< HEAD
 	const resolver = async () => {
 		const { filter, limit, offset } = args; // No default values to allow fetching all records
 		const currentUserId = ctx.currentClient?.user?.id;
@@ -89,6 +95,31 @@ export const resolveOrganizations = async (
 				}
 
 				// Case 3: Regular user with no admin privileges, return all organizations
+=======
+	const { filter, limit, offset } = args; // No default values to allow fetching all records
+	const currentUserId = ctx.currentClient?.user?.id;
+
+	try {
+		if (currentUserId) {
+			// Get current user with their role and organization memberships
+			const currentUser = await ctx.drizzleClient.query.usersTable.findFirst({
+				columns: {
+					role: true,
+				},
+				where: (fields, operators) => operators.eq(fields.id, currentUserId),
+			});
+
+			if (!currentUser) {
+				throw new TalawaGraphQLError({
+					extensions: {
+						code: "unauthenticated",
+					},
+				});
+			}
+
+			// Case 1: If user is an administrator, return all organizations
+			if (currentUser.role === "administrator") {
+>>>>>>> upstream
 				return ctx.drizzleClient.query.organizationsTable.findMany({
 					where: (fields) =>
 						filter ? ilike(fields.name, `%${filter}%`) : sql`TRUE`,
@@ -96,13 +127,49 @@ export const resolveOrganizations = async (
 					offset: offset ?? undefined, // No offset if not provided
 				});
 			}
+<<<<<<< HEAD
 			// Case 4: Unauthenticated user for registration, return all organizations
+=======
+
+			// Case 2: If user is regular, check if they are an admin in any organizations
+			const adminMemberships =
+				await ctx.drizzleClient.query.organizationMembershipsTable.findMany({
+					columns: {
+						organizationId: true,
+					},
+					where: (fields, operators) =>
+						and(
+							operators.eq(fields.memberId, currentUserId),
+							operators.eq(fields.role, "administrator"),
+						),
+				});
+
+			// If they're an admin in any organization, return only those organizations
+			if (adminMemberships.length > 0) {
+				const orgIds = adminMemberships.map(
+					(membership) => membership.organizationId,
+				);
+
+				return ctx.drizzleClient.query.organizationsTable.findMany({
+					where: (fields, operators) =>
+						and(
+							filter ? ilike(fields.name, `%${filter}%`) : sql`TRUE`,
+							operators.inArray(fields.id, orgIds),
+						),
+					limit: limit ?? undefined, // Fetch all if limit is not provided
+					offset: offset ?? undefined, // No offset if not provided
+				});
+			}
+
+			// Case 3: Regular user with no admin privileges, return all organizations
+>>>>>>> upstream
 			return ctx.drizzleClient.query.organizationsTable.findMany({
 				where: (fields) =>
 					filter ? ilike(fields.name, `%${filter}%`) : sql`TRUE`,
 				limit: limit ?? undefined, // Fetch all if limit is not provided
 				offset: offset ?? undefined, // No offset if not provided
 			});
+<<<<<<< HEAD
 		} catch (error) {
 			ctx.log.error(error, "Error in organizations query");
 			// Preserve original error to maintain GraphQL error codes and metadata
@@ -111,6 +178,20 @@ export const resolveOrganizations = async (
 	};
 
 	return await executeWithMetrics(ctx, "query:organizations", resolver);
+=======
+		}
+		// Case 4: Unauthenticated user for registration, return all organizations
+		return ctx.drizzleClient.query.organizationsTable.findMany({
+			where: (fields) =>
+				filter ? ilike(fields.name, `%${filter}%`) : sql`TRUE`,
+			limit: limit ?? undefined, // Fetch all if limit is not provided
+			offset: offset ?? undefined, // No offset if not provided
+		});
+	} catch (error) {
+		ctx.log.error(error, "Error in organizations query");
+		throw new Error("An error occurred while fetching organizations.");
+	}
+>>>>>>> upstream
 };
 
 builder.queryField("organizations", (t) =>

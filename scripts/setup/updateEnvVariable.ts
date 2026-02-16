@@ -1,10 +1,15 @@
+<<<<<<< HEAD
 import { promises as fs } from "node:fs";
+=======
+import fs from "node:fs";
+>>>>>>> upstream
 
 /**
  * Updates environment variables in the .env or .env_test file and synchronizes them with `process.env`.
  * @param config - An object containing key-value pairs where the keys are the environment variable names and
  * the values are the new values for those variables.
  */
+<<<<<<< HEAD
 export async function updateEnvVariable(config: {
 	[key: string]: string | number | undefined;
 }): Promise<void> {
@@ -36,16 +41,35 @@ export async function updateEnvVariable(config: {
 				throw error;
 			}
 		}
+=======
+export function updateEnvVariable(config: {
+	[key: string]: string | number;
+}): void {
+	const envFileName = process.env.NODE_ENV === "test" ? ".env_test" : ".env";
+
+	const backupFile = `${envFileName}.backup`;
+	if (fs.existsSync(envFileName)) {
+		fs.copyFileSync(envFileName, backupFile);
+	}
+
+	try {
+		const existingContent: string = fs.existsSync(envFileName)
+			? fs.readFileSync(envFileName, "utf8")
+			: "";
+>>>>>>> upstream
 
 		let updatedContent: string = existingContent;
 
 		for (const key in config) {
 			const value = config[key];
+<<<<<<< HEAD
 			// Skip undefined values
 			if (value === undefined) {
 				continue;
 			}
 
+=======
+>>>>>>> upstream
 			const regex = new RegExp(
 				`^${key.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}=.*`,
 				"gm",
@@ -60,6 +84,7 @@ export async function updateEnvVariable(config: {
 			process.env[key] = String(value);
 		}
 
+<<<<<<< HEAD
 		await fs.writeFile(envFileName, updatedContent, "utf8");
 	} catch (error) {
 		if (backupCreated) {
@@ -72,6 +97,12 @@ export async function updateEnvVariable(config: {
 					throw restoreError;
 				}
 			}
+=======
+		fs.writeFileSync(envFileName, updatedContent, "utf8");
+	} catch (error) {
+		if (fs.existsSync(backupFile)) {
+			fs.copyFileSync(backupFile, envFileName);
+>>>>>>> upstream
 		}
 		throw error;
 	}

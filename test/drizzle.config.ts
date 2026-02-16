@@ -1,14 +1,24 @@
 /**
  * This file is required for `package.json` scripts specific to the postgres test database to work. More information at this link: {@link https://orm.drizzle.team/kit-docs/config-reference}
  */
+<<<<<<< HEAD
 import { defineConfig } from "drizzle-kit";
 import { envSchema } from "env-schema";
 import { type Static, Type } from "typebox";
+=======
+import { type Static, Type } from "@sinclair/typebox";
+import { defineConfig } from "drizzle-kit";
+import { envSchema } from "env-schema";
+>>>>>>> upstream
 import { envConfigSchema, envSchemaAjv } from "~/src/envConfigSchema";
 import { testEnvConfigSchema } from "./envConfigSchema";
 
 const schema = Type.Pick(
+<<<<<<< HEAD
 	Type.Evaluate(Type.Intersect([envConfigSchema, testEnvConfigSchema])),
+=======
+	Type.Composite([envConfigSchema, testEnvConfigSchema]),
+>>>>>>> upstream
 	[
 		"API_POSTGRES_DATABASE",
 		"API_POSTGRES_PASSWORD",
@@ -33,12 +43,16 @@ export default defineConfig({
 		host: envConfig.API_POSTGRES_TEST_HOST,
 		port: envConfig.API_POSTGRES_PORT,
 		user: envConfig.API_POSTGRES_USER,
+<<<<<<< HEAD
 		ssl: envConfig.API_POSTGRES_SSL_MODE as
 			| boolean
 			| "allow"
 			| "prefer"
 			| "require"
 			| "verify-full",
+=======
+		ssl: envConfig.API_POSTGRES_SSL_MODE,
+>>>>>>> upstream
 	},
 	// https://orm.drizzle.team/docs/drizzle-config-file#dialect
 	dialect: "postgresql",

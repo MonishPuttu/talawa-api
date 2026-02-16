@@ -7,9 +7,14 @@ import {
 	mutationDeleteVenueBookingInputSchema,
 } from "~/src/graphql/inputs/MutationDeleteVenueBookingInput";
 import { Venue } from "~/src/graphql/types/Venue/Venue";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+>>>>>>> upstream
 const mutationDeleteVenueBookingArgumentsSchema = z.object({
 	input: mutationDeleteVenueBookingInputSchema,
 });

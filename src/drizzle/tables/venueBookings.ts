@@ -7,14 +7,20 @@ import {
 	uuid,
 } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
+<<<<<<< HEAD
 import { z } from "zod";
+=======
+>>>>>>> upstream
 import { eventsTable } from "./events";
 import { usersTable } from "./users";
 import { venuesTable } from "./venues";
 
+<<<<<<< HEAD
 const uuidRegex =
 	/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
+=======
+>>>>>>> upstream
 /**
  * Drizzle orm postgres table definition for venue bookings.
  */
@@ -98,6 +104,7 @@ export const venueBookingsTableRelations = relations(
 	}),
 );
 
+<<<<<<< HEAD
 export const venueBookingsTableInsertSchema = createInsertSchema(
 	venueBookingsTable,
 	{
@@ -107,3 +114,7 @@ export const venueBookingsTableInsertSchema = createInsertSchema(
 		createdAt: () => z.date().optional(),
 	},
 );
+=======
+export const venueBookingsTableInsertSchema =
+	createInsertSchema(venueBookingsTable);
+>>>>>>> upstream

@@ -1,11 +1,18 @@
+<<<<<<< HEAD
+=======
+import type { FileUpload } from "graphql-upload-minimal";
+>>>>>>> upstream
 import { z } from "zod";
 import { organizationsTableInsertSchema } from "~/src/drizzle/tables/organizations";
 import { builder } from "~/src/graphql/builder";
 import { Iso3166Alpha2CountryCode } from "~/src/graphql/enums/Iso3166Alpha2CountryCode";
+<<<<<<< HEAD
 import {
 	FileMetadataInput,
 	fileMetadataInputSchema,
 } from "./FileMetadataInput";
+=======
+>>>>>>> upstream
 
 export const mutationCreateOrganizationInputSchema =
 	organizationsTableInsertSchema
@@ -20,7 +27,11 @@ export const mutationCreateOrganizationInputSchema =
 			state: true,
 		})
 		.extend({
+<<<<<<< HEAD
 			avatar: fileMetadataInputSchema.nullish(),
+=======
+			avatar: z.custom<Promise<FileUpload>>().nullish(),
+>>>>>>> upstream
 			isUserRegistrationRequired: z.boolean().nullish(),
 		});
 
@@ -39,7 +50,11 @@ export const MutationCreateOrganizationInput = builder
 			}),
 			avatar: t.field({
 				description: "Avatar of the organization.",
+<<<<<<< HEAD
 				type: FileMetadataInput,
+=======
+				type: "Upload",
+>>>>>>> upstream
 			}),
 			city: t.string({
 				description: "Name of the city where the organization resides in.",

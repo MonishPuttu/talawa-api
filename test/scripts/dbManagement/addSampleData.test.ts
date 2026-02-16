@@ -34,6 +34,7 @@ suite("addSampleData main function tests", () => {
 			"comment_votes",
 			"action_categories",
 			"events",
+<<<<<<< HEAD
 			"recurring_event_templates",
 			"event_volunteers",
 			"event_volunteer_memberships",
@@ -41,6 +42,11 @@ suite("addSampleData main function tests", () => {
 			"tag_folders",
 			"tags",
 			"tag_assignments",
+=======
+			"event_volunteers",
+			"event_volunteer_memberships",
+			"action_items",
+>>>>>>> upstream
 			"notification_templates",
 		]);
 
@@ -76,6 +82,7 @@ suite("addSampleData main function tests", () => {
 		await expect(mainModule.main()).rejects.toThrow("Error adding sample data");
 	});
 });
+<<<<<<< HEAD
 
 suite("addSampleData run (CLI runner) tests", () => {
 	beforeEach(async () => {
@@ -111,3 +118,5 @@ suite("addSampleData run (CLI runner) tests", () => {
 		await expect(mainModule.run()).resolves.toBe(1);
 	});
 });
+=======
+>>>>>>> upstream

@@ -11,6 +11,7 @@
  * - Plugin types and interfaces
  */
 
+<<<<<<< HEAD
 import { afterEach, describe, expect, it, test, vi } from "vitest";
 
 import {
@@ -22,6 +23,12 @@ import {
 	ensureDirectory,
 	filterActiveExtensions,
 	generatePluginId,
+=======
+import { describe, expect, it, test, vi } from "vitest";
+
+import {
+	ExtensionPointType,
+>>>>>>> upstream
 	type IDatabaseExtension,
 	type IExtensionPoints,
 	type IExtensionRegistry,
@@ -32,21 +39,39 @@ import {
 	type IPluginError,
 	type IPluginLifecycle,
 	type IPluginManifest,
+<<<<<<< HEAD
+=======
+	PluginManager,
+	PluginStatus,
+	createPluginContext,
+	debounce,
+	deepClone,
+	directoryExists,
+	ensureDirectory,
+	filterActiveExtensions,
+	generatePluginId,
+>>>>>>> upstream
 	initializePluginSystem,
 	isValidPluginId,
 	loadPluginManifest,
 	normalizeImportPath,
+<<<<<<< HEAD
 	PluginManager,
 	PluginStatus,
+=======
+>>>>>>> upstream
 	safeRequire,
 	sortExtensionPoints,
 	validatePluginManifest,
 } from "~/src/plugin";
 
+<<<<<<< HEAD
 afterEach(() => {
 	vi.clearAllMocks();
 });
 
+=======
+>>>>>>> upstream
 describe("Plugin System Index", () => {
 	describe("Core exports", () => {
 		test("exports PluginManager", () => {

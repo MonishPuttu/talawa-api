@@ -6,6 +6,11 @@
 
 Defined in: [src/workers/eventGeneration/postProcessor.ts:14](https://github.com/PalisadoesFoundation/talawa-api/tree/mainsrc/workers/eventGeneration/postProcessor.ts#L14)
 
+<<<<<<< HEAD
+=======
+## Description
+
+>>>>>>> upstream
 Represents the result of post-processing operations, including whether cleanup was performed and any errors encountered.
 
 ## Properties

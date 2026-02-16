@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { z } from "zod";
 import {
 	COMMENT_BODY_MAX_LENGTH,
@@ -30,6 +31,16 @@ export const mutationCreateCommentInputSchema = commentsTableInsertSchema
 					}),
 			),
 	});
+=======
+import type { z } from "zod";
+import { commentsTableInsertSchema } from "~/src/drizzle/tables/comments";
+import { builder } from "~/src/graphql/builder";
+
+export const mutationCreateCommentInputSchema = commentsTableInsertSchema.pick({
+	body: true,
+	postId: true,
+});
+>>>>>>> upstream
 
 export const MutationCreateCommentInput = builder
 	.inputRef<z.infer<typeof mutationCreateCommentInputSchema>>(

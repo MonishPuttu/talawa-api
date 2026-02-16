@@ -99,4 +99,8 @@ The recurrence rule from the database
 
 `string`
 
+<<<<<<< HEAD
 - A short label describing the recurrence frequency
+=======
+A short label describing the recurrence frequency
+>>>>>>> upstream

@@ -116,6 +116,7 @@ describe("Event UpdatedAt Resolver Tests", () => {
 		it.each([
 			{ membershipRole: "administrator", description: "admin org membership" },
 			{ membershipRole: "member", description: "regular org membership" },
+<<<<<<< HEAD
 		])("should return updatedAt if user is system administrator with $description", async ({
 			membershipRole,
 		}) => {
@@ -134,6 +135,27 @@ describe("Event UpdatedAt Resolver Tests", () => {
 			const result = await eventUpdatedAtResolver(mockEvent, {}, ctx);
 			expect(result).toBe(mockEvent.updatedAt);
 		});
+=======
+		])(
+			"should return updatedAt if user is system administrator with $description",
+			async ({ membershipRole }) => {
+				const mockUserData: MockUser = {
+					id: "user-123",
+					role: "administrator",
+					organizationMembershipsWhereMember: [
+						{ role: membershipRole, organizationId: mockEvent.organizationId },
+					],
+				};
+
+				mocks.drizzleClient.query.usersTable.findFirst.mockResolvedValue(
+					mockUserData,
+				);
+
+				const result = await eventUpdatedAtResolver(mockEvent, {}, ctx);
+				expect(result).toBe(mockEvent.updatedAt);
+			},
+		);
+>>>>>>> upstream
 
 		it("should return updatedAt if user is organization administrator", async () => {
 			const mockUserData: MockUser = {

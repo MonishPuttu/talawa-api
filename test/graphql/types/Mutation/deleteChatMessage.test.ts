@@ -8,7 +8,11 @@ function createMockContext(
 	return {
 		currentClient: {
 			isAuthenticated: true,
+<<<<<<< HEAD
 			user: { id: "11111111-1111-4111-8111-111111111111" },
+=======
+			user: { id: "11111111-1111-1111-1111-111111111111" },
+>>>>>>> upstream
 		},
 		drizzleClient: {
 			query: {
@@ -44,7 +48,11 @@ function mockUsersTableFindFirst(
 ): void {
 	ctx.drizzleClient.query.usersTable.findFirst = vi.fn().mockResolvedValue({
 		role: "user",
+<<<<<<< HEAD
 		id: "11111111-1111-4111-8111-111111111111",
+=======
+		id: "11111111-1111-1111-1111-111111111111",
+>>>>>>> upstream
 		...returnValue,
 	});
 }
@@ -70,7 +78,11 @@ function mockChatMessagesTableFindFirst(
 	ctx.drizzleClient.query.chatMessagesTable.findFirst = vi
 		.fn()
 		.mockResolvedValue({
+<<<<<<< HEAD
 			creatorId: "22222222-2222-4222-8222-222222222222",
+=======
+			creatorId: "22222222-2222-2222-2222-222222222222",
+>>>>>>> upstream
 			chat: {
 				organization: { membershipsWhereOrganization: [] },
 				chatMembershipsWhereChat: [],
@@ -108,7 +120,11 @@ interface FindFirstParams {
 	};
 }
 
+<<<<<<< HEAD
 const validArgs = { input: { id: "11111111-1111-4111-8111-111111111111" } };
+=======
+const validArgs = { input: { id: "11111111-1111-1111-1111-111111111111" } };
+>>>>>>> upstream
 
 describe("deleteChatMessageResolver", () => {
 	let ctx: GraphQLContext;
@@ -167,7 +183,11 @@ describe("deleteChatMessageResolver", () => {
 	it("throws an unexpected error if the deletion returns undefined", async () => {
 		mockUsersTableFindFirst(ctx, { role: "administrator" });
 		mockChatMessagesTableFindFirst(ctx, {
+<<<<<<< HEAD
 			creatorId: "11111111-1111-4111-8111-111111111111",
+=======
+			creatorId: "11111111-1111-1111-1111-111111111111",
+>>>>>>> upstream
 			chat: {
 				organization: {
 					membershipsWhereOrganization: [{ role: "administrator" }],
@@ -193,8 +213,13 @@ describe("deleteChatMessageResolver", () => {
 
 	it("successfully deletes and returns the chat message", async () => {
 		const deletedMessage: TestChatMessage = {
+<<<<<<< HEAD
 			id: "11111111-1111-4111-8111-111111111111",
 			creatorId: "11111111-1111-4111-8111-111111111111",
+=======
+			id: "11111111-1111-1111-1111-111111111111",
+			creatorId: "11111111-1111-1111-1111-111111111111",
+>>>>>>> upstream
 			body: "Deleted message body",
 			chat: {
 				organization: {
@@ -202,11 +227,19 @@ describe("deleteChatMessageResolver", () => {
 				},
 				chatMembershipsWhereChat: [{ role: "member" }],
 			},
+<<<<<<< HEAD
 			chatId: "chat-123-uuid-4444-8444",
 		};
 		mockUsersTableFindFirst(ctx, { role: "administrator" });
 		mockChatMessagesTableFindFirst(ctx, {
 			creatorId: "11111111-1111-4111-8111-111111111111",
+=======
+			chatId: "chat-123",
+		};
+		mockUsersTableFindFirst(ctx, { role: "administrator" });
+		mockChatMessagesTableFindFirst(ctx, {
+			creatorId: "11111111-1111-1111-1111-111111111111",
+>>>>>>> upstream
 			chat: {
 				organization: {
 					membershipsWhereOrganization: [{ role: "administrator" }],
@@ -251,7 +284,11 @@ describe("deleteChatMessageResolver", () => {
 			.fn()
 			.mockResolvedValue(undefined);
 		mockChatMessagesTableFindFirst(ctx, {
+<<<<<<< HEAD
 			creatorId: "11111111-1111-4111-8111-111111111111",
+=======
+			creatorId: "11111111-1111-1111-1111-111111111111",
+>>>>>>> upstream
 			chat: {
 				organization: {
 					membershipsWhereOrganization: [{ role: "administrator" }],
@@ -289,7 +326,11 @@ describe("deleteChatMessageResolver", () => {
 						},
 						chatMembershipsWhereChat: [{ role: "member" }],
 					},
+<<<<<<< HEAD
 					chatId: "chat-123-uuid-4444-8444",
+=======
+					chatId: "chat-123",
+>>>>>>> upstream
 				},
 			]),
 		);

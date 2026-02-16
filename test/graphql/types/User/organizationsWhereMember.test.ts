@@ -4,17 +4,26 @@ import type {
 	ExplicitGraphQLContext,
 	ImplicitMercuriusContext,
 } from "~/src/graphql/context";
+<<<<<<< HEAD
 import type { OrganizationsWhereMemberArgs } from "~/src/graphql/types/User/organizationsWhereMember";
 import { resolveOrganizationsWhereMember } from "~/src/graphql/types/User/organizationsWhereMember";
 import type { User } from "~/src/graphql/types/User/User";
 
+=======
+import type { User } from "~/src/graphql/types/User/User";
+import { resolveOrganizationsWhereMember } from "~/src/graphql/types/User/organizationsWhereMember";
+>>>>>>> upstream
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 
 const globalArgs = {
 	cursor: Buffer.from(
 		JSON.stringify({
 			createdAt: new Date().toISOString(),
+<<<<<<< HEAD
 			organizationId: "67378abd-8500-4f17-8cf2-990d00000005",
+=======
+			organizationId: "67378abd-8500-8f17-1cf2-990d00000005",
+>>>>>>> upstream
 		}),
 	).toString("base64url"),
 	isInversed: false,
@@ -204,6 +213,7 @@ describe("resolveOrganizationsWhereMember", () => {
 
 		expect(mockWhere).toHaveBeenCalled();
 	});
+<<<<<<< HEAD
 
 	test("throws invalid_arguments error when cursor is invalid", async () => {
 		mockDrizzleClient.query.usersTable.findFirst.mockResolvedValue({
@@ -356,4 +366,6 @@ describe("resolveOrganizationsWhereMember", () => {
 		// The limit should be called with 11 (first + 1 for hasNextPage check)
 		expect(mockLimit).toHaveBeenCalledWith(11);
 	});
+=======
+>>>>>>> upstream
 });

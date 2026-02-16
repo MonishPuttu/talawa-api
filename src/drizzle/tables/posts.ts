@@ -19,10 +19,13 @@ export const postsTable = pgTable(
 		 */
 		caption: text("caption").notNull(),
 		/**
+<<<<<<< HEAD
 		 * Body of the post.
 		 */
 		body: text("body"),
 		/**
+=======
+>>>>>>> upstream
 		 * Date time at the time the post was created.
 		 */
 		createdAt: timestamp("created_at", {
@@ -35,10 +38,19 @@ export const postsTable = pgTable(
 		/**
 		 * Foreign key reference to the id of the user who created the post.
 		 */
+<<<<<<< HEAD
 		creatorId: uuid("creator_id").references(() => usersTable.id, {
 			onDelete: "set null",
 			onUpdate: "cascade",
 		}),
+=======
+		creatorId: uuid("creator_id")
+			.notNull()
+			.references(() => usersTable.id, {
+				onDelete: "set null",
+				onUpdate: "cascade",
+			}),
+>>>>>>> upstream
 		/**
 		 * Primary unique identifier of the post.
 		 */
@@ -131,6 +143,7 @@ export const postsTableRelations = relations(postsTable, ({ many, one }) => ({
 	}),
 }));
 
+<<<<<<< HEAD
 /**
  * Maximum length for post caption.
  */
@@ -139,4 +152,8 @@ export const POST_BODY_MAX_LENGTH = 2048;
 
 export const postsTableInsertSchema = createInsertSchema(postsTable, {
 	caption: (schema) => schema.min(1).max(POST_CAPTION_MAX_LENGTH),
+=======
+export const postsTableInsertSchema = createInsertSchema(postsTable, {
+	caption: (schema) => schema.min(1).max(2048),
+>>>>>>> upstream
 });

@@ -55,7 +55,11 @@ The command to run the server is:
 
 ```console
 $ npm run start
+<<<<<<< HEAD
 OR 
+=======
+OR
+>>>>>>> upstream
 $ npm start
 ```
 

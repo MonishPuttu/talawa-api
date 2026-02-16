@@ -1,7 +1,12 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { GraphQLContext } from "~/src/graphql/context";
+<<<<<<< HEAD
 import { eventCreatedAtResolver } from "~/src/graphql/types/Event/createdAt";
 import type { Event as EventType } from "~/src/graphql/types/Event/Event";
+=======
+import type { Event as EventType } from "~/src/graphql/types/Event/Event";
+import { eventCreatedAtResolver } from "~/src/graphql/types/Event/createdAt";
+>>>>>>> upstream
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 import "~/src/graphql/types/Event/Event";
 import { createMockGraphQLContext } from "test/_Mocks_/mockContextCreator/mockContextCreator";

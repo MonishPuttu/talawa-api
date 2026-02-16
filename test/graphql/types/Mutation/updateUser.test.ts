@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /**
  * NOTE ON AVATAR UPLOAD / REMOVAL TESTING
  *
@@ -17,6 +18,8 @@
  */
 
 import { Readable } from "node:stream";
+=======
+>>>>>>> upstream
 import { faker } from "@faker-js/faker";
 import type { ResultOf, VariablesOf } from "gql.tada";
 import { expect, suite, test } from "vitest";
@@ -600,6 +603,7 @@ suite("Mutation field updateUser", () => {
 					]),
 				);
 			});
+<<<<<<< HEAD
 
 			test("should return invalid_arguments when avatar mime type is not allowed", async () => {
 				const signIn = await mercuriusClient.query(Query_signIn, {
@@ -655,6 +659,8 @@ suite("Mutation field updateUser", () => {
 				expect(result.data).toBeNull();
 				expect(result.errors).toBeDefined();
 			});
+=======
+>>>>>>> upstream
 		},
 	);
 
@@ -1023,6 +1029,7 @@ suite("Mutation field updateUser", () => {
 					}),
 				);
 			});
+<<<<<<< HEAD
 
 			test("should update user successfully when password is not provided", async () => {
 				const signIn = await mercuriusClient.query(Query_signIn, {
@@ -1075,6 +1082,8 @@ suite("Mutation field updateUser", () => {
 
 				expect(result.data.updateUser.name).toBe("updated name");
 			});
+=======
+>>>>>>> upstream
 		},
 	);
 });

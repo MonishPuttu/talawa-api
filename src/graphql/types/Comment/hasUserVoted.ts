@@ -1,14 +1,25 @@
 import type { z } from "zod";
+<<<<<<< HEAD
 import type { commentVoteTypeZodEnum } from "~/src/drizzle/enums/commentVoteType";
 import { builder } from "~/src/graphql/builder";
 import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+=======
+import type { commentVoteTypeEnum } from "~/src/drizzle/enums/commentVoteType";
+import { builder } from "~/src/graphql/builder";
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+>>>>>>> upstream
 import { CommentVoteType } from "../../enums/CommentVoteType";
 import { Comment } from "./Comment";
 
 export const HasUserVotedComment = builder.objectRef<{
 	hasVoted: boolean;
+<<<<<<< HEAD
 	voteType: z.infer<typeof commentVoteTypeZodEnum> | null;
+=======
+	voteType: z.infer<typeof commentVoteTypeEnum> | null;
+>>>>>>> upstream
 }>("HasUserVotedComment");
 
 HasUserVotedComment.implement({
@@ -116,9 +127,13 @@ Comment.implement({
 				}
 
 				return {
+<<<<<<< HEAD
 					voteType: existingCommentVote.type as z.infer<
 						typeof commentVoteTypeZodEnum
 					>,
+=======
+					voteType: existingCommentVote.type,
+>>>>>>> upstream
 					hasVoted: true,
 				};
 			},

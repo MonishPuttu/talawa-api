@@ -11,8 +11,13 @@ import {
 	checkInCheckOutInputSchema,
 } from "~/src/graphql/inputs/CheckInCheckOutInput";
 import { EventAttendee } from "~/src/graphql/types/EventAttendee/EventAttendee";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+>>>>>>> upstream
 
 const mutationCheckOutArgumentsSchema = z.object({
 	data: checkInCheckOutInputSchema,

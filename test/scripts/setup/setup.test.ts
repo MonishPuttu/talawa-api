@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import {
 	afterEach,
 	beforeAll,
@@ -89,10 +90,27 @@ describe("Setup", () => {
 				fs.unlinkSync(".env");
 			}
 		} catch {}
+=======
+import fs from "node:fs";
+import dotenv from "dotenv";
+import inquirer from "inquirer";
+import { setup } from "scripts/setup/setup";
+import * as SetupModule from "scripts/setup/setup";
+import { afterEach, describe, expect, it, vi } from "vitest";
+
+vi.mock("inquirer");
+describe("Setup", () => {
+	const originalEnv = { ...process.env };
+
+	afterEach(() => {
+		process.env = { ...originalEnv };
+		vi.resetAllMocks();
+>>>>>>> upstream
 	});
 
 	it("should set up environment variables with default configuration when CI=false", async () => {
 		const mockResponses = [
+<<<<<<< HEAD
 			{ CI: "false" },
 			{ useDefaultApi: true },
 			{ useDefaultMinio: true },
@@ -101,6 +119,16 @@ describe("Setup", () => {
 			{ useDefaultCaddy: true },
 			{ API_ADMINISTRATOR_USER_EMAIL_ADDRESS: "test@email.com" },
 			{ setupReCaptcha: false },
+=======
+			{ envReconfigure: true },
+			{ CI: "false" },
+			{ useDefaultMinio: "true" },
+			{ useDefaultCloudbeaver: "true" },
+			{ useDefaultPostgres: "true" },
+			{ useDefaultCaddy: "true" },
+			{ useDefaultApi: "true" },
+			{ API_ADMINISTRATOR_USER_EMAIL_ADDRESS: "test@email.com" },
+>>>>>>> upstream
 		];
 
 		const promptMock = vi.spyOn(inquirer, "prompt");
@@ -108,10 +136,13 @@ describe("Setup", () => {
 			promptMock.mockResolvedValueOnce(response);
 		}
 
+<<<<<<< HEAD
 		if (fs.existsSync(".env")) {
 			fs.unlinkSync(".env");
 		}
 		Reflect.deleteProperty(process.env, "API_LOG_LEVEL");
+=======
+>>>>>>> upstream
 		await setup();
 
 		const expectedEnv = {
@@ -119,8 +150,13 @@ describe("Setup", () => {
 			API_HOST: "0.0.0.0",
 			API_PORT: "4000",
 			API_IS_APPLY_DRIZZLE_MIGRATIONS: "true",
+<<<<<<< HEAD
 			API_JWT_EXPIRES_IN: "900000",
 			API_LOG_LEVEL: "debug",
+=======
+			API_JWT_EXPIRES_IN: "2592000000",
+			API_LOG_LEVEL: "info",
+>>>>>>> upstream
 			API_MINIO_ACCESS_KEY: "talawa",
 			API_MINIO_END_POINT: "minio",
 			API_MINIO_PORT: "9000",
@@ -156,6 +192,7 @@ describe("Setup", () => {
 	});
 
 	it("should correctly set up environment variables when CI=true (skips CloudBeaver)", async () => {
+<<<<<<< HEAD
 		process.env.CI = "true";
 		const mockResponses = [
 			{ envReconfigure: true },
@@ -166,6 +203,16 @@ describe("Setup", () => {
 			{ useDefaultCaddy: true },
 			{ API_ADMINISTRATOR_USER_EMAIL_ADDRESS: "test@email.com" },
 			{ setupReCaptcha: false },
+=======
+		const mockResponses = [
+			{ envReconfigure: true },
+			{ CI: "true" },
+			{ useDefaultMinio: "true" },
+			{ useDefaultPostgres: "true" },
+			{ useDefaultCaddy: "true" },
+			{ useDefaultApi: "true" },
+			{ API_ADMINISTRATOR_USER_EMAIL_ADDRESS: "test@email.com" },
+>>>>>>> upstream
 		];
 
 		const promptMock = vi.spyOn(inquirer, "prompt");
@@ -173,6 +220,7 @@ describe("Setup", () => {
 			promptMock.mockResolvedValueOnce(response);
 		}
 
+<<<<<<< HEAD
 		const fsExistsSyncSpy = vi.spyOn(fs, "existsSync").mockReturnValue(true);
 		const fsAccessSpy = vi
 			.spyOn(fs.promises, "access")
@@ -216,6 +264,8 @@ describe("Setup", () => {
 				].join("\n"),
 			);
 
+=======
+>>>>>>> upstream
 		await setup();
 
 		const expectedEnv = {
@@ -256,10 +306,13 @@ describe("Setup", () => {
 		for (const [key, value] of Object.entries(expectedEnv)) {
 			expect(process.env[key]).toBe(value);
 		}
+<<<<<<< HEAD
 
 		fsExistsSyncSpy.mockRestore();
 		fsAccessSpy.mockRestore();
 		fsReadFileSyncSpy.mockRestore();
+=======
+>>>>>>> upstream
 	});
 	it("should restore .env from backup and exit when envReconfigure is false", async () => {
 		const processExitSpy = vi.spyOn(process, "exit").mockImplementation(() => {
@@ -270,6 +323,7 @@ describe("Setup", () => {
 			envReconfigure: false,
 		});
 
+<<<<<<< HEAD
 		// Mock fs.promises methods instead of sync methods
 		const fsAccessSpy = vi
 			.spyOn(fs.promises, "access")
@@ -401,11 +455,26 @@ describe("Setup", () => {
 			API_ADMINISTRATOR_USER_EMAIL_ADDRESS: "test@email.com",
 			setupReCaptcha: false,
 		});
+=======
+		await expect(SetupModule.setup()).rejects.toThrow("process.exit called");
+		expect(processExitSpy).toHaveBeenCalledWith(0);
+
+		processExitSpy.mockRestore();
+	});
+
+	it("should restore .env on SIGINT (Ctrl+C) and exit with code 1", async () => {
+		const consoleLogSpy = vi.spyOn(console, "log").mockImplementation(() => {});
+		const copyFileSpy = vi
+			.spyOn(fs, "copyFileSync")
+			.mockImplementation(() => {});
+		const existsSyncSpy = vi.spyOn(fs, "existsSync").mockReturnValue(true);
+>>>>>>> upstream
 
 		const processExitSpy = vi.spyOn(process, "exit").mockImplementation(() => {
 			throw new Error("process.exit called");
 		});
 
+<<<<<<< HEAD
 		// Start setup() which will register the SIGINT handler and create backup
 		const setupPromise = setup();
 
@@ -1627,5 +1696,20 @@ describe("Validation Helpers", () => {
 				"Please enter a valid cron expression",
 			);
 		});
+=======
+		await expect(async () => process.emit("SIGINT")).rejects.toThrow(
+			"process.exit called",
+		);
+		expect(copyFileSpy).toHaveBeenCalledWith(".env.backup", ".env");
+		expect(consoleLogSpy).toHaveBeenCalledWith(
+			"\nProcess interrupted! Undoing changes...",
+		);
+		expect(processExitSpy).toHaveBeenCalledWith(1);
+
+		consoleLogSpy.mockRestore();
+		processExitSpy.mockRestore();
+		copyFileSpy.mockRestore();
+		existsSyncSpy.mockRestore();
+>>>>>>> upstream
 	});
 });

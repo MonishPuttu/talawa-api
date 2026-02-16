@@ -75,8 +75,12 @@ Input for creating a new post
 
 ```graphql
 input MutationCreatePostInput {
+<<<<<<< HEAD
   attachment: Upload
   body: String
+=======
+  attachments: [FileMetadataInput!]
+>>>>>>> upstream
   caption: String!
   isPinned: Boolean
   organizationId: ID!
@@ -85,6 +89,7 @@ input MutationCreatePostInput {
 
 ### Fields
 
+<<<<<<< HEAD
 #### [<code style={{ fontWeight: 'normal' }}>MutationCreatePostInput.<b>attachment</b></code>](#)<Bullet />[<code style={{ fontWeight: 'normal' }}><b>Upload</b></code>](/auto-schema/types/scalars/upload.mdx) <Badge class="badge badge--secondary " text="scalar"/>
 
 Direct file upload
@@ -92,6 +97,11 @@ Direct file upload
 #### [<code style={{ fontWeight: 'normal' }}>MutationCreatePostInput.<b>body</b></code>](#)<Bullet />[<code style={{ fontWeight: 'normal' }}><b>String</b></code>](/auto-schema/types/scalars/string.mdx) <Badge class="badge badge--secondary " text="scalar"/>
 
 Body content of the post.
+=======
+#### [<code style={{ fontWeight: 'normal' }}>MutationCreatePostInput.<b>attachments</b></code>](#)<Bullet />[<code style={{ fontWeight: 'normal' }}><b>[FileMetadataInput!]</b></code>](/auto-schema/types/inputs/file-metadata-input.mdx) <Badge class="badge badge--secondary " text="list"/> <Badge class="badge badge--secondary " text="input"/>
+
+Metadata for files already uploaded via presigned URL
+>>>>>>> upstream
 
 #### [<code style={{ fontWeight: 'normal' }}>MutationCreatePostInput.<b>caption</b></code>](#)<Bullet />[<code style={{ fontWeight: 'normal' }}><b>String!</b></code>](/auto-schema/types/scalars/string.mdx) <Badge class="badge badge--secondary badge--non_null" text="non-null"/> <Badge class="badge badge--secondary " text="scalar"/>
 

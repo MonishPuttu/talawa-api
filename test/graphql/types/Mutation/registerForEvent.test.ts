@@ -67,7 +67,11 @@ suite("Mutation field registerForEvent", () => {
 							issues: expect.arrayContaining([
 								expect.objectContaining({
 									argumentPath: ["id"],
+<<<<<<< HEAD
 									message: expect.stringContaining("Invalid UUID"),
+=======
+									message: expect.stringContaining("Invalid uuid"),
+>>>>>>> upstream
 								}),
 							]),
 						}),

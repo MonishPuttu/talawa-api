@@ -16,10 +16,16 @@ import { isDeepStrictEqual } from "node:util";
  */
 export function assertToBeNonNullish<T>(
 	value: T | null | undefined,
+<<<<<<< HEAD
 	message?: string,
 ): asserts value is T {
 	if (value === undefined || value === null) {
 		throw new Error(message ?? "Not a non-nullish value.");
+=======
+): asserts value is T {
+	if (value === undefined || value === null) {
+		throw new Error("Not a non-nullish value.");
+>>>>>>> upstream
 	}
 }
 
@@ -46,6 +52,7 @@ export const isSubSequence = <T>(sequence: T[], subsequence: T[]) => {
 	// Return true or false depending on whether the matching for the entire subsequence has completed along with the loop exit.
 	return j === subsequence.length;
 };
+<<<<<<< HEAD
 
 export interface MultipartPayloadOptions {
 	operations: Record<string, unknown>;
@@ -92,3 +99,5 @@ export function createMultipartPayload({
 
 	return { body, boundary };
 }
+=======
+>>>>>>> upstream

@@ -14,6 +14,7 @@ type Collection =
 	| "comment_votes"
 	| "action_categories"
 	| "events"
+<<<<<<< HEAD
 	| "recurring_event_templates"
 	| "event_volunteers"
 	| "event_volunteer_memberships"
@@ -21,6 +22,11 @@ type Collection =
 	| "tag_folders"
 	| "tags"
 	| "tag_assignments"
+=======
+	| "event_volunteers"
+	| "event_volunteer_memberships"
+	| "action_items"
+>>>>>>> upstream
 	| "notification_templates";
 
 export async function main(): Promise<void> {
@@ -36,6 +42,7 @@ export async function main(): Promise<void> {
 		"comment_votes",
 		"action_categories",
 		"events",
+<<<<<<< HEAD
 		"recurring_event_templates",
 		"event_volunteers",
 		"event_volunteer_memberships",
@@ -43,6 +50,11 @@ export async function main(): Promise<void> {
 		"tag_folders",
 		"tags",
 		"tag_assignments",
+=======
+		"event_volunteers",
+		"event_volunteer_memberships",
+		"action_items",
+>>>>>>> upstream
 		"notification_templates",
 	];
 
@@ -63,6 +75,7 @@ export async function main(): Promise<void> {
 	return;
 }
 
+<<<<<<< HEAD
 /**
  * CLI runner: runs main(), then disconnect(). Returns exit code (0 = success, 1 = failure).
  * Extracted for testability so tests can assert on exit code without invoking process.exit().
@@ -87,10 +100,34 @@ export async function run(): Promise<number> {
 	}
 }
 
+=======
+>>>>>>> upstream
 const scriptPath = fileURLToPath(import.meta.url);
 export const isMain =
 	process.argv[1] && path.resolve(process.argv[1]) === path.resolve(scriptPath);
 
 if (isMain) {
+<<<<<<< HEAD
 	run().then((exitCode) => process.exit(exitCode));
+=======
+	let exitCode = 0;
+	(async () => {
+		try {
+			await main();
+		} catch (error: unknown) {
+			exitCode = 1;
+		}
+		try {
+			await disconnect();
+			console.log(
+				"\n\x1b[32mSuccess:\x1b[0m Gracefully disconnecting from the database\n",
+			);
+		} catch (error: unknown) {
+			console.error("Error: Cannot disconnect", error);
+			exitCode = 1;
+		} finally {
+			process.exit(exitCode);
+		}
+	})();
+>>>>>>> upstream
 }

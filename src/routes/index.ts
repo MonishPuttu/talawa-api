@@ -8,10 +8,15 @@ import objects from "./objects";
  * This fastify plugin function contains all talawa api routes within it.
  *
  * @example
+<<<<<<< HEAD
  * ```typescript
  * import routes from "./routes/index";
  * fastify.register(routes, {});
  * ```
+=======
+ * import routes from "./routes/index";
+ * fastify.register(routes, {});
+>>>>>>> upstream
  */
 export const routes = fastifyPlugin(async (fastify) => {
 	fastify.register(graphql);

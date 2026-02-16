@@ -1,4 +1,5 @@
 import type { Readable } from "node:stream";
+<<<<<<< HEAD
 
 import type { FastifyPluginAsync } from "fastify";
 import { type BucketItemStat, S3Error } from "minio";
@@ -28,6 +29,26 @@ export const objects: FastifyPluginAsync = async (fastify) => {
 			preHandler: fastify.rateLimit("normal"),
 			schema: {
 				params: objectsParamsJsonSchema,
+=======
+import type { FastifyPluginAsyncTypebox } from "@fastify/type-provider-typebox";
+import { Type } from "@sinclair/typebox";
+import { type BucketItemStat, S3Error } from "minio";
+
+/**
+ * This fastify route plugin is used to initialize a `/objects/:name` endpoint on the fastify server for clients to fetch objects from the minio server.
+ */
+export const objects: FastifyPluginAsyncTypebox = async (fastify) => {
+	fastify.get(
+		"/objects/:name",
+		{
+			schema: {
+				params: Type.Object({
+					name: Type.String({
+						maxLength: 36,
+						minLength: 1,
+					}),
+				}),
+>>>>>>> upstream
 			},
 		},
 		async (request, reply) => {
@@ -53,6 +74,7 @@ export const objects: FastifyPluginAsync = async (fastify) => {
 					error instanceof S3Error &&
 					(error.code === "NoSuchKey" || error.code === "NotFound")
 				) {
+<<<<<<< HEAD
 					throw new TalawaRestError({
 						code: ErrorCode.NOT_FOUND,
 						message: `No object found with the name "${name}".`,
@@ -62,6 +84,14 @@ export const objects: FastifyPluginAsync = async (fastify) => {
 
 				throw new TalawaRestError({
 					code: ErrorCode.INTERNAL_SERVER_ERROR,
+=======
+					return reply.status(404).send({
+						message: `No object found with the name "${name}".`,
+					});
+				}
+
+				return reply.status(500).send({
+>>>>>>> upstream
 					message: "Something went wrong. Please try again later.",
 				});
 			}

@@ -118,7 +118,11 @@ builder.mutationField("updatePlugin", (t) =>
 						try {
 							if (willBeActivated) {
 								// Plugin is being activated
+<<<<<<< HEAD
 								ctx.log.info({ pluginId: targetPluginId }, "Activating plugin");
+=======
+								console.log(`Activating plugin: ${targetPluginId}`);
+>>>>>>> upstream
 
 								// Load plugin if not already loaded
 								if (!pluginManager.isPluginLoaded(targetPluginId)) {
@@ -128,6 +132,7 @@ builder.mutationField("updatePlugin", (t) =>
 								// Activate the plugin (registers GraphQL, etc.)
 								await pluginManager.activatePlugin(targetPluginId);
 
+<<<<<<< HEAD
 								ctx.log.info(
 									{ pluginId: targetPluginId },
 									"Plugin activated successfully",
@@ -148,6 +153,23 @@ builder.mutationField("updatePlugin", (t) =>
 							ctx.log.error(
 								{ pluginId: targetPluginId, err: error },
 								`Error during plugin ${willBeActivated ? "activation" : "deactivation"}`,
+=======
+								console.log(`Plugin activated successfully: ${targetPluginId}`);
+							} else {
+								// Plugin is being deactivated
+								console.log(`Deactivating plugin: ${targetPluginId}`);
+								await pluginManager.deactivatePlugin(targetPluginId);
+								console.log(
+									`Plugin deactivated successfully: ${targetPluginId}`,
+								);
+							}
+						} catch (error) {
+							console.error(
+								`Error during plugin ${
+									willBeActivated ? "activation" : "deactivation"
+								}:`,
+								error,
+>>>>>>> upstream
 							);
 							// Note: We don't throw here to avoid breaking the DB update,
 							// but in production you might want to rollback the DB change

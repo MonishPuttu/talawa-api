@@ -1,6 +1,10 @@
 import { faker } from "@faker-js/faker";
 import { eq } from "drizzle-orm";
+<<<<<<< HEAD
 import { afterEach, expect, suite, test, vi } from "vitest";
+=======
+import { expect, suite, test } from "vitest";
+>>>>>>> upstream
 import { eventGenerationWindowsTable } from "~/src/drizzle/tables/eventGenerationWindows";
 import { eventsTable } from "~/src/drizzle/tables/events";
 import { organizationMembershipsTable } from "~/src/drizzle/tables/organizationMemberships";
@@ -16,12 +20,15 @@ import {
 	Query_signIn,
 } from "../documentNodes";
 
+<<<<<<< HEAD
 // Clean up after each test to prevent state leakage
 afterEach(() => {
 	vi.clearAllMocks();
 	mercuriusClient.setHeaders({});
 });
 
+=======
+>>>>>>> upstream
 async function addMembership(
 	organizationId: string,
 	memberId: string,
@@ -260,6 +267,7 @@ suite(
 			expect(result.errors?.[0]?.extensions?.code).toBe("invalid_arguments");
 		});
 
+<<<<<<< HEAD
 		test("should throw invalid_arguments error when both isPublic and isInviteOnly are set to true", async () => {
 			// Create organization
 			const orgId = await createOrganizationAndGetId(authToken);
@@ -363,6 +371,8 @@ suite(
 			});
 		});
 
+=======
+>>>>>>> upstream
 		test("should throw arguments_associated_resources_not_found error for non-existent instance", async () => {
 			const result = await mercuriusClient.mutate(
 				Mutation_updateThisAndFollowingEvents,
@@ -1252,6 +1262,7 @@ test("should handle missing generation window by initializing new one", async ()
 	expect(generationWindow).toBeDefined();
 	expect(generationWindow?.createdById).toBe(currentUser.id);
 }, 15000); // 15 second timeout for this complex test
+<<<<<<< HEAD
 
 test("should override isInviteOnly when explicitly provided", async () => {
 	// Create organization
@@ -1496,3 +1507,5 @@ test("should propagate isInviteOnly to generated instances", async () => {
 		expect(instance.baseRecurringEvent.isInviteOnly).toBe(true);
 	}
 }, 10000);
+=======
+>>>>>>> upstream

@@ -1,19 +1,28 @@
+<<<<<<< HEAD
 import { and, asc, desc, eq, exists, gt, lt, or, type SQL } from "drizzle-orm";
+=======
+import { type SQL, and, asc, desc, eq, exists, gt, lt, or } from "drizzle-orm";
+>>>>>>> upstream
 import { z } from "zod";
 import {
 	venueBookingsTable,
 	venueBookingsTableInsertSchema,
 } from "~/src/drizzle/tables/venueBookings";
 import { Event } from "~/src/graphql/types/Event/Event";
+<<<<<<< HEAD
 import {
 	type EventWithAttachments,
 	filterInviteOnlyEvents,
 } from "~/src/graphql/types/Query/eventQueries";
 import envConfig from "~/src/utilities/graphqLimits";
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+>>>>>>> upstream
 import {
 	defaultGraphQLConnectionArgumentsSchema,
 	transformDefaultGraphQLConnectionArguments,
 	transformToDefaultGraphQLConnection,
+<<<<<<< HEAD
 } from "~/src/utilities/graphqlConnection";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 import { Venue } from "./Venue";
@@ -22,6 +31,15 @@ const eventsArgumentsSchema = defaultGraphQLConnectionArgumentsSchema
 	.transform(transformDefaultGraphQLConnectionArguments)
 	.transform((arg, ctx) => {
 		let cursor: z.infer<typeof cursorSchema> | undefined;
+=======
+} from "~/src/utilities/defaultGraphQLConnection";
+import envConfig from "~/src/utilities/graphqLimits";
+import { Venue } from "./Venue";
+const eventsArgumentsSchema = defaultGraphQLConnectionArgumentsSchema
+	.transform(transformDefaultGraphQLConnectionArguments)
+	.transform((arg, ctx) => {
+		let cursor: z.infer<typeof cursorSchema> | undefined = undefined;
+>>>>>>> upstream
 
 		try {
 			if (arg.cursor !== undefined) {
@@ -29,7 +47,11 @@ const eventsArgumentsSchema = defaultGraphQLConnectionArgumentsSchema
 					JSON.parse(Buffer.from(arg.cursor, "base64url").toString("utf-8")),
 				);
 			}
+<<<<<<< HEAD
 		} catch (_error) {
+=======
+		} catch (error) {
+>>>>>>> upstream
 			ctx.addIssue({
 				code: "custom",
 				message: "Not a valid cursor.",
@@ -208,18 +230,25 @@ Venue.implement({
 						}
 					}
 
+<<<<<<< HEAD
 					// Fetch more venue bookings than needed to account for invite-only filtering
 					// This ensures we have enough bookings after filtering to fill the requested page
 					// Use 2x the limit or limit + 50, whichever is larger, capped at 200
 					const fetchLimit = Math.min(Math.max(limit * 2, limit + 50), 200);
 
+=======
+>>>>>>> upstream
 					const venueBookings =
 						await ctx.drizzleClient.query.venueBookingsTable.findMany({
 							columns: {
 								createdAt: true,
 								eventId: true,
 							},
+<<<<<<< HEAD
 							limit: fetchLimit + 1, // +1 for pagination detection
+=======
+							limit,
+>>>>>>> upstream
 							orderBy,
 							with: {
 								event: {
@@ -244,6 +273,7 @@ Venue.implement({
 						});
 					}
 
+<<<<<<< HEAD
 					// Check which eventIds are recurring instances
 					const eventIds = venueBookings.map((booking) => booking.eventId);
 					const recurringInstances =
@@ -309,6 +339,22 @@ Venue.implement({
 							}),
 						parsedArgs,
 						rawNodes: filteredBookings,
+=======
+					return transformToDefaultGraphQLConnection({
+						createCursor: (booking) =>
+							Buffer.from(
+								JSON.stringify({
+									createdAt: booking.createdAt.toISOString(),
+									eventId: booking.eventId,
+								}),
+							).toString("base64url"),
+						createNode: ({ event: { attachmentsWhereEvent, ...event } }) =>
+							Object.assign(event, {
+								attachments: attachmentsWhereEvent,
+							}),
+						parsedArgs,
+						rawNodes: venueBookings,
+>>>>>>> upstream
 					});
 				},
 				type: Event,

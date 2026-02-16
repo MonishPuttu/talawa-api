@@ -1,13 +1,19 @@
 import { verify } from "@node-rs/argon2";
+<<<<<<< HEAD
 import { and, eq } from "drizzle-orm";
 import { z } from "zod";
 import { usersTable } from "~/src/drizzle/tables/users";
+=======
+import { and } from "drizzle-orm";
+import { z } from "zod";
+>>>>>>> upstream
 import { builder } from "~/src/graphql/builder";
 import {
 	QuerySignInInput,
 	querySignInInputSchema,
 } from "~/src/graphql/inputs/QuerySignInInput";
 import { AuthenticationPayload } from "~/src/graphql/types/AuthenticationPayload";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { validateRecaptchaIfRequired } from "~/src/utilities/recaptchaUtils";
 import {
@@ -19,6 +25,11 @@ import {
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 import type { CurrentClient } from "../../context";
 
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+import type { CurrentClient } from "../../context";
+>>>>>>> upstream
 const querySignInArgumentsSchema = z.object({
 	input: querySignInInputSchema,
 });
@@ -61,6 +72,7 @@ builder.queryField("signIn", (t) =>
 				});
 			}
 
+<<<<<<< HEAD
 			// Verify reCAPTCHA if required
 			await validateRecaptchaIfRequired(
 				parsedArgs.input.recaptchaToken,
@@ -70,11 +82,14 @@ builder.queryField("signIn", (t) =>
 				ctx.envConfig.RECAPTCHA_SCORE_THRESHOLD ?? 0.5,
 			);
 
+=======
+>>>>>>> upstream
 			const existingUser = await ctx.drizzleClient.query.usersTable.findFirst({
 				where: (fields, operators) =>
 					operators.eq(fields.emailAddress, parsedArgs.input.emailAddress),
 			});
 
+<<<<<<< HEAD
 			// Check if account is locked (only if user exists)
 			// This reveals account existence but is necessary for UX to show retry time
 			if (existingUser?.lockedUntil && existingUser.lockedUntil > new Date()) {
@@ -82,10 +97,22 @@ builder.queryField("signIn", (t) =>
 					extensions: {
 						code: "account_locked",
 						retryAfter: existingUser.lockedUntil.toISOString(),
+=======
+			if (existingUser === undefined) {
+				throw new TalawaGraphQLError({
+					extensions: {
+						code: "arguments_associated_resources_not_found",
+						issues: [
+							{
+								argumentPath: ["input", "emailAddress"],
+							},
+						],
+>>>>>>> upstream
 					},
 				});
 			}
 
+<<<<<<< HEAD
 			// Dummy password hash for timing attack mitigation when user doesn't exist
 			// This ensures both code paths take approximately the same execution time
 			// Uses matching argon2id parameters (m=19456,t=2,p=1) as the default hash function
@@ -151,6 +178,18 @@ builder.queryField("signIn", (t) =>
 							{
 								argumentPath: ["input"],
 								message: "Invalid email address or password.",
+=======
+			if (
+				!(await verify(existingUser.passwordHash, parsedArgs.input.password))
+			) {
+				throw new TalawaGraphQLError({
+					extensions: {
+						code: "invalid_arguments",
+						issues: [
+							{
+								argumentPath: ["input", "password"],
+								message: "This password is invalid.",
+>>>>>>> upstream
 							},
 						],
 					},
@@ -183,6 +222,7 @@ builder.queryField("signIn", (t) =>
 				id: existingUser.id,
 			} as CurrentClient["user"];
 
+<<<<<<< HEAD
 			// Reset failed login attempts on successful authentication
 			if (
 				existingUser.failedLoginAttempts > 0 ||
@@ -242,6 +282,16 @@ builder.queryField("signIn", (t) =>
 			});
 
 			return result;
+=======
+			return {
+				authenticationToken: ctx.jwt.sign({
+					user: {
+						id: existingUser.id,
+					},
+				}),
+				user: existingUser,
+			};
+>>>>>>> upstream
 		},
 		type: AuthenticationPayload,
 	}),

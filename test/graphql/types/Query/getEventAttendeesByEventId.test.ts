@@ -104,7 +104,11 @@ suite("Query field getEventAttendeesByEventId", () => {
 							issues: expect.arrayContaining([
 								expect.objectContaining({
 									argumentPath: ["eventId"],
+<<<<<<< HEAD
 									message: "Invalid UUID",
+=======
+									message: "Invalid uuid",
+>>>>>>> upstream
 								}),
 							]),
 						}),
@@ -132,7 +136,11 @@ suite("Query field getEventAttendeesByEventId", () => {
 							issues: expect.arrayContaining([
 								expect.objectContaining({
 									argumentPath: ["recurringEventInstanceId"],
+<<<<<<< HEAD
 									message: "Invalid UUID",
+=======
+									message: "Invalid uuid",
+>>>>>>> upstream
 								}),
 							]),
 						}),

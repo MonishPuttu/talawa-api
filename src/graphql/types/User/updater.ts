@@ -1,7 +1,13 @@
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 import { User } from "./User";
 
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+import { User } from "./User";
+>>>>>>> upstream
 User.implement({
 	fields: (t) => ({
 		updater: t.field({
@@ -34,6 +40,13 @@ User.implement({
 					currentUser.role !== "administrator" &&
 					currentUserId !== parent.id
 				) {
+<<<<<<< HEAD
+=======
+					console.log("========================");
+					console.log(currentUser.role);
+					console.log("========================");
+
+>>>>>>> upstream
 					throw new TalawaGraphQLError({
 						extensions: {
 							code: "unauthorized_action",

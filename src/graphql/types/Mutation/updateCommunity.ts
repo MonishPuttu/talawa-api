@@ -1,4 +1,11 @@
+<<<<<<< HEAD
 import { z } from "zod";
+=======
+import type { FileUpload } from "graphql-upload-minimal";
+import { ulid } from "ulidx";
+import { z } from "zod";
+import { imageMimeTypeEnum } from "~/src/drizzle/enums/imageMimeType";
+>>>>>>> upstream
 import { communitiesTable } from "~/src/drizzle/tables/communities";
 import { builder } from "~/src/graphql/builder";
 import {
@@ -6,12 +13,54 @@ import {
 	mutationUpdateCommunityInputSchema,
 } from "~/src/graphql/inputs/MutationUpdateCommunityInput";
 import { Community } from "~/src/graphql/types/Community/Community";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { isNotNullish } from "~/src/utilities/isNotNullish";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 
 const mutationUpdateCommunityArgumentsSchema = z.object({
 	input: mutationUpdateCommunityInputSchema,
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+import { isNotNullish } from "~/src/utilities/isNotNullish";
+const mutationUpdateCommunityArgumentsSchema = z.object({
+	input: mutationUpdateCommunityInputSchema.transform(async (arg, ctx) => {
+		let logo:
+			| (FileUpload & {
+					mimetype: z.infer<typeof imageMimeTypeEnum>;
+			  })
+			| null
+			| undefined;
+
+		if (isNotNullish(arg.logo)) {
+			const rawAvatar = await arg.logo;
+			const result = imageMimeTypeEnum.safeParse(rawAvatar.mimetype);
+
+			if (!result.success) {
+				ctx.addIssue({
+					code: "custom",
+					path: ["logo"],
+					message: `Mime type ${rawAvatar.mimetype} not allowed for this file upload.`,
+				});
+			} else {
+				logo = Object.assign(rawAvatar, {
+					mimetype: result.data,
+				});
+			}
+
+			return {
+				...arg,
+				logo,
+			};
+		}
+
+		return {
+			...arg,
+			logo: arg.logo,
+		};
+	}),
+>>>>>>> upstream
 });
 
 builder.mutationField("updateCommunity", (t) =>
@@ -97,6 +146,7 @@ builder.mutationField("updateCommunity", (t) =>
 				});
 			}
 
+<<<<<<< HEAD
 			let logoMimeType: string | undefined;
 			let logoName: string | undefined;
 
@@ -194,6 +244,17 @@ builder.mutationField("updateCommunity", (t) =>
 						"Failed to remove old logo during null assignment",
 					);
 				}
+=======
+			let logoMimeType: z.infer<typeof imageMimeTypeEnum>;
+			let logoName: string;
+
+			if (isNotNullish(parsedArgs.input.logo)) {
+				logoName =
+					existingCommunity.logoName === null
+						? ulid()
+						: existingCommunity.logoName;
+				logoMimeType = parsedArgs.input.logo.mimetype;
+>>>>>>> upstream
 			}
 
 			return await ctx.drizzleClient.transaction(async (tx) => {
@@ -220,7 +281,11 @@ builder.mutationField("updateCommunity", (t) =>
 					})
 					.returning();
 
+<<<<<<< HEAD
 				// Updated community not being returned is a business logic error
+=======
+				// Updated community not being returned is a business logic error and means that the corresponding data in the database is in a corrupted state. It must be investigated and fixed as soon as possible to prevent additional data corruption.
+>>>>>>> upstream
 				if (updatedCommunity === undefined) {
 					ctx.log.error(
 						"Postgres update operation returned an empty array for the community.",
@@ -233,6 +298,29 @@ builder.mutationField("updateCommunity", (t) =>
 					});
 				}
 
+<<<<<<< HEAD
+=======
+				if (isNotNullish(parsedArgs.input.logo)) {
+					await ctx.minio.client.putObject(
+						ctx.minio.bucketName,
+						logoName,
+						parsedArgs.input.logo.createReadStream(),
+						undefined,
+						{
+							"content-type": parsedArgs.input.logo.mimetype,
+						},
+					);
+				} else if (
+					parsedArgs.input.logo !== undefined &&
+					existingCommunity.logoName !== null
+				) {
+					await ctx.minio.client.removeObject(
+						ctx.minio.bucketName,
+						existingCommunity.logoName,
+					);
+				}
+
+>>>>>>> upstream
 				return updatedCommunity;
 			});
 		},

@@ -1,4 +1,11 @@
+<<<<<<< HEAD
 import { z } from "zod";
+=======
+import type { FileUpload } from "graphql-upload-minimal";
+import { ulid } from "ulidx";
+import { z } from "zod";
+import { advertisementAttachmentMimeTypeEnum } from "~/src/drizzle/enums/advertisementAttachmentMimeType";
+>>>>>>> upstream
 import { advertisementAttachmentsTable } from "~/src/drizzle/tables/advertisementAttachments";
 import { advertisementsTable } from "~/src/drizzle/tables/advertisements";
 import { builder } from "~/src/graphql/builder";
@@ -7,11 +14,56 @@ import {
 	mutationCreateAdvertisementInputSchema,
 } from "~/src/graphql/inputs/MutationCreateAdvertisementInput";
 import { Advertisement } from "~/src/graphql/types/Advertisement/Advertisement";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 
 export const mutationCreateAdvertisementArgumentsSchema = z.object({
 	input: mutationCreateAdvertisementInputSchema,
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+
+const mutationCreateAdvertisementArgumentsSchema = z.object({
+	input: mutationCreateAdvertisementInputSchema.transform(async (arg, ctx) => {
+		let attachments:
+			| (FileUpload & {
+					mimetype: z.infer<typeof advertisementAttachmentMimeTypeEnum>;
+			  })[]
+			| undefined;
+
+		if (arg.attachments !== undefined) {
+			const rawAttachments = await Promise.all(arg.attachments);
+			const { data, error, success } = advertisementAttachmentMimeTypeEnum
+				.array()
+				.safeParse(rawAttachments.map((attachment) => attachment.mimetype));
+
+			if (!success) {
+				for (const issue of error.issues) {
+					// `issue.path[0]` would correspond to the numeric index of the attachment within `arg.attachments` array which contains the invalid mime type.
+					if (typeof issue.path[0] === "number") {
+						ctx.addIssue({
+							code: "custom",
+							path: ["attachments", issue.path[0]],
+							message: `Mime type "${rawAttachments[issue.path[0]]?.mimetype}" is not allowed.`,
+						});
+					}
+				}
+			} else {
+				attachments = rawAttachments.map((attachment, index) =>
+					Object.assign(attachment, {
+						mimetype: data[index],
+					}),
+				);
+			}
+		}
+
+		return {
+			...arg,
+			attachments,
+		};
+	}),
+>>>>>>> upstream
 });
 
 builder.mutationField("createAdvertisement", (t) =>
@@ -171,6 +223,7 @@ builder.mutationField("createAdvertisement", (t) =>
 					});
 				}
 
+<<<<<<< HEAD
 				if (
 					parsedArgs.input.attachments !== undefined &&
 					parsedArgs.input.attachments.length > 0
@@ -225,18 +278,47 @@ builder.mutationField("createAdvertisement", (t) =>
 					);
 
 					// Create attachment records using name from FileMetadataInput (original filename)
+=======
+				if (parsedArgs.input.attachments !== undefined) {
+					const attachments = parsedArgs.input.attachments;
+
+>>>>>>> upstream
 					const createdAdvertisementAttachments = await tx
 						.insert(advertisementAttachmentsTable)
 						.values(
 							attachments.map((attachment) => ({
 								advertisementId: createdAdvertisement.id,
 								creatorId: currentUserId,
+<<<<<<< HEAD
 								mimeType: attachment.mimeType,
 								name: attachment.name,
+=======
+								mimeType: attachment.mimetype,
+								name: ulid(),
+>>>>>>> upstream
 							})),
 						)
 						.returning();
 
+<<<<<<< HEAD
+=======
+					await Promise.all(
+						createdAdvertisementAttachments.map((attachment, index) => {
+							if (attachments[index] !== undefined) {
+								return ctx.minio.client.putObject(
+									ctx.minio.bucketName,
+									attachment.name,
+									attachments[index].createReadStream(),
+									undefined,
+									{
+										"content-type": attachment.mimeType,
+									},
+								);
+							}
+						}),
+					);
+
+>>>>>>> upstream
 					return Object.assign(createdAdvertisement, {
 						attachments: createdAdvertisementAttachments,
 					});

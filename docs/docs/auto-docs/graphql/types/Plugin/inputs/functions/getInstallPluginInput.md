@@ -14,7 +14,11 @@ Defined in: [src/graphql/types/Plugin/inputs.ts:135](https://github.com/Palisado
 
 ### schema
 
+<<<<<<< HEAD
 > **schema**: `ZodObject`\<\{ `pluginId`: `ZodString`; \}, `$strip`\> = `installPluginInputSchema`
+=======
+> **schema**: `ZodObject`\<\{ `pluginId`: `ZodString`; \}, `"strip"`, `ZodTypeAny`, \{ `pluginId`: `string`; \}, \{ `pluginId`: `string`; \}\> = `installPluginInputSchema`
+>>>>>>> upstream
 
 ### type
 

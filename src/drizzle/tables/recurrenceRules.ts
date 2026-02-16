@@ -245,6 +245,7 @@ export const recurrenceRulesTableInsertSchema = createInsertSchema(
 		frequency: frequencyZodEnum,
 		interval: (schema) => schema.min(1).max(999),
 		byDay: z.array(z.string().min(2).max(3)).optional(),
+<<<<<<< HEAD
 		byMonth: z.array(z.number().int().min(1).max(12)).optional(),
 		// RFC 5545: BYMONTHDAY values range from -31 to 31, excluding 0
 		byMonthDay: z
@@ -259,5 +260,9 @@ export const recurrenceRulesTableInsertSchema = createInsertSchema(
 					}),
 			)
 			.optional(),
+=======
+		byMonth: z.array(z.number().min(1).max(12)).optional(),
+		byMonthDay: z.array(z.number().min(-31).max(31)).optional(),
+>>>>>>> upstream
 	},
 );

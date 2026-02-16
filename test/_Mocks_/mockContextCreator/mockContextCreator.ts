@@ -6,8 +6,11 @@ import type {
 	ExplicitGraphQLContext,
 	GraphQLContext,
 } from "~/src/graphql/context";
+<<<<<<< HEAD
 import type { OAuthProviderRegistry } from "~/src/utilities/auth/oauth/OAuthProviderRegistry";
 import { createDataloaders } from "~/src/utilities/dataloaders";
+=======
+>>>>>>> upstream
 import { createMockDrizzleClient } from "../drizzleClientMock";
 import { createMockMinioClient } from "../mockMinioClient";
 import { createMockPubSub } from "../pubsubMock";
@@ -36,7 +39,10 @@ const authenticatedClient = (userId: string): CurrentClient => ({
 export function createMockGraphQLContext(
 	isAuthenticated = true,
 	userId = "user123",
+<<<<<<< HEAD
 	cacheState: Record<string, unknown> = {},
+=======
+>>>>>>> upstream
 ) {
 	// Create mock instances with proper typing
 	const mockDrizzleClient = createMockDrizzleClient();
@@ -48,6 +54,7 @@ export function createMockGraphQLContext(
 			(payload) => `mocked.jwt.${JSON.stringify(payload)}.token`,
 		);
 
+<<<<<<< HEAD
 	// Create mock cache service
 	const mockCache = {
 		get: vi.fn().mockImplementation(async (key: string) => {
@@ -118,12 +125,25 @@ export function createMockGraphQLContext(
 			API_IS_SECURE_COOKIES: false,
 			API_FRONTEND_URL: "http://localhost:3000",
 		},
+=======
+	// Create the explicit context
+	const explicitContext: ExplicitGraphQLContext = {
+		currentClient: isAuthenticated
+			? authenticatedClient(userId)
+			: unauthenticatedClient,
+		drizzleClient:
+			mockDrizzleClient as unknown as FastifyInstance["drizzleClient"],
+		envConfig: { API_BASE_URL: "http://localhost:4000" },
+>>>>>>> upstream
 		jwt: {
 			sign: mockJwtSign,
 		},
 		log: createMockLogger(),
 		minio: mockMinioClient,
+<<<<<<< HEAD
 		oauthProviderRegistry: mockOAuthProviderRegistry,
+=======
+>>>>>>> upstream
 	};
 
 	// Create the implicit context
@@ -135,6 +155,7 @@ export function createMockGraphQLContext(
 		...implicitContext,
 	};
 
+<<<<<<< HEAD
 	// Provide a minimal notification stub compatible with the real NotificationService
 	(context as GraphQLContext).notification = {
 		flush: async () => {},
@@ -143,6 +164,8 @@ export function createMockGraphQLContext(
 		emitEventCreatedImmediate: async () => {},
 	};
 
+=======
+>>>>>>> upstream
 	// Return both the context and exposed mocks for easier testing
 	return {
 		context,
@@ -151,7 +174,10 @@ export function createMockGraphQLContext(
 			minioClient: mockMinioClient,
 			pubsub: mockPubSub,
 			jwtSign: mockJwtSign as MockInstance,
+<<<<<<< HEAD
 			oauthProviderRegistry: mockOAuthProviderRegistry,
+=======
+>>>>>>> upstream
 		},
 	};
 }

@@ -1,10 +1,15 @@
+<<<<<<< HEAD
 import { and, asc, desc, eq, exists, gt, lt, type SQL } from "drizzle-orm";
+=======
+import { type SQL, and, asc, desc, eq, exists, gt, lt } from "drizzle-orm";
+>>>>>>> upstream
 import { z } from "zod";
 import {
 	advertisementsTable,
 	advertisementsTableInsertSchema,
 } from "~/src/drizzle/tables/advertisements";
 import { Advertisement } from "~/src/graphql/types/Advertisement/Advertisement";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import {
 	createGraphQLConnectionWithWhereSchema,
@@ -14,6 +19,17 @@ import {
 	transformToDefaultGraphQLConnection,
 } from "~/src/utilities/graphqlConnection";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import {
+	type ParsedDefaultGraphQLConnectionArgumentsWithWhere,
+	createGraphQLConnectionWithWhereSchema,
+	type defaultGraphQLConnectionArgumentsSchema,
+	transformGraphQLConnectionArgumentsWithWhere,
+	transformToDefaultGraphQLConnection,
+} from "~/src/utilities/defaultGraphQLConnection";
+import envConfig from "~/src/utilities/graphqLimits";
+>>>>>>> upstream
 import { AdvertisementWhereInput } from "../../inputs/QueryOrganizationInput";
 import { Organization } from "./Organization";
 
@@ -32,7 +48,11 @@ const advertisementsArgumentsSchema = createGraphQLConnectionWithWhereSchema(
 		> & { where: unknown },
 		ctx,
 	);
+<<<<<<< HEAD
 	let cursor: z.infer<typeof cursorSchema> | undefined;
+=======
+	let cursor: z.infer<typeof cursorSchema> | undefined = undefined;
+>>>>>>> upstream
 	try {
 		if (transformedArg.cursor !== undefined) {
 			cursor = cursorSchema.parse(
@@ -41,7 +61,11 @@ const advertisementsArgumentsSchema = createGraphQLConnectionWithWhereSchema(
 				),
 			);
 		}
+<<<<<<< HEAD
 	} catch (_error) {
+=======
+	} catch (error) {
+>>>>>>> upstream
 		ctx.addIssue({
 			code: "custom",
 			message: "Not a valid cursor.",
@@ -307,9 +331,18 @@ Organization.implement({
 					}
 
 					return transformToDefaultGraphQLConnection({
+<<<<<<< HEAD
 						createCursor: (advertisement) => ({
 							name: advertisement.name,
 						}),
+=======
+						createCursor: (advertisement) =>
+							Buffer.from(
+								JSON.stringify({
+									name: advertisement.name,
+								}),
+							).toString("base64url"),
+>>>>>>> upstream
 						createNode: ({ attachmentsWhereAdvertisement, ...advertisement }) =>
 							Object.assign(advertisement, {
 								attachments: attachmentsWhereAdvertisement,

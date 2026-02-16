@@ -1,7 +1,12 @@
 import { and, eq } from "drizzle-orm";
 import { z } from "zod";
+<<<<<<< HEAD
 import { eventsTable } from "~/src/drizzle/tables/events";
 import { eventVolunteersTable } from "~/src/drizzle/tables/eventVolunteers";
+=======
+import { eventVolunteersTable } from "~/src/drizzle/tables/eventVolunteers";
+import { eventsTable } from "~/src/drizzle/tables/events";
+>>>>>>> upstream
 import { organizationMembershipsTable } from "~/src/drizzle/tables/organizationMemberships";
 import { builder } from "~/src/graphql/builder";
 import {
@@ -9,8 +14,13 @@ import {
 	updateEventVolunteerInputSchema,
 } from "~/src/graphql/inputs/UpdateEventVolunteerInput";
 import { EventVolunteer } from "~/src/graphql/types/EventVolunteer/EventVolunteer";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+>>>>>>> upstream
 
 const mutationUpdateEventVolunteerArgumentsSchema = z.object({
 	id: z.string().uuid(),

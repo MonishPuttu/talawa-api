@@ -1,16 +1,25 @@
 import { relations, sql } from "drizzle-orm";
 import {
 	index,
+<<<<<<< HEAD
 	integer,
+=======
+>>>>>>> upstream
 	pgTable,
 	text,
 	timestamp,
 	uniqueIndex,
 	uuid,
 } from "drizzle-orm/pg-core";
+<<<<<<< HEAD
 import { createInsertSchema } from "drizzle-zod";
 import { uuidv7 } from "uuidv7";
 import { z } from "zod";
+=======
+import { integer } from "drizzle-orm/pg-core";
+import { createInsertSchema } from "drizzle-zod";
+import { uuidv7 } from "uuidv7";
+>>>>>>> upstream
 import { organizationsTable } from "./organizations";
 import { usersTable } from "./users";
 import { venueAttachmentsTable } from "./venueAttachments";
@@ -130,6 +139,7 @@ export const venuesTableRelations = relations(venuesTable, ({ many, one }) => ({
 	}),
 }));
 
+<<<<<<< HEAD
 export const VENUE_DESCRIPTION_MAX_LENGTH = 2048;
 export const VENUE_NAME_MAX_LENGTH = 256;
 
@@ -142,4 +152,9 @@ export const venuesTableInsertSchema = createInsertSchema(venuesTable, {
 	organizationId: () => z.string().uuid(),
 	creatorId: () => z.string().uuid().nullable().optional(),
 	updaterId: () => z.string().uuid().nullable().optional(),
+=======
+export const venuesTableInsertSchema = createInsertSchema(venuesTable, {
+	description: (schema) => schema.min(1).max(2048).optional(),
+	name: (schema) => schema.min(1).max(256),
+>>>>>>> upstream
 });

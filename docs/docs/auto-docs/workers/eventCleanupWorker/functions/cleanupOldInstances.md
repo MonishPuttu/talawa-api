@@ -25,4 +25,8 @@ and removes instances that have passed their retention period.
 
 `Promise`\<\{ `errorsEncountered`: `number`; `instancesDeleted`: `number`; `organizationsProcessed`: `number`; \}\>
 
+<<<<<<< HEAD
 - A promise that resolves to an object with statistics about the cleanup process.
+=======
+A promise that resolves to an object with statistics about the cleanup process.
+>>>>>>> upstream

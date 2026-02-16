@@ -1,4 +1,5 @@
 import { User } from "~/src/graphql/types/User/User";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 import type { GraphQLContext } from "../../context";
@@ -18,6 +19,14 @@ import { Tag } from "./Tag";
  * @throws {TalawaGraphQLError} With code "unauthorized_action" if user lacks admin permissions
  * @throws {TalawaGraphQLError} With code "unexpected" if creator user is not found despite non-null creatorId
  */
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+import type { GraphQLContext } from "../../context";
+import { Tag } from "./Tag";
+import type { Tag as TagType } from "./Tag";
+
+>>>>>>> upstream
 export const tagCreatorResolver = async (
 	parent: TagType,
 	_args: Record<string, never>,
@@ -63,7 +72,15 @@ export const tagCreatorResolver = async (
 			(currentUserOrganizationMembership === undefined ||
 				currentUserOrganizationMembership.role !== "administrator")
 		) {
+<<<<<<< HEAD
 			return null;
+=======
+			throw new TalawaGraphQLError({
+				extensions: {
+					code: "unauthorized_action",
+				},
+			});
+>>>>>>> upstream
 		}
 
 		if (parent.creatorId === null) {
@@ -76,10 +93,19 @@ export const tagCreatorResolver = async (
 
 		const creatorId = parent.creatorId;
 
+<<<<<<< HEAD
 		const existingUser = await ctx.dataloaders.user.load(creatorId);
 
 		// Creator id existing but the associated user not existing is a business logic error and probably means that the corresponding data in the database is in a corrupted state. It must be investigated and fixed as soon as possible to prevent additional data corruption.
 		if (existingUser === null) {
+=======
+		const existingUser = await ctx.drizzleClient.query.usersTable.findFirst({
+			where: (fields, operators) => operators.eq(fields.id, creatorId),
+		});
+
+		// Creator id existing but the associated user not existing is a business logic error and probably means that the corresponding data in the database is in a corrupted state. It must be investigated and fixed as soon as possible to prevent additional data corruption.
+		if (existingUser === undefined) {
+>>>>>>> upstream
 			ctx.log.error(
 				"Postgres select operation returned an empty array for a tag's creator id that isn't null.",
 			);
@@ -110,7 +136,10 @@ Tag.implement({
 		creator: t.field({
 			description: "User who created the tag.",
 			complexity: envConfig.API_GRAPHQL_OBJECT_FIELD_COST,
+<<<<<<< HEAD
 			nullable: true,
+=======
+>>>>>>> upstream
 			resolve: tagCreatorResolver,
 			type: User,
 		}),

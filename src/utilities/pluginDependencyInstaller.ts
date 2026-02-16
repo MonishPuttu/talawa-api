@@ -5,11 +5,20 @@
  * This ensures that all required dependencies are available before database creation.
  */
 
+<<<<<<< HEAD
 import path from "node:path";
 import { TalawaGraphQLError } from "./TalawaGraphQLError";
 import { pluginIdSchema } from "./validators";
 
 const MAX_BUFFER = 1_000_000; // 1MB
+=======
+import { exec } from "node:child_process";
+import path from "node:path";
+import { promisify } from "node:util";
+import { TalawaGraphQLError } from "./TalawaGraphQLError";
+
+const execAsync = promisify(exec);
+>>>>>>> upstream
 
 export interface DependencyInstallationResult {
 	success: boolean;
@@ -21,7 +30,11 @@ export interface DependencyInstallationResult {
  * Install dependencies for a plugin using pnpm
  * @param pluginId - The ID of the plugin
  * @param logger - Optional logger for output
+<<<<<<< HEAD
  * @returns - Promise<DependencyInstallationResult>
+=======
+ * @returns Promise<DependencyInstallationResult>
+>>>>>>> upstream
  */
 export async function installPluginDependencies(
 	pluginId: string,
@@ -30,6 +43,7 @@ export async function installPluginDependencies(
 		error?: (message: string) => void;
 	},
 ): Promise<DependencyInstallationResult> {
+<<<<<<< HEAD
 	// Validate pluginId to prevent command injection
 	const validation = pluginIdSchema.safeParse(pluginId);
 	if (!validation.success) {
@@ -42,6 +56,8 @@ export async function installPluginDependencies(
 		};
 	}
 
+=======
+>>>>>>> upstream
 	const pluginPath = path.join(
 		process.cwd(),
 		"src",
@@ -67,6 +83,7 @@ export async function installPluginDependencies(
 
 		logger?.info?.(`Installing dependencies for plugin ${pluginId}...`);
 
+<<<<<<< HEAD
 		// Use spawn with args array to avoid shell injection
 		const { spawn } = await import("node:child_process");
 		const pnpmBin = process.platform === "win32" ? "pnpm.cmd" : "pnpm";
@@ -214,16 +231,36 @@ export async function installPluginDependencies(
 				`Dependency installation warnings for ${pluginId}: ${installResult.stderr}`,
 			);
 		}
+=======
+		// Change to plugin directory and run pnpm install
+		const command = `cd "${pluginPath}" && pnpm install --frozen-lockfile`;
+
+		const { stdout, stderr } = await execAsync(command, {
+			cwd: pluginPath,
+			timeout: 300000, // 5 minutes timeout
+		});
+
+		if (stderr && !stderr.includes("warning")) {
+			logger?.error?.(
+				`Dependency installation warnings for ${pluginId}: ${stderr}`,
+			);
+		}
+
+>>>>>>> upstream
 		logger?.info?.(
 			`Successfully installed dependencies for plugin ${pluginId}`,
 		);
 		return {
 			success: true,
+<<<<<<< HEAD
 			output:
 				installResult.stdout.length >= MAX_BUFFER
 					? `${installResult.stdout}
 [output truncated]`
 					: installResult.stdout,
+=======
+			output: stdout,
+>>>>>>> upstream
 		};
 	} catch (error) {
 		const errorMessage =

@@ -13,7 +13,10 @@ import {
 	Query_actionItemsByVolunteerGroup,
 	Query_signIn,
 } from "../documentNodes";
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream
 const SUITE_TIMEOUT = 30_000;
 
 let globalAuth: { authToken: string; userId: string };
@@ -133,7 +136,11 @@ async function createActionItemCategory(
 async function createEventAndVolunteerGroup(
 	organizationId: string,
 	leaderId: string,
+<<<<<<< HEAD
 	_authToken: string,
+=======
+	authToken: string,
+>>>>>>> upstream
 ): Promise<{ eventId: string; volunteerGroupId: string }> {
 	// Ensure admin user has organization membership for event creation (ignore errors if already exists)
 	try {
@@ -147,7 +154,11 @@ async function createEventAndVolunteerGroup(
 				},
 			},
 		});
+<<<<<<< HEAD
 	} catch (_error) {
+=======
+	} catch (error) {
+>>>>>>> upstream
 		// Ignore errors - membership might already exist
 	}
 
@@ -163,7 +174,11 @@ async function createEventAndVolunteerGroup(
 				},
 			},
 		});
+<<<<<<< HEAD
 	} catch (_error) {
+=======
+	} catch (error) {
+>>>>>>> upstream
 		// Ignore errors - membership might already exist
 	}
 
@@ -175,8 +190,13 @@ async function createEventAndVolunteerGroup(
 				name: "Test Event",
 				description: "Test event for volunteer groups",
 				organizationId: organizationId,
+<<<<<<< HEAD
 				startAt: new Date(Date.now() + 86400000).toISOString(), // 1 day from now
 				endAt: new Date(Date.now() + 90000000).toISOString(), // 1 day + 1 hour from now
+=======
+				startAt: new Date().toISOString(),
+				endAt: new Date(Date.now() + 3600000).toISOString(),
+>>>>>>> upstream
 				isPublic: true,
 				isRegisterable: true,
 				location: "Test Location",
@@ -245,7 +265,11 @@ async function createActionItemForVolunteerGroup(
 	organizationId: string,
 	categoryId: string,
 	volunteerGroupId: string,
+<<<<<<< HEAD
 	_authToken: string,
+=======
+	authToken: string,
+>>>>>>> upstream
 ): Promise<string> {
 	const result = await mercuriusClient.mutate(Mutation_createActionItem, {
 		headers: { authorization: `bearer ${globalAuth.authToken}` },

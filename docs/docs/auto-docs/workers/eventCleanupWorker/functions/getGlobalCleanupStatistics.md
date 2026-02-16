@@ -21,4 +21,8 @@ including total instance counts and eligibility for cleanup.
 
 `Promise`\<\{ `averageInstancesPerOrganization`: `number`; `newestInstanceDate`: `Date` \| `null`; `oldestInstanceDate`: `Date` \| `null`; `totalInstances`: `number`; `totalInstancesEligibleForCleanup`: `number`; `totalOrganizations`: `number`; \}\>
 
+<<<<<<< HEAD
 - A promise that resolves to an object with the global cleanup statistics.
+=======
+A promise that resolves to an object with the global cleanup statistics.
+>>>>>>> upstream

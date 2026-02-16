@@ -6,12 +6,17 @@
 
 > **ExplicitGraphQLContext** = `object`
 
+<<<<<<< HEAD
 Defined in: [src/graphql/context.ts:47](https://github.com/PalisadoesFoundation/talawa-api/tree/mainsrc/graphql/context.ts#L47)
+=======
+Defined in: [src/graphql/context.ts:41](https://github.com/PalisadoesFoundation/talawa-api/tree/mainsrc/graphql/context.ts#L41)
+>>>>>>> upstream
 
 Type of the transport protocol agnostic explicit context object that is merged with the implcit mercurius context object and passed to the graphql resolvers each time they resolve a graphql operation at runtime.
 
 ## Properties
 
+<<<<<<< HEAD
 ### cache
 
 > **cache**: [`CacheService`](../../../services/caching/CacheService/interfaces/CacheService.md) \| `ReturnType`\<*typeof* [`metricsCacheProxy`](../../../services/metrics/metricsCacheProxy/functions/metricsCacheProxy.md)\>
@@ -77,10 +82,13 @@ The refresh token
 
 ***
 
+=======
+>>>>>>> upstream
 ### currentClient
 
 > **currentClient**: [`CurrentClient`](CurrentClient.md)
 
+<<<<<<< HEAD
 Defined in: [src/graphql/context.ts:52](https://github.com/PalisadoesFoundation/talawa-api/tree/mainsrc/graphql/context.ts#L52)
 
 ***
@@ -92,6 +100,9 @@ Defined in: [src/graphql/context.ts:52](https://github.com/PalisadoesFoundation/
 Defined in: [src/graphql/context.ts:56](https://github.com/PalisadoesFoundation/talawa-api/tree/mainsrc/graphql/context.ts#L56)
 
 Request-scoped DataLoaders for batching database queries.
+=======
+Defined in: [src/graphql/context.ts:42](https://github.com/PalisadoesFoundation/talawa-api/tree/mainsrc/graphql/context.ts#L42)
+>>>>>>> upstream
 
 ***
 
@@ -99,15 +110,25 @@ Request-scoped DataLoaders for batching database queries.
 
 > **drizzleClient**: `FastifyInstance`\[`"drizzleClient"`\]
 
+<<<<<<< HEAD
 Defined in: [src/graphql/context.ts:57](https://github.com/PalisadoesFoundation/talawa-api/tree/mainsrc/graphql/context.ts#L57)
+=======
+Defined in: [src/graphql/context.ts:43](https://github.com/PalisadoesFoundation/talawa-api/tree/mainsrc/graphql/context.ts#L43)
+>>>>>>> upstream
 
 ***
 
 ### envConfig
 
+<<<<<<< HEAD
 > **envConfig**: `Pick`\<`FastifyInstance`\[`"envConfig"`\], `"API_ACCOUNT_LOCKOUT_DURATION_MS"` \| `"API_ACCOUNT_LOCKOUT_THRESHOLD"` \| `"API_BASE_URL"` \| `"API_COMMUNITY_NAME"` \| `"API_REFRESH_TOKEN_EXPIRES_IN"` \| `"API_PASSWORD_RESET_USER_TOKEN_EXPIRES_SECONDS"` \| `"API_PASSWORD_RESET_ADMIN_TOKEN_EXPIRES_SECONDS"` \| `"API_EMAIL_VERIFICATION_TOKEN_EXPIRES_SECONDS"` \| `"API_EMAIL_VERIFICATION_TOKEN_HMAC_SECRET"` \| `"API_COOKIE_DOMAIN"` \| `"API_IS_SECURE_COOKIES"` \| `"API_JWT_EXPIRES_IN"` \| `"API_AWS_ACCESS_KEY_ID"` \| `"API_AWS_SECRET_ACCESS_KEY"` \| `"API_AWS_SES_REGION"` \| `"API_AWS_SES_FROM_EMAIL"` \| `"API_AWS_SES_FROM_NAME"` \| `"API_FRONTEND_URL"` \| `"RECAPTCHA_SECRET_KEY"` \| `"RECAPTCHA_SCORE_THRESHOLD"`\>
 
 Defined in: [src/graphql/context.ts:58](https://github.com/PalisadoesFoundation/talawa-api/tree/mainsrc/graphql/context.ts#L58)
+=======
+> **envConfig**: `Pick`\<`FastifyInstance`\[`"envConfig"`\], `"API_BASE_URL"`\>
+
+Defined in: [src/graphql/context.ts:44](https://github.com/PalisadoesFoundation/talawa-api/tree/mainsrc/graphql/context.ts#L44)
+>>>>>>> upstream
 
 ***
 
@@ -115,7 +136,11 @@ Defined in: [src/graphql/context.ts:58](https://github.com/PalisadoesFoundation/
 
 > **jwt**: `object`
 
+<<<<<<< HEAD
 Defined in: [src/graphql/context.ts:81](https://github.com/PalisadoesFoundation/talawa-api/tree/mainsrc/graphql/context.ts#L81)
+=======
+Defined in: [src/graphql/context.ts:45](https://github.com/PalisadoesFoundation/talawa-api/tree/mainsrc/graphql/context.ts#L45)
+>>>>>>> upstream
 
 #### sign()
 
@@ -135,9 +160,15 @@ Defined in: [src/graphql/context.ts:81](https://github.com/PalisadoesFoundation/
 
 ### log
 
+<<<<<<< HEAD
 > **log**: [`AppLogger`](../../../utilities/logging/logger/type-aliases/AppLogger.md)
 
 Defined in: [src/graphql/context.ts:104](https://github.com/PalisadoesFoundation/talawa-api/tree/mainsrc/graphql/context.ts#L104)
+=======
+> **log**: `FastifyInstance`\[`"log"`\]
+
+Defined in: [src/graphql/context.ts:48](https://github.com/PalisadoesFoundation/talawa-api/tree/mainsrc/graphql/context.ts#L48)
+>>>>>>> upstream
 
 ***
 
@@ -145,6 +176,7 @@ Defined in: [src/graphql/context.ts:104](https://github.com/PalisadoesFoundation
 
 > **minio**: `FastifyInstance`\[`"minio"`\]
 
+<<<<<<< HEAD
 Defined in: [src/graphql/context.ts:105](https://github.com/PalisadoesFoundation/talawa-api/tree/mainsrc/graphql/context.ts#L105)
 
 ***
@@ -313,3 +345,6 @@ Defined in: [src/graphql/context.ts:151](https://github.com/PalisadoesFoundation
 Request-scoped performance tracker for monitoring operation durations,
 cache behavior (hits/misses), and GraphQL complexity scores.
 Available in all GraphQL contexts (HTTP and WebSocket).
+=======
+Defined in: [src/graphql/context.ts:49](https://github.com/PalisadoesFoundation/talawa-api/tree/mainsrc/graphql/context.ts#L49)
+>>>>>>> upstream

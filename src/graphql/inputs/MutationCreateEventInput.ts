@@ -1,5 +1,6 @@
 import type { FileUpload } from "graphql-upload-minimal";
 import { z } from "zod";
+<<<<<<< HEAD
 import {
 	EVENT_DESCRIPTION_MAX_LENGTH,
 	EVENT_LOCATION_MAX_LENGTH,
@@ -8,20 +9,33 @@ import {
 } from "~/src/drizzle/tables/events";
 import { builder } from "~/src/graphql/builder";
 import { sanitizedStringSchema } from "~/src/utilities/sanitizer";
+=======
+import { eventsTableInsertSchema } from "~/src/drizzle/tables/events";
+import { builder } from "~/src/graphql/builder";
+>>>>>>> upstream
 import { RecurrenceInput, recurrenceInputSchema } from "./RecurrenceInput";
 
 export const mutationCreateEventInputSchema = eventsTableInsertSchema
 	.pick({
+<<<<<<< HEAD
 		endAt: true,
+=======
+		description: true,
+		endAt: true,
+		name: true,
+>>>>>>> upstream
 		organizationId: true,
 		startAt: true,
 	})
 	.extend({
+<<<<<<< HEAD
 		description: sanitizedStringSchema
 			.min(1)
 			.max(EVENT_DESCRIPTION_MAX_LENGTH)
 			.optional(),
 		name: sanitizedStringSchema.min(1).max(EVENT_NAME_MAX_LENGTH),
+=======
+>>>>>>> upstream
 		attachments: z
 			.custom<Promise<FileUpload>>()
 			.array()
@@ -29,6 +43,7 @@ export const mutationCreateEventInputSchema = eventsTableInsertSchema
 			.max(20)
 			.optional(),
 		allDay: z.boolean().optional(),
+<<<<<<< HEAD
 		isInviteOnly: z.boolean().optional(),
 		isPublic: z.boolean().optional(),
 		isRegisterable: z.boolean().optional(),
@@ -36,6 +51,11 @@ export const mutationCreateEventInputSchema = eventsTableInsertSchema
 			.min(1)
 			.max(EVENT_LOCATION_MAX_LENGTH)
 			.optional(),
+=======
+		isPublic: z.boolean().optional(),
+		isRegisterable: z.boolean().optional(),
+		location: z.string().min(1).max(1024).optional(),
+>>>>>>> upstream
 		recurrence: recurrenceInputSchema.optional(),
 	})
 	.superRefine((arg, ctx) => {
@@ -86,10 +106,13 @@ export const MutationCreateEventInput = builder
 				description: "Indicates if the event spans the entire day",
 				required: false,
 			}),
+<<<<<<< HEAD
 			isInviteOnly: t.boolean({
 				description: "Indicates if the event is invite-only",
 				required: false,
 			}),
+=======
+>>>>>>> upstream
 			isPublic: t.boolean({
 				description: "Indicates if the event is publicly visible",
 				required: false,

@@ -11,8 +11,13 @@ import {
 } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { uuidv7 } from "uuidv7";
+<<<<<<< HEAD
 import { eventsTable } from "./events";
 import { eventVolunteerMembershipsTable } from "./eventVolunteerMemberships";
+=======
+import { eventVolunteerMembershipsTable } from "./eventVolunteerMemberships";
+import { eventsTable } from "./events";
+>>>>>>> upstream
 import { recurringEventInstancesTable } from "./recurringEventInstances";
 import { usersTable } from "./users";
 

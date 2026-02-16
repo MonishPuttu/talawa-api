@@ -1,5 +1,6 @@
 import { faker } from "@faker-js/faker";
 import type { ResultOf, VariablesOf } from "gql.tada";
+<<<<<<< HEAD
 import { print } from "graphql";
 import { assertToBeNonNullish } from "test/helpers";
 import {
@@ -13,6 +14,10 @@ import {
 	vi,
 } from "vitest";
 import { COOKIE_NAMES } from "~/src/utilities/cookieConfig";
+=======
+import { assertToBeNonNullish } from "test/helpers";
+import { afterEach, expect, suite, test, vi } from "vitest";
+>>>>>>> upstream
 import type {
 	ForbiddenActionExtensions,
 	ForbiddenActionOnArgumentsAssociatedResourcesExtensions,
@@ -157,6 +162,7 @@ async function createTestOrganization(
 }
 
 suite("Mutation field signUp", () => {
+<<<<<<< HEAD
 	let originalRecaptchaSecretKey: string | undefined;
 	beforeAll(() => {
 		// Save original value for restoration
@@ -172,6 +178,8 @@ suite("Mutation field signUp", () => {
 		cachedAdminToken = null;
 		cachedAdminId = null;
 	});
+=======
+>>>>>>> upstream
 	suite(
 		`results in a graphql error with "forbidden_action" extensions code in the "errors" field and "null" as the value of "data.signUp" field if`,
 		() => {
@@ -510,6 +518,7 @@ suite("Mutation field signUp", () => {
 				});
 
 				expect(signUpResult.errors).toBeUndefined();
+<<<<<<< HEAD
 				// Email is compared case-insensitively (RFC 5321); API may or may not normalize
 				expect(
 					signUpResult.data.signUp?.user?.emailAddress?.toLowerCase(),
@@ -518,6 +527,11 @@ suite("Mutation field signUp", () => {
 					expect.objectContaining<ResultOf<typeof Mutation_signUp>["signUp"]>({
 						authenticationToken: expect.any(String),
 						refreshToken: expect.any(String),
+=======
+				expect(signUpResult.data.signUp).toEqual(
+					expect.objectContaining<ResultOf<typeof Mutation_signUp>["signUp"]>({
+						authenticationToken: expect.any(String),
+>>>>>>> upstream
 						user: expect.objectContaining<
 							Partial<
 								NonNullable<ResultOf<typeof Mutation_signUp>["signUp"]>["user"]
@@ -531,7 +545,11 @@ suite("Mutation field signUp", () => {
 							createdAt: expect.any(String),
 							description: variables.input.description,
 							educationGrade: variables.input.educationGrade,
+<<<<<<< HEAD
 							// emailAddress asserted above (case-insensitive)
+=======
+							emailAddress: variables.input.emailAddress,
+>>>>>>> upstream
 							employmentStatus: variables.input.employmentStatus,
 							homePhoneNumber: variables.input.homePhoneNumber,
 							id: expect.any(String),
@@ -549,6 +567,7 @@ suite("Mutation field signUp", () => {
 				);
 			});
 
+<<<<<<< HEAD
 			test("should set HTTP-Only cookies on successful sign-up", async () => {
 				// Create a test organization
 				const organization = await createTestOrganization();
@@ -596,6 +615,8 @@ suite("Mutation field signUp", () => {
 				expect(refreshTokenCookie?.sameSite).toBe("Lax");
 			});
 
+=======
+>>>>>>> upstream
 			test('nullable user fields have the "null" values if the corresponding nullable arguments are not provided in the graphql operation.', async () => {
 				// Create a test organization
 				const organization = await createTestOrganization();
@@ -618,7 +639,10 @@ suite("Mutation field signUp", () => {
 				expect(signUpResult.data.signUp).toEqual(
 					expect.objectContaining<ResultOf<typeof Mutation_signUp>["signUp"]>({
 						authenticationToken: expect.any(String),
+<<<<<<< HEAD
 						refreshToken: expect.any(String),
+=======
+>>>>>>> upstream
 						user: expect.objectContaining<
 							Partial<
 								NonNullable<ResultOf<typeof Mutation_signUp>["signUp"]>["user"]
@@ -666,7 +690,10 @@ suite("Mutation field signUp", () => {
 				expect(signUpResult.data.signUp).toEqual(
 					expect.objectContaining<ResultOf<typeof Mutation_signUp>["signUp"]>({
 						authenticationToken: expect.any(String),
+<<<<<<< HEAD
 						refreshToken: expect.any(String),
+=======
+>>>>>>> upstream
 						user: expect.objectContaining<
 							Partial<
 								NonNullable<ResultOf<typeof Mutation_signUp>["signUp"]>["user"]
@@ -900,6 +927,7 @@ suite("Mutation field signUp", () => {
 			});
 		},
 	);
+<<<<<<< HEAD
 
 	suite("reCAPTCHA validation", () => {
 		const mockFetch = vi.fn<typeof fetch>();
@@ -1204,4 +1232,6 @@ suite("Mutation field signUp", () => {
 			);
 		});
 	});
+=======
+>>>>>>> upstream
 });

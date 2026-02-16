@@ -6,7 +6,11 @@
 
 > **resolveInstanceWithInheritance**(`input`): [`ResolvedRecurringEventInstance`](../../../../drizzle/tables/recurringEventInstances/type-aliases/ResolvedRecurringEventInstance.md)
 
+<<<<<<< HEAD
 Defined in: [src/services/eventGeneration/instanceResolver.ts:20](https://github.com/PalisadoesFoundation/talawa-api/tree/mainsrc/services/eventGeneration/instanceResolver.ts#L20)
+=======
+Defined in: [src/services/eventGeneration/instanceResolver.ts:17](https://github.com/PalisadoesFoundation/talawa-api/tree/mainsrc/services/eventGeneration/instanceResolver.ts#L17)
+>>>>>>> upstream
 
 Resolves a single generated instance by combining the properties of the base event template
 with any applicable exceptions. This function forms the core of the inheritance logic,
@@ -24,4 +28,8 @@ An object containing the generated instance, base template, and optional excepti
 
 [`ResolvedRecurringEventInstance`](../../../../drizzle/tables/recurringEventInstances/type-aliases/ResolvedRecurringEventInstance.md)
 
+<<<<<<< HEAD
 - A fully resolved generated event instance with all properties correctly inherited and overridden.
+=======
+A fully resolved generated event instance with all properties correctly inherited and overridden.
+>>>>>>> upstream

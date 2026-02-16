@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { randomBytes } from "node:crypto";
 import type { FastifyBaseLogger, FastifyInstance } from "fastify";
 import type { AppLogger } from "./logging/logger";
@@ -141,22 +142,37 @@ export async function leakyBucket(
 
 /**
  * Implements a leaky bucket rate limiter (Token Bucket algorithm).
+=======
+import type { FastifyInstance } from "fastify";
+
+/**
+ * Implements a leaky bucket rate limiter.
+>>>>>>> upstream
  *
  * @param fastify - The Fastify instance.
  * @param key - The key to identify the bucket in Redis.
  * @param capacity - The maximum capacity of the bucket.
  * @param refillRate - The rate at which tokens are added to the bucket.
  * @param cost - The cost in tokens for each request.
+<<<<<<< HEAD
  * @param logger - The logger instance.
  * @returns - A promise that resolves to a boolean indicating if the request is allowed.
  */
 export async function complexityLeakyBucket(
+=======
+ * @returns A promise that resolves to a boolean indicating if the request is allowed.
+ */
+async function leakyBucket(
+>>>>>>> upstream
 	fastify: FastifyInstance,
 	key: string,
 	capacity: number,
 	refillRate: number,
 	cost: number,
+<<<<<<< HEAD
 	logger: AppLogger,
+=======
+>>>>>>> upstream
 ): Promise<boolean> {
 	const redis = fastify.redis;
 	const bucket = await redis.hgetall(key);
@@ -175,6 +191,7 @@ export async function complexityLeakyBucket(
 		});
 	} else {
 		// Parse existing bucket data
+<<<<<<< HEAD
 		const rawTokens = bucket.tokens
 			? Number.parseFloat(bucket.tokens)
 			: capacity;
@@ -187,6 +204,15 @@ export async function complexityLeakyBucket(
 		lastUpdate = Number.isNaN(rawLastUpdate) ? Date.now() : rawLastUpdate;
 	}
 	logger.debug({ tokens, lastUpdate }, "Leaky bucket state");
+=======
+		tokens = bucket.tokens ? Number.parseInt(bucket.tokens, 10) : capacity;
+		lastUpdate = bucket.lastUpdate
+			? Number.parseInt(bucket.lastUpdate, 10)
+			: Date.now();
+	}
+	console.log("Tokens: ", tokens);
+	console.log("Last Update: ", lastUpdate);
+>>>>>>> upstream
 	const now = Date.now();
 	const elapsed = (now - lastUpdate) / 1000;
 	// Refill tokens based on elapsed time and refill rate
@@ -207,3 +233,8 @@ export async function complexityLeakyBucket(
 
 	return true; // Request allowed
 }
+<<<<<<< HEAD
+=======
+
+export default leakyBucket;
+>>>>>>> upstream

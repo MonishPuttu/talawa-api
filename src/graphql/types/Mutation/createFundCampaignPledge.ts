@@ -1,8 +1,14 @@
+<<<<<<< HEAD
 import { eq, sql } from "drizzle-orm";
 import { uuidv7 } from "uuidv7";
 import { z } from "zod";
 import { fundCampaignPledgesTable } from "~/src/drizzle/tables/fundCampaignPledges";
 import { fundCampaignsTable } from "~/src/drizzle/tables/fundCampaigns";
+=======
+import { uuidv7 } from "uuidv7";
+import { z } from "zod";
+import { fundCampaignPledgesTable } from "~/src/drizzle/tables/fundCampaignPledges";
+>>>>>>> upstream
 import { builder } from "~/src/graphql/builder";
 import {
 	MutationCreateFundCampaignPledgeInput,
@@ -10,9 +16,14 @@ import {
 } from "~/src/graphql/inputs/MutationCreateFundCampaignPledgeInput";
 import { FundCampaignPledge } from "~/src/graphql/types/FundCampaignPledge/FundCampaignPledge";
 import { notificationEventBus } from "~/src/graphql/types/Notification/EventBus/eventBus";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+>>>>>>> upstream
 const mutationCreateFundCampaignPledgeArgumentsSchema = z.object({
 	input: mutationCreateFundCampaignPledgeInputSchema,
 });
@@ -219,6 +230,7 @@ builder.mutationField("createFundCampaignPledge", (t) =>
 				});
 			}
 
+<<<<<<< HEAD
 			const createdFundCampaignPledge = await ctx.drizzleClient.transaction(
 				async (tx) => {
 					const [createdPledge] = await tx
@@ -248,6 +260,19 @@ builder.mutationField("createFundCampaignPledge", (t) =>
 					return createdPledge;
 				},
 			);
+=======
+			const [createdFundCampaignPledge] = await ctx.drizzleClient
+				.insert(fundCampaignPledgesTable)
+				.values({
+					amount: parsedArgs.input.amount,
+					campaignId: parsedArgs.input.campaignId,
+					creatorId: currentUserId,
+					id: uuidv7(),
+					note: parsedArgs.input.note,
+					pledgerId: parsedArgs.input.pledgerId,
+				})
+				.returning();
+>>>>>>> upstream
 
 			// Inserted fund campaign pledge not being returned is an external defect unrelated to this code. It is very unlikely for this error to occur.
 			if (createdFundCampaignPledge === undefined) {

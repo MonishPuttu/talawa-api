@@ -6,7 +6,11 @@
 
 > **validateRecurrenceRule**(`recurrenceRule`): `boolean`
 
+<<<<<<< HEAD
 Defined in: [src/services/eventGeneration/occurrenceCalculator.ts:505](https://github.com/PalisadoesFoundation/talawa-api/tree/mainsrc/services/eventGeneration/occurrenceCalculator.ts#L505)
+=======
+Defined in: [src/services/eventGeneration/occurrenceCalculator.ts:498](https://github.com/PalisadoesFoundation/talawa-api/tree/mainsrc/services/eventGeneration/occurrenceCalculator.ts#L498)
+>>>>>>> upstream
 
 Validates the configuration of a recurrence rule to ensure it has a valid frequency
 and a positive interval.

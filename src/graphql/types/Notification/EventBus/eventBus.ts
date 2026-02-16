@@ -425,6 +425,7 @@ export class NotificationEventBus extends EventEmitter {
 			}
 		});
 	}
+<<<<<<< HEAD
 
 	async emitSendEventInvite(
 		data: {
@@ -470,6 +471,8 @@ export class NotificationEventBus extends EventEmitter {
 			}
 		});
 	}
+=======
+>>>>>>> upstream
 }
 
 export const notificationEventBus = new NotificationEventBus();

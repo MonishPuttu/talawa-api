@@ -23,4 +23,8 @@ An array of discovered workloads to be converted.
 
 [`EventGenerationJob`](../../executionEngine/interfaces/EventGenerationJob.md)[]
 
+<<<<<<< HEAD
 - An array of EventGeneration jobs ready for execution.
+=======
+An array of EventGeneration jobs ready for execution.
+>>>>>>> upstream

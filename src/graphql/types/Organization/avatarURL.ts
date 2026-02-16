@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 // check-sanitization-disable: URL field - validated by URL constructor, escaping would break query parameters
+=======
+>>>>>>> upstream
 import envConfig from "~/src/utilities/graphqLimits";
 import { Organization } from "./Organization";
 

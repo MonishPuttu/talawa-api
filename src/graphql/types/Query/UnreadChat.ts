@@ -6,8 +6,13 @@ import { chatMembershipsTable } from "~/src/drizzle/tables/chatMemberships";
 import { chatMessagesTable } from "~/src/drizzle/tables/chatMessages";
 import { builder } from "~/src/graphql/builder";
 import { Chat } from "~/src/graphql/types/Chat/Chat";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+>>>>>>> upstream
 
 builder.queryField("unreadChats", (t) =>
 	t.field({
@@ -26,7 +31,11 @@ builder.queryField("unreadChats", (t) =>
 			// Return chats where the current user is a member and there exists
 			// at least one message with createdAt > lastReadAt
 			const unreadChats = await ctx.drizzleClient.query.chatsTable.findMany({
+<<<<<<< HEAD
 				where: (fields, _operators) =>
+=======
+				where: (fields, operators) =>
+>>>>>>> upstream
 					exists(
 						ctx.drizzleClient
 							.select()

@@ -7,9 +7,14 @@ import {
 	MutationDeleteAgendaItemInputSchema,
 } from "~/src/graphql/inputs/MutationDeleteAgendaItemInput";
 import { AgendaItem } from "~/src/graphql/types/AgendaItem/AgendaItem";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+>>>>>>> upstream
 const mutationDeleteAgendaItemArgumentsSchema = z.object({
 	input: MutationDeleteAgendaItemInputSchema,
 });
@@ -67,6 +72,12 @@ builder.mutationField("deleteAgendaItem", (t) =>
 					},
 					with: {
 						folder: {
+<<<<<<< HEAD
+=======
+							columns: {
+								isAgendaItemFolder: true,
+							},
+>>>>>>> upstream
 							with: {
 								event: {
 									columns: {

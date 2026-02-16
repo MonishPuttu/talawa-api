@@ -28,7 +28,10 @@ export const mutationUpdateThisAndFollowingEventsInputSchema = z
 		allDay: z.boolean().optional(),
 		isPublic: z.boolean().optional(),
 		isRegisterable: z.boolean().optional(),
+<<<<<<< HEAD
 		isInviteOnly: z.boolean().optional(),
+=======
+>>>>>>> upstream
 		recurrence: recurrenceInputSchema.optional(),
 	})
 	.superRefine(({ id, ...remainingArgs }, ctx) => {
@@ -98,10 +101,13 @@ export const MutationUpdateThisAndFollowingEventsInput = builder
 				description:
 					"Whether users can register for this and following event instances.",
 			}),
+<<<<<<< HEAD
 			isInviteOnly: t.boolean({
 				description:
 					"Whether this and following event instances are invite-only.",
 			}),
+=======
+>>>>>>> upstream
 			recurrence: t.field({
 				description:
 					"Updated recurrence pattern for the new series starting from this instance.",

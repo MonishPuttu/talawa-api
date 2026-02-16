@@ -1,6 +1,11 @@
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { escapeHTML } from "~/src/utilities/sanitizer";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+>>>>>>> upstream
 import { User } from "./User";
 
 User.implement({
@@ -45,7 +50,11 @@ User.implement({
 					});
 				}
 
+<<<<<<< HEAD
 				return escapeHTML(parent.addressLine1);
+=======
+				return parent.addressLine1;
+>>>>>>> upstream
 			},
 			type: "String",
 		}),

@@ -1,14 +1,23 @@
+<<<<<<< HEAD
 import { and, asc, desc, eq, exists, gt, lt, or, type SQL } from "drizzle-orm";
+=======
+import { type SQL, and, asc, desc, eq, exists, gt, lt, or } from "drizzle-orm";
+>>>>>>> upstream
 import { z } from "zod";
 import {
 	chatMembershipsTable,
 	chatMembershipsTableInsertSchema,
 } from "~/src/drizzle/tables/chatMemberships";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+>>>>>>> upstream
 import {
 	defaultGraphQLConnectionArgumentsSchema,
 	transformDefaultGraphQLConnectionArguments,
 	transformToDefaultGraphQLConnection,
+<<<<<<< HEAD
 } from "~/src/utilities/graphqlConnection";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 import { Chat } from "./Chat";
@@ -22,6 +31,16 @@ const membersArgumentsSchema = defaultGraphQLConnectionArgumentsSchema
 	.transform(transformDefaultGraphQLConnectionArguments)
 	.transform((arg, ctx) => {
 		let cursor: z.infer<typeof cursorSchema> | undefined;
+=======
+} from "~/src/utilities/defaultGraphQLConnection";
+import envConfig from "~/src/utilities/graphqLimits";
+import { Chat } from "./Chat";
+import { ChatMember } from "./ChatMember";
+const membersArgumentsSchema = defaultGraphQLConnectionArgumentsSchema
+	.transform(transformDefaultGraphQLConnectionArguments)
+	.transform((arg, ctx) => {
+		let cursor: z.infer<typeof cursorSchema> | undefined = undefined;
+>>>>>>> upstream
 
 		try {
 			if (arg.cursor !== undefined) {
@@ -29,7 +48,11 @@ const membersArgumentsSchema = defaultGraphQLConnectionArgumentsSchema
 					JSON.parse(Buffer.from(arg.cursor, "base64url").toString("utf-8")),
 				);
 			}
+<<<<<<< HEAD
 		} catch (_error) {
+=======
+		} catch (error) {
+>>>>>>> upstream
 			ctx.addIssue({
 				code: "custom",
 				message: "Not a valid cursor.",
@@ -183,6 +206,7 @@ Chat.implement({
 						});
 					}
 
+<<<<<<< HEAD
 					return transformToDefaultGraphQLConnection<
 						(typeof chatMemberships)[number],
 						ChatMemberType,
@@ -196,6 +220,17 @@ Chat.implement({
 							member: chatMembership.member,
 							role: chatMembership.role as ChatMemberRole,
 						}),
+=======
+					return transformToDefaultGraphQLConnection({
+						createCursor: (chatMembership) =>
+							Buffer.from(
+								JSON.stringify({
+									createdAt: chatMembership.createdAt.toISOString(),
+									memberId: chatMembership.memberId,
+								}),
+							).toString("base64url"),
+						createNode: (chatMembership) => chatMembership,
+>>>>>>> upstream
 						parsedArgs,
 						rawNodes: chatMemberships,
 					});

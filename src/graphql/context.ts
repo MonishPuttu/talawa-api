@@ -1,11 +1,14 @@
 import type { FastifyInstance } from "fastify";
 import type { usersTable } from "~/src/drizzle/tables/users";
+<<<<<<< HEAD
 import type { CacheService } from "~/src/services/caching";
 import type { OAuthProviderRegistry } from "~/src/utilities/auth/oauth/OAuthProviderRegistry";
 import type { Dataloaders } from "~/src/utilities/dataloaders";
 import type { AppLogger } from "~/src/utilities/logging/logger";
 import type { PerformanceTracker } from "~/src/utilities/metrics/performanceTracker";
 import type { metricsCacheProxy } from "../services/metrics/metricsCacheProxy";
+=======
+>>>>>>> upstream
 import type { PubSub } from "./pubsub";
 
 /**
@@ -45,6 +48,7 @@ export type CurrentClient =
  * Type of the transport protocol agnostic explicit context object that is merged with the implcit mercurius context object and passed to the graphql resolvers each time they resolve a graphql operation at runtime.
  */
 export type ExplicitGraphQLContext = {
+<<<<<<< HEAD
 	/**
 	 * Redis-backed cache service for caching entities and query results.
 	 */
@@ -149,6 +153,16 @@ export type ExplicitGraphQLContext = {
 	 * Available in all GraphQL contexts (HTTP and WebSocket).
 	 */
 	perf?: PerformanceTracker;
+=======
+	currentClient: CurrentClient;
+	drizzleClient: FastifyInstance["drizzleClient"];
+	envConfig: Pick<FastifyInstance["envConfig"], "API_BASE_URL">;
+	jwt: {
+		sign: (payload: ExplicitAuthenticationTokenPayload) => string;
+	};
+	log: FastifyInstance["log"];
+	minio: FastifyInstance["minio"];
+>>>>>>> upstream
 };
 
 /**

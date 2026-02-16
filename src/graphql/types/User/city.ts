@@ -1,8 +1,14 @@
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { escapeHTML } from "~/src/utilities/sanitizer";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 import { User } from "./User";
 
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+import { User } from "./User";
+>>>>>>> upstream
 User.implement({
 	fields: (t) => ({
 		city: t.field({
@@ -38,6 +44,12 @@ User.implement({
 					currentUser.role !== "administrator" &&
 					parent.id !== currentUserId
 				) {
+<<<<<<< HEAD
+=======
+					console.log("=============================");
+					console.log(currentUser.role);
+					console.log("=============================");
+>>>>>>> upstream
 					throw new TalawaGraphQLError({
 						extensions: {
 							code: "unauthorized_action",
@@ -45,7 +57,11 @@ User.implement({
 					});
 				}
 
+<<<<<<< HEAD
 				return escapeHTML(parent.city);
+=======
+				return parent.city;
+>>>>>>> upstream
 			},
 			type: "String",
 		}),

@@ -1,4 +1,5 @@
 import { faker } from "@faker-js/faker";
+<<<<<<< HEAD
 import type { Client } from "minio";
 import {
 	afterAll,
@@ -12,6 +13,11 @@ import {
 } from "vitest";
 import type { TalawaGraphQLFormattedError } from "~/src/utilities/TalawaGraphQLError";
 import { assertToBeNonNullish, createMultipartPayload } from "../../../helpers";
+=======
+import { afterAll, beforeAll, expect, suite, test } from "vitest";
+import type { TalawaGraphQLFormattedError } from "~/src/utilities/TalawaGraphQLError";
+import { assertToBeNonNullish } from "../../../helpers";
+>>>>>>> upstream
 import { server } from "../../../server";
 import { mercuriusClient } from "../client";
 import {
@@ -25,6 +31,7 @@ import {
 	Query_signIn,
 } from "../documentNodes";
 
+<<<<<<< HEAD
 const createChatMutation = `
 mutation Mutation_createChat($input: MutationCreateChatInput!) {
 	createChat(input: $input) {
@@ -38,6 +45,8 @@ mutation Mutation_createChat($input: MutationCreateChatInput!) {
 // Extract the return type of putObject from the minio Client
 type UploadedObjectInfo = Awaited<ReturnType<Client["putObject"]>>;
 
+=======
+>>>>>>> upstream
 // Helper function to get admin auth token
 async function getAdminToken() {
 	const signInResult = await mercuriusClient.query(Query_signIn, {
@@ -127,6 +136,7 @@ async function createOrganizationMembership(
 }
 
 suite("Mutation field createChat", () => {
+<<<<<<< HEAD
 	afterEach(() => {
 		vi.restoreAllMocks();
 	});
@@ -135,6 +145,8 @@ suite("Mutation field createChat", () => {
 		vi.clearAllMocks();
 	});
 
+=======
+>>>>>>> upstream
 	let adminAuthToken: string;
 	let regularUserAuthToken: string;
 	let regularUserId: string;
@@ -195,7 +207,11 @@ suite("Mutation field createChat", () => {
 					headers: { authorization: `bearer ${adminAuthToken}` },
 					variables: { input: { id: chatId } },
 				});
+<<<<<<< HEAD
 			} catch (_error) {
+=======
+			} catch (error) {
+>>>>>>> upstream
 				// Ignore cleanup errors
 			}
 		}
@@ -206,7 +222,11 @@ suite("Mutation field createChat", () => {
 					headers: { authorization: `bearer ${adminAuthToken}` },
 					variables: { input: { id: userId } },
 				});
+<<<<<<< HEAD
 			} catch (_error) {
+=======
+			} catch (error) {
+>>>>>>> upstream
 				// Ignore cleanup errors
 			}
 		}
@@ -217,7 +237,11 @@ suite("Mutation field createChat", () => {
 					headers: { authorization: `bearer ${adminAuthToken}` },
 					variables: { input: { id: orgId } },
 				});
+<<<<<<< HEAD
 			} catch (_error) {
+=======
+			} catch (error) {
+>>>>>>> upstream
 				// Ignore cleanup errors
 			}
 		}
@@ -269,7 +293,11 @@ suite("Mutation field createChat", () => {
 						issues: [
 							{
 								argumentPath: ["input", "organizationId"],
+<<<<<<< HEAD
 								message: "Invalid UUID",
+=======
+								message: "Invalid uuid",
+>>>>>>> upstream
 							},
 						],
 					}),
@@ -348,6 +376,7 @@ suite("Mutation field createChat", () => {
 		);
 	});
 
+<<<<<<< HEAD
 	test("system administrator can create chat in organization they do not belong to", async () => {
 		// Create a system administrator user
 		const systemAdmin = await createTestUser(adminAuthToken, "administrator");
@@ -382,6 +411,8 @@ suite("Mutation field createChat", () => {
 		}
 	});
 
+=======
+>>>>>>> upstream
 	test("organization administrator can successfully create a chat", async () => {
 		const chatName = `Admin Test Chat ${faker.string.uuid()}`;
 		const result = await mercuriusClient.mutate(Mutation_createChat, {
@@ -455,6 +486,7 @@ suite("Mutation field createChat", () => {
 			createdChatIds.push(result.data.createChat.id);
 		}
 	});
+<<<<<<< HEAD
 
 	suite("Avatar handling", () => {
 		test("should handle invalid avatar mime type", async () => {
@@ -673,4 +705,6 @@ suite("Mutation field createChat", () => {
 			]),
 		);
 	});
+=======
+>>>>>>> upstream
 });

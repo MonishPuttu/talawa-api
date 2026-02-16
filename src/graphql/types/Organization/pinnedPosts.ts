@@ -1,4 +1,8 @@
 import {
+<<<<<<< HEAD
+=======
+	type SQL,
+>>>>>>> upstream
 	and,
 	asc,
 	desc,
@@ -8,16 +12,24 @@ import {
 	isNotNull,
 	lt,
 	or,
+<<<<<<< HEAD
 	type SQL,
+=======
+>>>>>>> upstream
 } from "drizzle-orm";
 import { z } from "zod";
 import { postsTable, postsTableInsertSchema } from "~/src/drizzle/tables/posts";
 import { Post } from "~/src/graphql/types/Post/Post";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+>>>>>>> upstream
 import {
 	defaultGraphQLConnectionArgumentsSchema,
 	transformDefaultGraphQLConnectionArguments,
 	transformToDefaultGraphQLConnection,
+<<<<<<< HEAD
 } from "~/src/utilities/graphqlConnection";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 import { Organization } from "./Organization";
@@ -26,6 +38,15 @@ const pinnedPostsArgumentsSchema = defaultGraphQLConnectionArgumentsSchema
 	.transform(transformDefaultGraphQLConnectionArguments)
 	.transform((arg, ctx) => {
 		let cursor: z.infer<typeof cursorSchema> | undefined;
+=======
+} from "~/src/utilities/defaultGraphQLConnection";
+import envConfig from "~/src/utilities/graphqLimits";
+import { Organization } from "./Organization";
+const pinnedPostsArgumentsSchema = defaultGraphQLConnectionArgumentsSchema
+	.transform(transformDefaultGraphQLConnectionArguments)
+	.transform((arg, ctx) => {
+		let cursor: z.infer<typeof cursorSchema> | undefined = undefined;
+>>>>>>> upstream
 
 		try {
 			if (arg.cursor !== undefined) {
@@ -33,7 +54,11 @@ const pinnedPostsArgumentsSchema = defaultGraphQLConnectionArgumentsSchema
 					JSON.parse(Buffer.from(arg.cursor, "base64url").toString("utf-8")),
 				);
 			}
+<<<<<<< HEAD
 		} catch (_error) {
+=======
+		} catch (error) {
+>>>>>>> upstream
 			ctx.addIssue({
 				code: "custom",
 				message: "Not a valid cursor.",
@@ -235,11 +260,22 @@ Organization.implement({
 					}
 
 					return transformToDefaultGraphQLConnection({
+<<<<<<< HEAD
 						createCursor: (post) => ({
 							id: post.id,
 							// `pinnedAt` field below cannot have `null` as the value because of the sql query logic. The optional chaining operator is just to prevent type errors.
 							pinnedAt: post.pinnedAt ?? new Date(0),
 						}),
+=======
+						createCursor: (post) =>
+							Buffer.from(
+								JSON.stringify({
+									id: post.id,
+									// `pinnedAt` field below cannot have `null` as the value because of the sql query logic. The optional chaining operator is just to prevent type errors.
+									pinnedAt: post.pinnedAt?.toISOString(),
+								}),
+							).toString("base64url"),
+>>>>>>> upstream
 						createNode: ({ attachmentsWherePost, ...post }) =>
 							Object.assign(post, {
 								attachments: attachmentsWherePost,

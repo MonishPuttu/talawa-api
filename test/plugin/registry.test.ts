@@ -1,4 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+<<<<<<< HEAD
 
 // Mock rootLogger
 vi.mock("~/src/utilities/logging/logger", () => ({
@@ -12,6 +13,9 @@ vi.mock("~/src/utilities/logging/logger", () => ({
 
 import type { IPluginContext } from "~/src/plugin/types";
 import { rootLogger } from "~/src/utilities/logging/logger";
+=======
+import type { IPluginContext } from "~/src/plugin/types";
+>>>>>>> upstream
 import {
 	createPluginContext,
 	destroyPluginSystem,
@@ -276,6 +280,7 @@ describe("Plugin Registry", () => {
 			// The actual implementation doesn't throw errors during destruction
 			await expect(destroyPluginSystem()).resolves.not.toThrow();
 		});
+<<<<<<< HEAD
 
 		it("should throw and log error when gracefulShutdown fails", async () => {
 			// Initialize the system first
@@ -314,6 +319,8 @@ describe("Plugin Registry", () => {
 			// Now clean up properly for subsequent tests
 			await destroyPluginSystem();
 		});
+=======
+>>>>>>> upstream
 	});
 
 	describe("getPluginSystemStatus", () => {

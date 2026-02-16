@@ -57,7 +57,11 @@ export const chatMembershipsTable = pgTable(
 		 * Role assigned to the user within the chat.
 		 */
 		role: text("role", {
+<<<<<<< HEAD
 			enum: chatMembershipRoleEnum.options as [string, ...string[]],
+=======
+			enum: chatMembershipRoleEnum.options,
+>>>>>>> upstream
 		}).notNull(),
 		/**
 		 * Last time this member marked the chat as read.

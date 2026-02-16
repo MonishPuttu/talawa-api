@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { drizzle, type PostgresJsDatabase } from "drizzle-orm/postgres-js";
+=======
+import { type PostgresJsDatabase, drizzle } from "drizzle-orm/postgres-js";
+>>>>>>> upstream
 import { migrate } from "drizzle-orm/postgres-js/migrator";
 import fastifyPlugin from "fastify-plugin";
 import * as drizzleSchema from "~/src/drizzle/schema";
@@ -10,6 +14,7 @@ declare module "fastify" {
 }
 
 /**
+<<<<<<< HEAD
  * Type alias for the Drizzle client with the full schema.
  */
 export type DrizzleClient = PostgresJsDatabase<typeof drizzleSchema>;
@@ -19,11 +24,20 @@ export type DrizzleClient = PostgresJsDatabase<typeof drizzleSchema>;
  *
  * @example
  * ```typescript
+=======
+ * Integrates a drizzle client instance on a namespace `drizzleClient` on the global fastify instance.
+ *
+ * @example
+ *
+>>>>>>> upstream
  * import drizzleClientPlugin from "~/src/plugins/drizzleClient";
  *
  * fastify.register(drizzleClientPlugin, {});
  * const user = await fastify.drizzleClient.query.usersTable.findFirst();
+<<<<<<< HEAD
  * ```
+=======
+>>>>>>> upstream
  */
 export const drizzleClient = fastifyPlugin(
 	async (fastify) => {
@@ -33,12 +47,16 @@ export const drizzleClient = fastifyPlugin(
 				host: fastify.envConfig.API_POSTGRES_HOST,
 				password: fastify.envConfig.API_POSTGRES_PASSWORD,
 				port: fastify.envConfig.API_POSTGRES_PORT,
+<<<<<<< HEAD
 				ssl: fastify.envConfig.API_POSTGRES_SSL_MODE as
 					| boolean
 					| "allow"
 					| "prefer"
 					| "require"
 					| "verify-full",
+=======
+				ssl: fastify.envConfig.API_POSTGRES_SSL_MODE,
+>>>>>>> upstream
 				user: fastify.envConfig.API_POSTGRES_USER,
 			},
 			// logger: new DrizzlePinoLogger(),
@@ -86,6 +104,7 @@ export const drizzleClient = fastifyPlugin(
 					"Successfully applied the drizzle migrations to the postgres database.",
 				);
 			} catch (error) {
+<<<<<<< HEAD
 				// Check if it's an "already exists" error - these are expected if migrations were already applied
 				const errorMessage =
 					error instanceof Error ? error.message : String(error);
@@ -129,6 +148,14 @@ export const drizzleClient = fastifyPlugin(
 						},
 					);
 				}
+=======
+				throw new Error(
+					"Failed to apply the drizzle migrations to the postgres database.",
+					{
+						cause: error,
+					},
+				);
+>>>>>>> upstream
 			}
 		}
 

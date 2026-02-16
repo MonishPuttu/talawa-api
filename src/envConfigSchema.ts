@@ -1,7 +1,13 @@
+<<<<<<< HEAD
 import ajvFormats from "ajv-formats";
 import type { EnvSchemaOpt } from "env-schema";
 import { type Static, Type } from "typebox";
 import { rootLogger } from "./utilities/logging/logger";
+=======
+import { type Static, Type } from "@sinclair/typebox";
+import ajvFormats from "ajv-formats";
+import type { EnvSchemaOpt } from "env-schema";
+>>>>>>> upstream
 
 /**
  * JSON schema of a record of environment variables accessible to the talawa api at runtime.
@@ -10,7 +16,11 @@ export const envConfigSchema = Type.Object({
 	/**
 	 * The frontend URL allowed for CORS.
 	 */
+<<<<<<< HEAD
 	API_FRONTEND_URL: Type.String({
+=======
+	FRONTEND_URL: Type.String({
+>>>>>>> upstream
 		minLength: 1,
 		format: "uri",
 	}),
@@ -40,6 +50,7 @@ export const envConfigSchema = Type.Object({
 		minLength: 1,
 	}),
 	/**
+<<<<<<< HEAD
 	 * Duration in milliseconds for which an account remains locked after exceeding failed login threshold.
 	 * Default: 900000 (15 minutes)
 	 */
@@ -60,6 +71,8 @@ export const envConfigSchema = Type.Object({
 		}),
 	),
 	/**
+=======
+>>>>>>> upstream
 	 * URL to the facebook account of the community.
 	 */
 	API_COMMUNITY_FACEBOOK_URL: Type.Optional(
@@ -138,6 +151,7 @@ export const envConfigSchema = Type.Object({
 		}),
 	),
 	/**
+<<<<<<< HEAD
 	 * Email provider selection.
 	 * Supported values: 'ses' (Amazon SES), 'smtp', and 'mailpit' (local testing).
 	 * Defaults to 'mailpit' if not specified.
@@ -231,6 +245,8 @@ export const envConfigSchema = Type.Object({
 	 */
 	API_SMTP_LOCAL_ADDRESS: Type.Optional(Type.String({ minLength: 1 })),
 	/**
+=======
+>>>>>>> upstream
 	 * URL to the youtube account of the community.
 	 */
 	API_COMMUNITY_YOUTUBE_URL: Type.Optional(
@@ -263,6 +279,7 @@ export const envConfigSchema = Type.Object({
 		minimum: 0,
 	}),
 	/**
+<<<<<<< HEAD
 	 * Used for providing the number of milli-seconds for setting the expiry time of refresh tokens created by talawa api.
 	 * Refresh tokens are long-lived tokens used to obtain new access tokens without re-authentication.
 	 * Default: 604800000 (7 days)
@@ -328,12 +345,15 @@ export const envConfigSchema = Type.Object({
 		}),
 	),
 	/**
+=======
+>>>>>>> upstream
 	 * Used for providing the secret for signing and verifying authentication json web tokens created by talawa api.
 	 */
 	API_JWT_SECRET: Type.String({
 		minLength: 64,
 	}),
 	/**
+<<<<<<< HEAD
 	 * REST auth JWT secret for signing and verifying access/refresh tokens.
 	 * tokens.getSecret() (src/services/auth/tokens) reads only this variable; there is no fallback to API_JWT_SECRET.
 	 * When unset in non-production, getSecret() uses a hardcoded dev default and logs a warning; in production it throws.
@@ -427,6 +447,8 @@ export const envConfigSchema = Type.Object({
 	 */
 	API_OTEL_SERVICE_NAME: Type.Optional(Type.String({ minLength: 1 })),
 	/**
+=======
+>>>>>>> upstream
 	 * Used for providing the log level for the logger used in talawa api.
 	 *
 	 * @privateRemarks
@@ -520,6 +542,7 @@ export const envConfigSchema = Type.Object({
 		maximum: 65535,
 		minimum: 0,
 	}),
+<<<<<<< HEAD
 	/**
 	 * Optional JSON object to override default cache TTL values per entity type.
 	 *
@@ -549,6 +572,8 @@ export const envConfigSchema = Type.Object({
 			format: "json", // Validates JSON syntax at schema-time
 		}),
 	),
+=======
+>>>>>>> upstream
 	// API_REDIS_URI: Type.String({
 	// 	format: "uri",
 	// 	pattern: "^redis://.*",
@@ -589,8 +614,13 @@ export const envConfigSchema = Type.Object({
 	}),
 
 	/**
+<<<<<<< HEAD
 	 * Rate at which a user's request bucket refills per second for rate limiting.
 	 */
+=======
++ * Rate at which a user's request bucket refills per second for rate limiting.
++ */
+>>>>>>> upstream
 	API_RATE_LIMIT_REFILL_RATE: Type.Number({
 		minimum: 0,
 	}),
@@ -604,7 +634,11 @@ export const envConfigSchema = Type.Object({
 	 * Cron schedule for the recurring event instance generation background worker.
 	 * Default: "0 * * * *" (every hour at minute 0)
 	 */
+<<<<<<< HEAD
 	API_RECURRING_EVENT_GENERATION_CRON_SCHEDULE: Type.Optional(
+=======
+	RECURRING_EVENT_GENERATION_CRON_SCHEDULE: Type.Optional(
+>>>>>>> upstream
 		Type.String({
 			minLength: 9, // Minimum valid cron: "* * * * *"
 		}),
@@ -614,11 +648,16 @@ export const envConfigSchema = Type.Object({
 	 * Cron schedule for the old event instance cleanup background worker.
 	 * Default: "0 2 * * *" (daily at 2 AM UTC)
 	 */
+<<<<<<< HEAD
 	API_OLD_EVENT_INSTANCES_CLEANUP_CRON_SCHEDULE: Type.Optional(
+=======
+	OLD_EVENT_INSTANCES_CLEANUP_CRON_SCHEDULE: Type.Optional(
+>>>>>>> upstream
 		Type.String({
 			minLength: 9, // Minimum valid cron: "* * * * *"
 		}),
 	),
+<<<<<<< HEAD
 
 	/**
 	 * Secret key for Google reCAPTCHA v3 verification.
@@ -813,6 +852,8 @@ export const envConfigSchema = Type.Object({
 			default: 300,
 		}),
 	),
+=======
+>>>>>>> upstream
 });
 
 /**
@@ -828,6 +869,7 @@ export const envSchemaAjv: EnvSchemaOpt["ajv"] = {
 		ajvFormats.default(ajvInstance, {
 			formats: ["email", "uri"],
 		});
+<<<<<<< HEAD
 
 		// Custom "json" format validator for fail-fast JSON object validation
 		// Only accepts non-null objects (not arrays or primitives)
@@ -848,6 +890,8 @@ export const envSchemaAjv: EnvSchemaOpt["ajv"] = {
 			},
 		});
 
+=======
+>>>>>>> upstream
 		return ajvInstance;
 	},
 };

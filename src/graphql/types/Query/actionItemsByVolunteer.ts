@@ -67,7 +67,11 @@ export const actionItemsByVolunteer = builder.queryField(
 					where: (fields, operators) => operators.eq(fields.id, currentUserId),
 				});
 
+<<<<<<< HEAD
 				if (!currentUser) {
+=======
+				if (currentUser === undefined) {
+>>>>>>> upstream
 					throw new TalawaGraphQLError({
 						extensions: {
 							code: "unauthenticated",
@@ -91,7 +95,11 @@ export const actionItemsByVolunteer = builder.queryField(
 						},
 					});
 
+<<<<<<< HEAD
 				if (!targetVolunteer) {
+=======
+				if (targetVolunteer === undefined) {
+>>>>>>> upstream
 					throw new TalawaGraphQLError({
 						message: "The specified volunteer does not exist.",
 						extensions: {

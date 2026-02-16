@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import type { z } from "zod";
 import type { userMaritalStatusEnum } from "~/src/drizzle/enums/userMaritalStatus";
 import { UserMaritalStatus } from "~/src/graphql/enums/UserMaritalStatus";
@@ -5,12 +6,21 @@ import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 import { User } from "./User";
 
+=======
+import { UserMaritalStatus } from "~/src/graphql/enums/UserMaritalStatus";
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+import { User } from "./User";
+>>>>>>> upstream
 User.implement({
 	fields: (t) => ({
 		maritalStatus: t.field({
 			description: "Marital status of the user.",
 			complexity: envConfig.API_GRAPHQL_SCALAR_RESOLVER_FIELD_COST,
+<<<<<<< HEAD
 			nullable: true,
+=======
+>>>>>>> upstream
 			resolve: async (parent, _args, ctx) => {
 				if (!ctx.currentClient.isAuthenticated) {
 					throw new TalawaGraphQLError({
@@ -48,9 +58,13 @@ User.implement({
 					});
 				}
 
+<<<<<<< HEAD
 				return parent.maritalStatus as z.infer<
 					typeof userMaritalStatusEnum
 				> | null;
+=======
+				return parent.maritalStatus;
+>>>>>>> upstream
 			},
 			type: UserMaritalStatus,
 		}),

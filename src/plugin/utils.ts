@@ -4,8 +4,12 @@
 
 import { promises as fs } from "node:fs";
 import path from "node:path";
+<<<<<<< HEAD
 import { rootLogger } from "~/src/utilities/logging/logger";
 import type { ILogger, IPluginManifest } from "./types";
+=======
+import type { IPluginManifest } from "./types";
+>>>>>>> upstream
 
 /**
  * Validates a plugin manifest structure
@@ -123,7 +127,11 @@ export async function safeRequire<T = unknown>(
 		const module = await import(modulePath);
 		return module as T;
 	} catch (error) {
+<<<<<<< HEAD
 		rootLogger.error({ err: error }, `Failed to require module: ${modulePath}`);
+=======
+		console.error(`Failed to require module: ${modulePath}`, error);
+>>>>>>> upstream
 		return null;
 	}
 }
@@ -273,6 +281,7 @@ function drizzleTypeToPostgresType(column: unknown): string {
 }
 
 /**
+<<<<<<< HEAD
  * Warns about automatic table name prefixing
  */
 function warnAboutTablePrefixing(
@@ -289,6 +298,8 @@ function warnAboutTablePrefixing(
 }
 
 /**
+=======
+>>>>>>> upstream
  * Generates CREATE TABLE SQL from a Drizzle table definition
  */
 export function generateCreateTableSQL(
@@ -315,7 +326,16 @@ export function generateCreateTableSQL(
 		!originalTableName.startsWith(`${pluginId}_`) &&
 		tableName !== originalTableName
 	) {
+<<<<<<< HEAD
 		warnAboutTablePrefixing(originalTableName, tableName, pluginId);
+=======
+		console.warn(
+			`⚠️  Plugin table name automatically prefixed: "${originalTableName}" -> "${tableName}" (plugin: ${pluginId})`,
+		);
+		console.warn(
+			"Consider using prefixed table names in your plugin code to avoid connectivity issues.",
+		);
+>>>>>>> upstream
 	}
 
 	const columns =
@@ -424,7 +444,16 @@ export function generateCreateIndexSQL(
 		!originalTableName.startsWith(`${pluginId}_`) &&
 		tableName !== originalTableName
 	) {
+<<<<<<< HEAD
 		warnAboutTablePrefixing(originalTableName, tableName, pluginId);
+=======
+		console.warn(
+			`⚠️  Plugin table name automatically prefixed: "${originalTableName}" -> "${tableName}" (plugin: ${pluginId})`,
+		);
+		console.warn(
+			"Consider using prefixed table names in your plugin code to avoid connectivity issues.",
+		);
+>>>>>>> upstream
 	}
 
 	const indexes =
@@ -463,7 +492,11 @@ export async function createPluginTables(
 	db: { execute: (sql: string) => Promise<unknown> },
 	pluginId: string,
 	tableDefinitions: Record<string, Record<string, unknown>>,
+<<<<<<< HEAD
 	logger?: ILogger,
+=======
+	logger?: { info?: (message: string) => void },
+>>>>>>> upstream
 ): Promise<void> {
 	// Import the plugin logger
 
@@ -497,6 +530,7 @@ export async function createPluginTables(
 					`Successfully created table and indexes for: ${tableName}`,
 				);
 			} catch (error) {
+<<<<<<< HEAD
 				if (logger?.error) {
 					logger.error({
 						msg: `Table creation failed for ${tableName}`,
@@ -508,10 +542,14 @@ export async function createPluginTables(
 						err: error,
 					});
 				}
+=======
+				console.error(`Table creation failed for ${tableName}:`, error);
+>>>>>>> upstream
 				throw error;
 			}
 		}
 	} catch (error) {
+<<<<<<< HEAD
 		if (logger?.error) {
 			logger.error({
 				msg: `Table creation process failed for plugin ${pluginId}`,
@@ -523,6 +561,12 @@ export async function createPluginTables(
 				err: error,
 			});
 		}
+=======
+		console.error(
+			`Table creation process failed for plugin ${pluginId}:`,
+			error,
+		);
+>>>>>>> upstream
 		throw error;
 	}
 }
@@ -534,7 +578,11 @@ export async function dropPluginTables(
 	db: { execute: (sql: string) => Promise<unknown> },
 	pluginId: string,
 	tableDefinitions: Record<string, Record<string, unknown>>,
+<<<<<<< HEAD
 	logger?: ILogger,
+=======
+	logger?: { info?: (message: string) => void },
+>>>>>>> upstream
 ): Promise<void> {
 	try {
 		logger?.info?.(`Dropping database tables for plugin: ${pluginId}`);
@@ -561,7 +609,11 @@ export async function dropPluginTables(
 				await db.execute(dropSQL);
 				logger?.info?.(`Successfully dropped table: ${prefixedTableName}`);
 			} catch (error) {
+<<<<<<< HEAD
 				logger?.error?.(
+=======
+				logger?.info?.(
+>>>>>>> upstream
 					`Error dropping table ${tableName}: ${
 						error instanceof Error ? error.message : String(error)
 					}`,
@@ -572,7 +624,11 @@ export async function dropPluginTables(
 
 		logger?.info?.(`Completed dropping tables for plugin: ${pluginId}`);
 	} catch (error) {
+<<<<<<< HEAD
 		logger?.error?.(
+=======
+		logger?.info?.(
+>>>>>>> upstream
 			`Error in dropPluginTables for plugin ${pluginId}: ${
 				error instanceof Error ? error.message : String(error)
 			}`,
@@ -607,10 +663,14 @@ export async function removePluginDirectory(pluginId: string): Promise<void> {
 		// Remove the directory and all its contents
 		await fs.rm(pluginPath, { recursive: true, force: true });
 	} catch (error) {
+<<<<<<< HEAD
 		rootLogger.error(
 			{ err: error },
 			`Failed to remove plugin directory ${pluginId}`,
 		);
+=======
+		console.error(`Failed to remove plugin directory ${pluginId}:`, error);
+>>>>>>> upstream
 		throw error;
 	}
 }
@@ -622,7 +682,11 @@ export async function removePluginDirectory(pluginId: string): Promise<void> {
  */
 export function clearPluginModuleCache(
 	pluginPath: string,
+<<<<<<< HEAD
 	_cacheObj?: Record<string, unknown>,
+=======
+	cacheObj?: Record<string, unknown>,
+>>>>>>> upstream
 ): void {
 	try {
 		// In ES modules, we cannot access the module cache directly
@@ -631,6 +695,7 @@ export function clearPluginModuleCache(
 		// The garbage collector will handle cleanup of unused modules automatically
 
 		// Log that cache clearing is not available in ES modules
+<<<<<<< HEAD
 		rootLogger.info({
 			msg: "Module cache clearing not available in ES modules",
 			pluginPath,
@@ -639,6 +704,15 @@ export function clearPluginModuleCache(
 		// Non-critical operation, continue with cleanup
 	} catch (error) {
 		rootLogger.warn({ msg: "Failed to clear module cache", err: error });
+=======
+		console.log(
+			`Module cache clearing not available in ES modules for plugin: ${pluginPath}`,
+		);
+
+		// Non-critical operation, continue with cleanup
+	} catch (error) {
+		console.warn("Failed to clear module cache:", error);
+>>>>>>> upstream
 		// Non-critical error, continue with cleanup
 	}
 }

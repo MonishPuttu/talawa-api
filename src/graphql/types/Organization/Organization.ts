@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 import type { z } from "zod";
 import type { iso3166Alpha2CountryCodeEnum } from "~/src/drizzle/enums/iso3166Alpha2CountryCode";
+=======
+>>>>>>> upstream
 import type { organizationsTable } from "~/src/drizzle/tables/organizations";
 import { builder } from "~/src/graphql/builder";
 import { Iso3166Alpha2CountryCode } from "~/src/graphql/enums/Iso3166Alpha2CountryCode";
@@ -24,6 +27,7 @@ Organization.implement({
 		city: t.exposeString("city", {
 			description: "Name of the city where the organization exists in.",
 		}),
+<<<<<<< HEAD
 		countryCode: t.field({
 			description: "Country code of the country the organization exists in.",
 			nullable: true,
@@ -31,6 +35,10 @@ Organization.implement({
 				organization.countryCode as z.infer<
 					typeof iso3166Alpha2CountryCodeEnum
 				> | null,
+=======
+		countryCode: t.expose("countryCode", {
+			description: "Country code of the country the organization exists in.",
+>>>>>>> upstream
 			type: Iso3166Alpha2CountryCode,
 		}),
 		createdAt: t.expose("createdAt", {

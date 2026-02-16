@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+>>>>>>> upstream
 import type { GraphQLContext } from "../../context";
 import {
 	FundCampaign,
@@ -14,15 +19,26 @@ import {
  * @param parent - The parent FundCampaign object containing the updatedAt field
  * @param args - GraphQL arguments (unused)
  * @param ctx - GraphQL context containing authentication and database clients
+<<<<<<< HEAD
  * @returns Promise<Date> The timestamp when the fund campaign was last updated
  * @throws TalawaGraphQLError With code 'unauthenticated' if user is not logged in
  * @throws TalawaGraphQLError With code 'unauthorized_action' if user lacks required permissions
  * @throws TalawaGraphQLError With code 'unexpected' for database or other runtime errors
+=======
+ * @returns {Promise<Date>} The timestamp when the fund campaign was last updated
+ * @throws {TalawaGraphQLError} With code 'unauthenticated' if user is not logged in
+ * @throws {TalawaGraphQLError} With code 'unauthorized_action' if user lacks required permissions
+ * @throws {TalawaGraphQLError} With code 'unexpected' for database or other runtime errors
+>>>>>>> upstream
  */
 
 export const updatedAtResolver = async (
 	parent: FundCampaignType,
+<<<<<<< HEAD
 	_args: Record<string, never>,
+=======
+	args: Record<string, never>,
+>>>>>>> upstream
 	ctx: GraphQLContext,
 ) => {
 	try {

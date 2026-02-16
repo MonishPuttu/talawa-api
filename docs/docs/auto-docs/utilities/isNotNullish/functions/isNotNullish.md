@@ -31,7 +31,11 @@ This function is used to check nullish state of a value passed to it. Nullish me
 ```ts
 function print(str: string | null) {
 	if (isNotNullish(str)) {
+<<<<<<< HEAD
 		console.log(`the string is $\{str\}`);
+=======
+		console.log(`the string is ${str}`);
+>>>>>>> upstream
 	} else {
 		console.log(`the string is null`);
 	}

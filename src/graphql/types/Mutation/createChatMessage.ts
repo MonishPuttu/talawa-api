@@ -6,9 +6,14 @@ import {
 	mutationCreateChatMessageInputSchema,
 } from "~/src/graphql/inputs/MutationCreateChatMessageInput";
 import { ChatMessage } from "~/src/graphql/types/ChatMessage/ChatMessage";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+>>>>>>> upstream
 const mutationCreateChatMessageArgumentsSchema = z.object({
 	input: mutationCreateChatMessageInputSchema,
 });
@@ -113,10 +118,14 @@ builder.mutationField("createChatMessage", (t) =>
 				});
 			}
 
+<<<<<<< HEAD
 			if (
 				parsedArgs.input.parentMessageId !== undefined &&
 				parsedArgs.input.parentMessageId !== null
 			) {
+=======
+			if (parsedArgs.input.parentMessageId !== undefined) {
+>>>>>>> upstream
 				const parentMessageId = parsedArgs.input.parentMessageId;
 
 				const existingChatMessage =

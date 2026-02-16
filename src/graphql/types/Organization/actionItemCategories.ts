@@ -1,5 +1,9 @@
 import { Buffer } from "node:buffer";
+<<<<<<< HEAD
 import { and, asc, desc, eq, exists, gt, lt, type SQL } from "drizzle-orm";
+=======
+import { type SQL, and, asc, desc, eq, exists, gt, lt } from "drizzle-orm";
+>>>>>>> upstream
 import type { z } from "zod";
 import {
 	actionItemCategoriesTable,
@@ -7,21 +11,36 @@ import {
 } from "~/src/drizzle/tables/actionItemCategories";
 import type { GraphQLContext } from "~/src/graphql/context";
 import { ActionItemCategory } from "~/src/graphql/types/ActionItemCategory/ActionItemCategory";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+>>>>>>> upstream
 import {
 	defaultGraphQLConnectionArgumentsSchema,
 	transformDefaultGraphQLConnectionArguments,
 	transformToDefaultGraphQLConnection,
+<<<<<<< HEAD
 } from "~/src/utilities/graphqlConnection";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 import type { Organization as OrganizationType } from "./Organization";
 import { Organization } from "./Organization";
+=======
+} from "~/src/utilities/defaultGraphQLConnection";
+import envConfig from "~/src/utilities/graphqLimits";
+import { Organization } from "./Organization";
+import type { Organization as OrganizationType } from "./Organization";
+>>>>>>> upstream
 
 const actionItemCategoriesArgumentsSchema =
 	defaultGraphQLConnectionArgumentsSchema
 		.transform(transformDefaultGraphQLConnectionArguments)
 		.transform((arg, ctx) => {
+<<<<<<< HEAD
 			let cursor: z.infer<typeof cursorSchema> | undefined;
+=======
+			let cursor: z.infer<typeof cursorSchema> | undefined = undefined;
+>>>>>>> upstream
 
 			try {
 				if (arg.cursor !== undefined) {
@@ -29,7 +48,11 @@ const actionItemCategoriesArgumentsSchema =
 						JSON.parse(Buffer.from(arg.cursor, "base64url").toString("utf-8")),
 					);
 				}
+<<<<<<< HEAD
 			} catch (_error) {
+=======
+			} catch (error) {
+>>>>>>> upstream
 				ctx.addIssue({
 					code: "custom",
 					message: "Not a valid cursor.",
@@ -196,9 +219,18 @@ export const resolveActionItemCategories = async (
 	}
 
 	return transformToDefaultGraphQLConnection({
+<<<<<<< HEAD
 		createCursor: (actionItemCategory) => ({
 			name: actionItemCategory.name,
 		}),
+=======
+		createCursor: (actionItemCategory) =>
+			Buffer.from(
+				JSON.stringify({
+					name: actionItemCategory.name,
+				}),
+			).toString("base64url"),
+>>>>>>> upstream
 		createNode: (actionItemCategory) => actionItemCategory,
 		parsedArgs,
 		rawNodes: actionItemCategories,

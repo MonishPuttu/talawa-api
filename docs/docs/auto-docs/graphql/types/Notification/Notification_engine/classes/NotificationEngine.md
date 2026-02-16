@@ -32,6 +32,7 @@ GraphQL context containing database connections and user info
 
 ## Methods
 
+<<<<<<< HEAD
 ### createDirectEmailNotification()
 
 > **createDirectEmailNotification**(`eventType`, `variables`, `receiverMail`, `channelType`): `Promise`\<`string`\>
@@ -75,6 +76,8 @@ Channel type (defaults to EMAIL)
 
 ***
 
+=======
+>>>>>>> upstream
 ### createNotification()
 
 > **createNotification**(`eventType`, `variables`, `audience`, `channelType`): `Promise`\<`string`\>
@@ -113,4 +116,8 @@ Channel to deliver notification (in_app, email)
 
 `Promise`\<`string`\>
 
+<<<<<<< HEAD
 - The created notification log ID
+=======
+The created notification log ID
+>>>>>>> upstream

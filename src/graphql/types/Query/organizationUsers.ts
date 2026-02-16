@@ -1,13 +1,21 @@
+<<<<<<< HEAD
 import type { InferSelectModel } from "drizzle-orm";
 import { inArray } from "drizzle-orm";
+=======
+import { inArray } from "drizzle-orm";
+import type { InferSelectModel } from "drizzle-orm";
+>>>>>>> upstream
 import { z } from "zod";
 import type { usersTable } from "~/src/drizzle/schema";
 import { builder } from "~/src/graphql/builder";
 import { Event } from "~/src/graphql/types/Event/Event";
+<<<<<<< HEAD
 import {
 	type EventWithAttachments,
 	filterInviteOnlyEvents,
 } from "~/src/graphql/types/Query/eventQueries";
+=======
+>>>>>>> upstream
 import { User } from "~/src/graphql/types/User/User";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 
@@ -17,6 +25,42 @@ const usersByIdsInputSchema = z.object({
 	ids: z.array(z.string().uuid()).min(1),
 });
 
+<<<<<<< HEAD
+=======
+interface EventType {
+	id: string;
+	name: string;
+	description: string | null;
+	createdAt: Date;
+	updatedAt: Date | null;
+	creatorId: string | null;
+	updaterId: string | null;
+	startAt: Date;
+	endAt: Date;
+	organizationId: string;
+	allDay: boolean;
+	isPublic: boolean;
+	isRegisterable: boolean;
+	location: string | null;
+	isRecurringEventTemplate: boolean;
+	attachments: Array<{
+		name: string;
+		createdAt: Date;
+		creatorId: string | null;
+		updatedAt: Date | null;
+		updaterId: string | null;
+		eventId: string;
+		mimeType:
+			| "image/avif"
+			| "image/jpeg"
+			| "image/png"
+			| "image/webp"
+			| "video/mp4"
+			| "video/webm";
+	}>;
+}
+
+>>>>>>> upstream
 const eventsByOrganizationIdInputSchema = z.object({
 	organizationId: z.string().uuid(),
 });
@@ -58,7 +102,11 @@ builder.queryField("usersByIds", (t) =>
 			const userIds = parsedArgs.data.ids;
 
 			const users = await ctx.drizzleClient.query.usersTable.findMany({
+<<<<<<< HEAD
 				where: (fields, _operators) => inArray(fields.id, userIds),
+=======
+				where: (fields, operators) => inArray(fields.id, userIds),
+>>>>>>> upstream
 			});
 
 			return users;
@@ -88,15 +136,23 @@ builder.queryField("usersByOrganizationId", (t) =>
 				if (userIds.length === 0) return [];
 
 				const users = await ctx.drizzleClient.query.usersTable.findMany({
+<<<<<<< HEAD
 					where: (fields, _operators) => inArray(fields.id, userIds),
+=======
+					where: (fields, operators) => inArray(fields.id, userIds),
+>>>>>>> upstream
 				});
 
 				return users;
 			} catch (error) {
+<<<<<<< HEAD
 				ctx.log.error(
 					{ error, organizationId: args.organizationId },
 					"Error fetching users for organization",
 				);
+=======
+				console.error("Error fetching users for organization:", error);
+>>>>>>> upstream
 				throw new Error("An error occurred while fetching users.");
 			}
 		},
@@ -117,12 +173,20 @@ builder.queryField("eventsByOrganizationId", (t) =>
 				required: true,
 			}),
 		},
+<<<<<<< HEAD
 		resolve: async (_parent, args, ctx): Promise<EventWithAttachments[]> => {
+=======
+		resolve: async (_parent, args, ctx): Promise<EventType[]> => {
+>>>>>>> upstream
 			if (!ctx.currentClient.isAuthenticated) {
 				throw new TalawaGraphQLError({
 					extensions: { code: "unauthenticated" },
 				});
 			}
+<<<<<<< HEAD
+=======
+			console.log("Input args:", args.input);
+>>>>>>> upstream
 
 			const parsedArgs = eventsByOrganizationIdInputSchema.safeParse(
 				args.input,
@@ -138,6 +202,7 @@ builder.queryField("eventsByOrganizationId", (t) =>
 					},
 				});
 			}
+<<<<<<< HEAD
 			const currentUserId = ctx.currentClient.user.id;
 
 			// Get current user and organization membership for filtering
@@ -169,12 +234,17 @@ builder.queryField("eventsByOrganizationId", (t) =>
 			const currentUserOrganizationMembership =
 				currentUser.organizationMembershipsWhereMember[0];
 
+=======
+			console.log("Drizzle Client:", !!ctx.drizzleClient);
+			console.log("Events Table Query:", !!ctx.drizzleClient.query.eventsTable);
+>>>>>>> upstream
 			try {
 				const events = await ctx.drizzleClient.query.eventsTable.findMany({
 					with: {
 						attachmentsWhereEvent: true,
 					},
 					where: (fields, operators) =>
+<<<<<<< HEAD
 						operators.and(
 							operators.eq(
 								fields.organizationId,
@@ -210,6 +280,22 @@ builder.queryField("eventsByOrganizationId", (t) =>
 					{ error, organizationId: parsedArgs.data.organizationId },
 					"Error fetching events for organization",
 				);
+=======
+						operators.eq(fields.organizationId, parsedArgs.data.organizationId),
+				});
+
+				console.log("Found events:", events);
+
+				return events.map((event) => ({
+					...event,
+					attachments:
+						event.attachmentsWhereEvent?.map((attachment) => ({
+							...attachment,
+						})) || [],
+				})) as EventType[];
+			} catch (error) {
+				console.error("Error fetching events for organization:", error);
+>>>>>>> upstream
 				throw new Error("An error occurred while fetching events.");
 			}
 		},

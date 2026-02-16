@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { promises as fs } from "node:fs";
 import { resolve } from "node:path";
 import process from "node:process";
@@ -505,15 +506,176 @@ export async function initializeEnvFile(answers: SetupAnswers): Promise<void> {
 	try {
 		await fs.access(envFileToUse);
 	} catch {
+=======
+import crypto from "node:crypto";
+import fs from "node:fs";
+import process from "node:process";
+import dotenv from "dotenv";
+import inquirer from "inquirer";
+import { updateEnvVariable } from "./updateEnvVariable";
+
+interface SetupAnswers {
+	[key: string]: string;
+}
+
+async function promptInput(
+	name: string,
+	message: string,
+	defaultValue?: string,
+	validate?: (input: string) => true | string,
+): Promise<string> {
+	const { [name]: result } = await inquirer.prompt([
+		{ type: "input", name, message, default: defaultValue, validate },
+	]);
+	return result;
+}
+
+async function promptList(
+	name: string,
+	message: string,
+	choices: string[],
+	defaultValue?: string,
+): Promise<string> {
+	const { [name]: result } = await inquirer.prompt([
+		{ type: "list", name, message, choices, default: defaultValue },
+	]);
+	return result;
+}
+
+async function promptConfirm(
+	name: string,
+	message: string,
+	defaultValue?: boolean,
+): Promise<boolean> {
+	const { [name]: result } = await inquirer.prompt([
+		{ type: "confirm", name, message, default: defaultValue },
+	]);
+	return result;
+}
+
+const envFileName = ".env";
+
+export function generateJwtSecret(): string {
+	try {
+		return crypto.randomBytes(64).toString("hex");
+	} catch (err) {
+		console.error(
+			"⚠️ Warning: Permission denied while generating JWT secret. Ensure the process has sufficient filesystem access.",
+			err,
+		);
+		throw new Error("Failed to generate JWT secret");
+	}
+}
+
+export function validateURL(input: string): true | string {
+	try {
+		const url = new URL(input);
+		const protocol = url.protocol.toLowerCase();
+		if (protocol !== "http:" && protocol !== "https:") {
+			return "Please enter a valid URL with http:// or https:// protocol.";
+		}
+		return true;
+	} catch (error) {
+		return "Please enter a valid URL.";
+	}
+}
+
+export function validatePort(input: string): true | string {
+	const portNumber = Number(input);
+	if (Number.isNaN(portNumber) || portNumber <= 0 || portNumber > 65535) {
+		return "Please enter a valid port number (1-65535).";
+	}
+	return true;
+}
+
+export function validateEmail(input: string): true | string {
+	if (!input.trim()) {
+		return "Email cannot be empty.";
+	}
+	if (input.length > 254) {
+		return "Email is too long.";
+	}
+	const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+	if (!emailRegex.test(input)) {
+		return "Invalid email format. Please enter a valid email address.";
+	}
+	return true;
+}
+
+export function validateCloudBeaverAdmin(input: string): true | string {
+	if (!input) return "Admin name is required";
+	if (input.length < 3) return "Admin name must be at least 3 characters long";
+	if (!/^[a-zA-Z0-9_]+$/.test(input))
+		return "Admin name can only contain letters, numbers, and underscores";
+	return true;
+}
+
+export function validateCloudBeaverPassword(input: string): true | string {
+	if (!input) return "Password is required";
+	if (input.length < 8) return "Password must be at least 8 characters long";
+	if (!/[A-Za-z]/.test(input) || !/[0-9]/.test(input)) {
+		return "Password must contain both letters and numbers";
+	}
+	return true;
+}
+
+export function validateCloudBeaverURL(input: string): true | string {
+	if (!input) return "Server URL is required";
+	try {
+		const url = new URL(input);
+		if (!["http:", "https:"].includes(url.protocol)) {
+			return "URL must use HTTP or HTTPS protocol";
+		}
+		const port = url.port || (url.protocol === "https:" ? "443" : "80");
+		if (!/^\d+$/.test(port) || Number.parseInt(port) > 65535) {
+			return "Invalid port in URL";
+		}
+		return true;
+	} catch {
+		return "Invalid URL format";
+	}
+}
+
+function handlePromptError(err: unknown): never {
+	console.error(err);
+	if (fs.existsSync(".env.backup")) {
+		fs.copyFileSync(".env.backup", ".env");
+	}
+	process.exit(1);
+}
+
+export function checkEnvFile(): boolean {
+	return fs.existsSync(envFileName);
+}
+
+export function initializeEnvFile(answers: SetupAnswers): void {
+	if (fs.existsSync(envFileName)) {
+		fs.copyFileSync(envFileName, `${envFileName}.backup`);
+		console.log(`✅ Backup created at ${envFileName}.backup`);
+	}
+
+	const envFileToUse =
+		answers.CI === "true" ? "envFiles/.env.ci" : "envFiles/.env.devcontainer";
+
+	if (!fs.existsSync(envFileToUse)) {
+>>>>>>> upstream
 		console.warn(`⚠️ Warning: Configuration file '${envFileToUse}' is missing.`);
 		throw new Error(
 			`Configuration file '${envFileToUse}' is missing. Please create the file or use a different environment configuration.`,
 		);
 	}
+<<<<<<< HEAD
 	try {
 		// Read and parse the source environment file
 		const fileContent = await fs.readFile(envFileToUse, { encoding: "utf-8" });
 		const parsedEnv = dotenv.parse(fileContent);
+=======
+
+	try {
+		const parsedEnv = dotenv.parse(fs.readFileSync(envFileToUse));
+		dotenv.config({ path: envFileName });
+
+>>>>>>> upstream
 		const safeContent = Object.entries(parsedEnv)
 			.map(([key, value]) => {
 				const escaped = value
@@ -524,22 +686,29 @@ export async function initializeEnvFile(answers: SetupAnswers): Promise<void> {
 			})
 			.join("\n");
 
+<<<<<<< HEAD
 		// Use AtomicEnvWriter for safe file operations
 		// Note: Backup is already created in setup() based on user preference
 		await writeTemp(envTempFile, safeContent);
 		await commitTemp(envFileName, envTempFile);
 
 		dotenv.config({ path: envFileName });
+=======
+		fs.writeFileSync(envFileName, safeContent, { encoding: "utf-8" });
+>>>>>>> upstream
 		console.log(
 			`✅ Environment variables loaded successfully from ${envFileToUse}`,
 		);
 	} catch (error) {
+<<<<<<< HEAD
 		// Clean up temp file on error
 		try {
 			await cleanupTemp(envTempFile);
 		} catch (cleanupError) {
 			console.warn("⚠️  Failed to clean temp file:", cleanupError);
 		}
+=======
+>>>>>>> upstream
 		console.error(
 			`❌ Error: Failed to load environment file '${envFileToUse}'.`,
 		);
@@ -549,25 +718,42 @@ export async function initializeEnvFile(answers: SetupAnswers): Promise<void> {
 		);
 	}
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream
 export async function setCI(answers: SetupAnswers): Promise<SetupAnswers> {
 	try {
 		answers.CI = await promptList("CI", "Set CI:", ["true", "false"], "false");
 	} catch (err) {
+<<<<<<< HEAD
 		await handlePromptError(err);
 	}
 	return answers;
 }
+=======
+		handlePromptError(err);
+	}
+	return answers;
+}
+
+>>>>>>> upstream
 export async function administratorEmail(
 	answers: SetupAnswers,
 ): Promise<SetupAnswers> {
 	try {
 		answers.API_ADMINISTRATOR_USER_EMAIL_ADDRESS = await promptInput(
 			"API_ADMINISTRATOR_USER_EMAIL_ADDRESS",
+<<<<<<< HEAD
 			"Enter administrator user email address:",
+=======
+			"Enter email:",
+>>>>>>> upstream
 			"administrator@email.com",
 			validateEmail,
 		);
 	} catch (err) {
+<<<<<<< HEAD
 		await handlePromptError(err);
 	}
 	return answers;
@@ -770,6 +956,9 @@ export async function oauthSetup(answers: SetupAnswers): Promise<SetupAnswers> {
 		console.log("\nOAuth provider configuration completed!");
 	} catch (err) {
 		await handlePromptError(err);
+=======
+		handlePromptError(err);
+>>>>>>> upstream
 	}
 	return answers;
 }
@@ -783,35 +972,59 @@ export async function apiSetup(answers: SetupAnswers): Promise<SetupAnswers> {
 			validateURL,
 		);
 		answers.API_HOST = await promptInput("API_HOST", "API host:", "0.0.0.0");
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream
 		answers.API_PORT = await promptInput(
 			"API_PORT",
 			"API port:",
 			"4000",
 			validatePort,
 		);
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream
 		answers.API_IS_APPLY_DRIZZLE_MIGRATIONS = await promptList(
 			"API_IS_APPLY_DRIZZLE_MIGRATIONS",
 			"Apply Drizzle migrations?",
 			["true", "false"],
 			"true",
 		);
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream
 		answers.API_IS_GRAPHIQL = await promptList(
 			"API_IS_GRAPHIQL",
 			"Enable GraphQL?",
 			["true", "false"],
 			answers.CI === "false" ? "true" : "false",
 		);
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream
 		answers.API_IS_PINO_PRETTY = await promptList(
 			"API_IS_PINO_PRETTY",
 			"Enable Pino Pretty logs?",
 			["true", "false"],
 			answers.CI === "false" ? "true" : "false",
 		);
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream
 		answers.API_JWT_EXPIRES_IN = await promptInput(
 			"API_JWT_EXPIRES_IN",
 			"JWT expiration (ms):",
 			"2592000000",
 		);
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream
 		const jwtSecret = generateJwtSecret();
 		answers.API_JWT_SECRET = await promptInput(
 			"API_JWT_SECRET",
@@ -826,6 +1039,7 @@ export async function apiSetup(answers: SetupAnswers): Promise<SetupAnswers> {
 			},
 		);
 
+<<<<<<< HEAD
 		answers.API_EMAIL_VERIFICATION_TOKEN_EXPIRES_SECONDS = await promptInput(
 			"API_EMAIL_VERIFICATION_TOKEN_EXPIRES_SECONDS",
 			"Email verification token expiration (seconds):",
@@ -853,27 +1067,42 @@ export async function apiSetup(answers: SetupAnswers): Promise<SetupAnswers> {
 			},
 		);
 
+=======
+>>>>>>> upstream
 		answers.API_LOG_LEVEL = await promptList(
 			"API_LOG_LEVEL",
 			"Log level:",
 			["info", "debug"],
 			answers.CI === "true" ? "info" : "debug",
 		);
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream
 		answers.API_MINIO_ACCESS_KEY = await promptInput(
 			"API_MINIO_ACCESS_KEY",
 			"Minio access key:",
 			"talawa",
 		);
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream
 		answers.API_MINIO_END_POINT = await promptInput(
 			"API_MINIO_END_POINT",
 			"Minio endpoint:",
 			"minio",
 		);
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream
 		answers.API_MINIO_PORT = await promptInput(
 			"API_MINIO_PORT",
 			"Minio port:",
 			"9000",
 		);
+<<<<<<< HEAD
 		// Treat empty string as unset so users can supply a new secret
 		const rawMinioPassword =
 			answers.MINIO_ROOT_PASSWORD ?? process.env.MINIO_ROOT_PASSWORD;
@@ -905,27 +1134,58 @@ export async function apiSetup(answers: SetupAnswers): Promise<SetupAnswers> {
 				"ℹ️  MINIO_ROOT_PASSWORD will be set to match API_MINIO_SECRET_KEY",
 			);
 		}
+=======
+
+		answers.API_MINIO_SECRET_KEY = await promptInput(
+			"API_MINIO_SECRET_KEY",
+			"Minio secret key:",
+			"password",
+		);
+
+		while (answers.API_MINIO_SECRET_KEY !== process.env.MINIO_ROOT_PASSWORD) {
+			console.warn("⚠️ API_MINIO_SECRET_KEY must match MINIO_ROOT_PASSWORD.");
+			answers.API_MINIO_SECRET_KEY = await promptInput(
+				"API_MINIO_SECRET_KEY",
+				"Minio secret key:",
+				"password",
+			);
+		}
+
+>>>>>>> upstream
 		answers.API_MINIO_TEST_END_POINT = await promptInput(
 			"API_MINIO_TEST_END_POINT",
 			"Minio test endpoint:",
 			"minio-test",
 		);
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream
 		answers.API_MINIO_USE_SSL = await promptList(
 			"API_MINIO_USE_SSL",
 			"Use Minio SSL?",
 			["true", "false"],
 			"false",
 		);
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream
 		answers.API_POSTGRES_DATABASE = await promptInput(
 			"API_POSTGRES_DATABASE",
 			"Postgres database:",
 			"talawa",
 		);
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream
 		answers.API_POSTGRES_HOST = await promptInput(
 			"API_POSTGRES_HOST",
 			"Postgres host:",
 			"postgres",
 		);
+<<<<<<< HEAD
 		// Treat empty string as unset so users can supply a new secret
 		const rawPostgresPassword =
 			answers.POSTGRES_PASSWORD ?? process.env.POSTGRES_PASSWORD;
@@ -957,33 +1217,73 @@ export async function apiSetup(answers: SetupAnswers): Promise<SetupAnswers> {
 				"ℹ️  POSTGRES_PASSWORD will be set to match API_POSTGRES_PASSWORD",
 			);
 		}
+=======
+
+		answers.API_POSTGRES_PASSWORD = await promptInput(
+			"API_POSTGRES_PASSWORD",
+			"Postgres password:",
+			"password",
+		);
+
+		while (answers.API_POSTGRES_PASSWORD !== process.env.POSTGRES_PASSWORD) {
+			console.warn("⚠️ API_POSTGRES_PASSWORD must match POSTGRES_PASSWORD.");
+			answers.API_POSTGRES_PASSWORD = await promptInput(
+				"API_POSTGRES_PASSWORD",
+				"Postgres password:",
+				"password",
+			);
+		}
+
+>>>>>>> upstream
 		answers.API_POSTGRES_PORT = await promptInput(
 			"API_POSTGRES_PORT",
 			"Postgres port:",
 			"5432",
+<<<<<<< HEAD
 			validatePort,
 		);
+=======
+		);
+
+>>>>>>> upstream
 		answers.API_POSTGRES_SSL_MODE = await promptList(
 			"API_POSTGRES_SSL_MODE",
 			"Use Postgres SSL?",
 			["true", "false"],
 			"false",
 		);
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream
 		answers.API_POSTGRES_TEST_HOST = await promptInput(
 			"API_POSTGRES_TEST_HOST",
 			"Postgres test host:",
 			"postgres-test",
 		);
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream
 		answers.API_POSTGRES_USER = await promptInput(
 			"API_POSTGRES_USER",
 			"Postgres user:",
 			"talawa",
 		);
 	} catch (err) {
+<<<<<<< HEAD
 		await handlePromptError(err);
 	}
 	return answers;
 }
+=======
+		handlePromptError(err);
+	}
+
+	return answers;
+}
+
+>>>>>>> upstream
 export async function cloudbeaverSetup(
 	answers: SetupAnswers,
 ): Promise<SetupAnswers> {
@@ -994,39 +1294,72 @@ export async function cloudbeaverSetup(
 			"talawa",
 			validateCloudBeaverAdmin,
 		);
+<<<<<<< HEAD
 		answers.CLOUDBEAVER_ADMIN_PASSWORD = await promptInput(
 			"CLOUDBEAVER_ADMIN_PASSWORD",
 			"CloudBeaver admin password:",
 			process.env.CLOUDBEAVER_ADMIN_PASSWORD ?? "",
 			validateCloudBeaverPassword,
 		);
+=======
+
+		answers.CLOUDBEAVER_ADMIN_PASSWORD = await promptInput(
+			"CLOUDBEAVER_ADMIN_PASSWORD",
+			"CloudBeaver admin password:",
+			"password",
+			validateCloudBeaverPassword,
+		);
+
+>>>>>>> upstream
 		answers.CLOUDBEAVER_MAPPED_HOST_IP = await promptInput(
 			"CLOUDBEAVER_MAPPED_HOST_IP",
 			"CloudBeaver mapped host IP:",
 			"127.0.0.1",
 		);
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream
 		answers.CLOUDBEAVER_MAPPED_PORT = await promptInput(
 			"CLOUDBEAVER_MAPPED_PORT",
 			"CloudBeaver mapped port:",
 			"8978",
 			validatePort,
 		);
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream
 		answers.CLOUDBEAVER_SERVER_NAME = await promptInput(
 			"CLOUDBEAVER_SERVER_NAME",
 			"CloudBeaver server name:",
 			"Talawa CloudBeaver Server",
 		);
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream
 		answers.CLOUDBEAVER_SERVER_URL = await promptInput(
 			"CLOUDBEAVER_SERVER_URL",
 			"CloudBeaver server URL:",
 			"http://127.0.0.1:8978",
 			validateCloudBeaverURL,
 		);
+<<<<<<< HEAD
 	} catch (err) {
 		await handlePromptError(err);
 	}
 	return answers;
 }
+=======
+
+		return answers;
+	} catch (err) {
+		handlePromptError(err);
+	}
+}
+
+>>>>>>> upstream
 export async function minioSetup(answers: SetupAnswers): Promise<SetupAnswers> {
 	try {
 		answers.MINIO_BROWSER = await promptInput(
@@ -1034,29 +1367,49 @@ export async function minioSetup(answers: SetupAnswers): Promise<SetupAnswers> {
 			"Minio browser (on/off):",
 			answers.CI === "true" ? "off" : "on",
 		);
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream
 		if (answers.CI === "false") {
 			answers.MINIO_API_MAPPED_HOST_IP = await promptInput(
 				"MINIO_API_MAPPED_HOST_IP",
 				"Minio API mapped host IP:",
 				"127.0.0.1",
 			);
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream
 			answers.MINIO_API_MAPPED_PORT = await promptInput(
 				"MINIO_API_MAPPED_PORT",
 				"Minio API mapped port:",
 				"9000",
 				validatePort,
 			);
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream
 			answers.MINIO_CONSOLE_MAPPED_HOST_IP = await promptInput(
 				"MINIO_CONSOLE_MAPPED_HOST_IP",
 				"Minio console mapped host IP:",
 				"127.0.0.1",
 			);
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream
 			answers.MINIO_CONSOLE_MAPPED_PORT = await promptInput(
 				"MINIO_CONSOLE_MAPPED_PORT",
 				"Minio console mapped port:",
 				"9001",
 				validatePort,
 			);
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream
 			let portConflict = true;
 			while (portConflict && answers.CI === "false") {
 				if (
@@ -1068,7 +1421,11 @@ export async function minioSetup(answers: SetupAnswers): Promise<SetupAnswers> {
 					answers.MINIO_CONSOLE_MAPPED_PORT = await promptInput(
 						"MINIO_CONSOLE_MAPPED_PORT",
 						"Please enter a different Minio console mapped port:",
+<<<<<<< HEAD
 						String(Number(answers.MINIO_API_MAPPED_PORT) + 1),
+=======
+						String(Number(answers.MINIO_API_MAPPED_PORT) + 1), // Suggest next available port
+>>>>>>> upstream
 						validatePort,
 					);
 				} else {
@@ -1076,6 +1433,7 @@ export async function minioSetup(answers: SetupAnswers): Promise<SetupAnswers> {
 				}
 			}
 		}
+<<<<<<< HEAD
 		// Use already-synced API_MINIO_SECRET_KEY as default if available
 		const minioPasswordDefault =
 			answers.API_MINIO_SECRET_KEY ??
@@ -1102,16 +1460,35 @@ export async function minioSetup(answers: SetupAnswers): Promise<SetupAnswers> {
 			answers.API_MINIO_SECRET_KEY = answers.MINIO_ROOT_PASSWORD;
 			process.env.MINIO_ROOT_PASSWORD = answers.MINIO_ROOT_PASSWORD;
 		}
+=======
+
+		answers.MINIO_ROOT_PASSWORD = await promptInput(
+			"MINIO_ROOT_PASSWORD",
+			"Minio root password:",
+			"password",
+		);
+
+>>>>>>> upstream
 		answers.MINIO_ROOT_USER = await promptInput(
 			"MINIO_ROOT_USER",
 			"Minio root user:",
 			"talawa",
 		);
+<<<<<<< HEAD
 	} catch (err) {
 		await handlePromptError(err);
 	}
 	return answers;
 }
+=======
+
+		return answers;
+	} catch (err) {
+		handlePromptError(err);
+	}
+}
+
+>>>>>>> upstream
 export async function postgresSetup(
 	answers: SetupAnswers,
 ): Promise<SetupAnswers> {
@@ -1121,12 +1498,20 @@ export async function postgresSetup(
 			"Postgres database:",
 			"talawa",
 		);
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream
 		if (answers.CI === "false") {
 			answers.POSTGRES_MAPPED_HOST_IP = await promptInput(
 				"POSTGRES_MAPPED_HOST_IP",
 				"Postgres mapped host IP:",
 				"127.0.0.1",
 			);
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream
 			answers.POSTGRES_MAPPED_PORT = await promptInput(
 				"POSTGRES_MAPPED_PORT",
 				"Postgres mapped port:",
@@ -1134,6 +1519,7 @@ export async function postgresSetup(
 				validatePort,
 			);
 		}
+<<<<<<< HEAD
 		// Use already-synced API_POSTGRES_PASSWORD as default if available
 		const postgresPasswordDefault =
 			answers.API_POSTGRES_PASSWORD ??
@@ -1160,16 +1546,35 @@ export async function postgresSetup(
 			answers.API_POSTGRES_PASSWORD = answers.POSTGRES_PASSWORD;
 			process.env.POSTGRES_PASSWORD = answers.POSTGRES_PASSWORD;
 		}
+=======
+
+		answers.POSTGRES_PASSWORD = await promptInput(
+			"POSTGRES_PASSWORD",
+			"Postgres password:",
+			"password",
+		);
+
+>>>>>>> upstream
 		answers.POSTGRES_USER = await promptInput(
 			"POSTGRES_USER",
 			"Postgres user:",
 			"talawa",
 		);
+<<<<<<< HEAD
 	} catch (err) {
 		await handlePromptError(err);
 	}
 	return answers;
 }
+=======
+
+		return answers;
+	} catch (err) {
+		handlePromptError(err);
+	}
+}
+
+>>>>>>> upstream
 export async function caddySetup(answers: SetupAnswers): Promise<SetupAnswers> {
 	try {
 		answers.CADDY_HTTP_MAPPED_PORT = await promptInput(
@@ -1178,34 +1583,58 @@ export async function caddySetup(answers: SetupAnswers): Promise<SetupAnswers> {
 			"80",
 			validatePort,
 		);
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream
 		answers.CADDY_HTTPS_MAPPED_PORT = await promptInput(
 			"CADDY_HTTPS_MAPPED_PORT",
 			"Caddy HTTPS mapped port:",
 			"443",
 			validatePort,
 		);
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream
 		answers.CADDY_HTTP3_MAPPED_PORT = await promptInput(
 			"CADDY_HTTP3_MAPPED_PORT",
 			"Caddy HTTP3 mapped port:",
 			"443",
 			validatePort,
 		);
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream
 		answers.CADDY_TALAWA_API_DOMAIN_NAME = await promptInput(
 			"CADDY_TALAWA_API_DOMAIN_NAME",
 			"Caddy Talawa API domain name:",
 			"localhost",
 		);
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream
 		answers.CADDY_TALAWA_API_EMAIL = await promptInput(
 			"CADDY_TALAWA_API_EMAIL",
 			"Caddy Talawa API email:",
 			"talawa@email.com",
 			validateEmail,
 		);
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream
 		answers.CADDY_TALAWA_API_HOST = await promptInput(
 			"CADDY_TALAWA_API_HOST",
 			"Caddy Talawa API host:",
 			"api",
 		);
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream
 		answers.CADDY_TALAWA_API_PORT = await promptInput(
 			"CADDY_TALAWA_API_PORT",
 			"Caddy Talawa API port:",
@@ -1213,12 +1642,17 @@ export async function caddySetup(answers: SetupAnswers): Promise<SetupAnswers> {
 			validatePort,
 		);
 	} catch (err) {
+<<<<<<< HEAD
 		await handlePromptError(err);
+=======
+		handlePromptError(err);
+>>>>>>> upstream
 	}
 	return answers;
 }
 
 export async function setup(): Promise<SetupAnswers> {
+<<<<<<< HEAD
 	// Reset state variables at the start of each setup call
 	// This ensures clean state for tests and multiple setup() calls
 	backupCreated = false;
@@ -1237,12 +1671,20 @@ export async function setup(): Promise<SetupAnswers> {
 		const envReconfigure = await promptConfirm(
 			"envReconfigure",
 			"Env file found. Re-configure?",
+=======
+	let answers: SetupAnswers = {};
+	if (checkEnvFile()) {
+		const envReconfigure = await promptConfirm(
+			"envReconfigure",
+			"Env file found. Re-configure? (Y)/N",
+>>>>>>> upstream
 			true,
 		);
 		if (!envReconfigure) {
 			process.exit(0);
 		}
 	}
+<<<<<<< HEAD
 	dotenv.config({ path: envFileName });
 
 	// Create backup using AtomicEnvWriter if .env exists
@@ -1302,28 +1744,74 @@ export async function setup(): Promise<SetupAnswers> {
 		const useDefaultCloudbeaver = await promptConfirm(
 			"useDefaultCloudbeaver",
 			"Use recommended default CloudBeaver settings?",
+=======
+
+	dotenv.config({ path: envFileName });
+
+	process.on("SIGINT", () => {
+		console.log("\nProcess interrupted! Undoing changes...");
+		answers = {};
+		if (fs.existsSync(".env.backup")) {
+			fs.copyFileSync(".env.backup", ".env");
+		}
+		process.exit(1);
+	});
+
+	answers = await setCI(answers);
+	initializeEnvFile(answers);
+
+	const useDefaultMinio = await promptConfirm(
+		"useDefaultMinio",
+		"Use recommended default Minio settings? (Y)/N",
+		true,
+	);
+
+	if (!useDefaultMinio) {
+		answers = await minioSetup(answers);
+	}
+
+	if (answers.CI === "false") {
+		const useDefaultCloudbeaver = await promptConfirm(
+			"useDefaultCloudbeaver",
+			"Use recommended default CloudBeaver settings? (Y)/N",
+>>>>>>> upstream
 			true,
 		);
 		if (!useDefaultCloudbeaver) {
 			answers = await cloudbeaverSetup(answers);
 		}
 	}
+<<<<<<< HEAD
 	const useDefaultPostgres = await promptConfirm(
 		"useDefaultPostgres",
 		"Use recommended default Postgres settings?",
+=======
+
+	const useDefaultPostgres = await promptConfirm(
+		"useDefaultPostgres",
+		"Use recommended default Postgres settings? (Y)/N",
+>>>>>>> upstream
 		true,
 	);
 	if (!useDefaultPostgres) {
 		answers = await postgresSetup(answers);
 	}
+<<<<<<< HEAD
 	const useDefaultCaddy = await promptConfirm(
 		"useDefaultCaddy",
 		"Use recommended default Caddy settings?",
+=======
+
+	const useDefaultCaddy = await promptConfirm(
+		"useDefaultCaddy",
+		"Use recommended default Caddy settings? (Y)/N",
+>>>>>>> upstream
 		true,
 	);
 	if (!useDefaultCaddy) {
 		answers = await caddySetup(answers);
 	}
+<<<<<<< HEAD
 	answers = await administratorEmail(answers);
 	const setupReCaptcha = await promptConfirm(
 		"setupReCaptcha",
@@ -1377,3 +1865,25 @@ if (
 		process.exit(1);
 	});
 }
+=======
+
+	const useDefaultApi = await promptConfirm(
+		"useDefaultApi",
+		"Use recommended default API settings? (Y)/N",
+		true,
+	);
+
+	if (!useDefaultApi) {
+		answers = await apiSetup(answers);
+	}
+
+	answers = await administratorEmail(answers);
+
+	updateEnvVariable(answers);
+	console.log("Configuration complete.");
+	if (fs.existsSync(".env.backup")) {
+		fs.unlinkSync(".env.backup");
+	}
+	return answers;
+}
+>>>>>>> upstream

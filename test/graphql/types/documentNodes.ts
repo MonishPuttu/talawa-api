@@ -13,7 +13,10 @@ export const Mutation_createUser =
 	gql(`mutation Mutation_createUser($input: MutationCreateUserInput!) {
     createUser(input: $input){
         authenticationToken
+<<<<<<< HEAD
         refreshToken
+=======
+>>>>>>> upstream
         user {
             addressLine1
             addressLine2
@@ -78,7 +81,10 @@ export const Mutation_signUp =
 	gql(`mutation Mutation_signUp($input: MutationSignUpInput!) {
     signUp(input: $input) {
         authenticationToken
+<<<<<<< HEAD
         refreshToken
+=======
+>>>>>>> upstream
         user {
             addressLine1
             addressLine2
@@ -110,8 +116,11 @@ export const Mutation_updateCurrentUser =
     updateCurrentUser(input: $input) {
         addressLine1
         addressLine2
+<<<<<<< HEAD
         avatarMimeType
         avatarURL
+=======
+>>>>>>> upstream
         birthDate
         city
         countryCode
@@ -127,7 +136,10 @@ export const Mutation_updateCurrentUser =
         mobilePhoneNumber
         name
         natalSex
+<<<<<<< HEAD
         naturalLanguageCode
+=======
+>>>>>>> upstream
         postalCode
         role
         state
@@ -196,7 +208,10 @@ export const Query_renewAuthenticationToken =
 export const Query_signIn = gql(`query Query_signIn($input: QuerySignInInput!) {
     signIn(input: $input) {
         authenticationToken
+<<<<<<< HEAD
         refreshToken
+=======
+>>>>>>> upstream
         user {
             addressLine1
             addressLine2
@@ -223,6 +238,7 @@ export const Query_signIn = gql(`query Query_signIn($input: QuerySignInInput!) {
     }
 }`);
 
+<<<<<<< HEAD
 export const Mutation_revokeRefreshToken =
 	gql(`mutation Mutation_revokeRefreshToken($refreshToken: String!) {
     revokeRefreshToken(refreshToken: $refreshToken)
@@ -253,6 +269,8 @@ export const Query_verifyPasswordResetToken =
     }
 }`);
 
+=======
+>>>>>>> upstream
 export const Query_user = gql(`query Query_user($input: QueryUserInput!) {
     user(input: $input) {
         addressLine1
@@ -279,6 +297,7 @@ export const Query_user = gql(`query Query_user($input: QueryUserInput!) {
     }
 }`);
 
+<<<<<<< HEAD
 export const Query_user_workPhoneNumber =
 	gql(`query Query_user_workPhoneNumber($input: QueryUserInput!) {
     user(input: $input) {
@@ -293,6 +312,8 @@ export const Query_user_mobilePhoneNumber =
     }
 }`);
 
+=======
+>>>>>>> upstream
 export const Query_allUsers = gql(`
   query Query_allUsers(
     $first: Int,
@@ -380,6 +401,7 @@ export const Query_user_updatedAt =
     }
 }`);
 
+<<<<<<< HEAD
 export const Query_user_city =
 	gql(`query Query_user_city($input: QueryUserInput!) {
     user(input: $input) {
@@ -401,6 +423,8 @@ export const Query_user_emailAddress =
     }
 }`);
 
+=======
+>>>>>>> upstream
 export const Query_user_updater =
 	gql(`query Query_user_updater($input: QueryUserInput!) {
     user(input: $input) {
@@ -430,6 +454,7 @@ export const Query_user_updater =
     }
 }`);
 
+<<<<<<< HEAD
 export const Query_user_updater_simple =
 	gql(`query Query_user_updater_simple($input: QueryUserInput!) {
     user(input: $input) {
@@ -439,14 +464,19 @@ export const Query_user_updater_simple =
     }
 }`);
 
+=======
+>>>>>>> upstream
 export const Query_fund = gql(`query Query_fund($input: QueryFundInput!) {
     fund(input: $input) {
       id
       isTaxDeductible
       name
+<<<<<<< HEAD
       isDefault
       isArchived
       referenceNumber
+=======
+>>>>>>> upstream
     }
   }`);
 
@@ -456,7 +486,10 @@ export const Query_fundCampaign =
       id
       name
       goalAmount
+<<<<<<< HEAD
       amountRaised
+=======
+>>>>>>> upstream
     }
   }`);
 
@@ -484,6 +517,7 @@ export const Query_getPledgesByUserId =
   }
 }`);
 
+<<<<<<< HEAD
 export const Query_chatMessage = gql(`
   query Query_chatMessage($input: QueryChatMessageInput!) {
     chatMessage(input: $input) {
@@ -492,6 +526,8 @@ export const Query_chatMessage = gql(`
   }
 `);
 
+=======
+>>>>>>> upstream
 export const Query_chat_members = gql(`
 query ChatMembers($input: QueryChatInput!, $first: Int, $last: Int, $after: String, $before: String) {
   chat(input: $input) {
@@ -537,6 +573,7 @@ export const Mutation_createFund =
       id
       name
       isTaxDeductible
+<<<<<<< HEAD
       isDefault
       isArchived
       referenceNumber
@@ -552,6 +589,8 @@ export const Mutation_updateFund =
       isDefault
       isArchived
       referenceNumber
+=======
+>>>>>>> upstream
     }
   }`);
 
@@ -573,6 +612,7 @@ export const Mutation_createFundCampaignPledge =
     }
   }`);
 
+<<<<<<< HEAD
 export const Mutation_updateFundCampaignPledge =
 	gql(`mutation Mutation_updateFundCampaignPledge($input: MutationUpdateFundCampaignPledgeInput!) {
     updateFundCampaignPledge(input: $input) {
@@ -582,6 +622,8 @@ export const Mutation_updateFundCampaignPledge =
     }
   }`);
 
+=======
+>>>>>>> upstream
 export const Mutation_createOrganizationMembership =
 	gql(`mutation Mutation_createOrganizationMembership($input: MutationCreateOrganizationMembershipInput!) {
     createOrganizationMembership(input: $input) {
@@ -650,7 +692,10 @@ export const Query_event = gql(`query Query_event($input: QueryEventInput!) {
         description
         startAt
         endAt
+<<<<<<< HEAD
         isInviteOnly
+=======
+>>>>>>> upstream
         creator {
             id
             name
@@ -682,6 +727,7 @@ export const Mutation_createEvent =
     }
 }`);
 
+<<<<<<< HEAD
 export const Mutation_sendEventInvitations =
 	gql(`mutation Mutation_sendEventInvitations($input: SendEventInvitationsInput!) {
     sendEventInvitations(input: $input) {
@@ -695,6 +741,8 @@ export const Mutation_sendEventInvitations =
     }
 }`);
 
+=======
+>>>>>>> upstream
 export const Query_tag = gql(`
     query tag($input:QueryTagInput!) {
   tag(input: $input) {
@@ -707,6 +755,7 @@ export const Query_tag = gql(`
   }
 }`);
 
+<<<<<<< HEAD
 export const Query_userTags = gql(`
   query userTags($userId: ID!) {
     userTags(userId: $userId) {
@@ -728,10 +777,15 @@ export const Query_userTags = gql(`
 
 export const Mutation_createTag = gql(`
   mutation createTag($input: MutationCreateTagInput!) {
+=======
+export const Mutation_createTag = gql(`
+  mutation CreateTag($input:MutationCreateTagInput!) {
+>>>>>>> upstream
     createTag(input: $input) {
       id
       name
       createdAt
+<<<<<<< HEAD
       updatedAt
     }
   }
@@ -787,6 +841,16 @@ export const Mutation_deleteTagFolder = gql(`
     }
   }
 `);
+=======
+      organization{
+        id
+        name
+        createdAt
+
+        }
+    }
+  }`);
+>>>>>>> upstream
 
 export const Query_organizations = gql(`
 	query Query_organizations {
@@ -861,6 +925,7 @@ export const Query_organization = gql(`
     }
   `);
 
+<<<<<<< HEAD
 export const Query_agendaCategoriesByEventId =
 	gql(`query Query_agendaCategoriesByEventId($eventId: ID!) {
   agendaCategoriesByEventId(eventId: $eventId) {
@@ -895,10 +960,25 @@ export const Query_agendaFoldersByEventId = gql(`
     }
   `);
 
+=======
+export const Query_agendaItem =
+	gql(`query Query_agendaItem($input: QueryAgendaItemInput!) {
+  agendaItem(input: $input) {
+    id
+    name
+    description
+    duration
+    key
+    type
+  }
+}`);
+
+>>>>>>> upstream
 export const Mutation_createAgendaFolder = gql(`
   mutation Mutation_createAgendaFolder($input: MutationCreateAgendaFolderInput!) {
     createAgendaFolder(input: $input) {
       id
+<<<<<<< HEAD
       createdAt
       description
       name
@@ -961,6 +1041,11 @@ export const Mutation_createAgendaCategory = gql(`
       creator {
         id
         name
+=======
+      name
+      event {
+        id
+>>>>>>> upstream
       }
     }
   }
@@ -973,6 +1058,7 @@ export const Mutation_createAgendaItem = gql(`
       name
       description
       duration
+<<<<<<< HEAD
       notes
       attachments {
         name
@@ -997,11 +1083,14 @@ export const Mutation_createAgendaItem = gql(`
         id
         name
       }
+=======
+>>>>>>> upstream
       type
     }
   }
 `);
 
+<<<<<<< HEAD
 export const Mutation_updateAgendaCategory = gql(`
   mutation Mutation_updateAgendaCategory($input: MutationUpdateAgendaCategoryInput!) {
     updateAgendaCategory(input: $input) {
@@ -1017,6 +1106,8 @@ export const Mutation_updateAgendaCategory = gql(`
   }
 `);
 
+=======
+>>>>>>> upstream
 export const Mutation_updateAgendaItem = gql(`
   mutation Mutation_updateAgendaItem($input: MutationUpdateAgendaItemInput!) {
     updateAgendaItem(input: $input) {
@@ -1024,6 +1115,7 @@ export const Mutation_updateAgendaItem = gql(`
       name
       description
       duration
+<<<<<<< HEAD
       notes
     	attachments {
         name
@@ -1062,12 +1154,21 @@ export const Mutation_deleteAgendaCategory = gql(`
   }
 `);
 
+=======
+      type
+    }
+  }
+`);
+>>>>>>> upstream
 export const Mutation_deleteAgendaItem = gql(`
   mutation Mutation_deleteAgendaItem($input: MutationDeleteAgendaItemInput!) {
     deleteAgendaItem(input: $input) {
       id
       name
+<<<<<<< HEAD
       description
+=======
+>>>>>>> upstream
     }
   }
 `);
@@ -1092,7 +1193,10 @@ export const Mutation_createPost = gql(`
     createPost(input: $input) {
       id
       caption
+<<<<<<< HEAD
       body
+=======
+>>>>>>> upstream
       pinnedAt
       organization {
         id
@@ -1135,6 +1239,15 @@ export const Mutation_unblockUser =
     unblockUser(organizationId: $organizationId, userId: $userId)
 }`);
 
+<<<<<<< HEAD
+=======
+export const Mutation_assignUserTag = gql(`
+      mutation AssignUserTag($assigneeId: ID!, $tagId: ID!) {
+        assignUserTag(assigneeId: $assigneeId, tagId: $tagId)
+      }
+`);
+
+>>>>>>> upstream
 export const Mutation_unassignUserTag = gql(`
       mutation UnassignUserTag($assigneeId: ID!, $tagId: ID!) {
         unassignUserTag(assigneeId: $assigneeId, tagId: $tagId)
@@ -1148,10 +1261,17 @@ export const Mutation_updatePost = gql(`
       pinnedAt
       caption
       attachments {
+<<<<<<< HEAD
         mimeType
         fileHash
         name
         objectName
+=======
+        mimeType            
+        fileHash
+        name
+        objectName          
+>>>>>>> upstream
         id
       }
     }
@@ -1183,7 +1303,10 @@ export const Mutation_createChat = gql(`
     createChat(input: $input) {
       id
       name
+<<<<<<< HEAD
       avatarMimeType
+=======
+>>>>>>> upstream
     }
   }
 `);
@@ -1493,7 +1616,10 @@ export const Query_eventsByIds = gql(`
       description
       startAt
       endAt
+<<<<<<< HEAD
       isInviteOnly
+=======
+>>>>>>> upstream
     }
   }
 `);
@@ -1531,8 +1657,11 @@ export const Query_eventsByOrganizationId = gql(`
       attachments {
         mimeType
       }
+<<<<<<< HEAD
       isGenerated
       baseRecurringEventId
+=======
+>>>>>>> upstream
     }
   }
 `);
@@ -1817,6 +1946,7 @@ export const Mutation_deleteEntireRecurringEventSeries = gql(`
   }
 `);
 
+<<<<<<< HEAD
 export const Mutation_verifyEventInvitation = gql(`
   mutation Mutation_verifyEventInvitation($input: VerifyEventInvitationInput!) {
     verifyEventInvitation(input: $input) {
@@ -1852,6 +1982,8 @@ export const Mutation_acceptEventInvitation = gql(`
   }
 `);
 
+=======
+>>>>>>> upstream
 export const Mutation_readNotification = gql(`
   mutation Mutation_readNotification($input: MutationReadNotificationInput!) {
     readNotification(input: $input) {
@@ -1923,7 +2055,10 @@ export const Mutation_updateSingleRecurringEventInstance = gql(`
       allDay
       isPublic
       isRegisterable
+<<<<<<< HEAD
       isInviteOnly
+=======
+>>>>>>> upstream
       hasExceptions
       sequenceNumber
       totalCount
@@ -1947,7 +2082,10 @@ export const Mutation_updateStandaloneEvent = gql(`
       allDay
       isPublic
       isRegisterable
+<<<<<<< HEAD
       isInviteOnly
+=======
+>>>>>>> upstream
       organization {
         id
         name
@@ -1971,7 +2109,10 @@ export const Mutation_updateThisAndFollowingEvents = gql(`
       allDay
       isPublic
       isRegisterable
+<<<<<<< HEAD
       isInviteOnly
+=======
+>>>>>>> upstream
       hasExceptions
       sequenceNumber
       totalCount
@@ -2193,6 +2334,7 @@ export const Mutation_createComment = gql(`
 	}
 `);
 
+<<<<<<< HEAD
 export const Mutation_deleteComment = gql(`
 	mutation Mutation_deleteComment($input: MutationDeleteCommentInput!) {
 		deleteComment(input: $input) {
@@ -2201,6 +2343,8 @@ export const Mutation_deleteComment = gql(`
 	}
 `);
 
+=======
+>>>>>>> upstream
 export const Mutation_createCommentVote = gql(`
 	mutation Mutation_createCommentVote($input: MutationCreateCommentVoteInput!) {
 		createCommentVote(input: $input) {
@@ -2225,6 +2369,7 @@ export const Mutation_deleteCommentVote = gql(`
 	}
 `);
 
+<<<<<<< HEAD
 export const Mutation_updateCommentVote = gql(`
 	mutation Mutation_updateCommentVote($input: MutationUpdateCommentVoteInput!) {
 		updateCommentVote(input: $input) {
@@ -2237,6 +2382,8 @@ export const Mutation_updateCommentVote = gql(`
 	}
 `);
 
+=======
+>>>>>>> upstream
 export const Query_comment = gql(`
 	query Query_comment($input: QueryCommentInput!) {
 		comment(input: $input) {
@@ -2619,6 +2766,7 @@ export const Mutation_updateChatMembership = gql(`
   }
 `);
 
+<<<<<<< HEAD
 export const Mutation_updateOrganizationMembership = gql(`
   mutation Mutation_updateOrganizationMembership($input: MutationUpdateOrganizationMembershipInput!) {
     updateOrganizationMembership(input: $input) {
@@ -2627,6 +2775,8 @@ export const Mutation_updateOrganizationMembership = gql(`
   }
 `);
 
+=======
+>>>>>>> upstream
 export const Mutation_registerEventAttendee = gql(`
   mutation Mutation_registerEventAttendee($data: EventAttendeeInput!) {
     registerEventAttendee(data: $data) {
@@ -2808,8 +2958,13 @@ export const Query_getEventInvitesByUserId = gql(`
 `);
 
 export const Query_getRecurringEvents = gql(`
+<<<<<<< HEAD
   query Query_getRecurringEvents($baseRecurringEventId: ID!, $includeCancelled: Boolean, $limit: Int, $offset: Int) {
     getRecurringEvents(baseRecurringEventId: $baseRecurringEventId, includeCancelled: $includeCancelled, limit: $limit, offset: $offset) {
+=======
+  query Query_getRecurringEvents($baseRecurringEventId: ID!) {
+    getRecurringEvents(baseRecurringEventId: $baseRecurringEventId) {
+>>>>>>> upstream
       id
       name
       description
@@ -2819,13 +2974,17 @@ export const Query_getRecurringEvents = gql(`
       isRegisterable
       location
       isRecurringEventTemplate
+<<<<<<< HEAD
       isCancelled
+=======
+>>>>>>> upstream
       recurrenceRule {
         id
       }
     }
   }
 `);
+<<<<<<< HEAD
 
 export const Mutation_cancelMembershipRequest = gql(`
   mutation Mutation_cancelMembershipRequest(
@@ -3034,3 +3193,5 @@ export const Query_venue_updatedAt = gql(`
     }
   }
 `);
+=======
+>>>>>>> upstream

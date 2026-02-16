@@ -49,6 +49,7 @@ This table defines the most important parameters in the file that will be requir
 | `CADDY_TALAWA_API_EMAIL`               | Email address for the Talawa API, used for SSL certificate registration and notifications.                                    |
 | `MINIO_ROOT_PASSWORD`                  | Root password for MinIO, used for securing administrative access to MinIO object storage.                                     |
 | `POSTGRES_PASSWORD`                    | Password for the PostgreSQL database (Docker Compose), used for database authentication and security.                         |
+<<<<<<< HEAD
 | `RECAPTCHA_SECRET_KEY` | Optional secret key for Google reCAPTCHA, used for server-side verification of reCAPTCHA responses to prevent automated abuse and bots. |
 | `<PROVIDER>_CLIENT_ID` | OAuth Client ID for authentication providers (Google, GitHub), obtained from respective developer consoles. |
 | `<PROVIDER>_CLIENT_SECRET` | OAuth Client Secret for authentication providers, used for server-side OAuth token exchange with providers. |
@@ -65,6 +66,8 @@ Talawa API supports three email providers:
 | **Mailpit** | Local development and testing | ✅ Yes |
 | **AWS SES** | Production deployments | No |
 | **SMTP** | Production with external providers | No |
+=======
+>>>>>>> upstream
 
 ## Production Environment Setup
 
@@ -136,6 +139,7 @@ You will need to update the `.env` file with the following information. This val
 1. `CADDY_TALAWA_API_DOMAIN_NAME` can be set to `localhost`
 2. `CADDY_TALAWA_API_EMAIL` can be set to a suitable email address
 
+<<<<<<< HEAD
 #### Configure Email Provider
 
 For production environments, you must configure an email provider to send transactional emails (verification, password reset, etc.). The default `mailpit` provider only works for local development.
@@ -172,6 +176,8 @@ API_SMTP_FROM_NAME=Your Organization
 ```
 
 
+=======
+>>>>>>> upstream
 #### Update the Social Media URLs
 
 You will need to update the `.env` file with the following information.
@@ -196,6 +202,7 @@ You will need to update the `.env` file with the following information.
 API_COMMUNITY_NAME
 ```
 
+<<<<<<< HEAD
 #### Update the reCAPTCHA Configuration
 
 You will need to update the `.env` file with the following information.
@@ -315,6 +322,9 @@ If you encounter issues with email delivery:
 2.  **"Access Denied" Error**: Ensure your IAM user has `ses:SendEmail` and `ses:SendRawEmail` permissions. check that the access key and secret key are correct.
 3.  **"Throttling" Error**: You may have exceeded your SES sending rate limits. Request a quota increase in the AWS Console.
 4.  **Test Email Fails**: If the setup script test email fails, check the console output for the specific error message. Common causes include network firewalls blocking the SES endpoint.
+=======
+### Operating the Production Server
+>>>>>>> upstream
 
 After all the configuration steps are complete, you will be ready to start the production server.
 
@@ -338,6 +348,7 @@ Most of these steps are specific to Linux. You will need to modify them accordin
     cp envFiles/.env.devcontainer .env
     ```
 
+<<<<<<< HEAD
 #### Email Testing in Development
 
 The development environment automatically configures [Mailpit](https://github.com/axllent/mailpit) for email testing. All emails sent by the API are captured by Mailpit and can be viewed at:
@@ -389,6 +400,8 @@ The following environment variables control how Mailpit is exposed on your host 
   - Check the API logs for SMTP connection errors
   - Ensure the Mailpit container is on the same Docker network as the API
 
+=======
+>>>>>>> upstream
 ### Operating the Development Server
 
 After all the configuration steps are complete, you will be ready to start the production server.

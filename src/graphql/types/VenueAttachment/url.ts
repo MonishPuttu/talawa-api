@@ -1,7 +1,12 @@
+<<<<<<< HEAD
 // check-sanitization-disable: URL field - name is always a ULID (safe for URL path)
 import envConfig from "~/src/utilities/graphqLimits";
 import { VenueAttachment } from "./VenueAttachment";
 
+=======
+import envConfig from "~/src/utilities/graphqLimits";
+import { VenueAttachment } from "./VenueAttachment";
+>>>>>>> upstream
 VenueAttachment.implement({
 	fields: (t) => ({
 		url: t.field({

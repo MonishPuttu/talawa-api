@@ -67,7 +67,10 @@ import "./MutationSignUpInput";
 import "./MutationUpdateAdvertisementInput";
 import "./MutationUpdateAgendaFolderInput";
 import "./MutationUpdateAgendaItemInput";
+<<<<<<< HEAD
 import "./MutationUpdateAgendaItemSequenceInput";
+=======
+>>>>>>> upstream
 import "./MutationUpdateChatInput";
 import "./MutationUpdateChatMembershipInput";
 import "./MutationUpdateChatMessageInput";
@@ -92,6 +95,10 @@ import "./MutationUpdateUserInput";
 import "./MutationUpdateVenueInput";
 import "./QueryAdvertisementInput";
 import "./QueryAgendaFolderInput";
+<<<<<<< HEAD
+=======
+import "./QueryAgendaItemInput";
+>>>>>>> upstream
 import "./QueryChatInput";
 import "./QueryChatMessageInput";
 import "./QueryCommentInput";
@@ -112,6 +119,7 @@ import "./QueryNotificationInput";
 import "./MutationReadNotificationinput";
 import "./MutationMarkChatAsReadInput";
 import "./CheckInCheckOutInput";
+<<<<<<< HEAD
 import "./MutationSendEventInvitationsInput";
 import "./MutationAcceptEventInvitationInput";
 import "./MutationVerifyEventInvitationInput";
@@ -124,3 +132,5 @@ import "./MutationUpdateAgendaCategoryInput";
 import "./MutationOAuthLoginInput";
 import "./MetricsInput";
 import "./MetricsFilterInput";
+=======
+>>>>>>> upstream

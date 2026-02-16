@@ -1,15 +1,24 @@
+<<<<<<< HEAD
 import { and, asc, desc, eq, exists, gt, lt, type SQL } from "drizzle-orm";
+=======
+import { type SQL, and, asc, desc, eq, exists, gt, lt } from "drizzle-orm";
+>>>>>>> upstream
 import { z } from "zod";
 import {
 	commentsTable,
 	commentsTableInsertSchema,
 } from "~/src/drizzle/tables/comments";
 import { Comment } from "~/src/graphql/types/Comment/Comment";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+>>>>>>> upstream
 import {
 	defaultGraphQLConnectionArgumentsSchema,
 	transformDefaultGraphQLConnectionArguments,
 	transformToDefaultGraphQLConnection,
+<<<<<<< HEAD
 } from "~/src/utilities/graphqlConnection";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 import { Post } from "./Post";
@@ -18,6 +27,15 @@ const commentsArgumentsSchema = defaultGraphQLConnectionArgumentsSchema
 	.transform(transformDefaultGraphQLConnectionArguments)
 	.transform((arg, ctx) => {
 		let cursor: z.infer<typeof cursorSchema> | undefined;
+=======
+} from "~/src/utilities/defaultGraphQLConnection";
+import envConfig from "~/src/utilities/graphqLimits";
+import { Post } from "./Post";
+const commentsArgumentsSchema = defaultGraphQLConnectionArgumentsSchema
+	.transform(transformDefaultGraphQLConnectionArguments)
+	.transform((arg, ctx) => {
+		let cursor: z.infer<typeof cursorSchema> | undefined = undefined;
+>>>>>>> upstream
 
 		try {
 			if (arg.cursor !== undefined) {
@@ -25,7 +43,11 @@ const commentsArgumentsSchema = defaultGraphQLConnectionArgumentsSchema
 					JSON.parse(Buffer.from(arg.cursor, "base64url").toString("utf-8")),
 				);
 			}
+<<<<<<< HEAD
 		} catch (_error) {
+=======
+		} catch (error) {
+>>>>>>> upstream
 			ctx.addIssue({
 				code: "custom",
 				message: "Not a valid cursor.",
@@ -155,9 +177,18 @@ Post.implement({
 					}
 
 					return transformToDefaultGraphQLConnection({
+<<<<<<< HEAD
 						createCursor: (comment) => ({
 							id: comment.id,
 						}),
+=======
+						createCursor: (comment) =>
+							Buffer.from(
+								JSON.stringify({
+									id: comment.id,
+								}),
+							).toString("base64url"),
+>>>>>>> upstream
 						createNode: (comment) => comment,
 						parsedArgs,
 						rawNodes: comments,

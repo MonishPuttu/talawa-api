@@ -6,7 +6,11 @@
 
 > **updateChatMessageResolver**(`_parent`, `args`, `ctx`): `Promise`\<\{ `body`: `string`; `chatId`: `string`; `createdAt`: `Date`; `creatorId`: `string` \| `null`; `id`: `string`; `parentMessageId`: `string` \| `null`; `updatedAt`: `Date` \| `null`; \}\>
 
+<<<<<<< HEAD
 Defined in: [src/graphql/types/Mutation/updateChatMessage.ts:20](https://github.com/PalisadoesFoundation/talawa-api/tree/mainsrc/graphql/types/Mutation/updateChatMessage.ts#L20)
+=======
+Defined in: [src/graphql/types/Mutation/updateChatMessage.ts:19](https://github.com/PalisadoesFoundation/talawa-api/tree/mainsrc/graphql/types/Mutation/updateChatMessage.ts#L19)
+>>>>>>> upstream
 
 ## Parameters
 

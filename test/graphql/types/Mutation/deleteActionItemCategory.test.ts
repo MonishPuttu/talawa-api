@@ -28,8 +28,13 @@ async function createEventAndVolunteer(
 				name: "Test Event",
 				description: "Test event for action items",
 				organizationId: organizationId,
+<<<<<<< HEAD
 				startAt: new Date(Date.now() + 86400000).toISOString(), // 1 day from now
 				endAt: new Date(Date.now() + 90000000).toISOString(), // 1 day + 1 hour from now
+=======
+				startAt: new Date().toISOString(),
+				endAt: new Date(Date.now() + 3600000).toISOString(),
+>>>>>>> upstream
 				isPublic: true,
 				isRegisterable: true,
 				location: "Test Location",

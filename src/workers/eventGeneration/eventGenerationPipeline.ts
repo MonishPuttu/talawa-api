@@ -16,7 +16,11 @@ import {
 import type { WorkerDependencies } from "./types";
 
 /**
+<<<<<<< HEAD
  * Configuration for the materialization worker, specifying concurrency and processing limits.
+=======
+ * @description Configuration for the materialization worker, specifying concurrency and processing limits.
+>>>>>>> upstream
  */
 export interface WorkerConfig {
 	maxConcurrentJobs: number;
@@ -25,7 +29,11 @@ export interface WorkerConfig {
 }
 
 /**
+<<<<<<< HEAD
  * Represents the result of a materialization worker run, summarizing the work done.
+=======
+ * @description Represents the result of a materialization worker run, summarizing the work done.
+>>>>>>> upstream
  */
 export interface WorkerResult {
 	organizationsProcessed: number;
@@ -42,7 +50,11 @@ export interface WorkerResult {
  * @param config - The configuration for the worker.
  * @param drizzleClient - The Drizzle ORM client for database access.
  * @param logger - The logger for logging the worker's progress and any errors.
+<<<<<<< HEAD
  * @returns - A promise that resolves to a summary result of the worker's run.
+=======
+ * @returns A promise that resolves to a summary result of the worker's run.
+>>>>>>> upstream
  */
 export async function runMaterializationWorker(
 	config: WorkerConfig,
@@ -134,7 +146,11 @@ export async function runMaterializationWorker(
  * @param organizationId - The ID of the organization to process.
  * @param drizzleClient - The Drizzle ORM client for database access.
  * @param logger - The logger for logging the process.
+<<<<<<< HEAD
  * @returns - A promise that resolves to the result of the processing for the specified organization.
+=======
+ * @returns A promise that resolves to the result of the processing for the specified organization.
+>>>>>>> upstream
  */
 export async function runSingleOrganizationWorker(
 	organizationId: string,
@@ -208,7 +224,11 @@ export async function runSingleOrganizationWorker(
  * Creates an empty worker result object, used when no materialization work is found.
  *
  * @param startTime - The start time of the worker run, used to calculate processing time.
+<<<<<<< HEAD
  * @returns - An empty worker result object.
+=======
+ * @returns An empty worker result object.
+>>>>>>> upstream
  */
 function createEmptyResult(startTime: number): WorkerResult {
 	return {
@@ -223,7 +243,11 @@ function createEmptyResult(startTime: number): WorkerResult {
 /**
  * Creates a default configuration object for the materialization worker.
  *
+<<<<<<< HEAD
  * @returns - A default worker configuration.
+=======
+ * @returns A default worker configuration.
+>>>>>>> upstream
  */
 export function createDefaultWorkerConfig(): WorkerConfig {
 	return {

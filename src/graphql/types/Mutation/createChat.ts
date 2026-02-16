@@ -9,10 +9,16 @@ import {
 	mutationCreateChatInputSchema,
 } from "~/src/graphql/inputs/MutationCreateChatInput";
 import { Chat } from "~/src/graphql/types/Chat/Chat";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { isNotNullish } from "~/src/utilities/isNotNullish";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+import { isNotNullish } from "~/src/utilities/isNotNullish";
+>>>>>>> upstream
 const mutationCreateChatArgumentsSchema = z.object({
 	input: mutationCreateChatInputSchema.transform(async (arg, ctx) => {
 		let avatar:
@@ -137,11 +143,16 @@ builder.mutationField("createChat", (t) =>
 			const currentUserOrganizationMembership =
 				existingOrganization.membershipsWhereOrganization[0];
 
+<<<<<<< HEAD
 			// Allow system administrators or organization members to create chats
 			if (
 				currentUser.role !== "administrator" &&
 				currentUserOrganizationMembership === undefined
 			) {
+=======
+			// Allow all users who are members of the organization to create chats
+			if (currentUserOrganizationMembership === undefined) {
+>>>>>>> upstream
 				throw new TalawaGraphQLError({
 					extensions: {
 						code: "unauthorized_action_on_arguments_associated_resources",
@@ -154,8 +165,13 @@ builder.mutationField("createChat", (t) =>
 				});
 			}
 
+<<<<<<< HEAD
 			let avatarMimeType: z.infer<typeof imageMimeTypeEnum> | null = null;
 			let avatarName: string | null = null;
+=======
+			let avatarMimeType: z.infer<typeof imageMimeTypeEnum>;
+			let avatarName: string;
+>>>>>>> upstream
 
 			if (isNotNullish(parsedArgs.input.avatar)) {
 				avatarName = ulid();
@@ -187,7 +203,11 @@ builder.mutationField("createChat", (t) =>
 					});
 				}
 
+<<<<<<< HEAD
 				if (isNotNullish(parsedArgs.input.avatar) && avatarName !== null) {
+=======
+				if (isNotNullish(parsedArgs.input.avatar)) {
+>>>>>>> upstream
 					await ctx.minio.client.putObject(
 						ctx.minio.bucketName,
 						avatarName,

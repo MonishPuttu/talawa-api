@@ -1,6 +1,11 @@
 import { User } from "~/src/graphql/types/User/User";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+>>>>>>> upstream
 import type { GraphQLContext } from "../../context";
 import { Community, type Community as CommunityType } from "./Community";
 

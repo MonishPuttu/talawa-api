@@ -7,19 +7,32 @@ import {
 	mutationDeleteChatInputSchema,
 } from "~/src/graphql/inputs/MutationDeleteChatInput";
 import { Chat } from "~/src/graphql/types/Chat/Chat";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+>>>>>>> upstream
 const mutationDeleteChatArgumentsSchema = z.object({
 	input: mutationDeleteChatInputSchema,
 });
 
+<<<<<<< HEAD
 export const deleteChat = builder.mutationField("deleteChat", (t) =>
 	t.field({
 		args: {
 			input: t.arg({
 				description:
 					"Input containing the UUID `id` of the chat to delete (required).",
+=======
+builder.mutationField("deleteChat", (t) =>
+	t.field({
+		args: {
+			input: t.arg({
+				description: "",
+>>>>>>> upstream
 				required: true,
 				type: MutationDeleteChatInput,
 			}),
@@ -75,10 +88,16 @@ export const deleteChat = builder.mutationField("deleteChat", (t) =>
 								operators.eq(fields.memberId, currentUserId),
 						},
 						organization: {
+<<<<<<< HEAD
 							// Intentionally do not select organization-level scalar fields here;
 							// only the nested `membershipsWhereOrganization` is required for
 							// authorization checks. Omitting unnecessary columns reduces fetch
 							// size for this resolver.
+=======
+							columns: {
+								countryCode: true,
+							},
+>>>>>>> upstream
 							with: {
 								membershipsWhereOrganization: {
 									columns: {

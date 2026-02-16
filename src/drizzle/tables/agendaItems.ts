@@ -1,4 +1,5 @@
 import { relations, sql } from "drizzle-orm";
+<<<<<<< HEAD
 import {
 	index,
 	integer,
@@ -15,6 +16,13 @@ import { agendaFoldersTable } from "./agendaFolders";
 import { agendaItemAttachmentsTable } from "./agendaItemAttachments";
 import { agendaItemUrlTable } from "./agendaItemUrls";
 import { eventsTable } from "./events";
+=======
+import { index, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
+import { createInsertSchema } from "drizzle-zod";
+import { uuidv7 } from "uuidv7";
+import { agendaItemTypeEnum } from "~/src/drizzle/enums/agendaItemType";
+import { agendaFoldersTable } from "./agendaFolders";
+>>>>>>> upstream
 import { usersTable } from "./users";
 
 /**
@@ -41,6 +49,7 @@ export const agendaItemsTable = pgTable(
 			onUpdate: "cascade",
 		}),
 		/**
+<<<<<<< HEAD
 		 * Foreign key reference to the id of the agenda category the agenda item belongs
 		 */
 		categoryId: uuid("category_id")
@@ -50,6 +59,8 @@ export const agendaItemsTable = pgTable(
 				onUpdate: "cascade",
 			}),
 		/**
+=======
+>>>>>>> upstream
 		 * Custom information about the agenda item.
 		 */
 		description: text("description"),
@@ -58,6 +69,7 @@ export const agendaItemsTable = pgTable(
 		 */
 		duration: text("duration"),
 		/**
+<<<<<<< HEAD
 		 * Foreign key reference to the id of the event the agenda item is associated to.
 		 */
 		eventId: uuid("event_id")
@@ -67,6 +79,8 @@ export const agendaItemsTable = pgTable(
 				onUpdate: "cascade",
 			}),
 		/**
+=======
+>>>>>>> upstream
 		 * Foreign key reference to the id of the agenda folder the agenda item is associated to.
 		 */
 		folderId: uuid("folder_id")
@@ -88,6 +102,7 @@ export const agendaItemsTable = pgTable(
 		 */
 		name: text("name", {}).notNull(),
 		/**
+<<<<<<< HEAD
 		 * Additional notes for the agenda item.
 		 */
 		notes: text("notes"),
@@ -100,6 +115,12 @@ export const agendaItemsTable = pgTable(
 		 */
 		type: text("type", {
 			enum: agendaItemTypeEnum.options as [string, ...string[]],
+=======
+		 * Type of the agenda item.
+		 */
+		type: text("type", {
+			enum: agendaItemTypeEnum.options,
+>>>>>>> upstream
 		}).notNull(),
 		/**
 		 * Date time at the time the agenda item was last updated.
@@ -122,8 +143,11 @@ export const agendaItemsTable = pgTable(
 	(self) => [
 		index().on(self.createdAt),
 		index().on(self.creatorId),
+<<<<<<< HEAD
 		index().on(self.categoryId),
 		index().on(self.eventId),
+=======
+>>>>>>> upstream
 		index().on(self.folderId),
 		index().on(self.name),
 		index().on(self.type),
@@ -132,6 +156,7 @@ export const agendaItemsTable = pgTable(
 
 export const agendaItemsTableRelations = relations(
 	agendaItemsTable,
+<<<<<<< HEAD
 	({ one, many }) => ({
 		/**
 		 * One to many relationship from `agenda_items` table to `agenda_item_attachments` table.
@@ -139,6 +164,9 @@ export const agendaItemsTableRelations = relations(
 		attachmentsWhereAgendaItem: many(agendaItemAttachmentsTable, {
 			relationName: "agenda_item_attachments.agenda_item_id:agenda_items.id",
 		}),
+=======
+	({ one }) => ({
+>>>>>>> upstream
 		/**
 		 * Many to one relationship from `agenda_items` table to `users` table.
 		 */
@@ -148,6 +176,7 @@ export const agendaItemsTableRelations = relations(
 			relationName: "agenda_items.creator_id:users.id",
 		}),
 		/**
+<<<<<<< HEAD
 		 * Many to one relationship from `agenda_items` table to `agenda_category` table.
 		 */
 		category: one(agendaCategoriesTable, {
@@ -170,6 +199,8 @@ export const agendaItemsTableRelations = relations(
 			relationName: "agenda_items.event_id:events.id",
 		}),
 		/**
+=======
+>>>>>>> upstream
 		 * Many to one relationship from `agenda_items` table to `agenda_folders` table.
 		 */
 		folder: one(agendaFoldersTable, {
@@ -188,6 +219,7 @@ export const agendaItemsTableRelations = relations(
 	}),
 );
 
+<<<<<<< HEAD
 export const AGENDA_ITEM_DESCRIPTION_MAX_LENGTH = 2048;
 export const AGENDA_ITEM_NAME_MAX_LENGTH = 256;
 export const AGENDA_ITEM_NOTES_MAX_LENGTH = 2048;
@@ -200,5 +232,12 @@ export const agendaItemsTableInsertSchema = createInsertSchema(
 		name: (schema) => schema.min(1).max(AGENDA_ITEM_NAME_MAX_LENGTH),
 		notes: (schema) => schema.max(AGENDA_ITEM_NOTES_MAX_LENGTH).optional(),
 		sequence: (schema) => schema.int().min(1),
+=======
+export const agendaItemsTableInsertSchema = createInsertSchema(
+	agendaItemsTable,
+	{
+		description: (schema) => schema.min(1).max(2048).optional(),
+		name: (schema) => schema.min(1).max(256),
+>>>>>>> upstream
 	},
 );

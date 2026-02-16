@@ -4,6 +4,7 @@ import { server } from "../../server";
 import { mercuriusClient } from "./client";
 import { Mutation_createUser, Query_signIn } from "./documentNodes";
 
+<<<<<<< HEAD
 /**
  * GraphQL error structure with optional extensions
  */
@@ -62,13 +63,18 @@ async function retryWithRateLimitCheck<T extends { errors?: unknown[] }>(
 	return result;
 }
 
+=======
+>>>>>>> upstream
 export async function createRegularUserUsingAdmin(): Promise<{
 	userId: string;
 	authToken: string;
 }> {
+<<<<<<< HEAD
 	// Clear any existing headers to ensure a clean sign-in
 	mercuriusClient.setHeaders({});
 
+=======
+>>>>>>> upstream
 	const adminSignInResult = await mercuriusClient.query(Query_signIn, {
 		variables: {
 			input: {
@@ -77,6 +83,7 @@ export async function createRegularUserUsingAdmin(): Promise<{
 			},
 		},
 	});
+<<<<<<< HEAD
 
 	// Check for errors first
 	if (adminSignInResult.errors) {
@@ -120,6 +127,28 @@ export async function createRegularUserUsingAdmin(): Promise<{
 
 	// Clear headers after use to prevent authentication state leakage
 	mercuriusClient.setHeaders({});
+=======
+	assertToBeNonNullish(adminSignInResult.data.signIn?.authenticationToken);
+	const adminAuthToken = adminSignInResult.data.signIn.authenticationToken;
+
+	// Use the admin token to create a regular user
+	const createUserResult = await mercuriusClient.mutate(Mutation_createUser, {
+		headers: {
+			authorization: `bearer ${adminAuthToken}`,
+		},
+		variables: {
+			input: {
+				emailAddress: `email${faker.string.ulid()}@email.com`,
+				isEmailAddressVerified: false,
+				name: "Regular User",
+				password: "password",
+				role: "regular",
+			},
+		},
+	});
+	assertToBeNonNullish(createUserResult.data.createUser?.authenticationToken);
+	assertToBeNonNullish(createUserResult.data.createUser?.user?.id);
+>>>>>>> upstream
 
 	return {
 		userId: createUserResult.data.createUser.user.id,

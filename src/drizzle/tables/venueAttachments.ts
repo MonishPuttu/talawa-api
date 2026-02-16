@@ -32,7 +32,11 @@ export const venueAttachmentsTable = pgTable(
 		 * Mime type of the attachment.
 		 */
 		mimeType: text("mime_type", {
+<<<<<<< HEAD
 			enum: venueAttachmentMimeTypeEnum.options as [string, ...string[]],
+=======
+			enum: venueAttachmentMimeTypeEnum.options,
+>>>>>>> upstream
 		}).notNull(),
 		/**
 		 * Identifier name of the attachment.

@@ -5,9 +5,14 @@ import {
 	queryFundCampaignInputSchema,
 } from "~/src/graphql/inputs/QueryFundCampaignInput";
 import { FundCampaign } from "~/src/graphql/types/FundCampaign/FundCampaign";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+>>>>>>> upstream
 const queryFundCampaignArgumentsSchema = z.object({
 	input: queryFundCampaignInputSchema,
 });

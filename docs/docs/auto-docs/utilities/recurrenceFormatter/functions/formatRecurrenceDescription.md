@@ -100,4 +100,8 @@ The recurrence rule from the database
 
 `string`
 
+<<<<<<< HEAD
 - A human-readable description of the recurrence pattern
+=======
+A human-readable description of the recurrence pattern
+>>>>>>> upstream

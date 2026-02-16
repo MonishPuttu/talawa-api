@@ -5,9 +5,14 @@ import {
 	queryFundInputSchema,
 } from "~/src/graphql/inputs/QueryFundInput";
 import { Fund } from "~/src/graphql/types/Fund/Fund";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+>>>>>>> upstream
 const queryFundArgumentsSchema = z.object({
 	input: queryFundInputSchema,
 });

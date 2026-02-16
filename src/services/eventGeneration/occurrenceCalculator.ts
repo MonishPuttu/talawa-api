@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 import { uuidv7 } from "uuidv7";
+=======
+>>>>>>> upstream
 import type { eventsTable } from "~/src/drizzle/tables/events";
 import type { recurrenceRulesTable } from "~/src/drizzle/tables/recurrenceRules";
 import type { eventExceptionsTable } from "~/src/drizzle/tables/recurringEventExceptions";
@@ -15,7 +18,11 @@ import type {
  *
  * @param config - The configuration object containing the recurrence rule, base event, and time window.
  * @param logger - The logger for logging debug and informational messages.
+<<<<<<< HEAD
  * @returns - An array of calculated occurrences, each with its start and end times and metadata.
+=======
+ * @returns An array of calculated occurrences, each with its start and end times and metadata.
+>>>>>>> upstream
  */
 export function calculateInstanceOccurrences(
 	config: OccurrenceCalculationConfig,
@@ -59,6 +66,7 @@ export function calculateInstanceOccurrences(
 	// For yearly events, create instances immediately without windowing
 	if (recurrenceRule.frequency === "YEARLY") {
 		while (
+<<<<<<< HEAD
 			(recurrenceRule.recurrenceEndDate
 				? currentDate <= recurrenceRule.recurrenceEndDate
 				: sequenceNumber <= (context.totalCount || 1)) &&
@@ -66,6 +74,12 @@ export function calculateInstanceOccurrences(
 		) {
 			iterationCount++;
 
+=======
+			recurrenceRule.recurrenceEndDate
+				? currentDate <= recurrenceRule.recurrenceEndDate
+				: sequenceNumber <= (context.totalCount || 1)
+		) {
+>>>>>>> upstream
 			if (
 				shouldGenerateInstanceAtDate(
 					currentDate,
@@ -79,10 +93,15 @@ export function calculateInstanceOccurrences(
 					sequenceNumber,
 				);
 				occurrences.push(occurrence);
+<<<<<<< HEAD
 			}
 
 			// Always increment sequenceNumber to avoid infinite loops
 			sequenceNumber++;
+=======
+				sequenceNumber++;
+			}
+>>>>>>> upstream
 			currentDate.setFullYear(
 				currentDate.getFullYear() + (recurrenceRule.interval || 1),
 			);
@@ -159,7 +178,11 @@ export function calculateInstanceOccurrences(
  * @param recurrenceRule - The recurrence rule for the event.
  * @param baseEvent - The base event template.
  * @param exceptions - An array of exceptions for the event.
+<<<<<<< HEAD
  * @returns - A recurrence context object with all necessary pre-calculated data.
+=======
+ * @returns A recurrence context object with all necessary pre-calculated data.
+>>>>>>> upstream
  */
 function buildRecurrenceContext(
 	recurrenceRule: typeof recurrenceRulesTable.$inferSelect,
@@ -213,7 +236,11 @@ function buildRecurrenceContext(
  * @param currentDate - The date for which to create the occurrence.
  * @param context - The recurrence context containing duration, exceptions, and other metadata.
  * @param sequenceNumber - The sequence number of this occurrence in the series.
+<<<<<<< HEAD
  * @returns - A calculated occurrence object with its original and actual start/end times.
+=======
+ * @returns A calculated occurrence object with its original and actual start/end times.
+>>>>>>> upstream
  */
 function createOccurrenceFromDate(
 	currentDate: Date,
@@ -247,7 +274,10 @@ function createOccurrenceFromDate(
 	}
 
 	return {
+<<<<<<< HEAD
 		recurringEventInstanceId: uuidv7(),
+=======
+>>>>>>> upstream
 		originalStartTime,
 		actualStartTime,
 		actualEndTime,
@@ -307,8 +337,13 @@ export function shouldGenerateInstanceAtDate(
  * @returns `true` if an instance should be generated, otherwise `false`.
  */
 function shouldGenerateForDaily(
+<<<<<<< HEAD
 	_date: Date,
 	_recurrenceRule: typeof recurrenceRulesTable.$inferSelect,
+=======
+	date: Date,
+	recurrenceRule: typeof recurrenceRulesTable.$inferSelect,
+>>>>>>> upstream
 ): boolean {
 	// For daily events, no additional day filters needed
 	return true;
@@ -415,7 +450,11 @@ function shouldGenerateForYearly(
  *
  * @param currentDate - The current occurrence date.
  * @param recurrenceRule - The recurrence rule for the event.
+<<<<<<< HEAD
  * @returns - The date of the next potential occurrence.
+=======
+ * @returns The date of the next potential occurrence.
+>>>>>>> upstream
  */
 export function getNextOccurrenceDate(
 	currentDate: Date,

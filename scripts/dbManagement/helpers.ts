@@ -104,8 +104,12 @@ export async function formatDatabase(): Promise<boolean> {
 		});
 
 		return true;
+<<<<<<< HEAD
 	} catch (error: unknown) {
 		console.error("Error formatting database:", error);
+=======
+	} catch (error) {
+>>>>>>> upstream
 		return false;
 	}
 }
@@ -117,9 +121,20 @@ export async function emptyMinioBucket(): Promise<boolean> {
 			(resolve, reject) => {
 				const objects: string[] = [];
 				const stream = minioClient.listObjects(bucketName, "", true);
+<<<<<<< HEAD
 				stream.on("data", (obj: { name: string }) => {
 					objects.push(obj.name);
 				});
+=======
+				stream.on(
+					"data",
+					(obj: {
+						name: string;
+					}) => {
+						objects.push(obj.name);
+					},
+				);
+>>>>>>> upstream
 				stream.on("error", (err: Error) => {
 					console.error("Error listing objects in bucket:", err);
 					reject(err);
@@ -141,13 +156,55 @@ export async function emptyMinioBucket(): Promise<boolean> {
 }
 
 /**
+<<<<<<< HEAD
+=======
+ * Lists sample data files and their document counts in the sample_data directory.
+ */
+export async function listSampleData(): Promise<boolean> {
+	try {
+		const sampleDataPath = path.resolve(dirname, "./sample_data");
+		const files = await fs.readdir(sampleDataPath);
+		console.log(files);
+		console.log("Sample Data Files:\n");
+
+		console.log(
+			`${"| File Name".padEnd(30)}| Document Count |
+${"|".padEnd(30, "-")}|----------------|
+`,
+		);
+
+		for (const file of files) {
+			const filePath = path.resolve(sampleDataPath, file);
+			const stats = await fs.stat(filePath);
+			if (stats.isFile()) {
+				const data = await fs.readFile(filePath, "utf8");
+				const docs = JSON.parse(data);
+				console.log(
+					`| ${file.padEnd(28)}| ${docs.length.toString().padEnd(15)}|`,
+				);
+			}
+		}
+		console.log();
+	} catch (err) {
+		throw new Error(`\x1b[31mError listing sample data: ${err}\x1b[0m`);
+	}
+
+	return true;
+}
+
+/**
+>>>>>>> upstream
  * Check database connection
  */
 
 export async function pingDB(): Promise<boolean> {
 	try {
 		await db.execute(sql`SELECT 1`);
+<<<<<<< HEAD
 	} catch (_error) {
+=======
+	} catch (error) {
+>>>>>>> upstream
 		throw new Error("Unable to connect to the database.");
 	}
 	return true;
@@ -215,6 +272,7 @@ export async function insertCollections(
 						(user: {
 							createdAt: string | number | Date;
 							updatedAt: string | number | Date;
+<<<<<<< HEAD
 							birthDate: string | number | Date;
 							lockedUntil: string | number | Date | null;
 							lastFailedLoginAt?: string | number | Date | null;
@@ -229,6 +287,12 @@ export async function insertCollections(
 							lastFailedLoginAt: user.lastFailedLoginAt
 								? parseDate(user.lastFailedLoginAt)
 								: null,
+=======
+						}) => ({
+							...user,
+							createdAt: parseDate(user.createdAt),
+							updatedAt: parseDate(user.updatedAt),
+>>>>>>> upstream
 						}),
 					) as (typeof schema.usersTable.$inferInsert)[];
 
@@ -306,7 +370,13 @@ export async function insertCollections(
 
 				case "organization_memberships": {
 					const organizationMemberships = JSON.parse(fileContent).map(
+<<<<<<< HEAD
 						(membership: { createdAt: string | number | Date }) => ({
+=======
+						(membership: {
+							createdAt: string | number | Date;
+						}) => ({
+>>>>>>> upstream
 							...membership,
 							createdAt: parseDate(membership.createdAt),
 						}),
@@ -363,6 +433,7 @@ export async function insertCollections(
 					);
 					break;
 				}
+<<<<<<< HEAD
 
 				case "tag_folders": {
 					const tag_folders = JSON.parse(fileContent).map(
@@ -438,6 +509,8 @@ export async function insertCollections(
 					break;
 				}
 
+=======
+>>>>>>> upstream
 				case "membership_requests": {
 					const membership_requests = JSON.parse(fileContent).map(
 						(membership_request: { createdAt: string | number | Date }) => ({
@@ -484,7 +557,11 @@ export async function insertCollections(
 								const fileData = await fs.readFile(filePath);
 								await minioClient.putObject(
 									bucketName,
+<<<<<<< HEAD
 									attachment.objectName,
+=======
+									attachment.name,
+>>>>>>> upstream
 									fileData,
 									undefined,
 									{
@@ -589,6 +666,7 @@ export async function insertCollections(
 					break;
 				}
 
+<<<<<<< HEAD
 				case "recurring_event_templates": {
 					// PR2: Insert template events only. recurrence_rules and
 					// recurring_event_instances are populated in a follow-up (PR3).
@@ -656,6 +734,8 @@ export async function insertCollections(
 					break;
 				}
 
+=======
+>>>>>>> upstream
 				case "event_volunteers": {
 					const eventVolunteers = JSON.parse(fileContent).map(
 						(volunteer: {
@@ -850,6 +930,7 @@ export function parseDate(date: string | number | Date): Date | null {
 }
 
 /**
+<<<<<<< HEAD
  * Returns the next occurrence of the same weekday and time (hours, minutes) as
  * templateDate, on or after referenceDate. Used for recurring event template start/end.
  */
@@ -886,6 +967,8 @@ export function getNextOccurrenceOfWeekdayTime(
 }
 
 /**
+=======
+>>>>>>> upstream
  * Checks record counts in specified tables after data insertion.
  * @returns {Promise<boolean>} - Returns true if data exists, false otherwise.
  */
@@ -899,9 +982,12 @@ export async function checkDataSize(stage: string): Promise<boolean> {
 				table: schema.organizationMembershipsTable,
 			},
 			{ name: "posts", table: schema.postsTable },
+<<<<<<< HEAD
 			{ name: "tag_folders", table: schema.tagFoldersTable },
 			{ name: "tags", table: schema.tagsTable },
 			{ name: "tag_assignments", table: schema.tagAssignmentsTable },
+=======
+>>>>>>> upstream
 			{ name: "post_votes", table: schema.postVotesTable },
 			{ name: "post_attachments", table: schema.postAttachmentsTable },
 			{ name: "comments", table: schema.commentsTable },

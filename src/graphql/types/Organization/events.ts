@@ -2,6 +2,7 @@ import { z } from "zod";
 import { Event } from "~/src/graphql/types/Event/Event";
 import {
 	type EventWithAttachments,
+<<<<<<< HEAD
 	filterInviteOnlyEvents,
 	getUnifiedEventsInDateRange,
 } from "~/src/graphql/types/Query/eventQueries";
@@ -17,6 +18,21 @@ import { Organization } from "./Organization";
  * Zod schema for validating and parsing connection arguments for events,
  * with bounded limits (up to 100) chosen to balance pagination needs and performance,
  * including recurring event instances.
+=======
+	getUnifiedEventsInDateRange,
+} from "~/src/graphql/types/Query/eventQueries";
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import {
+	type ParsedDefaultGraphQLConnectionArguments,
+	transformToDefaultGraphQLConnection,
+} from "~/src/utilities/defaultGraphQLConnection";
+import envConfig from "~/src/utilities/graphqLimits";
+import { Organization } from "./Organization";
+
+/**
+ * @description Zod schema for validating and parsing connection arguments for events,
+ * with increased limits to accommodate recurring event instances.
+>>>>>>> upstream
  */
 const eventsConnectionArgumentsSchema = z.object({
 	after: z
@@ -30,23 +46,39 @@ const eventsConnectionArgumentsSchema = z.object({
 	first: z
 		.number()
 		.min(1)
+<<<<<<< HEAD
 		.max(100)
+=======
+		.max(1000)
+>>>>>>> upstream
 		.nullish()
 		.transform((arg) => (arg === null ? undefined : arg)),
 	last: z
 		.number()
 		.min(1)
+<<<<<<< HEAD
 		.max(100)
+=======
+		.max(1000)
+>>>>>>> upstream
 		.nullish()
 		.transform((arg) => (arg === null ? undefined : arg)),
 });
 
 /**
+<<<<<<< HEAD
  * Transforms and validates the connection arguments for event queries,
  * handling pagination logic and setting default date ranges.
  * @param arg - The raw connection arguments.
  * @param ctx - The Zod refinement context for adding issues.
  * @returns - The parsed and validated connection arguments.
+=======
+ * @description Transforms and validates the connection arguments for event queries,
+ * handling pagination logic and setting default date ranges.
+ * @param arg - The raw connection arguments.
+ * @param ctx - The Zod refinement context for adding issues.
+ * @returns The parsed and validated connection arguments.
+>>>>>>> upstream
  */
 const transformEventsConnectionArguments = (
 	arg: z.infer<typeof eventsConnectionArgumentsSchema> & {
@@ -158,7 +190,11 @@ const transformEventsConnectionArguments = (
 };
 
 /**
+<<<<<<< HEAD
  * Zod schema for validating and parsing the complete set of arguments
+=======
+ * @description Zod schema for validating and parsing the complete set of arguments
+>>>>>>> upstream
  * for the `events` field, including pagination, date range, and recurring event filters.
  */
 const eventsArgumentsSchema = eventsConnectionArgumentsSchema
@@ -170,7 +206,11 @@ const eventsArgumentsSchema = eventsConnectionArgumentsSchema
 	})
 	.transform((arg, ctx) => {
 		const transformed = transformEventsConnectionArguments(arg, ctx);
+<<<<<<< HEAD
 		let cursor: z.infer<typeof cursorSchema> | undefined;
+=======
+		let cursor: z.infer<typeof cursorSchema> | undefined = undefined;
+>>>>>>> upstream
 
 		try {
 			if (transformed.cursor !== undefined) {
@@ -180,7 +220,11 @@ const eventsArgumentsSchema = eventsConnectionArgumentsSchema
 					),
 				);
 			}
+<<<<<<< HEAD
 		} catch (_error) {
+=======
+		} catch (error) {
+>>>>>>> upstream
 			ctx.addIssue({
 				code: "custom",
 				message: "Not a valid cursor.",
@@ -195,7 +239,11 @@ const eventsArgumentsSchema = eventsConnectionArgumentsSchema
 	});
 
 /**
+<<<<<<< HEAD
  * Zod schema for validating and parsing the event cursor,
+=======
+ * @description Zod schema for validating and parsing the event cursor,
+>>>>>>> upstream
  * which is used for pagination.
  */
 const cursorSchema = z
@@ -342,24 +390,32 @@ Organization.implement({
 							}
 						}
 
+<<<<<<< HEAD
 						// Fetch more events than needed to account for invite-only filtering
 						// This ensures we have enough events after filtering to fill the requested page
 						// Use 2x the limit or limit + 50, whichever is larger, capped at 200
 						// Note: 'limit' already includes +1 for pagination detection (set in transformEventsConnectionArguments)
 						const fetchLimit = Math.min(Math.max(limit * 2, limit + 50), 200);
 
+=======
+>>>>>>> upstream
 						allEvents = await getUnifiedEventsInDateRange(
 							{
 								organizationId: parent.id,
 								startDate: effectiveStartDate,
 								endDate: effectiveEndDate,
 								includeRecurring,
+<<<<<<< HEAD
 								limit: fetchLimit, // limit already includes +1 for pagination detection
+=======
+								limit: limit, // Use full limit including the +1 for pagination detection
+>>>>>>> upstream
 							},
 							ctx.drizzleClient,
 							ctx.log,
 						);
 
+<<<<<<< HEAD
 						// Filter invite-only events based on visibility rules
 						// This happens before pagination to ensure we have enough events
 						allEvents = await filterInviteOnlyEvents({
@@ -370,6 +426,8 @@ Organization.implement({
 							drizzleClient: ctx.drizzleClient,
 						});
 
+=======
+>>>>>>> upstream
 						ctx.log.debug(
 							{
 								organizationId: parent.id,
@@ -438,18 +496,32 @@ Organization.implement({
 						allEvents = allEvents.reverse();
 					}
 
+<<<<<<< HEAD
 					// Apply final limit - limit already includes +1 for pagination detection
 					// The transform function will trim to (limit - 1) for actual results
+=======
+					// Apply final limit
+>>>>>>> upstream
 					if (allEvents.length > limit) {
 						allEvents = allEvents.slice(0, limit);
 					}
 
 					// Transform to GraphQL connection format
 					return transformToDefaultGraphQLConnection({
+<<<<<<< HEAD
 						createCursor: (event) => ({
 							id: event.id,
 							startAt: new Date(event.startAt),
 						}),
+=======
+						createCursor: (event) =>
+							Buffer.from(
+								JSON.stringify({
+									id: event.id,
+									startAt: new Date(event.startAt).toISOString(),
+								}),
+							).toString("base64url"),
+>>>>>>> upstream
 						createNode: (event) => event,
 						parsedArgs: { cursor, isInversed, limit },
 						rawNodes: allEvents,

@@ -74,11 +74,16 @@ export const Details = ({
 ```graphql
 input MutationUpdateFundInput {
   id: ID!
+<<<<<<< HEAD
   isArchived: Boolean
   isDefault: Boolean
   isTaxDeductible: Boolean
   name: String
   referenceNumber: String
+=======
+  isTaxDeductible: Boolean
+  name: String
+>>>>>>> upstream
 }
 ```
 
@@ -88,6 +93,7 @@ input MutationUpdateFundInput {
 
 Global identifier of the associated organization.
 
+<<<<<<< HEAD
 #### [<code style={{ fontWeight: 'normal' }}>MutationUpdateFundInput.<b>isArchived</b></code>](#)<Bullet />[<code style={{ fontWeight: 'normal' }}><b>Boolean</b></code>](/auto-schema/types/scalars/boolean.mdx) <Badge class="badge badge--secondary " text="scalar"/>
 
 Boolean to tell if the fund is archived.
@@ -96,6 +102,8 @@ Boolean to tell if the fund is archived.
 
 Boolean to tell if the fund is the default fund.
 
+=======
+>>>>>>> upstream
 #### [<code style={{ fontWeight: 'normal' }}>MutationUpdateFundInput.<b>isTaxDeductible</b></code>](#)<Bullet />[<code style={{ fontWeight: 'normal' }}><b>Boolean</b></code>](/auto-schema/types/scalars/boolean.mdx) <Badge class="badge badge--secondary " text="scalar"/>
 
 Boolean to tell if the fund is tax deductible.
@@ -104,10 +112,13 @@ Boolean to tell if the fund is tax deductible.
 
 Name of the fund.
 
+<<<<<<< HEAD
 #### [<code style={{ fontWeight: 'normal' }}>MutationUpdateFundInput.<b>referenceNumber</b></code>](#)<Bullet />[<code style={{ fontWeight: 'normal' }}><b>String</b></code>](/auto-schema/types/scalars/string.mdx) <Badge class="badge badge--secondary " text="scalar"/>
 
 Reference number of the fund.
 
+=======
+>>>>>>> upstream
 ### Member Of
 
 [`updateFund`](/auto-schema/operations/mutations/update-fund.mdx) <Badge class="badge badge--secondary badge--relation" text="mutation"/>

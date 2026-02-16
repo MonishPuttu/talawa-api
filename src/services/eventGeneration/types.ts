@@ -1,7 +1,10 @@
 import type { NodePgDatabase } from "drizzle-orm/node-postgres";
 import type { FastifyBaseLogger } from "fastify";
 import type * as schema from "~/src/drizzle/schema";
+<<<<<<< HEAD
 import type { eventAttachmentsTable } from "~/src/drizzle/tables/eventAttachments";
+=======
+>>>>>>> upstream
 import type { eventsTable } from "~/src/drizzle/tables/events";
 import type { recurrenceRulesTable } from "~/src/drizzle/tables/recurrenceRules";
 import type { eventExceptionsTable } from "~/src/drizzle/tables/recurringEventExceptions";
@@ -43,7 +46,10 @@ export interface OccurrenceCalculationConfig {
  * Result of occurrence calculation
  */
 export interface CalculatedOccurrence {
+<<<<<<< HEAD
 	recurringEventInstanceId: string;
+=======
+>>>>>>> upstream
 	originalStartTime: Date;
 	actualStartTime: Date;
 	actualEndTime: Date;
@@ -53,6 +59,7 @@ export interface CalculatedOccurrence {
 }
 
 /**
+<<<<<<< HEAD
  * Event template with attachments
  */
 export type EventTemplateWithAttachments = typeof eventsTable.$inferSelect & {
@@ -60,11 +67,17 @@ export type EventTemplateWithAttachments = typeof eventsTable.$inferSelect & {
 };
 
 /**
+=======
+>>>>>>> upstream
  * Input for resolving instance with inheritance
  */
 export interface ResolveInstanceInput {
 	generatedInstance: typeof recurringEventInstancesTable.$inferSelect;
+<<<<<<< HEAD
 	baseTemplate: EventTemplateWithAttachments;
+=======
+	baseTemplate: typeof eventsTable.$inferSelect;
+>>>>>>> upstream
 	exception?: typeof eventExceptionsTable.$inferSelect;
 }
 

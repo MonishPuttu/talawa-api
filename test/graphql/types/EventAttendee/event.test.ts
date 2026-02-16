@@ -1,4 +1,5 @@
 import { createMockGraphQLContext } from "test/_Mocks_/mockContextCreator/mockContextCreator";
+<<<<<<< HEAD
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { GraphQLContext } from "~/src/graphql/context";
 import type { EventAttendee as EventAttendeeType } from "~/src/graphql/types/EventAttendee/EventAttendee";
@@ -54,6 +55,26 @@ describe("EventAttendee Event Resolver Tests", () => {
 	beforeEach(() => {
 		const { context } = createMockGraphQLContext(true, "user-123");
 		ctx = context;
+=======
+import { beforeEach, describe, expect, it } from "vitest";
+import type { GraphQLContext } from "~/src/graphql/context";
+import type { EventAttendee as EventAttendeeType } from "~/src/graphql/types/EventAttendee/EventAttendee";
+import { eventAttendeeEventResolver } from "~/src/graphql/types/EventAttendee/event";
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+
+describe("EventAttendee Event Resolver Tests", () => {
+	let ctx: GraphQLContext;
+	let mockEventAttendee: EventAttendeeType;
+	let mocks: ReturnType<typeof createMockGraphQLContext>["mocks"];
+
+	beforeEach(() => {
+		const { context, mocks: newMocks } = createMockGraphQLContext(
+			true,
+			"user-123",
+		);
+		ctx = context;
+		mocks = newMocks;
+>>>>>>> upstream
 		mockEventAttendee = {
 			id: "attendee-123",
 			userId: "user-789",
@@ -71,11 +92,14 @@ describe("EventAttendee Event Resolver Tests", () => {
 		} as EventAttendeeType;
 	});
 
+<<<<<<< HEAD
 	afterEach(() => {
 		vi.clearAllMocks();
 		vi.restoreAllMocks();
 	});
 
+=======
+>>>>>>> upstream
 	describe("Authentication", () => {
 		it("should throw unauthenticated error if user is not logged in", async () => {
 			ctx.currentClient.isAuthenticated = false;
@@ -102,7 +126,13 @@ describe("EventAttendee Event Resolver Tests", () => {
 				allDay: false,
 			};
 
+<<<<<<< HEAD
 			ctx.dataloaders.event.load = vi.fn().mockResolvedValue(mockEvent);
+=======
+			mocks.drizzleClient.query.eventsTable.findFirst.mockResolvedValue(
+				mockEvent,
+			);
+>>>>>>> upstream
 
 			const result = await eventAttendeeEventResolver(
 				mockEventAttendee,
@@ -114,11 +144,25 @@ describe("EventAttendee Event Resolver Tests", () => {
 				...mockEvent,
 				attachments: [],
 			});
+<<<<<<< HEAD
 			expect(ctx.dataloaders.event.load).toHaveBeenCalledWith("event-456");
 		});
 
 		it("should throw unexpected error if standalone event is not found", async () => {
 			ctx.dataloaders.event.load = vi.fn().mockResolvedValue(null);
+=======
+			expect(
+				mocks.drizzleClient.query.eventsTable.findFirst,
+			).toHaveBeenCalledWith({
+				where: expect.any(Object),
+			});
+		});
+
+		it("should throw unexpected error if standalone event is not found", async () => {
+			mocks.drizzleClient.query.eventsTable.findFirst.mockResolvedValue(
+				undefined,
+			);
+>>>>>>> upstream
 
 			await expect(
 				eventAttendeeEventResolver(mockEventAttendee, {}, ctx),
@@ -127,6 +171,7 @@ describe("EventAttendee Event Resolver Tests", () => {
 			);
 
 			expect(ctx.log.warn).toHaveBeenCalledWith(
+<<<<<<< HEAD
 				{
 					eventAttendeeId: "attendee-123",
 					eventId: "event-456",
@@ -139,6 +184,16 @@ describe("EventAttendee Event Resolver Tests", () => {
 			ctx.dataloaders.event.load = vi
 				.fn()
 				.mockRejectedValue(new Error("Database connection failed"));
+=======
+				"Postgres select operation returned an empty array for an event attendee's event id that isn't null.",
+			);
+		});
+
+		it("should handle database error when fetching standalone event", async () => {
+			mocks.drizzleClient.query.eventsTable.findFirst.mockRejectedValue(
+				new Error("Database connection failed"),
+			);
+>>>>>>> upstream
 
 			await expect(
 				eventAttendeeEventResolver(mockEventAttendee, {}, ctx),
@@ -147,15 +202,20 @@ describe("EventAttendee Event Resolver Tests", () => {
 	});
 
 	describe("Recurring Event Instance Resolution", () => {
+<<<<<<< HEAD
 		it("should resolve recurring event instance and return resolved instance", async () => {
 			ctx.dataloaders.event.load = vi.fn();
 
+=======
+		it("should return null for recurring event instances (TODO implementation)", async () => {
+>>>>>>> upstream
 			const recurringAttendee = {
 				...mockEventAttendee,
 				eventId: null,
 				recurringEventInstanceId: "instance-789",
 			} as EventAttendeeType;
 
+<<<<<<< HEAD
 			vi.mocked(getRecurringEventInstancesByIds).mockResolvedValue([
 				{
 					...mockResolvedInstance,
@@ -165,11 +225,14 @@ describe("EventAttendee Event Resolver Tests", () => {
 				},
 			]);
 
+=======
+>>>>>>> upstream
 			const result = await eventAttendeeEventResolver(
 				recurringAttendee,
 				{},
 				ctx,
 			);
+<<<<<<< HEAD
 
 			expect(result).toEqual({
 				...mockResolvedInstance,
@@ -184,12 +247,20 @@ describe("EventAttendee Event Resolver Tests", () => {
 		});
 
 		it("should include attachments when resolved instance has attachments", async () => {
+=======
+			expect(result).toBeNull();
+		});
+
+		it("should handle future recurring instance implementation", async () => {
+			// This test documents expected behavior once TODO is implemented
+>>>>>>> upstream
 			const recurringAttendee = {
 				...mockEventAttendee,
 				eventId: null,
 				recurringEventInstanceId: "instance-789",
 			} as EventAttendeeType;
 
+<<<<<<< HEAD
 			const instanceWithAttachments = {
 				...mockResolvedInstance,
 				attachments: [
@@ -209,11 +280,15 @@ describe("EventAttendee Event Resolver Tests", () => {
 				instanceWithAttachments,
 			]);
 
+=======
+			// Currently returns null, but should eventually resolve recurring instances
+>>>>>>> upstream
 			const result = await eventAttendeeEventResolver(
 				recurringAttendee,
 				{},
 				ctx,
 			);
+<<<<<<< HEAD
 
 			expect(result?.attachments).toEqual(instanceWithAttachments.attachments);
 		});
@@ -256,6 +331,14 @@ describe("EventAttendee Event Resolver Tests", () => {
 			await expect(
 				eventAttendeeEventResolver(recurringAttendee, {}, ctx),
 			).rejects.toThrow("Database connection failed");
+=======
+			expect(result).toBeNull();
+
+			// No database calls should be made for recurring instances yet
+			expect(
+				mocks.drizzleClient.query.eventsTable.findFirst,
+			).not.toHaveBeenCalled();
+>>>>>>> upstream
 		});
 	});
 
@@ -277,9 +360,15 @@ describe("EventAttendee Event Resolver Tests", () => {
 				eventId: "invalid-uuid-format",
 			} as EventAttendeeType;
 
+<<<<<<< HEAD
 			ctx.dataloaders.event.load = vi
 				.fn()
 				.mockRejectedValue(new Error("Invalid UUID format"));
+=======
+			mocks.drizzleClient.query.eventsTable.findFirst.mockRejectedValue(
+				new Error("Invalid UUID format"),
+			);
+>>>>>>> upstream
 
 			await expect(
 				eventAttendeeEventResolver(malformedAttendee, {}, ctx),
@@ -287,7 +376,14 @@ describe("EventAttendee Event Resolver Tests", () => {
 		});
 
 		it("should handle deleted events", async () => {
+<<<<<<< HEAD
 			ctx.dataloaders.event.load = vi.fn().mockResolvedValue(null);
+=======
+			// Event was deleted but attendee record remains
+			mocks.drizzleClient.query.eventsTable.findFirst.mockResolvedValue(
+				undefined,
+			);
+>>>>>>> upstream
 
 			await expect(
 				eventAttendeeEventResolver(mockEventAttendee, {}, ctx),
@@ -305,9 +401,15 @@ describe("EventAttendee Event Resolver Tests", () => {
 				organizationId: "org-123",
 			};
 
+<<<<<<< HEAD
 			ctx.dataloaders.event.load = vi
 				.fn()
 				.mockResolvedValue(eventWithoutAttachments);
+=======
+			mocks.drizzleClient.query.eventsTable.findFirst.mockResolvedValue(
+				eventWithoutAttachments,
+			);
+>>>>>>> upstream
 
 			const result = await eventAttendeeEventResolver(
 				mockEventAttendee,
@@ -340,7 +442,13 @@ describe("EventAttendee Event Resolver Tests", () => {
 				updatedAt: new Date("2024-03-05T14:00:00Z"),
 			};
 
+<<<<<<< HEAD
 			ctx.dataloaders.event.load = vi.fn().mockResolvedValue(completeEvent);
+=======
+			mocks.drizzleClient.query.eventsTable.findFirst.mockResolvedValue(
+				completeEvent,
+			);
+>>>>>>> upstream
 
 			const result = await eventAttendeeEventResolver(
 				mockEventAttendee,
@@ -359,9 +467,18 @@ describe("EventAttendee Event Resolver Tests", () => {
 				id: "event-456",
 				name: "Minimal Event",
 				organizationId: "org-123",
+<<<<<<< HEAD
 			};
 
 			ctx.dataloaders.event.load = vi.fn().mockResolvedValue(minimalEvent);
+=======
+				// Most other fields null/undefined
+			};
+
+			mocks.drizzleClient.query.eventsTable.findFirst.mockResolvedValue(
+				minimalEvent,
+			);
+>>>>>>> upstream
 
 			const result = await eventAttendeeEventResolver(
 				mockEventAttendee,
@@ -384,19 +501,35 @@ describe("EventAttendee Event Resolver Tests", () => {
 				organizationId: "org-123",
 			};
 
+<<<<<<< HEAD
 			ctx.dataloaders.event.load = vi.fn().mockResolvedValue(sharedEvent);
 
+=======
+			mocks.drizzleClient.query.eventsTable.findFirst.mockResolvedValue(
+				sharedEvent,
+			);
+
+			// Multiple attendees attending same event
+>>>>>>> upstream
 			const attendees = Array.from({ length: 12 }, (_, i) => ({
 				...mockEventAttendee,
 				id: `attendee-${i}`,
 				userId: `user-${i}`,
 			})) as EventAttendeeType[];
 
+<<<<<<< HEAD
+=======
+			const startTime = Date.now();
+>>>>>>> upstream
 			const results = await Promise.all(
 				attendees.map((attendee) =>
 					eventAttendeeEventResolver(attendee, {}, ctx),
 				),
 			);
+<<<<<<< HEAD
+=======
+			const endTime = Date.now();
+>>>>>>> upstream
 
 			expect(results).toHaveLength(12);
 			for (const result of results) {
@@ -405,6 +538,12 @@ describe("EventAttendee Event Resolver Tests", () => {
 					attachments: [],
 				});
 			}
+<<<<<<< HEAD
+=======
+
+			// Should handle bulk operations efficiently
+			expect(endTime - startTime).toBeLessThan(200);
+>>>>>>> upstream
 		});
 
 		it("should handle large event data without performance degradation", async () => {
@@ -416,25 +555,46 @@ describe("EventAttendee Event Resolver Tests", () => {
 				organizationId: "org-123",
 			};
 
+<<<<<<< HEAD
 			ctx.dataloaders.event.load = vi.fn().mockResolvedValue(largeEvent);
 
+=======
+			mocks.drizzleClient.query.eventsTable.findFirst.mockResolvedValue(
+				largeEvent,
+			);
+
+			const startTime = Date.now();
+>>>>>>> upstream
 			const result = await eventAttendeeEventResolver(
 				mockEventAttendee,
 				{},
 				ctx,
 			);
+<<<<<<< HEAD
+=======
+			const endTime = Date.now();
+>>>>>>> upstream
 
 			expect(result).toEqual({
 				...largeEvent,
 				attachments: [],
 			});
+<<<<<<< HEAD
+=======
+			expect(endTime - startTime).toBeLessThan(100);
+>>>>>>> upstream
 		});
 	});
 
 	describe("Database Recovery Scenarios", () => {
 		it("should handle transient database failures", async () => {
+<<<<<<< HEAD
 			ctx.dataloaders.event.load = vi
 				.fn()
+=======
+			// First call fails, second succeeds
+			mocks.drizzleClient.query.eventsTable.findFirst
+>>>>>>> upstream
 				.mockRejectedValueOnce(new Error("Transient database error"))
 				.mockResolvedValueOnce({
 					id: "event-456",
@@ -458,15 +618,22 @@ describe("EventAttendee Event Resolver Tests", () => {
 		});
 
 		it("should handle database rollback scenarios", async () => {
+<<<<<<< HEAD
 			ctx.dataloaders.event.load = vi
 				.fn()
 				.mockRejectedValue(new Error("Transaction was rolled back"));
+=======
+			mocks.drizzleClient.query.eventsTable.findFirst.mockRejectedValue(
+				new Error("Transaction was rolled back"),
+			);
+>>>>>>> upstream
 
 			await expect(
 				eventAttendeeEventResolver(mockEventAttendee, {}, ctx),
 			).rejects.toThrow("Transaction was rolled back");
 		});
 	});
+<<<<<<< HEAD
 
 	describe("Attachments Nullish Coalescing", () => {
 		it("should return empty array when resolved instance has null attachments", async () => {
@@ -523,4 +690,6 @@ describe("EventAttendee Event Resolver Tests", () => {
 			expect(result?.attachments).toEqual([]);
 		});
 	});
+=======
+>>>>>>> upstream
 });

@@ -1,8 +1,13 @@
 import { builder } from "~/src/graphql/builder";
 import { User } from "~/src/graphql/types/User/User";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+>>>>>>> upstream
 builder.queryField("currentUser", (t) =>
 	t.field({
 		description: "Query field to read a user.",

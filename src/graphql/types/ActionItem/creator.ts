@@ -1,6 +1,7 @@
 import type { GraphQLContext } from "~/src/graphql/context";
 import { User } from "~/src/graphql/types/User/User";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+<<<<<<< HEAD
 import type { ActionItem as ActionItemType } from "./ActionItem";
 import { ActionItem } from "./ActionItem";
 
@@ -17,6 +18,12 @@ import { ActionItem } from "./ActionItem";
  * @throws {TalawaGraphQLError} With code "unauthorized_action" if user lacks admin permissions
  * @throws {TalawaGraphQLError} With code "unexpected" if creator user is not found despite non-null creatorId
  */
+=======
+import { ActionItem } from "./ActionItem";
+import type { ActionItem as ActionItemType } from "./ActionItem";
+
+// Export the resolver function so it can be tested
+>>>>>>> upstream
 export const resolveCreator = async (
 	parent: ActionItemType,
 	_args: Record<string, never>,
@@ -78,9 +85,17 @@ export const resolveCreator = async (
 
 	const creatorId = parent.creatorId;
 
+<<<<<<< HEAD
 	const existingUser = await ctx.dataloaders.user.load(creatorId);
 
 	if (existingUser === null) {
+=======
+	const existingUser = await ctx.drizzleClient.query.usersTable.findFirst({
+		where: (fields, operators) => operators.eq(fields.id, creatorId),
+	});
+
+	if (existingUser === undefined) {
+>>>>>>> upstream
 		ctx.log.error(
 			"Postgres select operation returned an empty array for an action item's creator id that isn't null.",
 		);

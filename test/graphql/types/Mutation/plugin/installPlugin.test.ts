@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 import type { Mock } from "vitest";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+=======
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import type { Mock } from "vitest";
+>>>>>>> upstream
 import { builder } from "../../../../../src/graphql/builder";
 import { getPluginManagerInstance } from "../../../../../src/plugin/registry";
 import { TalawaGraphQLError } from "../../../../../src/utilities/TalawaGraphQLError";
@@ -46,12 +51,15 @@ type TestCtx = {
 		where: ReturnType<typeof vi.fn>;
 		returning: ReturnType<typeof vi.fn>;
 	};
+<<<<<<< HEAD
 	log: {
 		info: ReturnType<typeof vi.fn>;
 		error: ReturnType<typeof vi.fn>;
 		warn: ReturnType<typeof vi.fn>;
 		debug: ReturnType<typeof vi.fn>;
 	};
+=======
+>>>>>>> upstream
 	[key: string]: unknown;
 };
 
@@ -74,12 +82,15 @@ function makeCtx(overrides: Partial<TestCtx> = {}): TestCtx {
 			where: whereMock,
 			returning: returningMock,
 		},
+<<<<<<< HEAD
 		log: {
 			info: vi.fn(),
 			error: vi.fn(),
 			warn: vi.fn(),
 			debug: vi.fn(),
 		},
+=======
+>>>>>>> upstream
 		...overrides,
 	};
 }
@@ -134,11 +145,14 @@ describe("installPlugin mutation", () => {
 		const result = (await resolver({}, args, ctx)) as typeof existingPlugin;
 		expect(result.isInstalled).toBe(true);
 		expect(fakeManager.installPlugin).toHaveBeenCalledWith(validInput.pluginId);
+<<<<<<< HEAD
 		// Verify structured logging
 		expect(ctx.log.info).toHaveBeenCalledWith(
 			expect.objectContaining({ pluginId: "test_plugin" }),
 			expect.any(String),
 		);
+=======
+>>>>>>> upstream
 	});
 
 	it("throws on invalid input schema", async () => {
@@ -226,6 +240,7 @@ describe("installPlugin mutation", () => {
 		const result = (await resolver({}, args, ctx)) as typeof existingPlugin;
 		expect(result.isInstalled).toBe(true);
 		expect(fakeManager.installPlugin).toHaveBeenCalledWith(validInput.pluginId);
+<<<<<<< HEAD
 		// Verify structured logging for error
 		expect(ctx.log.error).toHaveBeenCalledWith(
 			expect.objectContaining({
@@ -234,6 +249,8 @@ describe("installPlugin mutation", () => {
 			}),
 			expect.any(String),
 		);
+=======
+>>>>>>> upstream
 	});
 
 	it("handles database update error", async () => {

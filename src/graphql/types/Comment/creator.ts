@@ -1,8 +1,14 @@
 import { User } from "~/src/graphql/types/User/User";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 import { Comment } from "./Comment";
 
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+import { Comment } from "./Comment";
+>>>>>>> upstream
 Comment.implement({
 	fields: (t) => ({
 		creator: t.field({

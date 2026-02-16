@@ -7,8 +7,13 @@ import {
 	mutationUpdatePostVoteInputSchema,
 } from "~/src/graphql/inputs/MutationUpdatePostVoteInput";
 import { Post } from "~/src/graphql/types/Post/Post";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+>>>>>>> upstream
 
 const mutationUpdatePostVoteArgumentsSchema = z.object({
 	input: mutationUpdatePostVoteInputSchema,
@@ -113,7 +118,11 @@ builder.mutationField("updatePostVote", (t) =>
 				});
 			}
 
+<<<<<<< HEAD
 			let voteResult: typeof postVotesTable.$inferSelect | undefined;
+=======
+			let voteResult = undefined;
+>>>>>>> upstream
 
 			if (parsedArgs.input.type === null) {
 				// DELETE the vote if type is null
@@ -133,8 +142,13 @@ builder.mutationField("updatePostVote", (t) =>
 						id: "",
 						creatorId: currentUserId,
 						postId: parsedArgs.input.postId,
+<<<<<<< HEAD
 						type: "down_vote", // Placeholder value; vote doesn't exist
 					} as typeof postVotesTable.$inferSelect;
+=======
+						type: null,
+					};
+>>>>>>> upstream
 				}
 			} else if (existingVote) {
 				// UPDATE the vote if type is not null

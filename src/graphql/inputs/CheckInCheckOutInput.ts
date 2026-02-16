@@ -1,15 +1,24 @@
 import { z } from "zod";
 import { builder } from "~/src/graphql/builder";
+<<<<<<< HEAD
 import { eventId, userId } from "~/src/graphql/validators/core";
+=======
+>>>>>>> upstream
 
 /**
  * Zod schema for CheckInCheckOutInput validation.
  */
 export const checkInCheckOutInputSchema = z
 	.object({
+<<<<<<< HEAD
 		userId,
 		eventId: eventId.optional(),
 		recurringEventInstanceId: eventId.optional(),
+=======
+		userId: z.string().uuid(),
+		eventId: z.string().uuid().optional(),
+		recurringEventInstanceId: z.string().uuid().optional(),
+>>>>>>> upstream
 	})
 	.refine(
 		(data) =>

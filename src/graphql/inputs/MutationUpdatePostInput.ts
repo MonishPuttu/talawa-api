@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import type { FileUpload } from "graphql-upload-minimal";
 import { z } from "zod";
 import { postAttachmentMimeTypeEnum } from "~/src/drizzle/enums/postAttachmentMimeType";
@@ -76,6 +77,22 @@ export const mutationUpdatePostInputSchema = z
 			...arg,
 			attachment,
 		};
+=======
+import { z } from "zod";
+import { postsTableInsertSchema } from "~/src/drizzle/tables/posts";
+import { builder } from "~/src/graphql/builder";
+import {
+	FileMetadataInput,
+	fileMetadataSchema,
+} from "./MutationCreatePostInput";
+
+export const mutationUpdatePostInputSchema = z
+	.object({
+		caption: postsTableInsertSchema.shape.caption.optional(),
+		id: z.string().uuid(),
+		isPinned: z.boolean().optional(),
+		attachments: z.array(fileMetadataSchema).min(1).max(20).optional(),
+>>>>>>> upstream
 	})
 	.refine(
 		({ id, ...remainingArg }) =>
@@ -83,18 +100,29 @@ export const mutationUpdatePostInputSchema = z
 		{ message: "At least one optional argument must be provided." },
 	);
 
+<<<<<<< HEAD
 export const MutationUpdatePostInput = builder.inputType(
 	"MutationUpdatePostInput",
 	{
+=======
+export const MutationUpdatePostInput = builder
+	.inputRef<z.infer<typeof mutationUpdatePostInputSchema>>(
+		"MutationUpdatePostInput",
+	)
+	.implement({
+>>>>>>> upstream
 		description: "Input for updating a post.",
 		fields: (t) => ({
 			caption: t.string({
 				description: "Caption about the post.",
+<<<<<<< HEAD
 				required: false,
 			}),
 			body: t.string({
 				description: "Body content of the post.",
 				required: false,
+=======
+>>>>>>> upstream
 			}),
 			id: t.id({
 				description: "Global identifier of the post.",
@@ -102,6 +130,7 @@ export const MutationUpdatePostInput = builder.inputType(
 			}),
 			isPinned: t.boolean({
 				description: "Boolean to tell if the post is pinned",
+<<<<<<< HEAD
 				required: false,
 			}),
 			attachment: t.field({
@@ -112,3 +141,12 @@ export const MutationUpdatePostInput = builder.inputType(
 		}),
 	},
 );
+=======
+			}),
+			attachments: t.field({
+				type: [FileMetadataInput],
+				description: "Metadata for files already uploaded via presigned URL",
+			}),
+		}),
+	});
+>>>>>>> upstream

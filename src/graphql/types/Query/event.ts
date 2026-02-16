@@ -1,6 +1,10 @@
+<<<<<<< HEAD
 import { and, eq, or } from "drizzle-orm";
 import { z } from "zod";
 import { eventAttendeesTable } from "~/src/drizzle/tables/eventAttendees";
+=======
+import { z } from "zod";
+>>>>>>> upstream
 import { builder } from "~/src/graphql/builder";
 import {
 	QueryEventInput,
@@ -8,16 +12,25 @@ import {
 } from "~/src/graphql/inputs/QueryEventInput";
 import { Event } from "~/src/graphql/types/Event/Event";
 import { getEventsByIds } from "~/src/graphql/types/Query/eventQueries";
+<<<<<<< HEAD
 import { executeWithMetrics } from "~/src/graphql/utils/withQueryMetrics";
 import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+>>>>>>> upstream
 
 const queryEventArgumentsSchema = z.object({
 	input: queryEventInputSchema,
 });
 
 /**
+<<<<<<< HEAD
  * Defines the 'event' query field for fetching a single event by its ID.
+=======
+ * @description Defines the 'event' query field for fetching a single event by its ID.
+>>>>>>> upstream
  * This query supports both standalone events and materialized instances of recurring events,
  * ensuring a unified way to retrieve any event type.
  */
@@ -34,6 +47,7 @@ builder.queryField("event", (t) =>
 		description:
 			"Retrieves a single event by its ID, supporting both standalone events and materialized recurring instances.",
 		resolve: async (_parent, args, ctx) => {
+<<<<<<< HEAD
 			const resolver = async () => {
 				if (!ctx.currentClient.isAuthenticated) {
 					throw new TalawaGraphQLError({
@@ -189,6 +203,101 @@ builder.queryField("event", (t) =>
 			};
 
 			return await executeWithMetrics(ctx, "query:event", resolver);
+=======
+			if (!ctx.currentClient.isAuthenticated) {
+				throw new TalawaGraphQLError({
+					extensions: {
+						code: "unauthenticated",
+					},
+				});
+			}
+
+			const {
+				data: parsedArgs,
+				error,
+				success,
+			} = queryEventArgumentsSchema.safeParse(args);
+
+			if (!success) {
+				throw new TalawaGraphQLError({
+					extensions: {
+						code: "invalid_arguments",
+						issues: error.issues.map((issue) => ({
+							argumentPath: issue.path,
+							message: issue.message,
+						})),
+					},
+				});
+			}
+
+			const currentUserId = ctx.currentClient.user.id;
+			const eventId = parsedArgs.input.id;
+
+			// Use the unified getEventsByIds function to fetch the event
+			const events = await getEventsByIds(
+				[eventId],
+				ctx.drizzleClient,
+				ctx.log,
+			);
+
+			const event = events[0];
+
+			if (!event) {
+				throw new TalawaGraphQLError({
+					extensions: {
+						code: "arguments_associated_resources_not_found",
+						issues: [
+							{
+								argumentPath: ["input", "id"],
+							},
+						],
+					},
+				});
+			}
+
+			// Perform authorization check
+			const currentUser = await ctx.drizzleClient.query.usersTable.findFirst({
+				columns: {
+					role: true,
+				},
+				where: (fields, operators) => operators.eq(fields.id, currentUserId),
+			});
+
+			if (!currentUser) {
+				throw new TalawaGraphQLError({
+					extensions: {
+						code: "unauthenticated",
+					},
+				});
+			}
+
+			const membership =
+				await ctx.drizzleClient.query.organizationMembershipsTable.findFirst({
+					columns: {
+						role: true,
+					},
+					where: (fields, operators) =>
+						operators.and(
+							operators.eq(fields.organizationId, event.organizationId),
+							operators.eq(fields.memberId, currentUserId),
+						),
+				});
+
+			if (currentUser.role !== "administrator" && !membership) {
+				throw new TalawaGraphQLError({
+					extensions: {
+						code: "unauthorized_action_on_arguments_associated_resources",
+						issues: [
+							{
+								argumentPath: ["input", "id"],
+							},
+						],
+					},
+				});
+			}
+
+			return event;
+>>>>>>> upstream
 		},
 		type: Event,
 	}),

@@ -1,11 +1,19 @@
 import { eq } from "drizzle-orm";
 import { eventsTable } from "~/src/drizzle/tables/events";
 import { Event } from "~/src/graphql/types/Event/Event";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 import type { GraphQLContext } from "../../context";
 import type { VolunteerMembership as VolunteerMembershipType } from "./EventVolunteerMembership";
 import { VolunteerMembership } from "./EventVolunteerMembership";
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+import type { GraphQLContext } from "../../context";
+import { VolunteerMembership } from "./EventVolunteerMembership";
+import type { VolunteerMembership as VolunteerMembershipType } from "./EventVolunteerMembership";
+>>>>>>> upstream
 
 export const VolunteerMembershipEventResolver = async (
 	parent: VolunteerMembershipType,

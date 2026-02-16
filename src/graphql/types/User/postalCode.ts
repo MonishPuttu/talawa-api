@@ -1,8 +1,14 @@
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { escapeHTML } from "~/src/utilities/sanitizer";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 import { User } from "./User";
 
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+import { User } from "./User";
+>>>>>>> upstream
 User.implement({
 	fields: (t) => ({
 		postalCode: t.field({
@@ -45,7 +51,11 @@ User.implement({
 					});
 				}
 
+<<<<<<< HEAD
 				return escapeHTML(parent.postalCode);
+=======
+				return parent.postalCode;
+>>>>>>> upstream
 			},
 			type: "String",
 		}),

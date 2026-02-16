@@ -11,7 +11,10 @@ import type { GraphQLSchema } from "graphql";
 import { builder } from "~/src/graphql/builder";
 import { getPluginManagerInstance } from "~/src/plugin/registry";
 import type { IExtensionRegistry } from "~/src/plugin/types";
+<<<<<<< HEAD
 import { rootLogger } from "~/src/utilities/logging/logger";
+=======
+>>>>>>> upstream
 
 class GraphQLSchemaManager {
 	private currentSchema: GraphQLSchema | null = null;
@@ -25,12 +28,20 @@ class GraphQLSchemaManager {
 		const pluginManager = getPluginManagerInstance();
 		if (pluginManager) {
 			// Listen for schema rebuild events
+<<<<<<< HEAD
 			pluginManager.on("schema:rebuild", async (_data) => {
+=======
+			pluginManager.on("schema:rebuild", async (data) => {
+>>>>>>> upstream
 				await this.rebuildSchema();
 			});
 
 			// Listen for plugin deactivation to remove fields
+<<<<<<< HEAD
 			pluginManager.on("plugin:deactivated", async (_pluginId) => {
+=======
+			pluginManager.on("plugin:deactivated", async (pluginId) => {
+>>>>>>> upstream
 				await this.rebuildSchema();
 			});
 		}
@@ -85,7 +96,11 @@ class GraphQLSchemaManager {
 
 			return newSchema;
 		} catch (error) {
+<<<<<<< HEAD
 			rootLogger.error({ err: error }, "Schema rebuild failed");
+=======
+			console.error("Schema rebuild failed:", error);
+>>>>>>> upstream
 			throw error;
 		} finally {
 			this.isRebuilding = false;
@@ -107,7 +122,11 @@ class GraphQLSchemaManager {
 			await import("./types/index");
 			// Note: interfaces and unions directories have empty index files, so skipping them
 		} catch (error) {
+<<<<<<< HEAD
 			rootLogger.error({ err: error }, "Core schema import failed");
+=======
+			console.error("Core schema import failed:", error);
+>>>>>>> upstream
 			throw error;
 		}
 	}
@@ -118,7 +137,11 @@ class GraphQLSchemaManager {
 	private async registerActivePluginExtensions(): Promise<void> {
 		const pluginManager = getPluginManagerInstance();
 		if (!pluginManager || !pluginManager.isSystemInitialized()) {
+<<<<<<< HEAD
 			rootLogger.info("Plugin Manager Not Available or Not Initialized");
+=======
+			console.log("Plugin Manager Not Available or Not Initialized");
+>>>>>>> upstream
 			return;
 		}
 
@@ -127,9 +150,13 @@ class GraphQLSchemaManager {
 		// Check if there are any plugins loaded
 		const loadedPlugins = pluginManager.getLoadedPlugins();
 		if (loadedPlugins.length === 0) {
+<<<<<<< HEAD
 			rootLogger.info(
 				"No plugins loaded, skipping plugin extension registration",
 			);
+=======
+			console.log("No plugins loaded, skipping plugin extension registration");
+>>>>>>> upstream
 			return;
 		}
 
@@ -158,12 +185,18 @@ class GraphQLSchemaManager {
 					try {
 						// Import the plugin's types file if it exists
 						await import(`${pluginPath}/graphql/types`);
+<<<<<<< HEAD
 					} catch (_error) {
 						// Plugin types file doesn't exist, continue without it
 						rootLogger.debug(
 							{ pluginId: extension.pluginId },
 							"No types file found for plugin",
 						);
+=======
+					} catch (error) {
+						// Plugin types file doesn't exist, continue without it
+						console.log(`No types file found for plugin ${extension.pluginId}`);
+>>>>>>> upstream
 					}
 
 					// Create a namespaced builder wrapper that automatically prefixes field names
@@ -174,6 +207,7 @@ class GraphQLSchemaManager {
 
 					// Execute the builder function with the namespaced builder
 					extension.builderFunction(namespacedBuilder);
+<<<<<<< HEAD
 					rootLogger.info(
 						{ pluginId: extension.pluginId, fieldName: extension.fieldName },
 						"Registered builder extension",
@@ -186,6 +220,15 @@ class GraphQLSchemaManager {
 							err: error,
 						},
 						"Failed to register builder extension",
+=======
+					console.log(
+						`Registered builder extension: ${extension.pluginId}.${extension.fieldName}`,
+					);
+				} catch (error) {
+					console.error(
+						`Failed to register builder extension ${extension.pluginId}.${extension.fieldName}:`,
+						error,
+>>>>>>> upstream
 					);
 				}
 			}
@@ -255,7 +298,11 @@ class GraphQLSchemaManager {
 			try {
 				callback(schema);
 			} catch (error) {
+<<<<<<< HEAD
 				rootLogger.error({ err: error }, "Schema update callback failed");
+=======
+				console.error("Schema update callback failed:", error);
+>>>>>>> upstream
 			}
 		}
 	}

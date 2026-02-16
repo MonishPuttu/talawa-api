@@ -1,8 +1,12 @@
 import { faker } from "@faker-js/faker";
 import type { ResultOf, VariablesOf } from "gql.tada";
+<<<<<<< HEAD
 import type { Client } from "minio";
 import { afterEach, expect, suite, test, vi } from "vitest";
 
+=======
+import { expect, suite, test } from "vitest";
+>>>>>>> upstream
 import type {
 	ForbiddenActionOnArgumentsAssociatedResourcesExtensions,
 	InvalidArgumentsExtensions,
@@ -19,6 +23,7 @@ import {
 	Query_signIn,
 } from "../documentNodes";
 
+<<<<<<< HEAD
 // Extract the return type of putObject from the minio Client
 type UploadedObjectInfo = Awaited<ReturnType<Client["putObject"]>>;
 
@@ -27,6 +32,9 @@ suite("Mutation field updateCurrentUser", () => {
 		vi.restoreAllMocks();
 	});
 
+=======
+suite("Mutation field updateCurrentUser", () => {
+>>>>>>> upstream
 	suite(
 		`results in a graphql error with "unauthenticated" extensions code in the "errors" field and "null" as the value of "data.updateCurrentUser" field if`,
 		() => {
@@ -757,6 +765,7 @@ suite("Mutation field updateCurrentUser", () => {
 			});
 		},
 	);
+<<<<<<< HEAD
 
 	suite("Avatar handling", () => {
 		test("should handle invalid avatar mime type", async () => {
@@ -1830,4 +1839,6 @@ suite("Mutation field updateCurrentUser", () => {
 			expect(putObjectSpy).toHaveBeenCalled();
 		});
 	});
+=======
+>>>>>>> upstream
 });

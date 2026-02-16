@@ -14,13 +14,21 @@ import {
 	generateInstancesForRecurringEvent,
 	initializeGenerationWindow,
 } from "~/src/services/eventGeneration";
+<<<<<<< HEAD
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+>>>>>>> upstream
 import envConfig from "~/src/utilities/graphqLimits";
 import {
 	applyRecurrenceOverrides,
 	buildRRuleString,
 	validateRecurrenceInput,
+<<<<<<< HEAD
 } from "~/src/utilities/recurringEvent";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+=======
+} from "~/src/utilities/recurringEventHelpers";
+>>>>>>> upstream
 
 const mutationUpdateThisAndFollowingEventsArgumentsSchema = z.object({
 	input: mutationUpdateThisAndFollowingEventsInputSchema,
@@ -90,7 +98,10 @@ builder.mutationField("updateThisAndFollowingEvents", (t) =>
 								allDay: true,
 								isPublic: true,
 								isRegisterable: true,
+<<<<<<< HEAD
 								isInviteOnly: true,
+=======
+>>>>>>> upstream
 								organizationId: true,
 								startAt: true,
 								endAt: true,
@@ -193,6 +204,7 @@ builder.mutationField("updateThisAndFollowingEvents", (t) =>
 				});
 			}
 
+<<<<<<< HEAD
 			// Validate visibility consistency (cannot be both public and invite-only)
 			const finalIsPublic =
 				parsedArgs.input.isPublic ??
@@ -219,6 +231,8 @@ builder.mutationField("updateThisAndFollowingEvents", (t) =>
 				});
 			}
 
+=======
+>>>>>>> upstream
 			return await ctx.drizzleClient.transaction(async (tx) => {
 				// Always split for "this and following" updates
 				// Step 1: Delete all instances from this one forward (including this instance)
@@ -364,8 +378,11 @@ builder.mutationField("updateThisAndFollowingEvents", (t) =>
 						isPublic: parsedArgs.input.isPublic ?? originalEvent.isPublic,
 						isRegisterable:
 							parsedArgs.input.isRegisterable ?? originalEvent.isRegisterable,
+<<<<<<< HEAD
 						isInviteOnly:
 							parsedArgs.input.isInviteOnly ?? originalEvent.isInviteOnly,
+=======
+>>>>>>> upstream
 						location: parsedArgs.input.location ?? originalEvent.location,
 						isRecurringEventTemplate: true,
 					})

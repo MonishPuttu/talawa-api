@@ -2,6 +2,7 @@ import { eq } from "drizzle-orm";
 import { z } from "zod";
 import { usersTable } from "~/src/drizzle/tables/users";
 import { builder } from "~/src/graphql/builder";
+<<<<<<< HEAD
 import {
 	MutationDeleteUserInput,
 	mutationDeleteUserInputSchema,
@@ -11,6 +12,13 @@ import { zParseOrThrow } from "~/src/graphql/validators/helpers";
 import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 
+=======
+import { MutationDeleteUserInput } from "~/src/graphql/inputs/MutationDeleteUserInput";
+import { mutationDeleteUserInputSchema } from "~/src/graphql/inputs/MutationDeleteUserInput";
+import { User } from "~/src/graphql/types/User/User";
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+>>>>>>> upstream
 const mutationDeleteUserArgumentsSchema = z.object({
 	input: mutationDeleteUserInputSchema,
 });
@@ -35,10 +43,30 @@ builder.mutationField("deleteUser", (t) =>
 				});
 			}
 
+<<<<<<< HEAD
 			const parsedArgs = await zParseOrThrow(
 				mutationDeleteUserArgumentsSchema,
 				args,
 			);
+=======
+			const {
+				data: parsedArgs,
+				error,
+				success,
+			} = mutationDeleteUserArgumentsSchema.safeParse(args);
+
+			if (!success) {
+				throw new TalawaGraphQLError({
+					extensions: {
+						code: "invalid_arguments",
+						issues: error.issues.map((issue) => ({
+							argumentPath: issue.path,
+							message: issue.message,
+						})),
+					},
+				});
+			}
+>>>>>>> upstream
 
 			const currentUserId = ctx.currentClient.user.id;
 

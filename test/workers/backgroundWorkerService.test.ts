@@ -1,26 +1,46 @@
 import type { NodePgDatabase } from "drizzle-orm/node-postgres";
 import type { FastifyBaseLogger } from "fastify";
+<<<<<<< HEAD
 import type { ScheduledTask, ScheduleOptions } from "node-cron";
+=======
+import type { ScheduleOptions, ScheduledTask } from "node-cron";
+>>>>>>> upstream
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type * as schema from "~/src/drizzle/schema";
 
 import {
 	runCleanupWorkerSafely,
 	runMaterializationWorkerSafely,
+<<<<<<< HEAD
 	runMetricsAggregationWorkerSafely,
+=======
+>>>>>>> upstream
 	startBackgroundWorkers,
 	stopBackgroundWorkers,
 } from "~/src/workers/backgroundWorkerService";
 
 vi.mock("node-cron", () => {
+<<<<<<< HEAD
+=======
+	let callCount = 0;
+
+>>>>>>> upstream
 	const schedule = vi.fn(
 		(
 			_expr: string,
 			funcOrString: string | ((now: Date | "manual" | "init") => void),
 			_options?: ScheduleOptions,
 		): ScheduledTask => {
+<<<<<<< HEAD
 			const start = vi.fn(() => {
 				if (typeof funcOrString === "function") {
+=======
+			const thisCall = callCount;
+			callCount++;
+
+			const start = vi.fn(() => {
+				if (thisCall === 0 && typeof funcOrString === "function") {
+>>>>>>> upstream
 					funcOrString("manual");
 				}
 			});
@@ -32,6 +52,10 @@ vi.mock("node-cron", () => {
 	);
 
 	const __resetMock = () => {
+<<<<<<< HEAD
+=======
+		callCount = 0;
+>>>>>>> upstream
 		schedule.mockClear();
 	};
 
@@ -52,11 +76,14 @@ vi.mock("~/src/workers/eventCleanupWorker", () => ({
 	cleanupOldInstances: vi.fn(),
 }));
 
+<<<<<<< HEAD
 // Mock metrics aggregation worker
 vi.mock("~/src/workers/metrics/metricsAggregationWorker", () => ({
 	runMetricsAggregationWorker: vi.fn(),
 }));
 
+=======
+>>>>>>> upstream
 describe("backgroundServiceWorker", () => {
 	let mockDrizzleClient: NodePgDatabase<typeof schema>;
 	let mockLogger: FastifyBaseLogger;
@@ -222,6 +249,7 @@ describe("backgroundServiceWorker", () => {
 		});
 	});
 
+<<<<<<< HEAD
 	describe("runMetricsAggregationWorkerSafely", () => {
 		it("logs successful metrics aggregation run", async () => {
 			const { runMetricsAggregationWorker } = await import(
@@ -308,6 +336,8 @@ describe("backgroundServiceWorker", () => {
 		});
 	});
 
+=======
+>>>>>>> upstream
 	describe("startBackgroundWorkers / stopBackgroundWorkers", () => {
 		it("starts and stops workers", async () => {
 			const { runMaterializationWorker } = await import(
@@ -361,6 +391,7 @@ describe("backgroundServiceWorker", () => {
 			);
 		});
 
+<<<<<<< HEAD
 		it("schedules metrics worker when enabled and snapshot getter provided", async () => {
 			const { runMaterializationWorker } = await import(
 				"~/src/workers/eventGeneration/eventGenerationPipeline"
@@ -541,6 +572,8 @@ describe("backgroundServiceWorker", () => {
 			vi.unstubAllEnvs();
 		});
 
+=======
+>>>>>>> upstream
 		it("warns if already running", async () => {
 			const { runMaterializationWorker } = await import(
 				"~/src/workers/eventGeneration/eventGenerationPipeline"
@@ -661,6 +694,7 @@ describe("backgroundServiceWorker", () => {
 			);
 		});
 	});
+<<<<<<< HEAD
 
 	describe("triggerMaterializationWorker", () => {
 		it("triggers worker when running", async () => {
@@ -926,4 +960,6 @@ describe("backgroundServiceWorker", () => {
 			vi.unstubAllEnvs();
 		});
 	});
+=======
+>>>>>>> upstream
 });

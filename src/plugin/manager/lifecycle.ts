@@ -27,6 +27,7 @@ interface IPluginManager {
 	emit(event: string, ...args: unknown[]): boolean;
 }
 
+<<<<<<< HEAD
 import { installPluginDependenciesWithErrorHandling } from "~/src/utilities/pluginDependencyInstaller";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 import { PluginStatus } from "../types";
@@ -36,6 +37,12 @@ import {
 	isValidPluginId,
 	safeRequire,
 } from "../utils";
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import { installPluginDependenciesWithErrorHandling } from "~/src/utilities/pluginDependencyInstaller";
+import { PluginStatus } from "../types";
+import { createPluginTables, dropPluginTables, safeRequire } from "../utils";
+>>>>>>> upstream
 
 export class PluginLifecycle {
 	constructor(
@@ -52,9 +59,12 @@ export class PluginLifecycle {
 		pluginManager: IPluginManager,
 	): Promise<boolean> {
 		try {
+<<<<<<< HEAD
 			if (!isValidPluginId(pluginId)) {
 				throw new Error(`Invalid plugin ID: ${pluginId}`);
 			}
+=======
+>>>>>>> upstream
 			pluginManager.emit("plugin:installing", pluginId);
 
 			// Load plugin manifest to get database definitions
@@ -64,6 +74,7 @@ export class PluginLifecycle {
 			}
 
 			// Install plugin dependencies first
+<<<<<<< HEAD
 			this.pluginContext.logger.info?.(
 				`Installing dependencies for plugin: ${pluginId}`,
 			);
@@ -71,6 +82,10 @@ export class PluginLifecycle {
 				info: (msg: string) => this.pluginContext.logger.info?.(msg),
 				error: (msg: string) => this.pluginContext.logger.error?.(msg),
 			});
+=======
+			console.log(`Installing dependencies for plugin: ${pluginId}`);
+			await installPluginDependenciesWithErrorHandling(pluginId, console);
+>>>>>>> upstream
 
 			// Create plugin-defined databases if specified
 			await this.createPluginDatabases(pluginId, manifest);
@@ -97,9 +112,12 @@ export class PluginLifecycle {
 		pluginManager: IPluginManager,
 	): Promise<boolean> {
 		try {
+<<<<<<< HEAD
 			if (!isValidPluginId(pluginId)) {
 				throw new Error(`Invalid plugin ID: ${pluginId}`);
 			}
+=======
+>>>>>>> upstream
 			pluginManager.emit("plugin:uninstalling", pluginId);
 
 			// Call plugin lifecycle hook first
@@ -178,15 +196,22 @@ export class PluginLifecycle {
 	 * Trigger schema rebuild to integrate/remove plugin extensions
 	 */
 	private async triggerSchemaRebuild(): Promise<void> {
+<<<<<<< HEAD
 		// Defense-in-depth: re-validate even though callers should have validated
+=======
+>>>>>>> upstream
 		try {
 			const { schemaManager } = await import("../../graphql/schemaManager");
 			await schemaManager.rebuildSchema();
 		} catch (error) {
+<<<<<<< HEAD
 			this.pluginContext.logger.error?.({
 				msg: "Schema rebuild failed",
 				err: error,
 			});
+=======
+			console.error("Schema rebuild failed:", error);
+>>>>>>> upstream
 		}
 	}
 
@@ -247,9 +272,12 @@ export class PluginLifecycle {
 	 * Load plugin manifest
 	 */
 	private async loadPluginManifest(pluginId: string): Promise<IPluginManifest> {
+<<<<<<< HEAD
 		if (!isValidPluginId(pluginId)) {
 			throw new Error(`Invalid plugin ID: ${pluginId}`);
 		}
+=======
+>>>>>>> upstream
 		const pluginPath = path.join(
 			process.cwd(),
 			"src",
@@ -276,10 +304,14 @@ export class PluginLifecycle {
 			manifest.extensionPoints?.database &&
 			manifest.extensionPoints.database.length > 0
 		) {
+<<<<<<< HEAD
 			this.pluginContext.logger.info?.({
 				msg: "Creating plugin-defined tables",
 				pluginId,
 			});
+=======
+			console.log(`Creating plugin-defined tables for: ${pluginId}`);
+>>>>>>> upstream
 
 			const tableDefinitions: Record<string, Record<string, unknown>> = {};
 			const pluginPath = path.join(
@@ -290,12 +322,23 @@ export class PluginLifecycle {
 				pluginId,
 			);
 
+<<<<<<< HEAD
 			for (const tableExtension of manifest.extensionPoints.database) {
 				this.pluginContext.logger.info?.({
 					msg: "Loading table definition",
 					name: tableExtension.name,
 					file: tableExtension.file,
 				});
+=======
+			// Load each table definition
+			for (const tableExtension of manifest.extensionPoints.database) {
+				console.log(
+					"Loading table definition:",
+					tableExtension.name,
+					"from",
+					tableExtension.file,
+				);
+>>>>>>> upstream
 
 				const tableFilePath = path.join(pluginPath, tableExtension.file);
 				const tableModule =
@@ -318,11 +361,15 @@ export class PluginLifecycle {
 				}
 
 				tableDefinitions[tableExtension.name] = tableDefinition;
+<<<<<<< HEAD
 				this.pluginContext.logger.debug?.({
 					msg: "Table definition loaded",
 					name: tableExtension.name,
 					file: tableExtension.file,
 				});
+=======
+				console.log("Table definition loaded:", tableExtension.name);
+>>>>>>> upstream
 			}
 
 			// Create the plugin-defined tables
@@ -333,6 +380,7 @@ export class PluginLifecycle {
 					},
 					pluginId,
 					tableDefinitions,
+<<<<<<< HEAD
 					this.pluginContext.logger, // Using context logger
 				);
 				this.pluginContext.logger.info?.({
@@ -344,6 +392,16 @@ export class PluginLifecycle {
 					msg: `Failed to create tables for ${pluginId}`,
 					err: error,
 				});
+=======
+					console, // Using console as logger
+				);
+				console.log(
+					"Successfully created plugin-defined tables for:",
+					pluginId,
+				);
+			} catch (error) {
+				console.error(`Failed to create tables for ${pluginId}:`, error);
+>>>>>>> upstream
 				throw new TalawaGraphQLError({
 					extensions: {
 						code: "forbidden_action_on_arguments_associated_resources",
@@ -357,9 +415,13 @@ export class PluginLifecycle {
 				});
 			}
 		} else {
+<<<<<<< HEAD
 			this.pluginContext.logger.info?.(
 				`No plugin-defined tables found for: ${pluginId}`,
 			);
+=======
+			console.log("No plugin-defined tables found for:", pluginId);
+>>>>>>> upstream
 		}
 	}
 
@@ -377,6 +439,7 @@ export class PluginLifecycle {
 				},
 				pluginId,
 				plugin.databaseTables as Record<string, Record<string, unknown>>,
+<<<<<<< HEAD
 				this.pluginContext.logger,
 			);
 			this.pluginContext.logger.info?.({
@@ -388,6 +451,15 @@ export class PluginLifecycle {
 				msg: `Failed to remove tables for ${pluginId}`,
 				err: error,
 			});
+=======
+				this.pluginContext.logger as { info?: (message: string) => void },
+			);
+			console.log(
+				`Successfully removed plugin-defined tables for: ${pluginId}`,
+			);
+		} catch (error) {
+			console.error(`Failed to remove tables for ${pluginId}:`, error);
+>>>>>>> upstream
 		}
 	}
 
@@ -464,10 +536,14 @@ export class PluginLifecycle {
 				.set(updates);
 			await updateBuilder.where(eq(pluginsTable.pluginId, pluginId));
 		} catch (error) {
+<<<<<<< HEAD
 			this.pluginContext.logger.error?.({
 				msg: "Error updating plugin in database",
 				err: error,
 			});
+=======
+			console.error("Error updating plugin in database:", error);
+>>>>>>> upstream
 			throw error;
 		}
 	}
@@ -482,10 +558,17 @@ export class PluginLifecycle {
 				await pluginModule.onInstall(this.pluginContext);
 			}
 		} catch (error) {
+<<<<<<< HEAD
 			this.pluginContext.logger.error?.({
 				msg: `Error calling onInstall lifecycle hook for plugin ${pluginId}`,
 				err: error,
 			});
+=======
+			console.error(
+				`Error calling onInstall lifecycle hook for plugin ${pluginId}:`,
+				error,
+			);
+>>>>>>> upstream
 		}
 	}
 
@@ -499,10 +582,17 @@ export class PluginLifecycle {
 				await pluginModule.onActivate(this.pluginContext);
 			}
 		} catch (error) {
+<<<<<<< HEAD
 			this.pluginContext.logger.error?.({
 				msg: `Error calling onActivate lifecycle hook for plugin ${pluginId}`,
 				err: error,
 			});
+=======
+			console.error(
+				`Error calling onActivate lifecycle hook for plugin ${pluginId}:`,
+				error,
+			);
+>>>>>>> upstream
 		}
 	}
 
@@ -516,10 +606,17 @@ export class PluginLifecycle {
 				await pluginModule.onDeactivate(this.pluginContext);
 			}
 		} catch (error) {
+<<<<<<< HEAD
 			this.pluginContext.logger.error?.({
 				msg: `Error calling onDeactivate lifecycle hook for plugin ${pluginId}`,
 				err: error,
 			});
+=======
+			console.error(
+				`Error calling onDeactivate lifecycle hook for plugin ${pluginId}:`,
+				error,
+			);
+>>>>>>> upstream
 		}
 	}
 
@@ -533,10 +630,17 @@ export class PluginLifecycle {
 				await pluginModule.onUninstall(this.pluginContext);
 			}
 		} catch (error) {
+<<<<<<< HEAD
 			this.pluginContext.logger.error?.({
 				msg: `Error calling onUninstall lifecycle hook for plugin ${pluginId}`,
 				err: error,
 			});
+=======
+			console.error(
+				`Error calling onUninstall lifecycle hook for plugin ${pluginId}:`,
+				error,
+			);
+>>>>>>> upstream
 		}
 	}
 
@@ -583,10 +687,17 @@ export class PluginLifecycle {
 				await pluginModule.onUnload(this.pluginContext);
 			}
 		} catch (error) {
+<<<<<<< HEAD
 			this.pluginContext.logger.error?.({
 				msg: `Error calling onUnload lifecycle hook for plugin ${pluginId}`,
 				err: error,
 			});
+=======
+			console.error(
+				`Error calling onUnload lifecycle hook for plugin ${pluginId}:`,
+				error,
+			);
+>>>>>>> upstream
 		}
 	}
 
@@ -598,10 +709,14 @@ export class PluginLifecycle {
 		error: Error,
 		phase: "install" | "activate" | "deactivate" | "uninstall" | "unload",
 	): void {
+<<<<<<< HEAD
 		this.pluginContext.logger.error?.({
 			msg: `Plugin ${pluginId} error during ${phase}`,
 			err: error,
 		});
+=======
+		console.error(`Plugin ${pluginId} error during ${phase}:`, error);
+>>>>>>> upstream
 	}
 
 	private async manageDocker(
@@ -624,13 +739,20 @@ export class PluginLifecycle {
 			);
 			const fullComposePath = path.join(pluginPath, composeFile);
 
+<<<<<<< HEAD
 			const { spawn } = await import("node:child_process");
+=======
+			const { exec } = await import("node:child_process");
+			const { promisify } = await import("node:util");
+			const execAsync = promisify(exec);
+>>>>>>> upstream
 
 			const env = { ...process.env, ...(cfg.env || {}) } as Record<
 				string,
 				string
 			>;
 
+<<<<<<< HEAD
 			const runCommand = (command: string, args: string[]) => {
 				return new Promise<void>((resolve, reject) => {
 					const child = spawn(command, args, {
@@ -654,10 +776,19 @@ export class PluginLifecycle {
 					pluginId,
 					action,
 				});
+=======
+			try {
+				await execAsync("docker --version", { cwd: pluginPath, env });
+			} catch {
+				console.warn(
+					`Docker not available for plugin ${pluginId}. Skipping docker step '${action}'.`,
+				);
+>>>>>>> upstream
 				return;
 			}
 
 			try {
+<<<<<<< HEAD
 				await runCommand("docker", ["compose", "version"]);
 			} catch {
 				this.pluginContext.logger.warn?.({
@@ -712,6 +843,55 @@ export class PluginLifecycle {
 				msg: `Docker lifecycle step '${action}' failed for plugin ${pluginId}`,
 				err: error,
 			});
+=======
+				await execAsync("docker compose version", { cwd: pluginPath, env });
+			} catch {
+				console.warn(
+					`'docker compose' not available for plugin ${pluginId}. Skipping docker step '${action}'.`,
+				);
+				return;
+			}
+
+			const runCompose = async (subcommand: string) => {
+				await execAsync(`sudo docker compose ${subcommand}`, {
+					cwd: pluginPath,
+					env,
+				});
+			};
+
+			if (action === "install" && (cfg.buildOnInstall ?? true)) {
+				console.log(`Building docker container for plugin ${pluginId}...`);
+				await runCompose(
+					`-f "${fullComposePath}" build ${serviceArg.join(" ")}`,
+				);
+			}
+
+			if (action === "activate" && (cfg.upOnActivate ?? true)) {
+				console.log(`Starting docker container for plugin ${pluginId}...`);
+				await runCompose(
+					`-f "${fullComposePath}" up -d ${serviceArg.join(" ")}`,
+				);
+			}
+
+			if (action === "deactivate" && (cfg.downOnDeactivate ?? true)) {
+				console.log(`Stopping docker container for plugin ${pluginId}...`);
+				await runCompose(
+					`-f "${fullComposePath}" down ${serviceArg.join(" ")}`,
+				);
+			}
+
+			if (action === "uninstall" && (cfg.removeOnUninstall ?? true)) {
+				console.log(`Removing docker container for plugin ${pluginId}...`);
+				await runCompose(
+					`-f "${fullComposePath}" down -v ${serviceArg.join(" ")}`,
+				);
+			}
+		} catch (error) {
+			console.warn(
+				`Docker lifecycle step '${action}' failed for plugin ${pluginId}:`,
+				error,
+			);
+>>>>>>> upstream
 		}
 	}
 }

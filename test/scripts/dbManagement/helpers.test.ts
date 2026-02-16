@@ -1,5 +1,6 @@
 import fs from "node:fs/promises";
 import readline from "node:readline";
+<<<<<<< HEAD
 import { eq } from "drizzle-orm";
 import * as schema from "src/drizzle/schema";
 import type { TestEnvConfig } from "test/envConfigSchema";
@@ -13,6 +14,12 @@ import {
 	test,
 	vi,
 } from "vitest";
+=======
+import * as schema from "src/drizzle/schema";
+import type { TestEnvConfig } from "test/envConfigSchema";
+import { uuidv7 } from "uuidv7";
+import { beforeAll, expect, suite, test, vi } from "vitest";
+>>>>>>> upstream
 
 let testEnvConfig: TestEnvConfig;
 let helpers: typeof import("scripts/dbManagement/helpers");
@@ -39,6 +46,7 @@ beforeAll(async () => {
 	helpers = await import("scripts/dbManagement/helpers");
 });
 
+<<<<<<< HEAD
 afterEach(async () => {
 	// Clean up recurring event template rows to avoid DB state pollution across tests/shards
 	if (helpers?.db && schema.eventsTable) {
@@ -81,6 +89,42 @@ suite.concurrent("parseDate", () => {
 			expect(resultFromDate.toISOString()).toBe(dateObj.toISOString());
 		}
 	});
+=======
+suite.concurrent("parseDate", () => {
+	test.concurrent(
+		"should return a valid Date object for a valid date string",
+		async () => {
+			const input = "2021-12-31";
+			const result = helpers.parseDate(input);
+			expect(result).not.toBeNull();
+			if (result !== null) {
+				// Compare ISO strings to avoid timezone issues
+				expect(result.toISOString()).toBe(new Date(input).toISOString());
+			}
+		},
+	);
+
+	test.concurrent(
+		"should return valid Date objects for a valid number timestamp and Date object",
+		async () => {
+			// Test using a numeric timestamp
+			const timestamp = 1609459200000; // Jan 1, 2021 00:00:00 GMT
+			const resultFromNumber = helpers.parseDate(timestamp);
+			expect(resultFromNumber).not.toBeNull();
+			if (resultFromNumber !== null) {
+				expect(resultFromNumber.getTime()).toBe(timestamp);
+			}
+
+			// Test using an already existing Date object
+			const dateObj = new Date("2021-12-31T00:00:00Z");
+			const resultFromDate = helpers.parseDate(dateObj);
+			expect(resultFromDate).not.toBeNull();
+			if (resultFromDate !== null) {
+				expect(resultFromDate.toISOString()).toBe(dateObj.toISOString());
+			}
+		},
+	);
+>>>>>>> upstream
 
 	test.concurrent("should return null for invalid date inputs", async () => {
 		// Test an invalid date string
@@ -90,6 +134,7 @@ suite.concurrent("parseDate", () => {
 	});
 });
 
+<<<<<<< HEAD
 suite.concurrent("getNextOccurrenceOfWeekdayTime", () => {
 	test.concurrent("returns next occurrence of same weekday and time on or after reference", async () => {
 		// Template: Tuesday 2025-04-01 09:00 UTC
@@ -174,12 +219,42 @@ suite.concurrent("action item ID generation", () => {
 		expect(result.id).not.toBe("short-id");
 		expect(result.id.length).toBe(36);
 	});
+=======
+suite.concurrent("action item ID generation", () => {
+	test.concurrent(
+		"should generate new uuidv7 when ID is not 36 characters",
+		async () => {
+			const actionItem = {
+				id: "short-id",
+				assignedAt: "2024-03-14",
+				completionAt: "2024-03-15",
+				createdAt: "2024-03-13",
+				updaterId: "user-123",
+			};
+
+			const result = {
+				...actionItem,
+				id: actionItem.id.length === 36 ? actionItem.id : uuidv7(),
+				assignedAt: helpers.parseDate(actionItem.assignedAt),
+				completionAt: helpers.parseDate(actionItem.completionAt),
+				createdAt: helpers.parseDate(actionItem.createdAt),
+			};
+
+			expect(result.id).not.toBe("short-id");
+			expect(result.id.length).toBe(36);
+		},
+	);
+>>>>>>> upstream
 });
 
 suite.concurrent("askUserToContinue", () => {
 	test.concurrent("should resolve to true when user inputs 'y'", async () => {
 		const fakeInterface = {
+<<<<<<< HEAD
 			question: (_query: string, callback: (answer: string) => void) => {
+=======
+			question: (query: string, callback: (answer: string) => void) => {
+>>>>>>> upstream
 				callback("y");
 			},
 			close: vi.fn(),
@@ -196,7 +271,11 @@ suite.concurrent("askUserToContinue", () => {
 
 	test.concurrent("should resolve to false when user inputs 'n'", async () => {
 		const fakeInterface = {
+<<<<<<< HEAD
 			question: (_query: string, callback: (answer: string) => void) => {
+=======
+			question: (query: string, callback: (answer: string) => void) => {
+>>>>>>> upstream
 				callback("n");
 			},
 			close: vi.fn(),
@@ -213,7 +292,11 @@ suite.concurrent("askUserToContinue", () => {
 
 	test.concurrent("should trim and ignore case in the input", async () => {
 		const fakeInterface = {
+<<<<<<< HEAD
 			question: (_query: string, callback: (answer: string) => void) => {
+=======
+			question: (query: string, callback: (answer: string) => void) => {
+>>>>>>> upstream
 				callback("  Y  ");
 			},
 			close: vi.fn(),
@@ -235,6 +318,7 @@ const overrideDbExecute = (newExecute: () => Promise<unknown>): void => {
 
 suite.concurrent("pingDB", () => {
 	test.concurrent("should return true when db.execute resolves", async () => {
+<<<<<<< HEAD
 		const originalExecute = Reflect.get(helpers.db, "execute");
 		try {
 			overrideDbExecute(() => Promise.resolve());
@@ -258,6 +342,46 @@ suite.concurrent("pingDB", () => {
 	});
 });
 
+=======
+		overrideDbExecute(() => Promise.resolve());
+		const result = await helpers.pingDB();
+		expect(result).toBe(true);
+	});
+
+	test.concurrent("should throw error when db.execute rejects", async () => {
+		overrideDbExecute(() => Promise.reject(new Error("connection failed")));
+		await expect(helpers.pingDB()).rejects.toThrow(
+			"Unable to connect to the database.",
+		);
+	});
+});
+
+suite.concurrent("listSampleData", () => {
+	test.concurrent(
+		"should list sample data files and return true using the original sample_data",
+		async () => {
+			const result = await helpers.listSampleData();
+			expect(result).toBe(true);
+		},
+	);
+
+	test.concurrent(
+		"should handle an error while listing sample data",
+		async () => {
+			vi.spyOn(fs, "readdir").mockRejectedValue(
+				new Error("Failed to read directory"),
+			);
+
+			await expect(helpers.listSampleData()).rejects.toThrow(
+				"Error listing sample data: Error: Failed to read directory",
+			);
+
+			vi.restoreAllMocks();
+		},
+	);
+});
+
+>>>>>>> upstream
 suite.concurrent("emptyMinioBucket", () => {
 	test.concurrent("should empty the Minio bucket and return true", async () => {
 		const result = await helpers.emptyMinioBucket();
@@ -266,6 +390,7 @@ suite.concurrent("emptyMinioBucket", () => {
 	test.concurrent("should return false if listing objects fails", async () => {
 		const minioClient = Reflect.get(helpers, "minioClient");
 		const originalListObjects = minioClient.listObjects;
+<<<<<<< HEAD
 		try {
 			minioClient.listObjects = () => {
 				const { Readable } = require("node:stream");
@@ -282,6 +407,22 @@ suite.concurrent("emptyMinioBucket", () => {
 		} finally {
 			minioClient.listObjects = originalListObjects;
 		}
+=======
+		minioClient.listObjects = () => {
+			const { Readable } = require("node:stream");
+			const stream = new Readable({ read() {} });
+			process.nextTick(() => {
+				stream.emit("error", new Error("Failed to list objects"));
+				stream.push(null);
+			});
+			return stream;
+		};
+
+		const result = await helpers.emptyMinioBucket();
+		expect(result).toBe(false);
+
+		minioClient.listObjects = originalListObjects;
+>>>>>>> upstream
 	});
 });
 
@@ -297,6 +438,7 @@ suite.concurrent("checkAndInsertData", () => {
 	});
 
 	test.concurrent("should throw error if transaction fails", async () => {
+<<<<<<< HEAD
 		const db = Reflect.get(helpers, "db");
 		const originalTransaction = db.transaction;
 		try {
@@ -315,10 +457,30 @@ suite.concurrent("checkAndInsertData", () => {
 		} finally {
 			db.transaction = originalTransaction;
 		}
+=======
+		// Override db.transaction to simulate a failure.
+		const db = Reflect.get(helpers, "db");
+		const originalTransaction = db.transaction;
+		db.transaction = async () => {
+			throw new Error("Transaction failed");
+		};
+
+		await expect(
+			helpers.checkAndInsertData(
+				schema.usersTable,
+				[{ id: 1 }],
+				schema.usersTable.id,
+				1000,
+			),
+		).rejects.toThrow("Transaction failed");
+
+		db.transaction = originalTransaction;
+>>>>>>> upstream
 	});
 });
 
 suite.concurrent("insertCollections", () => {
+<<<<<<< HEAD
 	test.concurrent("should insert collection data (for a valid collection) and return true", async () => {
 		const result = await helpers.insertCollections([
 			"users",
@@ -351,6 +513,12 @@ suite.concurrent("insertCollections", () => {
 		try {
 			const checkAndInsertDataSpy = vi.spyOn(helpers, "checkAndInsertData");
 			await helpers.insertCollections([
+=======
+	test.concurrent(
+		"should insert collection data (for a valid collection) and return true",
+		async () => {
+			const result = await helpers.insertCollections([
+>>>>>>> upstream
 				"users",
 				"organizations",
 				"organization_memberships",
@@ -361,6 +529,7 @@ suite.concurrent("insertCollections", () => {
 				"comment_votes",
 				"action_categories",
 				"events",
+<<<<<<< HEAD
 				"recurring_event_templates",
 				"action_items",
 				"membership_requests",
@@ -674,6 +843,147 @@ suite.concurrent("checkDataSize integration test", () => {
 		const result = await helpers.checkDataSize("Test Stage");
 		expect(typeof result).toBe("boolean");
 	});
+=======
+				"action_items",
+				"membership_requests",
+			]);
+			expect(result).toBe(true);
+		},
+	);
+
+	test.concurrent(
+		"should throw error for an invalid collection name",
+		async () => {
+			await expect(
+				helpers.insertCollections(["invalid_collection"]),
+			).rejects.toThrow(/Error adding data to tables:/);
+		},
+	);
+
+	test.concurrent(
+		"should generate new uuidv7 for action items with short IDs",
+		async () => {
+			const userId = uuidv7();
+			await helpers.checkAndInsertData(
+				schema.usersTable,
+				[
+					{
+						id: userId,
+						emailAddress: "test@example.com",
+						name: "Test User",
+						passwordHash: "hashed_password_123",
+						isEmailAddressVerified: true,
+						role: "regular",
+						createdAt: new Date(),
+						updatedAt: new Date(),
+					},
+				],
+				schema.usersTable.id,
+				1000,
+			);
+
+			const organizationId = "123e4567-e89b-12d3-a456-426614174000";
+			await helpers.checkAndInsertData(
+				schema.organizationsTable,
+				[
+					{
+						id: organizationId,
+						name: "Test Organizations",
+						description: "Test organization description",
+						createdAt: new Date(),
+						updatedAt: new Date(),
+						creatorId: userId,
+						updaterId: userId,
+						isUserRegistrationRequired: false,
+					},
+				],
+				schema.organizationsTable.id,
+				1000,
+			);
+
+			const categoryId = "123e4567-e89b-12d3-a456-426614174001";
+			await helpers.checkAndInsertData(
+				schema.actionItemCategoriesTable,
+				[
+					{
+						id: categoryId,
+						name: "Test Category",
+						description: "Test category description",
+						createdAt: new Date(),
+						updatedAt: new Date(),
+						creatorId: userId,
+						updaterId: userId,
+						organizationId: organizationId,
+						isDisabled: false,
+					},
+				],
+				schema.actionItemCategoriesTable.id,
+				1000,
+			);
+			const mockActionItem = {
+				id: "short-id",
+				assignedAt: "2024-03-14",
+				completionAt: "2024-03-15",
+				createdAt: "2024-03-13",
+				updatedAt: "2024-03-13",
+				preCompletionNotes: "Test notes",
+				postCompletionNotes: "",
+				organizationId: organizationId,
+				categoryId: categoryId,
+				eventId: null,
+				assigneeId: userId,
+				creatorId: userId,
+				updaterId: userId,
+				isCompleted: false,
+			};
+
+			let capturedData: (typeof schema.actionItemsTable.$inferInsert)[] = [];
+			const checkAndInsertDataSpy = vi
+				.spyOn(helpers, "checkAndInsertData")
+				.mockImplementation((table, data) => {
+					capturedData =
+						data as (typeof schema.actionItemsTable.$inferInsert)[];
+					return Promise.resolve(true);
+				});
+
+			const actionItemWithUuid = {
+				...mockActionItem,
+				id: uuidv7(),
+				assignedAt: helpers.parseDate(mockActionItem.assignedAt),
+				completionAt: helpers.parseDate(mockActionItem.completionAt),
+				createdAt: helpers.parseDate(mockActionItem.createdAt),
+				updatedAt: helpers.parseDate(mockActionItem.updatedAt),
+			};
+
+			await helpers.checkAndInsertData(
+				schema.actionItemsTable,
+				[actionItemWithUuid],
+				schema.actionItemsTable.id,
+				1000,
+			);
+
+			expect(capturedData.length).toBeGreaterThan(0);
+			const firstItem = capturedData[0];
+			if (!firstItem || !firstItem.id) {
+				throw new Error("Expected action item with ID");
+			}
+			expect(firstItem.id).not.toBe("short-id");
+			expect(firstItem.id.length).toBe(36);
+
+			checkAndInsertDataSpy.mockRestore();
+		},
+	);
+});
+
+suite.concurrent("checkDataSize integration test", () => {
+	test.concurrent(
+		"should return a boolean indicating record existence",
+		async () => {
+			const result = await helpers.checkDataSize("Test Stage");
+			expect(typeof result).toBe("boolean");
+		},
+	);
+>>>>>>> upstream
 	test.concurrent("should return false if db query fails", async () => {
 		const db = Reflect.get(helpers, "db");
 		const originalSelect = db.select;

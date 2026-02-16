@@ -31,7 +31,11 @@ Our documentation can be found in ONLY 3 PLACES:
 
 The process in easy:
 
+<<<<<<< HEAD
 1. Enter the `docs/` directory.
+=======
+1. Enter the `docs/` directory
+>>>>>>> upstream
 2. Follow the instructions in the `README.md` file to launch Docusaurus.
 3. Add/modify the markdown documents to the `docs/docs/docs` directory.
 4. If adding a file, then you may need to edit the `sidebars.js` which is used to generate the left navigation menus.

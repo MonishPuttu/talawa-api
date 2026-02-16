@@ -22,6 +22,7 @@ jobs:
     # only run the job if the pull request actor is not dependabot
     if: ${{ github.actor != 'dependabot[bot]' }}
     name: Check base branch of the pull request to be develop
+<<<<<<< HEAD
     runs-on: ubuntu-latest
     steps:
       - if: github.event.pull_request.base.ref != 'develop'
@@ -54,10 +55,28 @@ jobs:
           # Get all changed files
           CHANGED_FILES=$(git diff --name-only --diff-filter=ACMRT $BASE_SHA ${{ github.event.pull_request.head.sha }} | tr '\n' ' ')
           echo "changed_files=${CHANGED_FILES}" >> $GITHUB_OUTPUT
+=======
+    runs-on: ubuntu-latest
+    steps:
+      - if: github.event.pull_request.base.ref != 'develop'
+        name: Check base branch
+        run: |
+          echo "Pull requests are only allowed against the 'develop' branch. Please refer to the pull request guidelines."
+          echo "Error: Close this PR and try again."
+          exit 1
+
+  Code-Quality-Checks:
+    name: Checking code quality
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout this repository
+        uses: actions/checkout@v4.2.2
+>>>>>>> upstream
       - name: Build talawa api non production environment docker image
         run: docker buildx build --file ./docker/api.Containerfile --tag talawa_api --target non_production ./
       - name: Check code format
         run: docker container run talawa_api pnpm format:check
+<<<<<<< HEAD
       - name: Check TSDoc comments
         run: docker container run talawa_api pnpm lint:tsdoc
       - name: Check sanitization
@@ -66,6 +85,8 @@ jobs:
         env:
           CHANGED_FILES: ${{ steps.changed-files.outputs.changed_files }}
         run: docker container run -e CHANGED_FILES="$CHANGED_FILES" talawa_api pnpm validate:error-handling
+=======
+>>>>>>> upstream
       - name: Check if the source and target branches are different
         if: ${{ github.event.pull_request.base.ref == github.event.pull_request.head.ref }}
         run: |
@@ -74,6 +95,7 @@ jobs:
           echo "Error: Source and Target Branches are the same. Please ensure they are different."
           echo "Error: Close this PR and try again."
           exit 1
+<<<<<<< HEAD
       - name: Lint shell scripts (shellcheck)
         shell: bash
         run: |
@@ -90,10 +112,128 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
+=======
+    
+  Check-AutoDocs:
+    if: ${{ github.actor != 'dependabot[bot]' }}
+    name: Generate and Validate Documentation
+    runs-on: ubuntu-latest
+    needs: [Code-Quality-Checks]
+    steps:
+      - name: Checkout the Repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24.x'
+          cache: 'pnpm'
+
+      - name: Prepare dependency store
+        run: pnpm fetch
+
+      - name: Install Dependencies (frozen)
+        run: pnpm install --frozen-lockfile --prefer-offline
+
+      - name: Run documentation generation
+        run: pnpm run generate:docs
+
+      - name: Check for uncommitted doc changes
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "::error::Documentation files are outdated or missing."
+            echo "Please run 'pnpm run generate:docs' locally and commit the updated files."
+            echo ""
+            echo "Changed files:"
+            git status --porcelain
+            exit 1
+          else
+            echo "Documentation is up to date."
+          fi
+
+  python_checks:
+    name: Run Python Checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get changed files
+        id: changed-files
+        run: |
+          echo "all_changed_files=$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} | tr '\n' ' ')" >> $GITHUB_OUTPUT
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.9
+
+      - name: Run Biome Ignore Check
+        run: |
+          python .github/workflows/scripts/biome_disable_check.py --files ${{ steps.changed-files.outputs.all_changed_files }}
+
+      - name: Run Code Coverage Disable Check
+        run: |
+          python .github/workflows/scripts/code_coverage_disable_check.py --files ${{ steps.changed-files.outputs.all_changed_files }}
+
+      - name: Run TS Ignore Check
+        run: |
+          python .github/workflows/scripts/detect_ts_ignore.py --files ${{ steps.changed-files.outputs.all_changed_files }}
+
+  check_gql_tada:
+    name: Check gql tada files and configuration
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout this repository
+        uses: actions/checkout@v4.2.2
+      - name: Build talawa api non production environment docker image
+        run: docker buildx build --file ./docker/api.Containerfile --tag talawa_api --target non_production ./
+      - name: Check gql tada
+        run: docker container run talawa_api pnpm check_gql_tada
+
+  check_drizzle_migrations:
+    name: Check drizzle migration files
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout this repository
+        uses: actions/checkout@v4.2.2
+      - name: Build talawa api non production environment docker image
+        run: docker buildx build --file ./docker/api.Containerfile --tag talawa_api --target non_production ./
+      - name: Check drizzle migrations
+        run: docker container run --env-file ./envFiles/.env.ci talawa_api pnpm check_drizzle_migrations
+
+  check_type_errors:
+    name: Check type errors
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout this repository
+        uses: actions/checkout@v4.2.2
+      - name: Build talawa api non production environment docker image
+        run: docker buildx build --file ./docker/api.Containerfile --tag talawa_api --target non_production ./
+      - name: Check type errors
+        run: docker container run talawa_api pnpm typecheck
+  Generate-Schema-Docs:
+    if: ${{ github.actor != 'dependabot[bot]' }}
+    name: Generate GraphQL Schema Documentation
+    runs-on: ubuntu-latest
+    needs: [Code-Quality-Checks]
+    steps:
+      - name: Checkout repository
+>>>>>>> upstream
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+<<<<<<< HEAD
       - name: Set up Python 3.11
         uses: actions/setup-python@v4
         with:
@@ -106,8 +246,56 @@ jobs:
           key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
           restore-keys: |
             ${{ runner.os }}-pip-
+=======
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: false
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24.x'
+          cache: 'pnpm'
+
+>>>>>>> upstream
+
+      - name: Prepare dependency store
+        run: pnpm fetch
+
+      - name: Install Docs dependencies
+        working-directory: ./docs
+        run: pnpm install --frozen-lockfile --prefer-offline
+
+      - name: Generate GraphQL Schema Markdown
+        working-directory: ./docs
+        run: pnpm docusaurus graphql-to-doc
+      - name: Check for uncommitted schema changes
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "::error::Schema files are outdated or missing."
+            echo "Please run 'pnpm docusaurus graphql-to-doc' inside '/docs' locally and commit the updated files."
+            echo ""
+            echo "Changed files:"
+            git status --porcelain
+            exit 1
+          else
+            echo "Schema is up to date."
+          fi
+  Check_unused_code:
+    name: Check for unused files, exports and dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4.2.2     
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
       - name: Install dependencies
+<<<<<<< HEAD
         run: |
           python3 -m venv venv
           source venv/bin/activate
@@ -139,11 +327,39 @@ jobs:
 
   python_checks:
     name: Run Python Checks
+=======
+        run: pnpm install --frozen-lockfile 
+      - name: Run Knip for files and exports
+        run: pnpm knip --include files,exports
+        # Dummy environment variables required for Knip to load drizzle.config.ts during file parsing
+        env:
+          API_POSTGRES_DATABASE: dummy_db
+          API_POSTGRES_PASSWORD: dummy_password
+          API_POSTGRES_HOST: localhost
+          API_POSTGRES_PORT: '5432'
+          API_POSTGRES_USER: dummy_user
+          API_POSTGRES_SSL_MODE: 'false' 
+      - name: Run Knip for dependencies
+        run: pnpm knip --config knip.deps.json --include dependencies
+        # Dummy environment variables required for Knip to load drizzle.config.ts during file parsing
+        env:
+          API_POSTGRES_DATABASE: dummy_db
+          API_POSTGRES_PASSWORD: dummy_password
+          API_POSTGRES_HOST: localhost
+          API_POSTGRES_PORT: '5432'
+          API_POSTGRES_USER: dummy_user
+          API_POSTGRES_SSL_MODE: 'false' 
+
+  Check-Sensitive-Files:
+    if: ${{ github.actor != 'dependabot[bot]' }}
+    name: Checks if sensitive files have been changed without authorization
+>>>>>>> upstream
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
+<<<<<<< HEAD
           fetch-depth: 0
 
       - name: Checkout centralized scripts
@@ -789,6 +1005,200 @@ jobs:
         with:
           path: "./coverage/vitest/lcov.info"
           min_coverage: 80.0
+=======
+          fetch-depth: 0 # Fetch all history for all branches and tags
+
+      - name: Get PR labels
+        id: check-labels
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ -z "${{ github.event.pull_request.number }}" ]; then
+            echo "skip=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          LABELS="$(gh api repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/labels --jq '.[].name' | tr '\n' ' ')"
+
+          if echo "$LABELS" | grep -qw "ignore-sensitive-files-pr"; then
+            echo "::notice::Skipping sensitive files check due to 'ignore-sensitive-files-pr' label."
+            echo "skip=true" >> $GITHUB_OUTPUT
+          else
+            echo "skip=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Get Changed Unauthorized files
+        if: steps.check-labels.outputs.skip != 'true'
+        id: changed-unauth-files
+        run: |
+          set -e
+
+          # Skip if not in PR context
+          if [ -z "${{ github.event.pull_request.base.sha }}" ]; then
+            echo "any_changed=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          # Determine base and head commits for comparison
+          HEAD_SHA="${{ github.event.pull_request.head.sha || github.sha }}"
+          BASE_SHA=$(git merge-base "${{ github.event.pull_request.base.sha }}" "$HEAD_SHA" 2>&1) || {
+            echo "::error::Failed to find merge base between ${{ github.event.pull_request.base.sha }} and $HEAD_SHA" >&2
+            exit 1
+          }
+
+          # Verify BASE_SHA is not empty
+          if [ -z "$BASE_SHA" ]; then
+            echo "::error::BASE_SHA is empty after git merge-base command" >&2
+            exit 1
+          fi
+
+          # Define sensitive files patterns as a bash array
+          SENSITIVE_PATTERNS=(
+            '.coderabbit.yaml$'
+            'Caddyfile$'
+            'codegen.ts$'
+            '^Dockerfile.*'
+            '^docker-compose.*'
+            '^drizzle_migrations/.*'
+            '.dockerignore$'
+            '.env.sample$'
+            '.env_test$'
+            'eslint.config.mjs$'
+            '^envFiles/.*'
+            '.gitignore$'
+            'init-mongo.sh$'
+            '.prettierignore$'
+            '.prettierrc.json$'
+            '.pylintrc$'
+            '^.github/.*'
+            'biome.jsonc$'
+            'renovate.json$'
+            'requirements.txt$'
+            'schema.graphql$'
+            'CODEOWNERS$'
+            'LICENSE$'
+            'tsconfig.json$'
+            'vitest.config.ts$'
+            'pnpm-lock.yaml$'
+            'package.json$'
+            'package-lock.json$'
+            '.nojekyll$'
+            'knip.json$'
+            'docs/docusaurus.config.ts$'
+            '^docs/sidebar.*'
+            'setup.ts$'
+            '^src/graphql/types/Mutation/.*'
+            '^src/graphql/types/Query/.*'
+            'tsconfig.build.json$'
+            'vite.config.mts$'
+            'CNAME$'
+            'CODE_OF_CONDUCT.md$'
+            'CODE_STYLE.md$'
+            'CONTRIBUTING.md$'
+            'DOCUMENTATION.md$'
+            'INSTALLATION.md$'
+            'ISSUE_GUIDELINES.md$'
+            'PR_GUIDELINES.md$'
+            'README.md$'
+          )
+
+          # Check for changes in sensitive files
+          CHANGED_UNAUTH_FILES=""
+          for pattern in "${SENSITIVE_PATTERNS[@]}"; do
+            FILES=$(git diff --name-only --diff-filter=ACMRD "$BASE_SHA" "$HEAD_SHA" | grep -E "$pattern" || true)
+            if [ ! -z "$FILES" ]; then
+              CHANGED_UNAUTH_FILES="$CHANGED_UNAUTH_FILES $FILES"
+            fi
+          done
+
+          # Deduplicate and format output
+          # Convert to newline-separated, deduplicate, then rejoin as space-separated
+          if [ ! -z "$CHANGED_UNAUTH_FILES" ]; then
+            CHANGED_UNAUTH_FILES=$(echo "$CHANGED_UNAUTH_FILES" | tr ' ' '\n' | sort -u | tr '\n' ' ' | xargs)
+          fi
+          
+          echo "all_changed_files=$CHANGED_UNAUTH_FILES" >> $GITHUB_OUTPUT
+
+          # Check if any unauthorized files changed
+          if [ ! -z "$CHANGED_UNAUTH_FILES" ]; then
+            echo "any_changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "any_changed=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: List all changed unauthorized files
+        if: steps.changed-unauth-files.outputs.any_changed == 'true'
+        env:
+          CHANGED_UNAUTH_FILES: ${{ steps.changed-unauth-files.outputs.all_changed_files }}
+        run: |
+          echo "::error::Unauthorized changes detected in sensitive files:"
+          echo ""
+          for file in $CHANGED_UNAUTH_FILES; do
+            echo "- $file"
+          done
+          echo ""
+          echo "To override:"
+          echo "Add the 'ignore-sensitive-files-pr' label to this PR."
+          exit 1
+
+  Run-Tests:
+    name: Run tests for talawa api
+    runs-on: ubuntu-latest
+    needs: [Code-Quality-Checks, python_checks, check_type_errors, check_drizzle_migrations, check_gql_tada, Check-AutoDocs, Check_unused_code, Generate-Schema-Docs]
+    steps:
+      - name: Checkout this repository
+        uses: actions/checkout@v4.2.2
+      - name: Create .env file for talawa api testing environment
+        run: cp ./envFiles/.env.ci ./.env
+      - name: Build talawa api compose testing environment
+        run: docker compose build
+      - name: Start Postgres service
+        run: docker compose up -d postgres
+      - name: Wait for Postgres to be ready
+        run: |
+          set -euo pipefail
+          echo "Waiting for Postgres (service: postgres)…"
+          timeout=90
+          until docker compose exec -T postgres pg_isready -h localhost -p 5432 -U postgres >/dev/null 2>&1 || [ $timeout -eq 0 ]; do
+            echo "Postgres not ready yet... ($timeout seconds remaining)"
+            sleep 1
+            ((timeout--))
+          done
+          if [ $timeout -eq 0 ]; then
+            echo "Error: Postgres failed to start"
+            docker compose ps
+            docker compose logs postgres
+            docker compose down -v
+            exit 1
+          else
+            echo "Postgres is ready."
+          fi
+      - name: Run tests
+        run: docker compose up --exit-code-from api
+      - name: Copy coverage from container
+        run: |
+          CONTAINER_ID=$(docker ps -aq --filter "ancestor=talawa-api")
+          docker cp $CONTAINER_ID:/home/talawa/api/coverage ./coverage
+
+      #######################################################################
+      # DO NOT DELETE ANY references to env.CODECOV_UNIQUE_NAME in this
+      # section. They are required for accurate calculations
+      #######################################################################
+      - name: Present and upload coverage to Codecov as ${{env.CODECOV_UNIQUE_NAME}}
+        uses: codecov/codecov-action@v5
+        with:
+          name: "${{env.CODECOV_UNIQUE_NAME}}"
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: false
+          verbose: true
+          exclude: 'docs/'      
+
+      - name: Test acceptable level of code coverage
+        uses: VeryGoodOpenSource/very_good_coverage@v3
+        with:
+          path: "./coverage/lcov.info"
+          min_coverage: 68.0
+>>>>>>> upstream
 
   Test-Docusaurus-Deployment:
     name: Test Deployment to https://docs-api.talawa.io
@@ -812,6 +1222,7 @@ jobs:
         working-directory: ./docs
         run: pnpm build
 
+<<<<<<< HEAD
   Check-Sample-Data:
     name: Check If Sample Data Script Executes Successfully
     timeout-minutes: 5
@@ -898,6 +1309,94 @@ jobs:
         if: always()
         run: |
           docker compose down
+=======
+  Python-Compliance:
+    name: Check Python Code Style
+    runs-on: ubuntu-latest
+    needs: [Code-Quality-Checks]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+
+      - name: Cache pip packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install dependencies
+        run: |
+          python3 -m venv venv
+          source venv/bin/activate
+          python -m pip install --upgrade pip
+          pip install -r .github/workflows/requirements.txt
+
+      - name: Run Black Formatter Check
+        run: |
+          source venv/bin/activate
+          black --check .
+
+      - name: Run Flake8 Linter
+        run: |
+          source venv/bin/activate
+          flake8 --docstring-convention google --ignore E402,E722,E203,F401,W503 .github
+
+      - name: Run pydocstyle
+        run: |
+          source venv/bin/activate
+          pydocstyle --convention=google --add-ignore=D415,D205 .github
+
+      - name: Run docstring compliance check
+        run: |
+          source venv/bin/activate
+          python .github/workflows/scripts/check_docstrings.py --directories .github
+
+  Count-Changed-Files:
+    if: ${{ github.actor != 'dependabot[bot]' }}
+    name: Checks if number of files changed is acceptable
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Fetch all history for all branches and tags
+
+      - name: Get changed files
+        id: changed-files
+        run: |
+          # Get the base branch ref
+          BASE_SHA=$(git merge-base ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }})
+
+          # Count all changed files
+          ALL_CHANGED_FILES_COUNT=$(git diff --name-only --diff-filter=ACMRT $BASE_SHA ${{ github.event.pull_request.head.sha }} | wc -l | tr -d ' ')
+          echo "all_changed_files_count=$ALL_CHANGED_FILES_COUNT" >> $GITHUB_OUTPUT
+
+      - name: Echo number of changed files
+        env:
+          CHANGED_FILES_COUNT: ${{ steps.changed-files.outputs.all_changed_files_count }}
+        run: |
+          echo "Number of files changed: $CHANGED_FILES_COUNT"
+
+      - name: Check if the number of changed files is less than 100
+        if: steps.changed-files.outputs.all_changed_files_count > 100
+        env:
+          CHANGED_FILES_COUNT: ${{ steps.changed-files.outputs.all_changed_files_count }}
+        run: |
+          echo "Error: Too many files (greater than 100) changed in the pull request."
+          echo "Possible issues:"
+          echo "- Contributor may be merging into an incorrect branch."
+          echo "- Source branch may be incorrect please use develop as source branch."
+          exit 1
+>>>>>>> upstream
 
   Check-App-Startup:
     name: Check App Startup and Health
@@ -911,7 +1410,11 @@ jobs:
       - name: Copy devcontainer environment file
         run: cp envFiles/.env.devcontainer .env
       - name: Bring up devcontainer
+<<<<<<< HEAD
         run: devcontainer up --workspace-folder . --config .devcontainer/default/devcontainer.json
+=======
+        run: devcontainer up --workspace-folder .
+>>>>>>> upstream
       - name: Wait for Postgres in devcontainer
         run: |
           set -euo pipefail

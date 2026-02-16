@@ -73,7 +73,11 @@ export const Details = ({
 
 ```graphql
 input MutationUpdateVenueInput {
+<<<<<<< HEAD
   attachments: [FileMetadataInput!]
+=======
+  attachments: [Upload!]
+>>>>>>> upstream
   capacity: Int
   description: String
   id: ID!
@@ -83,9 +87,15 @@ input MutationUpdateVenueInput {
 
 ### Fields
 
+<<<<<<< HEAD
 #### [<code style={{ fontWeight: 'normal' }}>MutationUpdateVenueInput.<b>attachments</b></code>](#)<Bullet />[<code style={{ fontWeight: 'normal' }}><b>[FileMetadataInput!]</b></code>](/auto-schema/types/inputs/file-metadata-input.mdx) <Badge class="badge badge--secondary " text="list"/> <Badge class="badge badge--secondary " text="input"/>
 
 File metadata for attachments uploaded via MinIO presigned URLs.
+=======
+#### [<code style={{ fontWeight: 'normal' }}>MutationUpdateVenueInput.<b>attachments</b></code>](#)<Bullet />[<code style={{ fontWeight: 'normal' }}><b>[Upload!]</b></code>](/auto-schema/types/scalars/upload.mdx) <Badge class="badge badge--secondary " text="list"/> <Badge class="badge badge--secondary " text="scalar"/>
+
+Attachments of the venue.
+>>>>>>> upstream
 
 #### [<code style={{ fontWeight: 'normal' }}>MutationUpdateVenueInput.<b>capacity</b></code>](#)<Bullet />[<code style={{ fontWeight: 'normal' }}><b>Int</b></code>](/auto-schema/types/scalars/int.mdx) <Badge class="badge badge--secondary " text="scalar"/>
 

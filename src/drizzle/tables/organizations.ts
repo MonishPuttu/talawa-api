@@ -43,7 +43,11 @@ export const organizationsTable = pgTable(
 		 * Mime type of the avatar of the organization.
 		 */
 		avatarMimeType: text("avatar_mime_type", {
+<<<<<<< HEAD
 			enum: imageMimeTypeEnum.options as [string, ...string[]],
+=======
+			enum: imageMimeTypeEnum.options,
+>>>>>>> upstream
 		}),
 		/**
 		 * Primary unique identifier of the organziation's avatar.
@@ -57,7 +61,11 @@ export const organizationsTable = pgTable(
 		 * Country code of the country the organization exists in.
 		 */
 		countryCode: text("country_code", {
+<<<<<<< HEAD
 			enum: iso3166Alpha2CountryCodeEnum.options as [string, ...string[]],
+=======
+			enum: iso3166Alpha2CountryCodeEnum.options,
+>>>>>>> upstream
 		}),
 		/**
 		 * Date time at the time the organization was created.

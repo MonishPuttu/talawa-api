@@ -4,8 +4,13 @@ import { eventVolunteerMembershipsTable } from "~/src/drizzle/tables/eventVolunt
 import { eventVolunteersTable } from "~/src/drizzle/tables/eventVolunteers";
 import { builder } from "~/src/graphql/builder";
 import { VolunteerMembership } from "~/src/graphql/types/EventVolunteerMembership/EventVolunteerMembership";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+>>>>>>> upstream
 
 const mutationUpdateVolunteerMembershipArgumentsSchema = z.object({
 	id: z.string().uuid(),

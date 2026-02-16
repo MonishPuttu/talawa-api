@@ -1,15 +1,24 @@
+<<<<<<< HEAD
 import { and, asc, desc, eq, exists, gt, lt, type SQL } from "drizzle-orm";
+=======
+import { type SQL, and, asc, desc, eq, exists, gt, lt } from "drizzle-orm";
+>>>>>>> upstream
 import type { z } from "zod";
 import {
 	venuesTable,
 	venuesTableInsertSchema,
 } from "~/src/drizzle/tables/venues";
 import { Venue } from "~/src/graphql/types/Venue/Venue";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+>>>>>>> upstream
 import {
 	defaultGraphQLConnectionArgumentsSchema,
 	transformDefaultGraphQLConnectionArguments,
 	transformToDefaultGraphQLConnection,
+<<<<<<< HEAD
 } from "~/src/utilities/graphqlConnection";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 import { Organization } from "./Organization";
@@ -18,6 +27,15 @@ const venuesArgumentsSchema = defaultGraphQLConnectionArgumentsSchema
 	.transform(transformDefaultGraphQLConnectionArguments)
 	.transform((arg, ctx) => {
 		let cursor: z.infer<typeof cursorSchema> | undefined;
+=======
+} from "~/src/utilities/defaultGraphQLConnection";
+import envConfig from "~/src/utilities/graphqLimits";
+import { Organization } from "./Organization";
+const venuesArgumentsSchema = defaultGraphQLConnectionArgumentsSchema
+	.transform(transformDefaultGraphQLConnectionArguments)
+	.transform((arg, ctx) => {
+		let cursor: z.infer<typeof cursorSchema> | undefined = undefined;
+>>>>>>> upstream
 
 		try {
 			if (arg.cursor !== undefined) {
@@ -25,7 +43,11 @@ const venuesArgumentsSchema = defaultGraphQLConnectionArgumentsSchema
 					JSON.parse(Buffer.from(arg.cursor, "base64url").toString("utf-8")),
 				);
 			}
+<<<<<<< HEAD
 		} catch (_error) {
+=======
+		} catch (error) {
+>>>>>>> upstream
 			ctx.addIssue({
 				code: "custom",
 				message: "Not a valid cursor.",
@@ -199,9 +221,18 @@ Organization.implement({
 					}
 
 					return transformToDefaultGraphQLConnection({
+<<<<<<< HEAD
 						createCursor: (venue) => ({
 							name: venue.name,
 						}),
+=======
+						createCursor: (venue) =>
+							Buffer.from(
+								JSON.stringify({
+									name: venue.name,
+								}),
+							).toString("base64url"),
+>>>>>>> upstream
 						createNode: ({ attachmentsWhereVenue, ...venue }) =>
 							Object.assign(venue, {
 								attachments: attachmentsWhereVenue,

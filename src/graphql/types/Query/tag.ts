@@ -5,9 +5,14 @@ import {
 	queryTagInputSchema,
 } from "~/src/graphql/inputs/QueryTagInput";
 import { Tag } from "~/src/graphql/types/Tag/Tag";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+>>>>>>> upstream
 const queryTagArgumentsSchema = z.object({
 	input: queryTagInputSchema,
 });

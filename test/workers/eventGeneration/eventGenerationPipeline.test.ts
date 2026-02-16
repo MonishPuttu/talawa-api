@@ -3,10 +3,17 @@ import type { FastifyBaseLogger } from "fastify";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type * as schema from "~/src/drizzle/schema";
 import {
+<<<<<<< HEAD
 	createDefaultWorkerConfig,
 	runMaterializationWorker,
 	runSingleOrganizationWorker,
 	type WorkerConfig,
+=======
+	type WorkerConfig,
+	createDefaultWorkerConfig,
+	runMaterializationWorker,
+	runSingleOrganizationWorker,
+>>>>>>> upstream
 } from "~/src/workers/eventGeneration/eventGenerationPipeline";
 
 // Mock dependencies

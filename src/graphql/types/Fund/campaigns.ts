@@ -1,15 +1,24 @@
+<<<<<<< HEAD
 import { and, asc, desc, eq, exists, gt, lt, type SQL } from "drizzle-orm";
+=======
+import { type SQL, and, asc, desc, eq, exists, gt, lt } from "drizzle-orm";
+>>>>>>> upstream
 import type { z } from "zod";
 import {
 	fundCampaignsTable,
 	fundCampaignsTableInsertSchema,
 } from "~/src/drizzle/tables/fundCampaigns";
 import { FundCampaign } from "~/src/graphql/types/FundCampaign/FundCampaign";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+>>>>>>> upstream
 import {
 	defaultGraphQLConnectionArgumentsSchema,
 	transformDefaultGraphQLConnectionArguments,
 	transformToDefaultGraphQLConnection,
+<<<<<<< HEAD
 } from "~/src/utilities/graphqlConnection";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 import { Fund } from "./Fund";
@@ -18,6 +27,15 @@ const campaignsArgumentsSchema = defaultGraphQLConnectionArgumentsSchema
 	.transform(transformDefaultGraphQLConnectionArguments)
 	.transform((arg, ctx) => {
 		let cursor: z.infer<typeof cursorSchema> | undefined;
+=======
+} from "~/src/utilities/defaultGraphQLConnection";
+import envConfig from "~/src/utilities/graphqLimits";
+import { Fund } from "./Fund";
+const campaignsArgumentsSchema = defaultGraphQLConnectionArgumentsSchema
+	.transform(transformDefaultGraphQLConnectionArguments)
+	.transform((arg, ctx) => {
+		let cursor: z.infer<typeof cursorSchema> | undefined = undefined;
+>>>>>>> upstream
 
 		try {
 			if (arg.cursor !== undefined) {
@@ -25,7 +43,11 @@ const campaignsArgumentsSchema = defaultGraphQLConnectionArgumentsSchema
 					JSON.parse(Buffer.from(arg.cursor, "base64url").toString("utf-8")),
 				);
 			}
+<<<<<<< HEAD
 		} catch (_error) {
+=======
+		} catch (error) {
+>>>>>>> upstream
 			ctx.addIssue({
 				code: "custom",
 				message: "Not a valid cursor.",
@@ -141,9 +163,18 @@ Fund.implement({
 					}
 
 					return transformToDefaultGraphQLConnection({
+<<<<<<< HEAD
 						createCursor: (campaign) => ({
 							name: campaign.name,
 						}),
+=======
+						createCursor: (campaign) =>
+							Buffer.from(
+								JSON.stringify({
+									name: campaign.name,
+								}),
+							).toString("base64url"),
+>>>>>>> upstream
 						createNode: (campaign) => campaign,
 						parsedArgs,
 						rawNodes: fundCampaigns,

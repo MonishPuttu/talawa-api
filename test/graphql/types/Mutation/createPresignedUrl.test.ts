@@ -53,7 +53,11 @@ suite("Mutation field createPresignedUrl", () => {
 			server.minio.client.presignedPutObject = async (
 				bucket: string,
 				objectName: string,
+<<<<<<< HEAD
 				_expiry: number,
+=======
+				expiry: number,
+>>>>>>> upstream
 			): Promise<string> => {
 				const fallbackBaseUrl = `http://${server.envConfig.API_MINIO_END_POINT}:${server.envConfig.API_MINIO_PORT}`;
 				const effectiveBaseUrl =

@@ -7,9 +7,15 @@ import {
 	mutationUpdateAgendaFolderInputSchema,
 } from "~/src/graphql/inputs/MutationUpdateAgendaFolderInput";
 import { AgendaFolder } from "~/src/graphql/types/AgendaFolder/AgendaFolder";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+import { isNotNullish } from "~/src/utilities/isNotNullish";
+>>>>>>> upstream
 const mutationUpdateAgendaFolderArgumentsSchema = z.object({
 	input: mutationUpdateAgendaFolderInputSchema,
 });
@@ -64,7 +70,10 @@ builder.mutationField("updateAgendaFolder", (t) =>
 				ctx.drizzleClient.query.agendaFoldersTable.findFirst({
 					columns: {
 						eventId: true,
+<<<<<<< HEAD
 						isDefaultFolder: true,
+=======
+>>>>>>> upstream
 					},
 					with: {
 						event: {
@@ -115,6 +124,7 @@ builder.mutationField("updateAgendaFolder", (t) =>
 				});
 			}
 
+<<<<<<< HEAD
 			const isOnlySequenceUpdate =
 				parsedArgs.input.sequence !== undefined &&
 				parsedArgs.input.name === undefined &&
@@ -133,6 +143,59 @@ builder.mutationField("updateAgendaFolder", (t) =>
 						],
 					},
 				});
+=======
+			if (isNotNullish(parsedArgs.input.parentFolderId)) {
+				const parentFolderId = parsedArgs.input.parentFolderId;
+
+				const existingParentFolder =
+					await ctx.drizzleClient.query.agendaFoldersTable.findFirst({
+						where: (fields, operators) =>
+							operators.eq(fields.id, parentFolderId),
+					});
+
+				if (existingParentFolder === undefined) {
+					throw new TalawaGraphQLError({
+						extensions: {
+							code: "arguments_associated_resources_not_found",
+							issues: [
+								{
+									argumentPath: ["input", "parentFolderId"],
+								},
+							],
+						},
+					});
+				}
+
+				if (existingParentFolder.eventId !== existingAgendaFolder.eventId) {
+					throw new TalawaGraphQLError({
+						extensions: {
+							code: "forbidden_action_on_arguments_associated_resources",
+							issues: [
+								{
+									argumentPath: ["input", "parentFolderId"],
+									message:
+										"This agenda folder does not belong to the event associated to the agenda folder being updated.",
+								},
+							],
+						},
+					});
+				}
+
+				if (existingParentFolder.isAgendaItemFolder) {
+					throw new TalawaGraphQLError({
+						extensions: {
+							code: "forbidden_action_on_arguments_associated_resources",
+							issues: [
+								{
+									argumentPath: ["input", "parentFolderId"],
+									message:
+										"This agenda folder cannot be a parent folder for other agenda folders.",
+								},
+							],
+						},
+					});
+				}
+>>>>>>> upstream
 			}
 
 			const currentUserOrganizationMembership =
@@ -155,6 +218,7 @@ builder.mutationField("updateAgendaFolder", (t) =>
 				});
 			}
 
+<<<<<<< HEAD
 			const updateData: Partial<typeof agendaFoldersTable.$inferInsert> = {
 				updaterId: currentUserId,
 			};
@@ -174,6 +238,15 @@ builder.mutationField("updateAgendaFolder", (t) =>
 			const [updatedAgendaFolder] = await ctx.drizzleClient
 				.update(agendaFoldersTable)
 				.set(updateData)
+=======
+			const [updatedAgendaFolder] = await ctx.drizzleClient
+				.update(agendaFoldersTable)
+				.set({
+					name: parsedArgs.input.name,
+					parentFolderId: parsedArgs.input.parentFolderId,
+					updaterId: currentUserId,
+				})
+>>>>>>> upstream
 				.where(eq(agendaFoldersTable.id, parsedArgs.input.id))
 				.returning();
 

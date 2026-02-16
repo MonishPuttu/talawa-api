@@ -1,19 +1,35 @@
+<<<<<<< HEAD
 import { and, asc, desc, eq, gt, lt, or, type SQL } from "drizzle-orm";
 import { z } from "zod";
 import { blockedUsersTable } from "~/src/drizzle/tables/blockedUsers";
 import { User } from "~/src/graphql/types/User/User";
+=======
+import { type SQL, and, asc, desc, eq, gt, lt, or } from "drizzle-orm";
+import { z } from "zod";
+import { blockedUsersTable } from "~/src/drizzle/tables/blockedUsers";
+import { User } from "~/src/graphql/types/User/User";
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+>>>>>>> upstream
 import {
 	defaultGraphQLConnectionArgumentsSchema,
 	transformDefaultGraphQLConnectionArguments,
 	transformToDefaultGraphQLConnection,
+<<<<<<< HEAD
 } from "~/src/utilities/graphqlConnection";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+=======
+} from "~/src/utilities/defaultGraphQLConnection";
+>>>>>>> upstream
 import { Organization } from "./Organization";
 
 const blockedUsersArgumentsSchema = defaultGraphQLConnectionArgumentsSchema
 	.transform(transformDefaultGraphQLConnectionArguments)
 	.transform((arg, ctx) => {
+<<<<<<< HEAD
 		let cursor: z.infer<typeof cursorSchema> | undefined;
+=======
+		let cursor: z.infer<typeof cursorSchema> | undefined = undefined;
+>>>>>>> upstream
 
 		try {
 			if (arg.cursor !== undefined) {
@@ -21,7 +37,11 @@ const blockedUsersArgumentsSchema = defaultGraphQLConnectionArgumentsSchema
 					JSON.parse(Buffer.from(arg.cursor, "base64url").toString("utf-8")),
 				);
 			}
+<<<<<<< HEAD
 		} catch (_error) {
+=======
+		} catch (error) {
+>>>>>>> upstream
 			ctx.addIssue({
 				code: "custom",
 				message: "Not a valid cursor.",
@@ -123,10 +143,20 @@ Organization.implement({
 				}
 
 				return transformToDefaultGraphQLConnection({
+<<<<<<< HEAD
 					createCursor: (blockedUser) => ({
 						createdAt: blockedUser.createdAt.toISOString(),
 						userId: blockedUser.userId,
 					}),
+=======
+					createCursor: (blockedUser) =>
+						Buffer.from(
+							JSON.stringify({
+								createdAt: blockedUser.createdAt.toISOString(),
+								userId: blockedUser.userId,
+							}),
+						).toString("base64url"),
+>>>>>>> upstream
 					createNode: (blockedUser) => blockedUser.user,
 					parsedArgs,
 					rawNodes: blockedUsers,

@@ -1,9 +1,16 @@
 import type { chatsTable } from "~/src/drizzle/tables/chats";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 import type { GraphQLContext } from "../../context";
 import { Chat } from "./Chat";
 
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+import type { GraphQLContext } from "../../context";
+import { Chat } from "./Chat";
+>>>>>>> upstream
 type ChatsTable = typeof chatsTable.$inferSelect;
 
 export const resolveUpdatedAt = async (

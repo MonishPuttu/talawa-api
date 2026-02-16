@@ -1,7 +1,10 @@
+<<<<<<< HEAD
 import { afterEach, describe, expect, it, type MockInstance, vi } from "vitest";
 
 vi.mock("inquirer");
 
+=======
+>>>>>>> upstream
 import fs from "node:fs";
 import inquirer from "inquirer";
 import {
@@ -11,6 +14,12 @@ import {
 	validateCloudBeaverPassword,
 	validateCloudBeaverURL,
 } from "scripts/setup/setup";
+<<<<<<< HEAD
+=======
+import { afterEach, describe, expect, it, vi } from "vitest";
+
+vi.mock("inquirer");
+>>>>>>> upstream
 
 describe("Setup -> cloudbeaverSetup", () => {
 	const originalEnv = { ...process.env };
@@ -64,6 +73,7 @@ describe("Setup -> cloudbeaverSetup", () => {
 		const processExitSpy = vi
 			.spyOn(process, "exit")
 			.mockImplementation(() => undefined as never);
+<<<<<<< HEAD
 		vi.spyOn(fs, "existsSync").mockImplementation((path) => {
 			if (path === ".backup") return true;
 			return false;
@@ -73,6 +83,9 @@ describe("Setup -> cloudbeaverSetup", () => {
 				(path: fs.PathLike) => string[]
 			>
 		).mockImplementation(() => [".env.1600000000", ".env.1700000000"]);
+=======
+		const fsExistsSyncSpy = vi.spyOn(fs, "existsSync").mockReturnValue(true);
+>>>>>>> upstream
 		const fsCopyFileSyncSpy = vi
 			.spyOn(fs, "copyFileSync")
 			.mockImplementation(() => undefined);
@@ -85,6 +98,7 @@ describe("Setup -> cloudbeaverSetup", () => {
 		await cloudbeaverSetup({});
 
 		expect(consoleErrorSpy).toHaveBeenCalledWith(mockError);
+<<<<<<< HEAD
 		expect(fsCopyFileSyncSpy).toHaveBeenCalledWith(
 			".backup/.env.1700000000",
 			".env",
@@ -92,6 +106,16 @@ describe("Setup -> cloudbeaverSetup", () => {
 		expect(processExitSpy).toHaveBeenCalledWith(1);
 
 		vi.clearAllMocks();
+=======
+		expect(fsExistsSyncSpy).toHaveBeenCalledWith(".env.backup");
+		expect(fsCopyFileSyncSpy).toHaveBeenCalledWith(".env.backup", ".env");
+		expect(processExitSpy).toHaveBeenCalledWith(1);
+
+		processExitSpy.mockRestore();
+		fsExistsSyncSpy.mockRestore();
+		fsCopyFileSyncSpy.mockRestore();
+		consoleErrorSpy.mockRestore();
+>>>>>>> upstream
 	});
 });
 

@@ -1,6 +1,9 @@
 import { z } from "zod";
 import { builder } from "~/src/graphql/builder";
+<<<<<<< HEAD
 import { escapeHTML } from "~/src/utilities/sanitizer";
+=======
+>>>>>>> upstream
 
 export const userNotificationSchema = z.object({
 	id: z.string().uuid(),
@@ -43,14 +46,22 @@ Notification.implement({
 			description: "Notification title for display.",
 			nullable: false,
 			resolve: (parent) => {
+<<<<<<< HEAD
 				return escapeHTML(parent.renderedContent?.title || "Notification");
+=======
+				return parent.renderedContent?.title || "Notification";
+>>>>>>> upstream
 			},
 		}),
 		body: t.string({
 			description: "Notification message body.",
 			nullable: false,
 			resolve: (parent) => {
+<<<<<<< HEAD
 				return escapeHTML(parent.renderedContent?.body || "");
+=======
+				return parent.renderedContent?.body || "";
+>>>>>>> upstream
 			},
 		}),
 		createdAt: t.expose("createdAt", {

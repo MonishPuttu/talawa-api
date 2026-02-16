@@ -58,7 +58,11 @@ if (isMain) {
 	(async () => {
 		try {
 			await main();
+<<<<<<< HEAD
 		} catch (_error: unknown) {
+=======
+		} catch (error: unknown) {
+>>>>>>> upstream
 			exitCode = 1;
 		}
 		try {

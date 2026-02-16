@@ -12,7 +12,11 @@ import type { recurrenceRulesTable } from "~/src/drizzle/tables/recurrenceRules"
  * - "Yearly on January 1st"
  *
  * @param rule - The recurrence rule from the database
+<<<<<<< HEAD
  * @returns - A human-readable description of the recurrence pattern
+=======
+ * @returns A human-readable description of the recurrence pattern
+>>>>>>> upstream
  */
 export function formatRecurrenceDescription(
 	rule: typeof recurrenceRulesTable.$inferSelect,
@@ -216,7 +220,11 @@ export function formatRecurrenceDescription(
  * - "Every 3 months"
  *
  * @param rule - The recurrence rule from the database
+<<<<<<< HEAD
  * @returns - A short label describing the recurrence frequency
+=======
+ * @returns A short label describing the recurrence frequency
+>>>>>>> upstream
  */
 export function getRecurrenceLabel(
 	rule: typeof recurrenceRulesTable.$inferSelect,

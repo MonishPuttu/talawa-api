@@ -6,9 +6,14 @@ import {
 	mutationCreateCommentInputSchema,
 } from "~/src/graphql/inputs/MutationCreateCommentInput";
 import { Comment } from "~/src/graphql/types/Comment/Comment";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+>>>>>>> upstream
 const mutationCreateCommentArgumentsSchema = z.object({
 	input: mutationCreateCommentInputSchema,
 });
@@ -85,7 +90,11 @@ builder.mutationField("createComment", (t) =>
 				}),
 			]);
 
+<<<<<<< HEAD
 			if (!currentUser) {
+=======
+			if (currentUser === undefined) {
+>>>>>>> upstream
 				throw new TalawaGraphQLError({
 					extensions: {
 						code: "unauthenticated",
@@ -93,7 +102,11 @@ builder.mutationField("createComment", (t) =>
 				});
 			}
 
+<<<<<<< HEAD
 			if (!existingPost) {
+=======
+			if (existingPost === undefined) {
+>>>>>>> upstream
 				throw new TalawaGraphQLError({
 					extensions: {
 						code: "arguments_associated_resources_not_found",
@@ -111,7 +124,11 @@ builder.mutationField("createComment", (t) =>
 
 			if (
 				currentUser.role !== "administrator" &&
+<<<<<<< HEAD
 				!currentUserOrganizationMembership
+=======
+				currentUserOrganizationMembership === undefined
+>>>>>>> upstream
 			) {
 				throw new TalawaGraphQLError({
 					extensions: {
@@ -135,7 +152,11 @@ builder.mutationField("createComment", (t) =>
 				.returning();
 
 			// Inserted comment not being returned is an external defect unrelated to this code. It is very unlikely for this error to occur.
+<<<<<<< HEAD
 			if (!createdComment) {
+=======
+			if (createdComment === undefined) {
+>>>>>>> upstream
 				ctx.log.error(
 					"Postgres insert operation unexpectedly returned an empty array instead of throwing an error.",
 				);

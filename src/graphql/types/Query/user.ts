@@ -5,9 +5,14 @@ import {
 	queryUserInputSchema,
 } from "~/src/graphql/inputs/QueryUserInput";
 import { User } from "~/src/graphql/types/User/User";
+<<<<<<< HEAD
 import { executeWithMetrics } from "~/src/graphql/utils/withQueryMetrics";
 import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+>>>>>>> upstream
 
 const queryUserArgumentsSchema = z.object({
 	input: queryUserInputSchema,
@@ -25,6 +30,7 @@ builder.queryField("user", (t) =>
 		complexity: envConfig.API_GRAPHQL_OBJECT_FIELD_COST,
 		description: "Query field to read a user.",
 		resolve: async (_parent, args, ctx) => {
+<<<<<<< HEAD
 			const resolver = async () => {
 				const {
 					data: parsedArgs,
@@ -66,6 +72,45 @@ builder.queryField("user", (t) =>
 			};
 
 			return await executeWithMetrics(ctx, "query:user", resolver);
+=======
+			const {
+				data: parsedArgs,
+				error,
+				success,
+			} = queryUserArgumentsSchema.safeParse(args);
+
+			if (!success) {
+				throw new TalawaGraphQLError({
+					extensions: {
+						code: "invalid_arguments",
+						issues: error.issues.map((issue) => ({
+							argumentPath: issue.path,
+							message: issue.message,
+						})),
+					},
+				});
+			}
+
+			const user = await ctx.drizzleClient.query.usersTable.findFirst({
+				where: (fields, operators) =>
+					operators.eq(fields.id, parsedArgs.input.id),
+			});
+
+			if (user === undefined) {
+				throw new TalawaGraphQLError({
+					extensions: {
+						code: "arguments_associated_resources_not_found",
+						issues: [
+							{
+								argumentPath: ["input", "id"],
+							},
+						],
+					},
+				});
+			}
+
+			return user;
+>>>>>>> upstream
 		},
 		type: User,
 	}),

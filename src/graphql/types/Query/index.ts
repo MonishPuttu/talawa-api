@@ -1,6 +1,10 @@
 import "./Query";
 import "./advertisement";
 import "./agendaFolder";
+<<<<<<< HEAD
+=======
+import "./agendaItem";
+>>>>>>> upstream
 import "./chat";
 import "./chatMessage";
 import "./comment";
@@ -23,7 +27,10 @@ import "./renewAuthenticationToken";
 import "./signIn";
 import "./tag";
 import "./tagFolder";
+<<<<<<< HEAD
 import "./TagsAssignedToUser";
+=======
+>>>>>>> upstream
 import "./user";
 import "./venue";
 import "./allUsers";
@@ -41,6 +48,7 @@ import "./getVolunteerMembership";
 import "./getEventVolunteerGroups";
 import "./UnreadChat";
 import "./hasSubmittedFeedback";
+<<<<<<< HEAD
 import "./verifyPasswordResetToken";
 import "./agendaCategoriesByEventId";
 import "./agendaFoldersByEventId";
@@ -48,3 +56,5 @@ import "./eventsByCreator";
 import "./eventsByAttendee";
 import "./eventsByVolunteer";
 import "./eventsByAdmin";
+=======
+>>>>>>> upstream

@@ -1,4 +1,8 @@
 import {
+<<<<<<< HEAD
+=======
+	type SQL,
+>>>>>>> upstream
 	and,
 	asc,
 	desc,
@@ -8,12 +12,16 @@ import {
 	ilike,
 	lt,
 	or,
+<<<<<<< HEAD
 	type SQL,
+=======
+>>>>>>> upstream
 } from "drizzle-orm";
 import { z } from "zod";
 import { usersTable } from "~/src/drizzle/tables/users";
 import { builder } from "~/src/graphql/builder";
 import { User } from "~/src/graphql/types/User/User";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import {
 	createGraphQLConnectionWithWhereSchema,
@@ -24,6 +32,17 @@ import {
 } from "~/src/utilities/graphqlConnection";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import {
+	type ParsedDefaultGraphQLConnectionArgumentsWithWhere,
+	createGraphQLConnectionWithWhereSchema,
+	type defaultGraphQLConnectionArgumentsSchema,
+	transformGraphQLConnectionArgumentsWithWhere,
+	transformToDefaultGraphQLConnection,
+} from "~/src/utilities/defaultGraphQLConnection";
+import envConfig from "~/src/utilities/graphqLimits";
+>>>>>>> upstream
 // Define the where schema for user filtering
 const userWhereSchema = z
 	.object({
@@ -44,7 +63,11 @@ const allUsersArgumentsSchema = createGraphQLConnectionWithWhereSchema(
 		ctx,
 	);
 
+<<<<<<< HEAD
 	let cursor: z.infer<typeof cursorSchema> | undefined;
+=======
+	let cursor: z.infer<typeof cursorSchema> | undefined = undefined;
+>>>>>>> upstream
 	try {
 		if (transformedArg.cursor !== undefined) {
 			cursor = cursorSchema.parse(
@@ -53,7 +76,11 @@ const allUsersArgumentsSchema = createGraphQLConnectionWithWhereSchema(
 				),
 			);
 		}
+<<<<<<< HEAD
 	} catch (_error) {
+=======
+	} catch (error) {
+>>>>>>> upstream
 		ctx.addIssue({
 			code: "custom",
 			message: "Not a valid cursor.",
@@ -237,10 +264,20 @@ builder.queryField("allUsers", (t) =>
 				}
 
 				return transformToDefaultGraphQLConnection({
+<<<<<<< HEAD
 					createCursor: (user) => ({
 						createdAt: user.createdAt,
 						id: user.id,
 					}),
+=======
+					createCursor: (user) =>
+						Buffer.from(
+							JSON.stringify({
+								createdAt: user.createdAt.toISOString(),
+								id: user.id,
+							}),
+						).toString("base64url"),
+>>>>>>> upstream
 					createNode: (user) => user,
 					parsedArgs,
 					rawNodes: users,

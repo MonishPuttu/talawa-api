@@ -7,10 +7,16 @@ import {
 	mutationUpdateTagInputSchema,
 } from "~/src/graphql/inputs/MutationUpdateTagInput";
 import { Tag } from "~/src/graphql/types/Tag/Tag";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { isNotNullish } from "~/src/utilities/isNotNullish";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+import { isNotNullish } from "~/src/utilities/isNotNullish";
+>>>>>>> upstream
 const mutationUpdateTagArgumentsSchema = z.object({
 	input: mutationUpdateTagInputSchema,
 });
@@ -112,7 +118,11 @@ builder.mutationField("updateTag", (t) =>
 				const folderId = parsedArgs.input.folderId;
 
 				const existingTagFolder =
+<<<<<<< HEAD
 					await ctx.drizzleClient.query.tagFoldersTable.findFirst({
+=======
+					await ctx.drizzleClient.query.tagsTable.findFirst({
+>>>>>>> upstream
 						columns: {
 							organizationId: true,
 						},
@@ -160,7 +170,10 @@ builder.mutationField("updateTag", (t) =>
 							operators.and(
 								operators.eq(fields.name, name),
 								operators.eq(fields.organizationId, existingTag.organizationId),
+<<<<<<< HEAD
 								operators.ne(fields.id, parsedArgs.input.id),
+=======
+>>>>>>> upstream
 							),
 					});
 

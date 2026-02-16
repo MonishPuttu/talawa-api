@@ -1,7 +1,12 @@
 import type { GraphQLContext } from "~/src/graphql/context";
 import { User } from "~/src/graphql/types/User/User";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+>>>>>>> upstream
 import {
 	FundCampaignPledge,
 	type FundCampaignPledge as FundCampaignPledgeType,
@@ -43,8 +48,11 @@ export const resolveUpdater = async (
 			return currentUser;
 		}
 
+<<<<<<< HEAD
 		const updaterId = parent.updaterId;
 
+=======
+>>>>>>> upstream
 		const existingUser = await ctx.drizzleClient.query.usersTable.findFirst({
 			where: (fields, operators) => operators.eq(fields.id, updaterId),
 		});

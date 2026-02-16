@@ -8,8 +8,13 @@ import {
 	mutationUpdateEntireRecurringEventSeriesInputSchema,
 } from "~/src/graphql/inputs/MutationUpdateEntireRecurringEventSeriesInput";
 import { Event } from "~/src/graphql/types/Event/Event";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+>>>>>>> upstream
 
 const mutationUpdateEntireRecurringEventSeriesArgumentsSchema = z.object({
 	input: mutationUpdateEntireRecurringEventSeriesInputSchema,
@@ -81,7 +86,10 @@ builder.mutationField("updateEntireRecurringEventSeries", (t) =>
 								allDay: true,
 								isPublic: true,
 								isRegisterable: true,
+<<<<<<< HEAD
 								isInviteOnly: true,
+=======
+>>>>>>> upstream
 								organizationId: true,
 								creatorId: true,
 								startAt: true,
@@ -202,7 +210,10 @@ builder.mutationField("updateEntireRecurringEventSeries", (t) =>
 									allDay: true,
 									isPublic: true,
 									isRegisterable: true,
+<<<<<<< HEAD
 									isInviteOnly: true,
+=======
+>>>>>>> upstream
 								},
 							},
 						},
@@ -295,7 +306,10 @@ builder.mutationField("updateEntireRecurringEventSeries", (t) =>
 									allDay: true,
 									isPublic: true,
 									isRegisterable: true,
+<<<<<<< HEAD
 									isInviteOnly: true,
+=======
+>>>>>>> upstream
 									creatorId: true,
 									updaterId: true,
 									createdAt: true,

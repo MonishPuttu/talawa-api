@@ -1,7 +1,13 @@
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 import { ChatMessage } from "./ChatMessage";
 
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+import { ChatMessage } from "./ChatMessage";
+>>>>>>> upstream
 ChatMessage.implement({
 	fields: (t) => ({
 		parentMessage: t.field({

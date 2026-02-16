@@ -6,6 +6,10 @@
 
 > **CurrentClient** = `object` & `{ [K in keyof ExplicitAuthenticationTokenPayload]?: never }` \| `object` & [`ExplicitAuthenticationTokenPayload`](ExplicitAuthenticationTokenPayload.md)
 
+<<<<<<< HEAD
 Defined in: [src/graphql/context.ts:28](https://github.com/PalisadoesFoundation/talawa-api/tree/mainsrc/graphql/context.ts#L28)
+=======
+Defined in: [src/graphql/context.ts:22](https://github.com/PalisadoesFoundation/talawa-api/tree/mainsrc/graphql/context.ts#L22)
+>>>>>>> upstream
 
 Type of the client-specific context for a grahphql operation client.

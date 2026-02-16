@@ -2,6 +2,7 @@ import type { NodePgDatabase } from "drizzle-orm/node-postgres";
 import type { FastifyBaseLogger } from "fastify";
 import cron from "node-cron";
 import type * as schema from "~/src/drizzle/schema";
+<<<<<<< HEAD
 import { ErrorCode } from "~/src/utilities/errors/errorCodes";
 import { TalawaRestError } from "~/src/utilities/errors/TalawaRestError";
 import { rootLogger } from "~/src/utilities/logging/logger";
@@ -35,11 +36,31 @@ let metricsSchedule: string | undefined;
  * @param drizzleClient - Drizzle database client
  * @param logger - Fastify logger instance
  * @param getMetricsSnapshots - Optional function to retrieve performance snapshots for metrics aggregation
+=======
+import { cleanupOldInstances } from "./eventCleanupWorker";
+import {
+	type WorkerConfig,
+	type WorkerResult,
+	createDefaultWorkerConfig,
+	runMaterializationWorker,
+} from "./eventGeneration/eventGenerationPipeline";
+
+let materializationTask: cron.ScheduledTask | undefined;
+let cleanupTask: cron.ScheduledTask | undefined;
+let isRunning = false;
+let materializationConfig: WorkerConfig = createDefaultWorkerConfig();
+
+/**
+ * Initializes and starts all background workers, scheduling them to run at their configured intervals.
+>>>>>>> upstream
  */
 export async function startBackgroundWorkers(
 	drizzleClient: NodePgDatabase<typeof schema>,
 	logger: FastifyBaseLogger,
+<<<<<<< HEAD
 	getMetricsSnapshots?: (windowMinutes?: number) => PerfSnapshot[],
+=======
+>>>>>>> upstream
 ): Promise<void> {
 	if (isRunning) {
 		logger.warn("Background workers are already running");
@@ -48,6 +69,7 @@ export async function startBackgroundWorkers(
 
 	try {
 		logger.info("Starting background worker service...");
+<<<<<<< HEAD
 		materializationSchedule =
 			process.env.API_RECURRING_EVENT_GENERATION_CRON_SCHEDULE ||
 			DEFAULT_HOURLY_CRON;
@@ -58,6 +80,12 @@ export async function startBackgroundWorkers(
 		// Schedule event generation worker - runs every hour
 		materializationTask = cron.schedule(
 			materializationSchedule,
+=======
+
+		// Schedule event generation worker - runs every hour
+		materializationTask = cron.schedule(
+			process.env.EVENT_GENERATION_CRON_SCHEDULE || "0 * * * *",
+>>>>>>> upstream
 			() => runMaterializationWorkerSafely(drizzleClient, logger),
 			{
 				scheduled: false,
@@ -67,7 +95,11 @@ export async function startBackgroundWorkers(
 
 		// Schedule cleanup worker - runs daily at 2 AM UTC
 		cleanupTask = cron.schedule(
+<<<<<<< HEAD
 			cleanupSchedule,
+=======
+			process.env.CLEANUP_CRON_SCHEDULE || "0 2 * * *",
+>>>>>>> upstream
 			() => runCleanupWorkerSafely(drizzleClient, logger),
 			{
 				scheduled: false,
@@ -79,6 +111,7 @@ export async function startBackgroundWorkers(
 		materializationTask.start();
 		cleanupTask.start();
 
+<<<<<<< HEAD
 		// Schedule metrics aggregation worker if enabled and snapshot getter is provided
 		// Parse API_METRICS_AGGREGATION_ENABLED explicitly (case-insensitive)
 		// Default to true (enabled) when unset, matching envConfigSchema default
@@ -136,6 +169,14 @@ export async function startBackgroundWorkers(
 				materializationSchedule,
 				cleanupSchedule,
 				metricsEnabled: metricsEnabled && !!getMetricsSnapshots,
+=======
+		isRunning = true;
+		logger.info(
+			{
+				materializationSchedule:
+					process.env.EVENT_GENERATION_CRON_SCHEDULE || "0 * * * *",
+				cleanupSchedule: process.env.CLEANUP_CRON_SCHEDULE || "0 2 * * *",
+>>>>>>> upstream
 			},
 			"Background worker service started successfully",
 		);
@@ -172,11 +213,14 @@ export async function stopBackgroundWorkers(
 			cleanupTask = undefined;
 		}
 
+<<<<<<< HEAD
 		if (metricsTask) {
 			metricsTask.stop();
 			metricsTask = undefined;
 		}
 
+=======
+>>>>>>> upstream
 		isRunning = false;
 		logger.info("Background worker service stopped successfully");
 	} catch (error) {
@@ -263,6 +307,7 @@ export async function runCleanupWorkerSafely(
 }
 
 /**
+<<<<<<< HEAD
  * Executes the metrics aggregation worker with robust error handling to prevent crashes.
  */
 export async function runMetricsAggregationWorkerSafely(
@@ -301,6 +346,8 @@ export async function runMetricsAggregationWorkerSafely(
 }
 
 /**
+=======
+>>>>>>> upstream
  * Manually triggers a run of the materialization worker, useful for testing or administrative purposes.
  */
 export async function triggerMaterializationWorker(
@@ -308,10 +355,14 @@ export async function triggerMaterializationWorker(
 	logger: FastifyBaseLogger,
 ): Promise<void> {
 	if (!isRunning) {
+<<<<<<< HEAD
 		throw new TalawaRestError({
 			code: ErrorCode.CONFLICT,
 			message: "Background worker service is not running",
 		});
+=======
+		throw new Error("Background worker service is not running");
+>>>>>>> upstream
 	}
 
 	logger.info("Manually triggering materialization worker");
@@ -326,10 +377,14 @@ export async function triggerCleanupWorker(
 	logger: FastifyBaseLogger,
 ): Promise<void> {
 	if (!isRunning) {
+<<<<<<< HEAD
 		throw new TalawaRestError({
 			code: ErrorCode.CONFLICT,
 			message: "Background worker service is not running",
 		});
+=======
+		throw new Error("Background worker service is not running");
+>>>>>>> upstream
 	}
 
 	logger.info("Manually triggering cleanup worker");
@@ -339,12 +394,17 @@ export async function triggerCleanupWorker(
 /**
  * Retrieves the current status of the background worker service, including scheduling information.
  *
+<<<<<<< HEAD
  * @returns - An object containing the current status of the service.
+=======
+ * @returns An object containing the current status of the service.
+>>>>>>> upstream
  */
 export function getBackgroundWorkerStatus(): {
 	isRunning: boolean;
 	materializationSchedule: string;
 	cleanupSchedule: string;
+<<<<<<< HEAD
 	metricsSchedule?: string;
 	metricsEnabled?: boolean;
 	nextMaterializationRun?: Date;
@@ -376,12 +436,23 @@ export function getBackgroundWorkerStatus(): {
 			metricsSchedule: currentMetricsSchedule,
 			metricsEnabled: currentMetricsEnabled,
 		}),
+=======
+	nextMaterializationRun?: Date;
+	nextCleanupRun?: Date;
+} {
+	return {
+		isRunning,
+		materializationSchedule:
+			process.env.EVENT_GENERATION_CRON_SCHEDULE || "0 * * * *",
+		cleanupSchedule: process.env.CLEANUP_CRON_SCHEDULE || "0 2 * * *",
+>>>>>>> upstream
 	};
 }
 
 /**
  * Performs a health check of the background worker service, suitable for use by monitoring systems.
  *
+<<<<<<< HEAD
  * @returns - A promise that resolves to an object indicating the health status and any relevant details.
  */
 export async function healthCheck(
@@ -389,11 +460,20 @@ export async function healthCheck(
 		typeof getBackgroundWorkerStatus
 	> = getBackgroundWorkerStatus,
 ): Promise<{
+=======
+ * @returns A promise that resolves to an object indicating the health status and any relevant details.
+ */
+export async function healthCheck(): Promise<{
+>>>>>>> upstream
 	status: "healthy" | "unhealthy";
 	details: Record<string, unknown>;
 }> {
 	try {
+<<<<<<< HEAD
 		const status = statusGetter();
+=======
+		const status = getBackgroundWorkerStatus();
+>>>>>>> upstream
 
 		if (!status.isRunning) {
 			return {
@@ -410,6 +490,7 @@ export async function healthCheck(
 			details: status,
 		};
 	} catch (error) {
+<<<<<<< HEAD
 		rootLogger.error(
 			{
 				error: error instanceof Error ? error.message : String(error),
@@ -417,6 +498,8 @@ export async function healthCheck(
 			},
 			"Background worker health check failed",
 		);
+=======
+>>>>>>> upstream
 		return {
 			status: "unhealthy",
 			details: {

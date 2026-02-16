@@ -1,5 +1,6 @@
 import type { NodePgDatabase } from "drizzle-orm/node-postgres";
 import type { FastifyBaseLogger } from "fastify";
+<<<<<<< HEAD
 import {
 	afterEach,
 	beforeEach,
@@ -16,6 +17,16 @@ import {
 	type DiscoveredWorkload,
 	discoverEventGenerationWorkloads,
 	type JobDiscoveryConfig,
+=======
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import type * as schema from "~/src/drizzle/schema";
+import {
+	type DiscoveredWorkload,
+	type JobDiscoveryConfig,
+	createDefaultJobDiscoveryConfig,
+	createEventGenerationJobs,
+	discoverEventGenerationWorkloads,
+>>>>>>> upstream
 } from "~/src/workers/eventGeneration/jobDiscovery";
 import type { WorkerDependencies } from "~/src/workers/eventGeneration/types";
 
@@ -27,11 +38,18 @@ vi.mock("drizzle-orm", async () => {
 		and: vi.fn(),
 		eq: vi.fn(),
 		lt: vi.fn(),
+<<<<<<< HEAD
 		inArray: vi.fn(),
 	};
 });
 
 vi.mock("~/src/utilities/recurringEvent", () => ({
+=======
+	};
+});
+
+vi.mock("~/src/utilities/recurringEventHelpers", () => ({
+>>>>>>> upstream
 	estimateInstanceCount: vi.fn(),
 	normalizeRecurrenceRule: vi.fn(),
 }));
@@ -39,7 +57,11 @@ vi.mock("~/src/utilities/recurringEvent", () => ({
 import {
 	estimateInstanceCount,
 	normalizeRecurrenceRule,
+<<<<<<< HEAD
 } from "~/src/utilities/recurringEvent";
+=======
+} from "~/src/utilities/recurringEventHelpers";
+>>>>>>> upstream
 
 describe("jobDiscovery", () => {
 	let mockDrizzleClient: NodePgDatabase<typeof schema>;
@@ -90,7 +112,10 @@ describe("jobDiscovery", () => {
 		attendees: [],
 		isPublic: true,
 		isRegisterable: false,
+<<<<<<< HEAD
 		isInviteOnly: false,
+=======
+>>>>>>> upstream
 		...overrides,
 	});
 
@@ -121,8 +146,12 @@ describe("jobDiscovery", () => {
 
 	beforeEach(() => {
 		vi.clearAllMocks();
+<<<<<<< HEAD
 		vi.useFakeTimers();
 		vi.setSystemTime(new Date("2024-06-01"));
+=======
+
+>>>>>>> upstream
 		mockLogger = {
 			info: vi.fn(),
 			warn: vi.fn(),
@@ -149,9 +178,13 @@ describe("jobDiscovery", () => {
 			logger: mockLogger,
 		};
 	});
+<<<<<<< HEAD
 	afterEach(() => {
 		vi.useRealTimers();
 	});
+=======
+
+>>>>>>> upstream
 	describe("discoverEventGenerationWorkloads", () => {
 		it("should discover workloads successfully", async () => {
 			const config: JobDiscoveryConfig = {
@@ -249,6 +282,7 @@ describe("jobDiscovery", () => {
 				"Discovered 1 EventGeneration workloads",
 			);
 		});
+<<<<<<< HEAD
 		it("should skip recurring events without rules", async () => {
 			const config: JobDiscoveryConfig = {
 				maxOrganizations: 10,
@@ -288,6 +322,8 @@ describe("jobDiscovery", () => {
 
 			expect(result).toHaveLength(0);
 		});
+=======
+>>>>>>> upstream
 
 		it("should handle no organizations needing work", async () => {
 			const config: JobDiscoveryConfig = {
@@ -427,6 +463,7 @@ describe("jobDiscovery", () => {
 			vi.mocked(
 				mockDrizzleClient.query.eventGenerationWindowsTable.findMany,
 			).mockResolvedValue(mockWindowConfigs);
+<<<<<<< HEAD
 
 			vi.mocked(mockDrizzleClient.query.eventsTable.findMany as unknown as Mock)
 				.mockResolvedValueOnce([mockEvents[0]])
@@ -441,6 +478,14 @@ describe("jobDiscovery", () => {
 				.mockResolvedValueOnce([mockRecurrenceRules[0]])
 				.mockResolvedValueOnce([mockRecurrenceRules[1]]);
 
+=======
+			vi.mocked(mockDrizzleClient.query.eventsTable.findMany)
+				.mockResolvedValueOnce(mockEvents)
+				.mockResolvedValueOnce(mockEvents);
+			vi.mocked(mockDrizzleClient.query.recurrenceRulesTable.findMany)
+				.mockResolvedValueOnce(mockRecurrenceRules)
+				.mockResolvedValueOnce(mockRecurrenceRules);
+>>>>>>> upstream
 			vi.mocked(estimateInstanceCount).mockReturnValue(5);
 
 			const result = await discoverEventGenerationWorkloads(config, deps);
@@ -450,6 +495,7 @@ describe("jobDiscovery", () => {
 			// Since org2 has a never-ending event and higher base priority, it should come first
 			expect(result[0]?.organizationId).toBe("org2"); // Higher priority should come first
 			expect(result[1]?.organizationId).toBe("org1");
+<<<<<<< HEAD
 		});
 
 		describe("createEventGenerationJobs", () => {
@@ -691,6 +737,122 @@ describe("jobDiscovery", () => {
 			// Verify batch 2 inArray call received the 2 event IDs
 			const batch2Ids = batch2.map((e) => e.id);
 			expect(inArrayMock.mock.calls[1]?.[1]).toEqual(batch2Ids);
+=======
+
+			// Clean up system time
+			vi.useRealTimers();
+		});
+	});
+
+	describe("createEventGenerationJobs", () => {
+		it("should create materialization jobs from workloads", () => {
+			const mockWorkloads: DiscoveredWorkload[] = [
+				{
+					organizationId: "org1",
+					windowConfig: createMockWindowConfig({
+						id: "window1",
+						organizationId: "org1",
+						processingPriority: 7,
+					}),
+					recurringEvents: [
+						{
+							eventId: "event1",
+							eventName: "Event 1",
+							ruleId: "rule1",
+							isNeverEnding: true,
+							estimatedInstances: 5,
+							recurrenceRule: createMockRecurrenceRule({
+								id: "rule1",
+								baseRecurringEventId: "event1",
+								organizationId: "org1",
+								count: null,
+								recurrenceEndDate: null,
+							}),
+						},
+						{
+							eventId: "event2",
+							eventName: "Event 2",
+							ruleId: "rule2",
+							isNeverEnding: false,
+							estimatedInstances: 3,
+							recurrenceRule: createMockRecurrenceRule({
+								id: "rule2",
+								baseRecurringEventId: "event2",
+								organizationId: "org1",
+								count: 10,
+								recurrenceEndDate: new Date("2024-12-31"),
+							}),
+						},
+					],
+					priority: 7,
+					estimatedDurationMs: 10000,
+				},
+			];
+
+			const mockNormalizedRule = createMockRecurrenceRule({
+				id: "rule1",
+				baseRecurringEventId: "event1",
+				organizationId: "org1",
+				count: null,
+				recurrenceEndDate: new Date("2024-12-31"),
+			});
+
+			vi.mocked(normalizeRecurrenceRule).mockReturnValue(mockNormalizedRule);
+
+			const result = createEventGenerationJobs(mockWorkloads);
+
+			expect(result).toHaveLength(2);
+			expect(result[0]).toEqual({
+				organizationId: "org1",
+				baseRecurringEventId: "event1",
+				windowStartDate: new Date("2024-12-31"),
+				windowEndDate: expect.any(Date),
+			});
+			expect(result[1]).toEqual({
+				organizationId: "org1",
+				baseRecurringEventId: "event2",
+				windowStartDate: new Date("2024-12-31"),
+				windowEndDate: expect.any(Date),
+			});
+		});
+
+		it("should handle empty workloads", () => {
+			const result = createEventGenerationJobs([]);
+
+			expect(result).toHaveLength(0);
+		});
+
+		it("should handle workloads with no recurring events", () => {
+			const mockWorkloads: DiscoveredWorkload[] = [
+				{
+					organizationId: "org1",
+					windowConfig: createMockWindowConfig({
+						id: "window1",
+						organizationId: "org1",
+						processingPriority: 7,
+					}),
+					recurringEvents: [],
+					priority: 7,
+					estimatedDurationMs: 10000,
+				},
+			];
+
+			const result = createEventGenerationJobs(mockWorkloads);
+
+			expect(result).toHaveLength(0);
+		});
+	});
+
+	describe("createDefaultJobDiscoveryConfig", () => {
+		it("should create default config with expected values", () => {
+			const config = createDefaultJobDiscoveryConfig();
+
+			expect(config).toEqual({
+				maxOrganizations: 50,
+				lookAheadMonths: 1,
+				priorityThreshold: 5,
+			});
+>>>>>>> upstream
 		});
 	});
 });

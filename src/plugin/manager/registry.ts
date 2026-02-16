@@ -29,10 +29,14 @@ export class PluginRegistry {
 
 			return results[0] || null;
 		} catch (error) {
+<<<<<<< HEAD
 			this.pluginContext.logger.error?.({
 				msg: "Error fetching plugin from database",
 				err: error,
 			});
+=======
+			console.error("Error fetching plugin from database:", error);
+>>>>>>> upstream
 			return null;
 		}
 	}
@@ -50,10 +54,14 @@ export class PluginRegistry {
 				.set(updates);
 			await updateBuilder.where(eq(pluginsTable.pluginId, pluginId));
 		} catch (error) {
+<<<<<<< HEAD
 			this.pluginContext.logger.error?.({
 				msg: "Error updating plugin in database",
 				err: error,
 			});
+=======
+			console.error("Error updating plugin in database:", error);
+>>>>>>> upstream
 			throw error;
 		}
 	}

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 import type { GraphQLContext } from "../../context";
@@ -55,13 +56,60 @@ export const homePhoneNumberResolver = async (
 	return parent.homePhoneNumber;
 };
 
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+import { User } from "./User";
+>>>>>>> upstream
 User.implement({
 	fields: (t) => ({
 		homePhoneNumber: t.field({
 			description:
 				"The phone number to use to communicate with the user at their home.",
 			complexity: envConfig.API_GRAPHQL_SCALAR_RESOLVER_FIELD_COST,
+<<<<<<< HEAD
 			resolve: homePhoneNumberResolver,
+=======
+			resolve: async (parent, _args, ctx) => {
+				if (!ctx.currentClient.isAuthenticated) {
+					throw new TalawaGraphQLError({
+						extensions: {
+							code: "unauthenticated",
+						},
+					});
+				}
+
+				const currentUserId = ctx.currentClient.user.id;
+
+				const currentUser = await ctx.drizzleClient.query.usersTable.findFirst({
+					columns: {
+						role: true,
+					},
+					where: (fields, operators) => operators.eq(fields.id, currentUserId),
+				});
+
+				if (currentUser === undefined) {
+					throw new TalawaGraphQLError({
+						extensions: {
+							code: "unauthenticated",
+						},
+					});
+				}
+
+				if (
+					currentUser.role !== "administrator" &&
+					parent.id !== currentUserId
+				) {
+					throw new TalawaGraphQLError({
+						extensions: {
+							code: "unauthorized_action",
+						},
+					});
+				}
+
+				return parent.homePhoneNumber;
+			},
+>>>>>>> upstream
 			type: "PhoneNumber",
 		}),
 	}),

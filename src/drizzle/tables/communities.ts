@@ -2,7 +2,10 @@ import { relations, sql } from "drizzle-orm";
 import { integer, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { uuidv7 } from "uuidv7";
+<<<<<<< HEAD
 import { z } from "zod";
+=======
+>>>>>>> upstream
 import { imageMimeTypeEnum } from "~/src/drizzle/enums/imageMimeType";
 import { usersTable } from "./users";
 
@@ -48,7 +51,11 @@ export const communitiesTable = pgTable("communities", {
 	 * Mime type of the logo of the community.
 	 */
 	logoMimeType: text("logo_mime_type", {
+<<<<<<< HEAD
 		enum: imageMimeTypeEnum.options as [string, ...string[]],
+=======
+		enum: imageMimeTypeEnum.options,
+>>>>>>> upstream
 	}),
 	/**
 	 * Primary unique identifier of the community's logo.
@@ -114,6 +121,7 @@ export const communitiesTableRelations = relations(
 export const communitiesTableInsertSchema = createInsertSchema(
 	communitiesTable,
 	{
+<<<<<<< HEAD
 		facebookURL: () => z.string().url().optional(),
 		githubURL: () => z.string().url().optional(),
 		inactivityTimeoutDuration: (schema) => schema.min(1).optional(),
@@ -126,5 +134,19 @@ export const communitiesTableInsertSchema = createInsertSchema(
 		websiteURL: () => z.string().url().optional(),
 		xURL: () => z.string().url().optional(),
 		youtubeURL: () => z.string().url().optional(),
+=======
+		facebookURL: (schema) => schema.url().optional(),
+		githubURL: (schema) => schema.url().optional(),
+		inactivityTimeoutDuration: (schema) => schema.min(1).optional(),
+		instagramURL: (schema) => schema.url().optional(),
+		linkedinURL: (schema) => schema.url().optional(),
+		logoName: (schema) => schema.min(1).optional(),
+		name: (schema) => schema.min(1).max(256),
+		redditURL: (schema) => schema.url().optional(),
+		slackURL: (schema) => schema.url().optional(),
+		websiteURL: (schema) => schema.url().optional(),
+		xURL: (schema) => schema.url().optional(),
+		youtubeURL: (schema) => schema.url().optional(),
+>>>>>>> upstream
 	},
 );

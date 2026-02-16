@@ -14,11 +14,17 @@ import { usersTable, usersTableInsertSchema } from "~/src/drizzle/tables/users";
  * This plugin handles seeding the initial data into appropriate service at the startup time of the talawa api. The data must strictly only comprise of things that are required in the production environment of talawa api. This plugin shouldn't be used for seeding dummy data.
  *
  * @example
+<<<<<<< HEAD
  * ```typescript
  * import seedInitialDataPlugin from "./plugins/seedInitialData";
  *
  * fastify.register(seedInitialDataPlugin, \\{\\});
  * ```
+=======
+ * import seedInitialDataPlugin from "./plugins/seedInitialData";
+ *
+ * fastify.register(seedInitialDataPlugin, {});
+>>>>>>> upstream
  */
 const plugin: FastifyPluginAsync = async (fastify) => {
 	fastify.log.info(

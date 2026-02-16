@@ -7,9 +7,14 @@ import {
 	mutationDeleteFundCampaignInputSchema,
 } from "~/src/graphql/inputs/MutationDeleteFundCampaignInput";
 import { FundCampaign } from "~/src/graphql/types/FundCampaign/FundCampaign";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+>>>>>>> upstream
 const mutationDeleteFundCampaignArgumentsSchema = z.object({
 	input: mutationDeleteFundCampaignInputSchema,
 });

@@ -71,6 +71,7 @@ export const Details = ({
   );
 };
 
+<<<<<<< HEAD
 Input type for creating a new agenda item.
 
 ```graphql
@@ -87,11 +88,22 @@ input MutationCreateAgendaItemInput {
   sequence: Int!
   type: AgendaItemType!
   url: [AgendaItemUrlInput!]
+=======
+```graphql
+input MutationCreateAgendaItemInput {
+  description: String
+  duration: String
+  folderId: ID!
+  key: String
+  name: String!
+  type: AgendaItemType!
+>>>>>>> upstream
 }
 ```
 
 ### Fields
 
+<<<<<<< HEAD
 #### [<code style={{ fontWeight: 'normal' }}>MutationCreateAgendaItemInput.<b>attachments</b></code>](#)<Bullet />[<code style={{ fontWeight: 'normal' }}><b>[AgendaItemAttachmentInput!]</b></code>](/auto-schema/types/inputs/agenda-item-attachment-input.mdx) <Badge class="badge badge--secondary " text="list"/> <Badge class="badge badge--secondary " text="input"/>
 
 Attachments for the agenda items.
@@ -100,6 +112,8 @@ Attachments for the agenda items.
 
 Category id
 
+=======
+>>>>>>> upstream
 #### [<code style={{ fontWeight: 'normal' }}>MutationCreateAgendaItemInput.<b>description</b></code>](#)<Bullet />[<code style={{ fontWeight: 'normal' }}><b>String</b></code>](/auto-schema/types/scalars/string.mdx) <Badge class="badge badge--secondary " text="scalar"/>
 
 Custom information about the agenda item.
@@ -108,11 +122,15 @@ Custom information about the agenda item.
 
 Duration of the agenda item.
 
+<<<<<<< HEAD
 #### [<code style={{ fontWeight: 'normal' }}>MutationCreateAgendaItemInput.<b>eventId</b></code>](#)<Bullet />[<code style={{ fontWeight: 'normal' }}><b>ID!</b></code>](/auto-schema/types/scalars/id.mdx) <Badge class="badge badge--secondary badge--non_null" text="non-null"/> <Badge class="badge badge--secondary " text="scalar"/>
 
 Global identifier of the event the agenda item is associated to.
 
 #### [<code style={{ fontWeight: 'normal' }}>MutationCreateAgendaItemInput.<b>folderId</b></code>](#)<Bullet />[<code style={{ fontWeight: 'normal' }}><b>ID</b></code>](/auto-schema/types/scalars/id.mdx) <Badge class="badge badge--secondary " text="scalar"/>
+=======
+#### [<code style={{ fontWeight: 'normal' }}>MutationCreateAgendaItemInput.<b>folderId</b></code>](#)<Bullet />[<code style={{ fontWeight: 'normal' }}><b>ID!</b></code>](/auto-schema/types/scalars/id.mdx) <Badge class="badge badge--secondary badge--non_null" text="non-null"/> <Badge class="badge badge--secondary " text="scalar"/>
+>>>>>>> upstream
 
 Global identifier of the agenda folder the agenda item is associated to.
 
@@ -124,6 +142,7 @@ Key of the agenda item if it's of a "song" type. More information at [this](<htt
 
 Name of the agenda item.
 
+<<<<<<< HEAD
 #### [<code style={{ fontWeight: 'normal' }}>MutationCreateAgendaItemInput.<b>notes</b></code>](#)<Bullet />[<code style={{ fontWeight: 'normal' }}><b>String</b></code>](/auto-schema/types/scalars/string.mdx) <Badge class="badge badge--secondary " text="scalar"/>
 
 Notes for the agenda item
@@ -132,14 +151,19 @@ Notes for the agenda item
 
 Sequence of the AgendaItem.
 
+=======
+>>>>>>> upstream
 #### [<code style={{ fontWeight: 'normal' }}>MutationCreateAgendaItemInput.<b>type</b></code>](#)<Bullet />[<code style={{ fontWeight: 'normal' }}><b>AgendaItemType!</b></code>](/auto-schema/types/enums/agenda-item-type.mdx) <Badge class="badge badge--secondary badge--non_null" text="non-null"/> <Badge class="badge badge--secondary " text="enum"/>
 
 Type of the agenda item.
 
+<<<<<<< HEAD
 #### [<code style={{ fontWeight: 'normal' }}>MutationCreateAgendaItemInput.<b>url</b></code>](#)<Bullet />[<code style={{ fontWeight: 'normal' }}><b>[AgendaItemUrlInput!]</b></code>](/auto-schema/types/inputs/agenda-item-url-input.mdx) <Badge class="badge badge--secondary " text="list"/> <Badge class="badge badge--secondary " text="input"/>
 
 URLs associated with the agenda item.
 
+=======
+>>>>>>> upstream
 ### Member Of
 
 [`createAgendaItem`](/auto-schema/operations/mutations/create-agenda-item.mdx) <Badge class="badge badge--secondary badge--relation" text="mutation"/>

@@ -1,6 +1,10 @@
 import { faker } from "@faker-js/faker";
 import { and, eq } from "drizzle-orm";
+<<<<<<< HEAD
 import { afterEach, expect, type Mock, suite, test, vi } from "vitest";
+=======
+import { type Mock, expect, suite, test, vi } from "vitest";
+>>>>>>> upstream
 import { eventsTable } from "~/src/drizzle/tables/events";
 import { recurrenceRulesTable } from "~/src/drizzle/tables/recurrenceRules";
 import { generateInstancesForRecurringEvent } from "~/src/services/eventGeneration";
@@ -9,10 +13,13 @@ import type {
 	ServiceDependencies,
 } from "~/src/services/eventGeneration/types";
 
+<<<<<<< HEAD
 afterEach(() => {
 	vi.clearAllMocks();
 });
 
+=======
+>>>>>>> upstream
 suite("eventMaterialization", () => {
 	const mockLogger = {
 		info: vi.fn(),

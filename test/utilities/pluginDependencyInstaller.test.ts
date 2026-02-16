@@ -1,9 +1,15 @@
+<<<<<<< HEAD
 import { EventEmitter } from "node:events";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+=======
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { TalawaGraphQLError } from "../../src/utilities/TalawaGraphQLError";
+>>>>>>> upstream
 import {
 	installPluginDependencies,
 	installPluginDependenciesWithErrorHandling,
 } from "../../src/utilities/pluginDependencyInstaller";
+<<<<<<< HEAD
 import { TalawaGraphQLError } from "../../src/utilities/TalawaGraphQLError";
 
 // Create hoisted mock for spawn that returns a mock child process
@@ -60,6 +66,17 @@ function createMockChildProcess(
 // Mock child_process
 vi.mock("node:child_process", () => ({
 	spawn: mockSpawn,
+=======
+
+// Create hoisted mocks
+const mockExecAsync = vi.hoisted(() =>
+	vi.fn().mockResolvedValue({ stdout: "Dependencies installed", stderr: "" }),
+);
+
+// Mock child_process
+vi.mock("node:child_process", () => ({
+	exec: vi.fn(),
+>>>>>>> upstream
 }));
 
 // Mock fs/promises
@@ -74,15 +91,26 @@ vi.mock("node:path", () => ({
 	},
 }));
 
+<<<<<<< HEAD
+=======
+// Mock util
+vi.mock("node:util", () => ({
+	promisify: vi.fn(() => mockExecAsync),
+}));
+
+>>>>>>> upstream
 // Mock process.cwd
 Object.defineProperty(process, "cwd", {
 	value: vi.fn(() => "/test/cwd"),
 	writable: true,
 });
 
+<<<<<<< HEAD
 // Store original process.kill
 const originalProcessKill = process.kill.bind(process);
 
+=======
+>>>>>>> upstream
 import * as fs from "node:fs/promises";
 
 describe("Plugin Dependency Installer", () => {
@@ -93,6 +121,7 @@ describe("Plugin Dependency Installer", () => {
 
 	beforeEach(() => {
 		vi.clearAllMocks();
+<<<<<<< HEAD
 		vi.useRealTimers();
 		// Reset the mock to return the test path
 		(process.cwd as ReturnType<typeof vi.fn>).mockReturnValue("/test/cwd");
@@ -103,6 +132,15 @@ describe("Plugin Dependency Installer", () => {
 		);
 		// Reset process.kill mock
 		mockProcessKill.mockReset();
+=======
+		// Reset the mock to return the test path
+		(process.cwd as ReturnType<typeof vi.fn>).mockReturnValue("/test/cwd");
+		// Reset mockExecAsync mock to default successful state
+		mockExecAsync.mockReset().mockResolvedValue({
+			stdout: "Dependencies installed",
+			stderr: "",
+		});
+>>>>>>> upstream
 	});
 
 	describe("installPluginDependencies", () => {
@@ -110,6 +148,7 @@ describe("Plugin Dependency Installer", () => {
 			// Mock fs.access to succeed (package.json exists)
 			vi.mocked(fs.access).mockResolvedValue(undefined);
 
+<<<<<<< HEAD
 			// Mock spawn to succeed
 			mockSpawn.mockImplementation(() =>
 				createMockChildProcess({
@@ -117,6 +156,13 @@ describe("Plugin Dependency Installer", () => {
 					stderr: "",
 				}),
 			);
+=======
+			// Mock mockExecAsync to succeed
+			mockExecAsync.mockResolvedValue({
+				stdout: "Dependencies installed",
+				stderr: "",
+			});
+>>>>>>> upstream
 
 			const result = await installPluginDependencies("test-plugin", mockLogger);
 
@@ -146,6 +192,7 @@ describe("Plugin Dependency Installer", () => {
 			// Mock fs.access to succeed
 			vi.mocked(fs.access).mockResolvedValue(undefined);
 
+<<<<<<< HEAD
 			// Mock spawn to return warnings in stderr (must contain 'warn' or 'warning')
 			mockSpawn.mockImplementation(() =>
 				createMockChildProcess({
@@ -153,11 +200,19 @@ describe("Plugin Dependency Installer", () => {
 					stderr: "warn: deprecated package",
 				}),
 			);
+=======
+			// Mock execAsync to return errors (not warnings) in stderr
+			mockExecAsync.mockResolvedValue({
+				stdout: "Dependencies installed",
+				stderr: "error: deprecated package",
+			});
+>>>>>>> upstream
 
 			const result = await installPluginDependencies("test-plugin", mockLogger);
 
 			expect(result.success).toBe(true);
 			expect(mockLogger.error).toHaveBeenCalledWith(
+<<<<<<< HEAD
 				"Dependency installation warnings for test-plugin: warn: deprecated package",
 			);
 		});
@@ -173,6 +228,21 @@ describe("Plugin Dependency Installer", () => {
 					stderr: "some info message",
 				}),
 			);
+=======
+				"Dependency installation warnings for test-plugin: error: deprecated package",
+			);
+		});
+
+		it("should ignore warnings in stderr", async () => {
+			// Mock fs.access to succeed
+			vi.mocked(fs.access).mockResolvedValue(undefined);
+
+			// Mock mockExecAsync to return only warnings in stderr
+			mockExecAsync.mockResolvedValue({
+				stdout: "Dependencies installed",
+				stderr: "warning only",
+			});
+>>>>>>> upstream
 
 			const result = await installPluginDependencies("test-plugin", mockLogger);
 
@@ -184,6 +254,7 @@ describe("Plugin Dependency Installer", () => {
 			// Mock fs.access to succeed
 			vi.mocked(fs.access).mockResolvedValue(undefined);
 
+<<<<<<< HEAD
 			// Mock spawn to fail with error
 			mockSpawn.mockImplementation(() =>
 				createMockChildProcess({
@@ -191,15 +262,25 @@ describe("Plugin Dependency Installer", () => {
 					stderr: "pnpm install failed",
 				}),
 			);
+=======
+			// Mock mockExecAsync to fail
+			mockExecAsync.mockRejectedValue(new Error("pnpm install failed"));
+>>>>>>> upstream
 
 			const result = await installPluginDependencies("test-plugin", mockLogger);
 
 			expect(result.success).toBe(false);
+<<<<<<< HEAD
 			expect(result.error).toContain("pnpm install failed with exit code");
 			expect(mockLogger.error).toHaveBeenCalledWith(
 				expect.stringContaining(
 					"Failed to install dependencies for plugin test-plugin",
 				),
+=======
+			expect(result.error).toBe("pnpm install failed");
+			expect(mockLogger.error).toHaveBeenCalledWith(
+				"Failed to install dependencies for plugin test-plugin: pnpm install failed",
+>>>>>>> upstream
 			);
 		});
 
@@ -207,17 +288,28 @@ describe("Plugin Dependency Installer", () => {
 			// Mock fs.access to succeed
 			vi.mocked(fs.access).mockResolvedValue(undefined);
 
+<<<<<<< HEAD
 			// Mock spawn to emit an error event
 			mockSpawn.mockImplementation(() =>
 				createMockChildProcess({ error: new Error("Unknown spawn error") }),
 			);
+=======
+			// Mock mockExecAsync to throw a non-Error object
+			mockExecAsync.mockRejectedValue("string error");
+>>>>>>> upstream
 
 			const result = await installPluginDependencies("test-plugin", mockLogger);
 
 			expect(result.success).toBe(false);
+<<<<<<< HEAD
 			expect(result.error).toBe("Unknown spawn error");
 			expect(mockLogger.error).toHaveBeenCalledWith(
 				"Failed to install dependencies for plugin test-plugin: Unknown spawn error",
+=======
+			expect(result.error).toBe("Unknown error");
+			expect(mockLogger.error).toHaveBeenCalledWith(
+				"Failed to install dependencies for plugin test-plugin: Unknown error",
+>>>>>>> upstream
 			);
 		});
 
@@ -225,6 +317,7 @@ describe("Plugin Dependency Installer", () => {
 			// Mock fs.access to succeed
 			vi.mocked(fs.access).mockResolvedValue(undefined);
 
+<<<<<<< HEAD
 			// Mock spawn to succeed
 			mockSpawn.mockImplementation(() =>
 				createMockChildProcess({
@@ -232,6 +325,13 @@ describe("Plugin Dependency Installer", () => {
 					stderr: "",
 				}),
 			);
+=======
+			// Mock mockExecAsync to succeed
+			mockExecAsync.mockResolvedValue({
+				stdout: "Dependencies installed",
+				stderr: "",
+			});
+>>>>>>> upstream
 
 			const result = await installPluginDependencies("test-plugin");
 
@@ -255,6 +355,7 @@ describe("Plugin Dependency Installer", () => {
 			// Mock fs.access to succeed
 			vi.mocked(fs.access).mockResolvedValue(undefined);
 
+<<<<<<< HEAD
 			// Mock spawn to succeed
 			mockSpawn.mockImplementation(() =>
 				createMockChildProcess({
@@ -272,10 +373,28 @@ describe("Plugin Dependency Installer", () => {
 				expect.objectContaining({
 					cwd: "/test/cwd/src/plugin/available/test-plugin",
 				}),
+=======
+			// Mock mockExecAsync to succeed
+			mockExecAsync.mockResolvedValue({
+				stdout: "Dependencies installed",
+				stderr: "",
+			});
+
+			await installPluginDependencies("test-plugin", mockLogger);
+
+			// Verify mockExecAsync was called with correct parameters
+			expect(mockExecAsync).toHaveBeenCalledWith(
+				'cd "/test/cwd/src/plugin/available/test-plugin" && pnpm install --frozen-lockfile',
+				{
+					cwd: "/test/cwd/src/plugin/available/test-plugin",
+					timeout: 300000,
+				},
+>>>>>>> upstream
 			);
 		});
 
 		it("should handle timeout errors", async () => {
+<<<<<<< HEAD
 			vi.useFakeTimers();
 			// Mock fs.access to succeed
 			vi.mocked(fs.access).mockResolvedValue(undefined);
@@ -326,12 +445,41 @@ describe("Plugin Dependency Installer", () => {
 					stderr: "warning: package deprecated",
 				}),
 			);
+=======
+			// Mock fs.access to succeed
+			vi.mocked(fs.access).mockResolvedValue(undefined);
+
+			// Mock mockExecAsync to timeout
+			const timeoutError = new Error("Command timed out");
+			timeoutError.name = "TimeoutError";
+			mockExecAsync.mockRejectedValue(timeoutError);
+
+			const result = await installPluginDependencies("test-plugin", mockLogger);
+
+			expect(result.success).toBe(false);
+			expect(result.error).toBe("Command timed out");
+		});
+
+		it("should handle stderr errors that are not warnings", async () => {
+			// Mock fs.access to succeed
+			vi.mocked(fs.access).mockResolvedValue(undefined);
+
+			// Mock mockExecAsync to return errors in stderr
+			mockExecAsync.mockResolvedValue({
+				stdout: "Dependencies installed",
+				stderr: "error: package not found",
+			});
+>>>>>>> upstream
 
 			const result = await installPluginDependencies("test-plugin", mockLogger);
 
 			expect(result.success).toBe(true);
 			expect(mockLogger.error).toHaveBeenCalledWith(
+<<<<<<< HEAD
 				"Dependency installation warnings for test-plugin: warning: package deprecated",
+=======
+				"Dependency installation warnings for test-plugin: error: package not found",
+>>>>>>> upstream
 			);
 		});
 
@@ -339,6 +487,7 @@ describe("Plugin Dependency Installer", () => {
 			// Mock fs.access to succeed
 			vi.mocked(fs.access).mockResolvedValue(undefined);
 
+<<<<<<< HEAD
 			// Mock spawn to succeed
 			mockSpawn.mockImplementation(() =>
 				createMockChildProcess({
@@ -346,6 +495,13 @@ describe("Plugin Dependency Installer", () => {
 					stderr: "",
 				}),
 			);
+=======
+			// Mock mockExecAsync to succeed
+			mockExecAsync.mockResolvedValue({
+				stdout: "Dependencies installed",
+				stderr: "",
+			});
+>>>>>>> upstream
 
 			await installPluginDependencies("my-awesome-plugin", mockLogger);
 
@@ -355,6 +511,7 @@ describe("Plugin Dependency Installer", () => {
 		});
 
 		it("should handle dynamic import error", async () => {
+<<<<<<< HEAD
 			// Mock fs.access to succeed but spawn to fail
 			vi.mocked(fs.access).mockResolvedValue(undefined);
 
@@ -362,6 +519,13 @@ describe("Plugin Dependency Installer", () => {
 			mockSpawn.mockImplementation(() =>
 				createMockChildProcess({ error: new Error("Import failed") }),
 			);
+=======
+			// Mock fs.access to succeed but fs import to fail
+			vi.mocked(fs.access).mockResolvedValue(undefined);
+
+			// Mock the fs import to fail by making execAsync throw
+			mockExecAsync.mockRejectedValue(new Error("Import failed"));
+>>>>>>> upstream
 
 			const result = await installPluginDependencies("test-plugin", mockLogger);
 
@@ -375,6 +539,7 @@ describe("Plugin Dependency Installer", () => {
 			// Mock fs.access to succeed
 			vi.mocked(fs.access).mockResolvedValue(undefined);
 
+<<<<<<< HEAD
 			// Mock spawn to succeed
 			mockSpawn.mockImplementation(() =>
 				createMockChildProcess({
@@ -382,6 +547,13 @@ describe("Plugin Dependency Installer", () => {
 					stderr: "",
 				}),
 			);
+=======
+			// Mock mockExecAsync to succeed
+			mockExecAsync.mockResolvedValue({
+				stdout: "Dependencies installed",
+				stderr: "",
+			});
+>>>>>>> upstream
 
 			await expect(
 				installPluginDependenciesWithErrorHandling("test-plugin", mockLogger),
@@ -392,6 +564,7 @@ describe("Plugin Dependency Installer", () => {
 			// Mock fs.access to succeed
 			vi.mocked(fs.access).mockResolvedValue(undefined);
 
+<<<<<<< HEAD
 			// Mock spawn to fail with non-zero exit code
 			mockSpawn.mockImplementation(() =>
 				createMockChildProcess({
@@ -399,6 +572,10 @@ describe("Plugin Dependency Installer", () => {
 					stderr: "Installation failed",
 				}),
 			);
+=======
+			// Mock execAsync to fail
+			mockExecAsync.mockRejectedValue(new Error("Installation failed"));
+>>>>>>> upstream
 
 			await expect(
 				installPluginDependenciesWithErrorHandling("test-plugin", mockLogger),
@@ -425,8 +602,13 @@ describe("Plugin Dependency Installer", () => {
 					"input",
 					"pluginId",
 				]);
+<<<<<<< HEAD
 				expect(extensions?.issues?.[0]?.message).toContain(
 					"Failed to install plugin dependencies:",
+=======
+				expect(extensions?.issues?.[0]?.message).toBe(
+					"Failed to install plugin dependencies: Installation failed",
+>>>>>>> upstream
 				);
 			}
 		});
@@ -435,10 +617,15 @@ describe("Plugin Dependency Installer", () => {
 			// Mock fs.access to succeed
 			vi.mocked(fs.access).mockResolvedValue(undefined);
 
+<<<<<<< HEAD
 			// Mock spawn to fail with error event
 			mockSpawn.mockImplementation(() =>
 				createMockChildProcess({ error: new Error("Unknown spawn error") }),
 			);
+=======
+			// Mock mockExecAsync to fail with unknown error
+			mockExecAsync.mockRejectedValue("string error");
+>>>>>>> upstream
 
 			try {
 				await installPluginDependenciesWithErrorHandling(
@@ -454,7 +641,11 @@ describe("Plugin Dependency Installer", () => {
 					}>;
 				};
 				expect(extensions?.issues?.[0]?.message).toBe(
+<<<<<<< HEAD
 					"Failed to install plugin dependencies: Unknown spawn error",
+=======
+					"Failed to install plugin dependencies: Unknown error",
+>>>>>>> upstream
 				);
 			}
 		});
@@ -463,6 +654,7 @@ describe("Plugin Dependency Installer", () => {
 			// Mock fs.access to succeed
 			vi.mocked(fs.access).mockResolvedValue(undefined);
 
+<<<<<<< HEAD
 			// Mock spawn to succeed
 			mockSpawn.mockImplementation(() =>
 				createMockChildProcess({
@@ -470,6 +662,13 @@ describe("Plugin Dependency Installer", () => {
 					stderr: "",
 				}),
 			);
+=======
+			// Mock mockExecAsync to succeed
+			mockExecAsync.mockResolvedValue({
+				stdout: "Dependencies installed",
+				stderr: "",
+			});
+>>>>>>> upstream
 
 			await expect(
 				installPluginDependenciesWithErrorHandling("test-plugin"),
@@ -488,12 +687,23 @@ describe("Plugin Dependency Installer", () => {
 
 	describe("Edge cases", () => {
 		it("should handle empty plugin ID", async () => {
+<<<<<<< HEAD
 			const result = await installPluginDependencies("", mockLogger);
 
 			expect(result.success).toBe(false);
 			expect(result.error).toBe("Invalid plugin ID");
 			expect(mockLogger.error).toHaveBeenCalledWith(
 				expect.stringContaining("Plugin ID validation failed"),
+=======
+			// Mock fs.access to fail
+			vi.mocked(fs.access).mockRejectedValue(new Error("ENOENT"));
+
+			const result = await installPluginDependencies("", mockLogger);
+
+			expect(result.success).toBe(true);
+			expect(mockLogger.info).toHaveBeenCalledWith(
+				"No package.json found for plugin , skipping dependency installation",
+>>>>>>> upstream
 			);
 		});
 
@@ -501,6 +711,7 @@ describe("Plugin Dependency Installer", () => {
 			// Mock fs.access to succeed
 			vi.mocked(fs.access).mockResolvedValue(undefined);
 
+<<<<<<< HEAD
 			// Mock spawn to succeed
 			mockSpawn.mockImplementation(() =>
 				createMockChildProcess({
@@ -508,6 +719,13 @@ describe("Plugin Dependency Installer", () => {
 					stderr: "",
 				}),
 			);
+=======
+			// Mock mockExecAsync to succeed
+			mockExecAsync.mockResolvedValue({
+				stdout: "Dependencies installed",
+				stderr: "",
+			});
+>>>>>>> upstream
 
 			const result = await installPluginDependencies(
 				"plugin-with-dashes_and_underscores",
@@ -517,6 +735,7 @@ describe("Plugin Dependency Installer", () => {
 			expect(result.success).toBe(true);
 		});
 
+<<<<<<< HEAD
 		it("should handle very long stderr output with warnings", async () => {
 			// Mock fs.access to succeed
 			vi.mocked(fs.access).mockResolvedValue(undefined);
@@ -529,6 +748,18 @@ describe("Plugin Dependency Installer", () => {
 					stderr: longStderr,
 				}),
 			);
+=======
+		it("should handle very long stderr output", async () => {
+			// Mock fs.access to succeed
+			vi.mocked(fs.access).mockResolvedValue(undefined);
+
+			const longStderr = "error: ".repeat(1000);
+			// Mock mockExecAsync to return long stderr
+			mockExecAsync.mockResolvedValue({
+				stdout: "Dependencies installed",
+				stderr: longStderr,
+			});
+>>>>>>> upstream
 
 			const result = await installPluginDependencies("test-plugin", mockLogger);
 
@@ -538,6 +769,7 @@ describe("Plugin Dependency Installer", () => {
 			);
 		});
 
+<<<<<<< HEAD
 		it("should handle spawn error event", async () => {
 			// Mock fs.access to succeed
 			vi.mocked(fs.access).mockResolvedValue(undefined);
@@ -546,11 +778,23 @@ describe("Plugin Dependency Installer", () => {
 			mockSpawn.mockImplementation(() =>
 				createMockChildProcess({ error: new Error("Spawn failed") }),
 			);
+=======
+		it("should handle exec callback called without parameters", async () => {
+			// Mock fs.access to succeed
+			vi.mocked(fs.access).mockResolvedValue(undefined);
+
+			// Mock execAsync to throw a non-Error object
+			mockExecAsync.mockRejectedValue("string error");
+>>>>>>> upstream
 
 			const result = await installPluginDependencies("test-plugin", mockLogger);
 
 			expect(result.success).toBe(false);
+<<<<<<< HEAD
 			expect(result.error).toBe("Spawn failed");
+=======
+			expect(result.error).toBe("Unknown error");
+>>>>>>> upstream
 		});
 	});
 
@@ -561,6 +805,7 @@ describe("Plugin Dependency Installer", () => {
 			// Mock fs.access to succeed
 			vi.mocked(fs.access).mockResolvedValue(undefined);
 
+<<<<<<< HEAD
 			// Mock spawn to fail with non-zero exit code
 			mockSpawn.mockImplementation(() =>
 				createMockChildProcess({
@@ -568,6 +813,10 @@ describe("Plugin Dependency Installer", () => {
 					stderr: "Installation failed",
 				}),
 			);
+=======
+			// Mock mockExecAsync to fail
+			mockExecAsync.mockRejectedValue(new Error("Installation failed"));
+>>>>>>> upstream
 
 			const result = await installPluginDependencies(
 				"test-plugin",
@@ -586,6 +835,7 @@ describe("Plugin Dependency Installer", () => {
 			// Mock fs.access to succeed
 			vi.mocked(fs.access).mockResolvedValue(undefined);
 
+<<<<<<< HEAD
 			// Mock spawn to fail with non-zero exit code
 			mockSpawn.mockImplementation(() =>
 				createMockChildProcess({
@@ -593,6 +843,10 @@ describe("Plugin Dependency Installer", () => {
 					stderr: "Installation failed",
 				}),
 			);
+=======
+			// Mock mockExecAsync to fail
+			mockExecAsync.mockRejectedValue(new Error("Installation failed"));
+>>>>>>> upstream
 
 			const result = await installPluginDependencies(
 				"test-plugin",
@@ -601,6 +855,7 @@ describe("Plugin Dependency Installer", () => {
 
 			expect(result.success).toBe(false);
 			expect(partialLogger.error).toHaveBeenCalledWith(
+<<<<<<< HEAD
 				expect.stringContaining(
 					"Failed to install dependencies for plugin test-plugin",
 				),
@@ -1650,4 +1905,10 @@ describe("Plugin Dependency Installer", () => {
 			vi.useRealTimers();
 		});
 	});
+=======
+				"Failed to install dependencies for plugin test-plugin: Installation failed",
+			);
+		});
+	});
+>>>>>>> upstream
 });

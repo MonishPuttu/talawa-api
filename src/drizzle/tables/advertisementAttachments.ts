@@ -41,10 +41,14 @@ export const advertisementAttachmentsTable = pgTable(
 		 * Mime type of the attachment.
 		 */
 		mimeType: text("mime_type", {
+<<<<<<< HEAD
 			enum: advertisementAttachmentMimeTypeEnum.options as [
 				string,
 				...string[],
 			],
+=======
+			enum: advertisementAttachmentMimeTypeEnum.options,
+>>>>>>> upstream
 		}).notNull(),
 		/**
 		 * Identifier name of the attachment.

@@ -1,11 +1,19 @@
 import { z } from "zod";
 import { builder } from "~/src/graphql/builder";
+<<<<<<< HEAD
 import { nonEmptyString, orgId } from "~/src/graphql/validators/core";
 
 export const mutationCreateActionItemCategoryInputSchema = z.object({
 	name: nonEmptyString.max(256),
 	description: nonEmptyString.max(2048).optional(),
 	organizationId: orgId,
+=======
+
+export const mutationCreateActionItemCategoryInputSchema = z.object({
+	name: z.string().min(1).max(256),
+	description: z.string().min(1).max(2048).optional(),
+	organizationId: z.string().uuid(),
+>>>>>>> upstream
 	isDisabled: z.boolean().optional().default(false),
 });
 

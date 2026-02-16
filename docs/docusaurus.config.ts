@@ -68,7 +68,11 @@ const config: Config = {
             "https://github.com/PalisadoesFoundation/talawa-api/tree/develop/docs/docs",
         },
         theme: {
+<<<<<<< HEAD
           // the custom css file is default css provided by docusaurus
+=======
+          // custom css file with project-specific styling
+>>>>>>> upstream
           customCss: require.resolve("./src/css/custom.css"),
         },
       },
@@ -152,9 +156,15 @@ const config: Config = {
           title: "Community",
           items: [
             {
+<<<<<<< HEAD
               label: "Forums",
               to: "https://community.talawa.io/",
               className: "footer__icon footer__news",
+=======
+              label: "Slack",
+              to: "https://github.com/PalisadoesFoundation",
+              className: "footer__icon footer__slack",
+>>>>>>> upstream
             },
             {
               label: "News",

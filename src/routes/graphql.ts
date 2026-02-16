@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 import { type Span, trace } from "@opentelemetry/api";
+=======
+>>>>>>> upstream
 import { complexityFromQuery } from "@pothos/plugin-complexity";
 import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import fastifyPlugin from "fastify-plugin";
@@ -10,6 +13,7 @@ import type {
 	ExplicitGraphQLContext,
 } from "~/src/graphql/context";
 import schemaManager from "~/src/graphql/schemaManager";
+<<<<<<< HEAD
 import NotificationService from "~/src/services/notification/NotificationService";
 import { observabilityConfig } from "../config/observability";
 import { metricsCacheProxy } from "../services/metrics/metricsCacheProxy";
@@ -81,6 +85,10 @@ export function getPublicErrorMessage(
 	// Fallback for unknown messages those are not safe to expose
 	return defaultMessage;
 }
+=======
+import { TalawaGraphQLError } from "../utilities/TalawaGraphQLError";
+import leakyBucket from "../utilities/leakyBucket";
+>>>>>>> upstream
 
 /**
  * Type of the initial context argument provided to the createContext function by the graphql server.
@@ -113,6 +121,7 @@ type InitialContext = {
 	  }
 );
 
+<<<<<<< HEAD
 /**
  * Type for the data passed to the subscription onConnect callback.
  * Contains the authorization payload and optional socket with performance tracker.
@@ -126,6 +135,8 @@ type SubscriptionConnectionData = {
 	};
 };
 
+=======
+>>>>>>> upstream
 export type CreateContext = (
 	initialContext: InitialContext,
 ) => Promise<ExplicitGraphQLContext>;
@@ -136,17 +147,23 @@ export type CreateContext = (
 export const createContext: CreateContext = async (initialContext) => {
 	const { fastify, request } = initialContext;
 
+<<<<<<< HEAD
 	// Try to authenticate from Authorization header first, then fall back to cookie
 	let currentClient: CurrentClient;
 
 	try {
 		// First try Authorization header (existing behavior for mobile clients)
+=======
+	let currentClient: CurrentClient;
+	try {
+>>>>>>> upstream
 		const jwtPayload =
 			await request.jwtVerify<ExplicitAuthenticationTokenPayload>();
 		currentClient = {
 			isAuthenticated: true,
 			user: jwtPayload.user,
 		};
+<<<<<<< HEAD
 	} catch (_headerError) {
 		// If no Authorization header, try to get token from cookie (web clients)
 		const accessTokenFromCookie = request.cookies?.[COOKIE_NAMES.ACCESS_TOKEN];
@@ -238,12 +255,23 @@ export const createContext: CreateContext = async (initialContext) => {
 			fastify.cache,
 			request.perf,
 		),
+=======
+	} catch (error) {
+		currentClient = {
+			isAuthenticated: false,
+		};
+	}
+
+	return {
+		currentClient,
+>>>>>>> upstream
 		drizzleClient: fastify.drizzleClient,
 		envConfig: fastify.envConfig,
 		jwt: {
 			sign: (payload: ExplicitAuthenticationTokenPayload) =>
 				fastify.jwt.sign(payload),
 		},
+<<<<<<< HEAD
 		cookie: cookieHelper,
 		log: opLogger,
 		minio: fastify.minio,
@@ -252,10 +280,15 @@ export const createContext: CreateContext = async (initialContext) => {
 		// attached a per-request notification service that queues notifications and can flush later
 		notification: new NotificationService(),
 		perf: request.perf,
+=======
+		log: fastify.log,
+		minio: fastify.minio,
+>>>>>>> upstream
 	};
 };
 
 /**
+<<<<<<< HEAD
  * File upload configuration for GraphQL multipart requests.
  * These limits are enforced by mercurius-upload and are exported for use in tests.
  */
@@ -342,6 +375,8 @@ export function extractZodMessage(
 }
 
 /**
+=======
+>>>>>>> upstream
  * This fastify route plugin function is initializes mercurius on the fastify instance and directs incoming requests on the `/graphql` route to it.
  */
 export const graphql = fastifyPlugin(async (fastify) => {
@@ -350,7 +385,27 @@ export const graphql = fastifyPlugin(async (fastify) => {
 	 * 1. {@link https://github.com/mercurius-js/mercurius-upload}
 	 * 2. {@link https://github.com/flash-oss/graphql-upload-minimal/blob/56e83775b114edc169f605041d983156d4131387/public/index.js#L61}
 	 */
+<<<<<<< HEAD
 	await fastify.register(mercuriusUpload, FILE_UPLOAD_CONFIG);
+=======
+	await fastify.register(mercuriusUpload, {
+		/**
+		 * Maximum allowed non-file multipart form field size in bytes. This basically means the size of the actual graphql document excluding the size of the file uploads carried along with it.
+		 *
+		 * 1024 * 1024
+		 */
+		maxFieldSize: 1048576,
+		/**
+		 * Maximum allowed number of files in a single graphql operation.
+		 */
+		maxFiles: 20,
+		/**
+		 * Maximum allowed file size in bytes.
+		 * 1024 * 1024 * 10
+		 */
+		maxFileSize: 10485760,
+	});
+>>>>>>> upstream
 
 	// Build initial schema with active plugins
 	const initialSchema = await schemaManager.buildInitialSchema();
@@ -370,6 +425,7 @@ export const graphql = fastifyPlugin(async (fastify) => {
 		cache: false,
 		path: "/graphql",
 		schema: initialSchema,
+<<<<<<< HEAD
 		errorFormatter: (execution, context) => {
 			const { errors, data } = execution;
 
@@ -665,6 +721,11 @@ export const graphql = fastifyPlugin(async (fastify) => {
 		subscription: {
 			onConnect: async (data: SubscriptionConnectionData) => {
 				const { payload, socket } = data;
+=======
+		subscription: {
+			onConnect: async (data) => {
+				const { payload } = data;
+>>>>>>> upstream
 				if (!payload?.authorization) {
 					return false;
 				}
@@ -678,6 +739,7 @@ export const graphql = fastifyPlugin(async (fastify) => {
 						"Subscription connection authorized.",
 					);
 
+<<<<<<< HEAD
 					// Extract perf from socket.request.perf if available
 					const perf =
 						socket?.request &&
@@ -688,15 +750,21 @@ export const graphql = fastifyPlugin(async (fastify) => {
 
 					return {
 						cache: fastify.cache,
+=======
+					return {
+>>>>>>> upstream
 						currentClient: {
 							isAuthenticated: true,
 							user: decoded.user,
 						},
+<<<<<<< HEAD
 						dataloaders: createDataloaders(
 							fastify.drizzleClient,
 							fastify.cache,
 							perf,
 						),
+=======
+>>>>>>> upstream
 						drizzleClient: fastify.drizzleClient,
 						envConfig: fastify.envConfig,
 						jwt: {
@@ -705,9 +773,12 @@ export const graphql = fastifyPlugin(async (fastify) => {
 						},
 						log: fastify.log,
 						minio: fastify.minio,
+<<<<<<< HEAD
 						oauthProviderRegistry: fastify.oauthProviderRegistry,
 						notification: new NotificationService(),
 						perf,
+=======
+>>>>>>> upstream
 					};
 				} catch (error) {
 					fastify.log.error(
@@ -723,11 +794,17 @@ export const graphql = fastifyPlugin(async (fastify) => {
 			// KeepAlive is fine as it is
 			keepAlive: 1000 * 30,
 			// A function which is called with the subscription context of the connection after the connection gets disconnected.
+<<<<<<< HEAD
 			onDisconnect: (_ctx) => {
 				// no cleanup needed on disconnect (intentional no-op)
 			},
 			// This function is used to validate incoming Websocket connections.
 			verifyClient: (_info, next) => {
+=======
+			onDisconnect: (ctx) => {},
+			// This function is used to validate incoming Websocket connections.
+			verifyClient: (info, next) => {
+>>>>>>> upstream
 				next(true);
 			},
 		},
@@ -770,6 +847,7 @@ export const graphql = fastifyPlugin(async (fastify) => {
 			);
 		}
 	});
+<<<<<<< HEAD
 
 	// GraphQL operation tracing - create spans for each operation
 	if (observabilityConfig.enabled) {
@@ -816,6 +894,8 @@ export const graphql = fastifyPlugin(async (fastify) => {
 		});
 	}
 
+=======
+>>>>>>> upstream
 	fastify.graphql.addHook(
 		"preExecution",
 		async (schema, context, document, variables) => {
@@ -841,11 +921,14 @@ export const graphql = fastifyPlugin(async (fastify) => {
 					fastify.envConfig.API_GRAPHQL_MUTATION_BASE_COST;
 			}
 
+<<<<<<< HEAD
 			// Track GraphQL complexity score in performance tracker
 			if (request.perf) {
 				request.perf.trackComplexity(complexity.complexity);
 			}
 
+=======
+>>>>>>> upstream
 			// Get the IP address of the client making the request
 			const ip = request.ip;
 
@@ -859,7 +942,11 @@ export const graphql = fastifyPlugin(async (fastify) => {
 					isAuthenticated: true,
 					user: jwtPayload.user,
 				};
+<<<<<<< HEAD
 			} catch (_error) {
+=======
+			} catch (error) {
+>>>>>>> upstream
 				currentClient = {
 					isAuthenticated: false,
 				};
@@ -884,19 +971,32 @@ export const graphql = fastifyPlugin(async (fastify) => {
 				// For unauthenticated users, use only IP address
 				key = `rate-limit:ip:${ip}`;
 			}
+<<<<<<< HEAD
 			const isRequestAllowed = await complexityLeakyBucket(
+=======
+			const isRequestAllowed = await leakyBucket(
+>>>>>>> upstream
 				fastify,
 				key,
 				fastify.envConfig.API_RATE_LIMIT_BUCKET_CAPACITY,
 				fastify.envConfig.API_RATE_LIMIT_REFILL_RATE,
 				complexity.complexity,
+<<<<<<< HEAD
 				request.log as AppLogger,
 			);
+=======
+			);
+			console.log("Complexity: ", complexity.complexity);
+>>>>>>> upstream
 
 			// If the request exceeds rate limits, reject it
 			if (!isRequestAllowed) {
 				throw new TalawaGraphQLError({
+<<<<<<< HEAD
 					extensions: { code: ErrorCode.RATE_LIMIT_EXCEEDED },
+=======
+					extensions: { code: "too_many_requests" },
+>>>>>>> upstream
 				});
 			}
 		},

@@ -1,4 +1,8 @@
 import { and, eq } from "drizzle-orm";
+<<<<<<< HEAD
+=======
+import { GraphQLError } from "graphql";
+>>>>>>> upstream
 import { z } from "zod";
 import { chatMembershipsTable } from "~/src/drizzle/tables/chatMemberships";
 import { chatMessageReadReceiptsTable } from "~/src/drizzle/tables/chatMessageReadReceipts";
@@ -6,7 +10,10 @@ import {
 	MutationMarkChatAsReadInput,
 	mutationMarkChatAsReadInputSchema,
 } from "~/src/graphql/inputs/MutationMarkChatAsReadInput";
+<<<<<<< HEAD
 import { ErrorCode } from "~/src/utilities/errors/errorCodes";
+=======
+>>>>>>> upstream
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 import { builder } from "../../builder";
 
@@ -28,7 +35,11 @@ builder.mutationField("markChatAsRead", (t) =>
 		resolve: async (_parent, args, ctx) => {
 			if (!ctx.currentClient.isAuthenticated) {
 				throw new TalawaGraphQLError({
+<<<<<<< HEAD
 					extensions: { code: ErrorCode.UNAUTHENTICATED },
+=======
+					extensions: { code: "unauthenticated" },
+>>>>>>> upstream
 				});
 			}
 			const {
@@ -39,7 +50,11 @@ builder.mutationField("markChatAsRead", (t) =>
 			if (!success) {
 				throw new TalawaGraphQLError({
 					extensions: {
+<<<<<<< HEAD
 						code: ErrorCode.INVALID_ARGUMENTS,
+=======
+						code: "invalid_arguments",
+>>>>>>> upstream
 						issues: error.issues.map((issue) => ({
 							argumentPath: issue.path,
 							message: issue.message,
@@ -65,15 +80,24 @@ builder.mutationField("markChatAsRead", (t) =>
 				}),
 			]);
 			if (!user) {
+<<<<<<< HEAD
 				throw new TalawaGraphQLError({
 					message: "User not found",
 					extensions: { code: ErrorCode.NOT_FOUND },
+=======
+				throw new GraphQLError("User not found", {
+					extensions: { code: "unauthenticated" },
+>>>>>>> upstream
 				});
 			}
 			if (!chat) {
 				throw new TalawaGraphQLError({
 					extensions: {
+<<<<<<< HEAD
 						code: ErrorCode.ARGUMENTS_ASSOCIATED_RESOURCES_NOT_FOUND,
+=======
+						code: "arguments_associated_resources_not_found",
+>>>>>>> upstream
 						issues: [{ argumentPath: ["input", "chatId"] }],
 					},
 				});
@@ -81,7 +105,11 @@ builder.mutationField("markChatAsRead", (t) =>
 			if (!message) {
 				throw new TalawaGraphQLError({
 					extensions: {
+<<<<<<< HEAD
 						code: ErrorCode.ARGUMENTS_ASSOCIATED_RESOURCES_NOT_FOUND,
+=======
+						code: "arguments_associated_resources_not_found",
+>>>>>>> upstream
 						issues: [{ argumentPath: ["input", "messageId"] }],
 					},
 				});
@@ -99,7 +127,11 @@ builder.mutationField("markChatAsRead", (t) =>
 			if (!membership) {
 				throw new TalawaGraphQLError({
 					extensions: {
+<<<<<<< HEAD
 						code: ErrorCode.UNAUTHORIZED_ACTION_ON_ARGUMENTS_ASSOCIATED_RESOURCES,
+=======
+						code: "unauthorized_action_on_arguments_associated_resources",
+>>>>>>> upstream
 						issues: [{ argumentPath: ["input", "chatId"] }],
 					},
 				});

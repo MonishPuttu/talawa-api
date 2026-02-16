@@ -1,8 +1,13 @@
 import { createMockGraphQLContext } from "test/_Mocks_/mockContextCreator/mockContextCreator";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { GraphQLContext } from "~/src/graphql/context";
+<<<<<<< HEAD
 import { venueCreator } from "~/src/graphql/types/Venue/creator";
 import type { Venue } from "~/src/graphql/types/Venue/Venue";
+=======
+import type { Venue } from "~/src/graphql/types/Venue/Venue";
+import { venueCreator } from "~/src/graphql/types/Venue/creator";
+>>>>>>> upstream
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 
 // Tests section

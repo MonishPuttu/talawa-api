@@ -1,8 +1,12 @@
 import { faker } from "@faker-js/faker";
+<<<<<<< HEAD
 import { eq } from "drizzle-orm";
 import type { FastifyInstance } from "fastify";
 import { afterEach, expect, suite, test } from "vitest";
 import { organizationsTable } from "~/src/drizzle/tables/organizations";
+=======
+import { afterEach, expect, suite, test } from "vitest";
+>>>>>>> upstream
 import { assertToBeNonNullish } from "../../../helpers";
 import { server } from "../../../server";
 import { mercuriusClient } from "../client";
@@ -459,6 +463,7 @@ suite("Mutation field updateOrganization", () => {
 			]),
 		);
 	});
+<<<<<<< HEAD
 	test("should return an error when organization name already exists", async () => {
 		// Create first organization
 		const createOrg1Result = await mercuriusClient.mutate(
@@ -793,4 +798,6 @@ suite("Mutation field updateOrganization", () => {
 		expect(updatedOrg?.avatarName).toBeNull();
 		expect(updatedOrg?.avatarMimeType).toBeNull();
 	});
+=======
+>>>>>>> upstream
 });

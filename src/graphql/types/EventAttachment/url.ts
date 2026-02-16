@@ -1,7 +1,12 @@
+<<<<<<< HEAD
 // check-sanitization-disable: URL field - validated by URL constructor, escaping would break query parameters
 import envConfig from "~/src/utilities/graphqLimits";
 import { EventAttachment } from "./EventAttachment";
 
+=======
+import envConfig from "~/src/utilities/graphqLimits";
+import { EventAttachment } from "./EventAttachment";
+>>>>>>> upstream
 EventAttachment.implement({
 	fields: (t) => ({
 		url: t.field({

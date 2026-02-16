@@ -1,4 +1,8 @@
 import {
+<<<<<<< HEAD
+=======
+	type SQL,
+>>>>>>> upstream
 	and,
 	asc,
 	desc,
@@ -10,7 +14,10 @@ import {
 	lt,
 	ne,
 	or,
+<<<<<<< HEAD
 	type SQL,
+=======
+>>>>>>> upstream
 } from "drizzle-orm";
 import { z } from "zod";
 import { organizationMembershipRoleEnum } from "~/src/drizzle/enums/organizationMembershipRole";
@@ -20,6 +27,7 @@ import {
 } from "~/src/drizzle/tables/organizationMemberships";
 import { usersTable } from "~/src/drizzle/tables/users";
 import { User } from "~/src/graphql/types/User/User";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import {
 	createGraphQLConnectionWithWhereSchema,
@@ -32,6 +40,19 @@ import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 import { MembersWhereInput } from "../../inputs/QueryOrganizationInput";
 import { Organization } from "./Organization";
 
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import {
+	type ParsedDefaultGraphQLConnectionArgumentsWithWhere,
+	createGraphQLConnectionWithWhereSchema,
+	type defaultGraphQLConnectionArgumentsSchema,
+	transformGraphQLConnectionArgumentsWithWhere,
+	transformToDefaultGraphQLConnection,
+} from "~/src/utilities/defaultGraphQLConnection";
+import envConfig from "~/src/utilities/graphqLimits";
+import { MembersWhereInput } from "../../inputs/QueryOrganizationInput";
+import { Organization } from "./Organization";
+>>>>>>> upstream
 type UserRole = z.infer<typeof organizationMembershipRoleEnum>;
 type MembersWhere = {
 	name_contains?: string;
@@ -62,7 +83,11 @@ const membersArgumentsSchema = createGraphQLConnectionWithWhereSchema(
 		ctx,
 	);
 
+<<<<<<< HEAD
 	let cursor: z.infer<typeof cursorSchema> | undefined;
+=======
+	let cursor: z.infer<typeof cursorSchema> | undefined = undefined;
+>>>>>>> upstream
 	try {
 		if (transformedArg.cursor !== undefined) {
 			cursor = cursorSchema.parse(
@@ -71,7 +96,11 @@ const membersArgumentsSchema = createGraphQLConnectionWithWhereSchema(
 				),
 			);
 		}
+<<<<<<< HEAD
 	} catch (_error) {
+=======
+	} catch (error) {
+>>>>>>> upstream
 		ctx.addIssue({
 			code: "custom",
 			message: "Not a valid cursor.",
@@ -365,10 +394,20 @@ Organization.implement({
 					}
 
 					return transformToDefaultGraphQLConnection({
+<<<<<<< HEAD
 						createCursor: (organizationMembership) => ({
 							createdAt: organizationMembership.createdAt,
 							memberId: organizationMembership.memberId,
 						}),
+=======
+						createCursor: (organizationMembership) =>
+							Buffer.from(
+								JSON.stringify({
+									createdAt: organizationMembership.createdAt.toISOString(),
+									memberId: organizationMembership.memberId,
+								}),
+							).toString("base64url"),
+>>>>>>> upstream
 						createNode: (organizationMembership) =>
 							organizationMembership.member,
 						parsedArgs,

@@ -5,8 +5,13 @@ import {
 	queryChatInputSchema,
 } from "~/src/graphql/inputs/QueryChatInput";
 import { Chat } from "~/src/graphql/types/Chat/Chat";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+>>>>>>> upstream
 
 const queryChatArgumentsSchema = z.object({
 	input: queryChatInputSchema,
@@ -132,7 +137,11 @@ builder.queryField("chatsByUser", (t) =>
 		complexity: envConfig.API_GRAPHQL_OBJECT_FIELD_COST,
 		description:
 			"Query field to read all chats the current user is a member of.",
+<<<<<<< HEAD
 		resolve: async (_parent, _args, ctx) => {
+=======
+		resolve: async (_parent, args, ctx) => {
+>>>>>>> upstream
 			if (!ctx.currentClient.isAuthenticated) {
 				throw new TalawaGraphQLError({
 					extensions: {

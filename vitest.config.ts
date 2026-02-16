@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { cpus } from "node:os";
 import tsconfigPaths from "vite-tsconfig-paths";
 import { configDefaults, defineConfig } from "vitest/config";
@@ -49,6 +50,11 @@ const isUnitTest = process.argv.some((arg) =>
 	/test[\\/](unit|install)[\\/]/.test(arg),
 );
 
+=======
+import tsconfigPaths from "vite-tsconfig-paths";
+import { configDefaults, defineConfig } from "vitest/config";
+
+>>>>>>> upstream
 export default defineConfig({
 	plugins: [tsconfigPaths()],
 	test: {
@@ -63,11 +69,18 @@ export default defineConfig({
 			"drizzle_migrations/**",
 			"envFiles/**",
 			"scripts/**",
+<<<<<<< HEAD
 			"**/scripts/**",
 		],
 		coverage: {
 			provider: "v8", // or 'istanbul' if you prefer
 			reporter: ["text", "lcov", "html", "json"],
+=======
+		],
+		coverage: {
+			provider: "v8", // or 'istanbul' if you prefer
+			reporter: ["text", "lcov", "html"],
+>>>>>>> upstream
 			exclude: [
 				...(configDefaults.coverage?.exclude ?? []),
 				"dist/**",
@@ -78,16 +91,28 @@ export default defineConfig({
 				"docker/**",
 				"drizzle_migrations/**",
 				"envFiles/**",
+<<<<<<< HEAD
 				"**/scripts/**", // Mirror test exclusion to exclude nested scripts
 			],
 		},
 
 		// https://vitest.dev/config/#globalsetup
 		globalSetup: isUnitTest ? [] : ["./test/setup.ts"],
+=======
+				"scripts/**",
+			],
+		},
+		// https://vitest.dev/config/#fileparallelism
+		// fileParallelism: true,
+
+		// https://vitest.dev/config/#globalsetup
+		globalSetup: ["./test/setup.ts"],
+>>>>>>> upstream
 
 		// https://vitest.dev/config/#passwithnotests
 		passWithNoTests: true,
 
+<<<<<<< HEAD
 		hookTimeout: 30000, // 30 seconds for hooks
 		testTimeout: 60000, // 60 seconds per test
 		pool: "threads", // for faster test execution and to avoid postgres max-limit error
@@ -103,5 +128,13 @@ export default defineConfig({
 			shuffle: false,
 			concurrent: false,
 		},
+=======
+		// https://vitest.dev/config/#teardowntimeout
+		// teardownTimeout: 10000
+
+		hookTimeout: 30000, // 30 seconds for hooks
+		testTimeout: 60000, // 60 seconds per test
+		pool: "threads", // for faster test execution and to avoid postgres max-limit error
+>>>>>>> upstream
 	},
 });

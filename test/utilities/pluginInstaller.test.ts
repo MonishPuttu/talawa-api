@@ -4,7 +4,11 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 vi.mock("yauzl", () => {
 	return {
 		default: {
+<<<<<<< HEAD
 			open: vi.fn((_path, _options, callback) => {
+=======
+			open: vi.fn((path, options, callback) => {
+>>>>>>> upstream
 				// Simulate immediate success
 				const mockZipFile = {
 					readEntry: vi.fn(),
@@ -18,12 +22,20 @@ vi.mock("yauzl", () => {
 						}
 						return mockZipFile;
 					}),
+<<<<<<< HEAD
 					openReadStream: vi.fn((_entry, callback) => {
+=======
+					openReadStream: vi.fn((entry, callback) => {
+>>>>>>> upstream
 						const mockStream = {
 							on: vi.fn((event, handler) => {
 								if (event === "data") {
 									handler(
+<<<<<<< HEAD
 										'{"pluginId": "test_plugin", "name": "Test Plugin", "version": "1.0.0"}',
+=======
+										'{"pluginId": "test-plugin", "name": "Test Plugin", "version": "1.0.0"}',
+>>>>>>> upstream
 									);
 								}
 								if (event === "end") {
@@ -38,7 +50,11 @@ vi.mock("yauzl", () => {
 				callback(null, mockZipFile);
 			}),
 		},
+<<<<<<< HEAD
 		open: vi.fn((_path, _options, callback) => {
+=======
+		open: vi.fn((path, options, callback) => {
+>>>>>>> upstream
 			const mockZipFile = {
 				readEntry: vi.fn(),
 				on: vi.fn((event, handler) => {
@@ -50,12 +66,20 @@ vi.mock("yauzl", () => {
 					}
 					return mockZipFile;
 				}),
+<<<<<<< HEAD
 				openReadStream: vi.fn((_entry, callback) => {
+=======
+				openReadStream: vi.fn((entry, callback) => {
+>>>>>>> upstream
 					const mockStream = {
 						on: vi.fn((event, handler) => {
 							if (event === "data") {
 								handler(
+<<<<<<< HEAD
 									'{"pluginId": "test_plugin", "name": "Test Plugin", "version": "1.0.0"}',
+=======
+									'{"pluginId": "test-plugin", "name": "Test Plugin", "version": "1.0.0"}',
+>>>>>>> upstream
 								);
 							}
 							if (event === "end") {
@@ -114,7 +138,11 @@ vi.mock("../../src/plugin/utils", () => {
 	return {
 		validatePluginManifest: vi.fn(() => true),
 		loadPluginManifest: vi.fn(async () => ({
+<<<<<<< HEAD
 			pluginId: "test_plugin",
+=======
+			pluginId: "test-plugin",
+>>>>>>> upstream
 			name: "Test Plugin",
 			version: "1.0.0",
 			extensionPoints: { database: [] },
@@ -157,6 +185,7 @@ vi.mock("../../src/utilities/TalawaGraphQLError", () => {
 	};
 });
 
+<<<<<<< HEAD
 // Mock rootLogger for logging coverage
 vi.mock("../../src/utilities/logging/logger", () => ({
 	rootLogger: {
@@ -167,6 +196,8 @@ vi.mock("../../src/utilities/logging/logger", () => ({
 	},
 }));
 
+=======
+>>>>>>> upstream
 // Import after mocks
 import * as yauzl from "yauzl";
 import * as pluginUtils from "../../src/plugin/utils";
@@ -206,6 +237,7 @@ describe("validatePluginZip", () => {
 		expect(result).toBeDefined();
 		expect(typeof result.hasApiFolder).toBe("boolean");
 		expect(result.hasApiFolder).toBe(true);
+<<<<<<< HEAD
 		expect(result.pluginId).toBe("test_plugin");
 		expect(result.apiManifest).toBeDefined();
 	});
@@ -409,6 +441,11 @@ describe("validatePluginZip", () => {
 			/Invalid API manifest.json/,
 		);
 	});
+=======
+		expect(result.pluginId).toBe("test-plugin");
+		expect(result.apiManifest).toBeDefined();
+	});
+>>>>>>> upstream
 });
 
 describe("extractPluginZip", () => {
@@ -417,13 +454,20 @@ describe("extractPluginZip", () => {
 	});
 
 	it("should extract plugin files from zip", async () => {
+<<<<<<< HEAD
 		const structure = { hasApiFolder: true, pluginId: "test_plugin" };
 		await expect(
 			extractPluginZip("/path/to/test.zip", "test_plugin", structure),
+=======
+		const structure = { hasApiFolder: true, pluginId: "test-plugin" };
+		await expect(
+			extractPluginZip("/path/to/test.zip", "test-plugin", structure),
+>>>>>>> upstream
 		).resolves.toBeUndefined();
 	});
 
 	it("should skip non-api files during extraction", async () => {
+<<<<<<< HEAD
 		const mockYauzl = yauzl as unknown as {
 			default: { open: ReturnType<typeof vi.fn> };
 		};
@@ -651,6 +695,29 @@ describe("extractPluginZip", () => {
 		// Should resolve without errors as undefined entry is simply skipped
 		await expect(
 			extractPluginZip("/path/to/test.zip", "test_plugin", structure),
+=======
+		const mockYauzl = yauzl as unknown as { open: ReturnType<typeof vi.fn> };
+		mockYauzl.open.mockImplementationOnce((path, options, callback) => {
+			const mockZipFile = {
+				readEntry: vi.fn(),
+				on: vi.fn((event, handler) => {
+					if (event === "entry") {
+						handler({ fileName: "other/file.txt" });
+					}
+					if (event === "end") {
+						handler();
+					}
+					return mockZipFile;
+				}),
+				openReadStream: vi.fn(),
+			};
+			callback(null, mockZipFile);
+		});
+
+		const structure = { hasApiFolder: false, pluginId: "test-plugin" };
+		await expect(
+			extractPluginZip("/path/to/test.zip", "test-plugin", structure),
+>>>>>>> upstream
 		).resolves.toBeUndefined();
 	});
 });
@@ -732,7 +799,11 @@ describe("installPluginFromZip", () => {
 				pluginsTable: {
 					findFirst: vi.fn(async () => ({
 						id: "existing-id",
+<<<<<<< HEAD
 						pluginId: "test_plugin",
+=======
+						pluginId: "test-plugin",
+>>>>>>> upstream
 					})),
 				},
 			},
@@ -765,9 +836,16 @@ describe("installPluginFromZip", () => {
 		expect(result.plugin).toBeDefined();
 	});
 
+<<<<<<< HEAD
 	it("should install plugin successfully with valid manifest data", async () => {
 		// This test verifies that the plugin installation completes successfully
 		// with the default mocks that provide valid manifest data
+=======
+	it("should handle manifest loading errors", async () => {
+		// This test now verifies that the plugin installation completes successfully
+		// even when the manifest parsing logic encounters issues, as the current
+		// implementation uses default mocks that provide valid manifest data
+>>>>>>> upstream
 
 		const mockZipFile: MockFileUpload = {
 			createReadStream: vi.fn(() => ({
@@ -820,6 +898,7 @@ describe("installPluginFromZip", () => {
 		expect(result.plugin).toBeDefined();
 	});
 
+<<<<<<< HEAD
 	it("should handle database insert failure when creating new plugin", async () => {
 		const mockZipFile: MockFileUpload = {
 			createReadStream: vi.fn(() => ({
@@ -929,6 +1008,8 @@ describe("installPluginFromZip", () => {
 		);
 	});
 
+=======
+>>>>>>> upstream
 	it("should handle plugin with database tables", async () => {
 		const mockZipFile: MockFileUpload = {
 			createReadStream: vi.fn(() => ({
@@ -1208,7 +1289,11 @@ describe("installPluginFromZip", () => {
 	it("should handle missing manifest error", async () => {
 		// Mock yauzl to return a structure without apiManifest
 		const mockYauzl = yauzl as unknown as { open: ReturnType<typeof vi.fn> };
+<<<<<<< HEAD
 		mockYauzl.open.mockImplementationOnce((_path, _options, callback) => {
+=======
+		mockYauzl.open.mockImplementationOnce((path, options, callback) => {
+>>>>>>> upstream
 			const mockZipFile = {
 				readEntry: vi.fn(),
 				on: vi.fn((event, handler) => {
@@ -1220,7 +1305,11 @@ describe("installPluginFromZip", () => {
 					}
 					return mockZipFile;
 				}),
+<<<<<<< HEAD
 				openReadStream: vi.fn((_entry, callback) => {
+=======
+				openReadStream: vi.fn((entry, callback) => {
+>>>>>>> upstream
 					const mockStream = {
 						on: vi.fn((event, handler) => {
 							if (event === "data") {
@@ -1243,7 +1332,11 @@ describe("installPluginFromZip", () => {
 			loadPluginManifest: ReturnType<typeof vi.fn>;
 		};
 		mockPluginUtils.loadPluginManifest.mockResolvedValueOnce({
+<<<<<<< HEAD
 			pluginId: "test_plugin",
+=======
+			pluginId: "test-plugin",
+>>>>>>> upstream
 			name: "Test Plugin",
 			version: "1.0.0",
 			extensionPoints: { database: [] },
@@ -1306,7 +1399,11 @@ describe("installPluginFromZip", () => {
 			loadPluginManifest: ReturnType<typeof vi.fn>;
 		};
 		mockPluginUtils.loadPluginManifest.mockResolvedValueOnce({
+<<<<<<< HEAD
 			pluginId: "test_plugin",
+=======
+			pluginId: "test-plugin",
+>>>>>>> upstream
 			name: "Test Plugin",
 			version: "1.0.0",
 			extensionPoints: { database: [] },
@@ -1368,17 +1465,29 @@ describe("installPluginFromZip", () => {
 			loadPluginManifest: ReturnType<typeof vi.fn>;
 		};
 		mockPluginUtils.loadPluginManifest.mockResolvedValueOnce({
+<<<<<<< HEAD
 			pluginId: "test_plugin",
+=======
+			pluginId: "test-plugin",
+>>>>>>> upstream
 			name: "Test Plugin",
 			version: "1.0.0",
 			extensionPoints: { database: [] },
 		});
 
+<<<<<<< HEAD
 		// Import the mocked registry and configure for this test
 		const { getPluginManagerInstance } = await import(
 			"../../src/plugin/registry"
 		);
 		vi.mocked(getPluginManagerInstance).mockReturnValueOnce(null);
+=======
+		// Mock plugin registry to return null by overriding the mock
+		const mockPluginRegistry = await import("../../src/plugin/registry");
+		const originalGetPluginManagerInstance =
+			mockPluginRegistry.getPluginManagerInstance;
+		mockPluginRegistry.getPluginManagerInstance = vi.fn(() => null);
+>>>>>>> upstream
 
 		const mockZipFile: MockFileUpload = {
 			createReadStream: vi.fn(() => ({
@@ -1429,6 +1538,7 @@ describe("installPluginFromZip", () => {
 		const result = await installPluginFromZip(options);
 		expect(result).toBeDefined();
 		expect(result.plugin).toBeDefined();
+<<<<<<< HEAD
 	});
 
 	it("should reject when zip has no API folder", async () => {
@@ -1877,5 +1987,11 @@ describe("installPluginFromZip", () => {
 
 		// Restore the spy
 		validateSpy.mockRestore();
+=======
+
+		// Restore original function
+		mockPluginRegistry.getPluginManagerInstance =
+			originalGetPluginManagerInstance;
+>>>>>>> upstream
 	});
 });

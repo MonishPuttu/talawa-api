@@ -1,4 +1,5 @@
 import { createMockGraphQLContext } from "test/_Mocks_/mockContextCreator/mockContextCreator";
+<<<<<<< HEAD
 import {
 	afterEach,
 	beforeEach,
@@ -8,6 +9,9 @@ import {
 	test,
 	vi,
 } from "vitest";
+=======
+import { type Mock, beforeEach, describe, expect, test, vi } from "vitest";
+>>>>>>> upstream
 import type { GraphQLContext } from "~/src/graphql/context";
 import type { FundCampaignPledge } from "~/src/graphql/types/FundCampaignPledge/FundCampaignPledge";
 import { resolveUpdater } from "~/src/graphql/types/FundCampaignPledge/updater";
@@ -38,10 +42,13 @@ describe("resolveUpdater", () => {
 		vi.clearAllMocks();
 	});
 
+<<<<<<< HEAD
 	afterEach(() => {
 		vi.restoreAllMocks();
 	});
 
+=======
+>>>>>>> upstream
 	test("throws an unauthenticated error if user is not authenticated or not found", async () => {
 		const { context: unauthenticatedCtx } = createMockGraphQLContext(false);
 
@@ -418,6 +425,7 @@ describe("resolveUpdater", () => {
 			}
 		}
 	});
+<<<<<<< HEAD
 
 	test("returns null when pledger views own pledge with null updaterId", async () => {
 		const pledgerId = "user123";
@@ -534,4 +542,6 @@ describe("resolveUpdater", () => {
 
 		expect(result).toEqual({ id: updaterId, role: "regular" });
 	});
+=======
+>>>>>>> upstream
 });

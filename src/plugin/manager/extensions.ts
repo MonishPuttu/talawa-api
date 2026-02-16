@@ -6,7 +6,10 @@
  */
 
 import path from "node:path";
+<<<<<<< HEAD
 import { rootLogger } from "~/src/utilities/logging/logger";
+=======
+>>>>>>> upstream
 import type {
 	IDatabaseExtension,
 	IExtensionRegistry,
@@ -34,6 +37,12 @@ export class ExtensionLoader {
 		manifest: IPluginManifest,
 		pluginModule: Record<string, unknown>,
 	): Promise<void> {
+<<<<<<< HEAD
+=======
+		const plugin = this.loadedPlugins.get(pluginId);
+		if (!plugin) return;
+
+>>>>>>> upstream
 		try {
 			// Load GraphQL extensions (builder-first approach only)
 			if (manifest.extensionPoints?.graphql) {
@@ -51,9 +60,15 @@ export class ExtensionLoader {
 							pluginModule,
 						);
 					} catch (error) {
+<<<<<<< HEAD
 						rootLogger.error(
 							{ pluginId, extension: extension.name, err: error },
 							"Failed to load GraphQL extension",
+=======
+						console.error(
+							`Failed to load GraphQL extension ${extension.name} for plugin ${pluginId}:`,
+							error,
+>>>>>>> upstream
 						);
 						throw error;
 					}
@@ -81,9 +96,15 @@ export class ExtensionLoader {
 				}
 			}
 		} catch (error) {
+<<<<<<< HEAD
 			rootLogger.error(
 				{ pluginId, err: error },
 				"Extension points loading failed",
+=======
+			console.error(
+				`Extension points loading failed for plugin ${pluginId}:`,
+				error,
+>>>>>>> upstream
 			);
 			throw new Error(
 				`Failed to load extension points: ${
@@ -160,9 +181,14 @@ export class ExtensionLoader {
 
 		this.extensionRegistry.graphql.builderExtensions.push(builderExtension);
 
+<<<<<<< HEAD
 		rootLogger.info(
 			{ pluginId, extension: extension.name },
 			"Registered builder-first GraphQL extension",
+=======
+		console.log(
+			`Registered builder-first GraphQL extension: ${pluginId}.${extension.name}`,
+>>>>>>> upstream
 		);
 	}
 
@@ -338,9 +364,14 @@ export class ExtensionLoader {
 		) => Promise<unknown>;
 
 		// Log webhook registration
+<<<<<<< HEAD
 		rootLogger.info(
 			{ pluginId, method: extension.method || "POST", path: extension.path },
 			"Webhook registered",
+=======
+		console.log(
+			`🔗 Webhook registered: ${extension.method || "POST"} /api/plugins/${pluginId}/webhook${extension.path} (${extension.description || "No description"})`,
+>>>>>>> upstream
 		);
 	}
 

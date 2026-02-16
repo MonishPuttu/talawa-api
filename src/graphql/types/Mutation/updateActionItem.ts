@@ -4,8 +4,13 @@ import { actionItemExceptionsTable } from "~/src/drizzle/tables/actionItemExcept
 import { actionItemsTable } from "~/src/drizzle/tables/actionItems";
 import { builder } from "~/src/graphql/builder";
 import { ActionItem } from "~/src/graphql/types/ActionItem/ActionItem";
+<<<<<<< HEAD
 import { isNotNullish } from "~/src/utilities/isNotNullish";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import { isNotNullish } from "~/src/utilities/isNotNullish";
+>>>>>>> upstream
 import {
 	MutationUpdateActionItemInput,
 	MutationUpdateActionItemInputSchema,
@@ -217,6 +222,15 @@ builder.mutationField("updateActionItem", (t) =>
 					.where(eq(actionItemExceptionsTable.actionId, actionItemId));
 			}
 
+<<<<<<< HEAD
+=======
+			if (updatedActionItem) {
+				await ctx.drizzleClient
+					.delete(actionItemExceptionsTable)
+					.where(eq(actionItemExceptionsTable.actionId, actionItemId));
+			}
+
+>>>>>>> upstream
 			if (!updatedActionItem) {
 				throw new TalawaGraphQLError({
 					extensions: {
@@ -303,6 +317,15 @@ builder.mutationField("markActionItemAsPending", (t) =>
 					.where(eq(actionItemExceptionsTable.actionId, input.id));
 			}
 
+<<<<<<< HEAD
+=======
+			if (updatedActionItem) {
+				await ctx.drizzleClient
+					.delete(actionItemExceptionsTable)
+					.where(eq(actionItemExceptionsTable.actionId, input.id));
+			}
+
+>>>>>>> upstream
 			if (!updatedActionItem) {
 				throw new TalawaGraphQLError({
 					extensions: { code: "unexpected" },

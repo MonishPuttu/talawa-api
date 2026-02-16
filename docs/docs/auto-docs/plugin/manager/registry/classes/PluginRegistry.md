@@ -50,7 +50,11 @@ Get plugin from database
 
 > **updatePluginInDatabase**(`pluginId`, `updates`): `Promise`\<`void`\>
 
+<<<<<<< HEAD
 Defined in: [src/plugin/manager/registry.ts:43](https://github.com/PalisadoesFoundation/talawa-api/tree/mainsrc/plugin/manager/registry.ts#L43)
+=======
+Defined in: [src/plugin/manager/registry.ts:40](https://github.com/PalisadoesFoundation/talawa-api/tree/mainsrc/plugin/manager/registry.ts#L40)
+>>>>>>> upstream
 
 Update plugin in database
 

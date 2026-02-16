@@ -15,7 +15,11 @@ import {
 	normalizeRecurrenceRule,
 	validateRecurrenceInput,
 	validateRecurrenceRule,
+<<<<<<< HEAD
 } from "~/src/utilities/recurringEvent";
+=======
+} from "~/src/utilities/recurringEventHelpers";
+>>>>>>> upstream
 
 describe("recurringEventHelpers", () => {
 	describe("buildRRuleString", () => {
@@ -41,6 +45,7 @@ describe("recurringEventHelpers", () => {
 				},
 				"RRULE:FREQ=MONTHLY;INTERVAL=3;COUNT=10;BYMONTH=1,2,3;BYMONTHDAY=1,15",
 			],
+<<<<<<< HEAD
 		])("should build the correct RRULE string for various inputs", (recurrence, expected) => {
 			const rrule = buildRRuleString(
 				recurrence as z.infer<typeof recurrenceInputSchema>,
@@ -48,6 +53,18 @@ describe("recurringEventHelpers", () => {
 			);
 			expect(rrule).toBe(expected);
 		});
+=======
+		])(
+			"should build the correct RRULE string for various inputs",
+			(recurrence, expected) => {
+				const rrule = buildRRuleString(
+					recurrence as z.infer<typeof recurrenceInputSchema>,
+					startDate,
+				);
+				expect(rrule).toBe(expected);
+			},
+		);
+>>>>>>> upstream
 	});
 
 	describe("validateRecurrenceInput", () => {
@@ -83,6 +100,7 @@ describe("recurringEventHelpers", () => {
 				false,
 				["Invalid month day: 32"],
 			],
+<<<<<<< HEAD
 			// Test valid ordinal prefixes in byDay (for MONTHLY/YEARLY)
 			[
 				{
@@ -132,6 +150,19 @@ describe("recurringEventHelpers", () => {
 			expect(result.isValid).toBe(isValid);
 			expect(result.errors).toEqual(errors);
 		});
+=======
+		])(
+			"should validate various recurrence inputs",
+			(recurrence, isValid, errors) => {
+				const result = validateRecurrenceInput(
+					recurrence as z.infer<typeof recurrenceInputSchema>,
+					startDate,
+				);
+				expect(result.isValid).toBe(isValid);
+				expect(result.errors).toEqual(errors);
+			},
+		);
+>>>>>>> upstream
 	});
 
 	describe("normalizeRecurrenceRule", () => {
@@ -183,6 +214,7 @@ describe("recurringEventHelpers", () => {
 				expect(normalizedRule).toEqual(rule);
 			}
 		});
+<<<<<<< HEAD
 
 		// Test input validation
 		it("should throw error for invalid count (negative)", () => {
@@ -226,6 +258,8 @@ describe("recurringEventHelpers", () => {
 				"Invalid recurrence start date",
 			);
 		});
+=======
+>>>>>>> upstream
 	});
 
 	describe("calculateCompletionDateFromCount", () => {
@@ -235,6 +269,7 @@ describe("recurringEventHelpers", () => {
 			[5, "WEEKLY", 2, new Date("2025-02-26T00:00:00.000Z")],
 			[6, "MONTHLY", 1, new Date("2025-06-01T00:00:00.000Z")],
 			[3, "YEARLY", 1, new Date("2027-01-01T00:00:00.000Z")],
+<<<<<<< HEAD
 			// Unknown frequency - defaults to daily calculation (covers line 46)
 			[10, "UNKNOWN", 1, new Date("2025-01-10T00:00:00.000Z")],
 		] as const)("should calculate the correct completion date", (count, frequency, interval, expected) => {
@@ -246,6 +281,20 @@ describe("recurringEventHelpers", () => {
 			);
 			expect(completionDate).toEqual(expected);
 		});
+=======
+		] as const)(
+			"should calculate the correct completion date",
+			(count, frequency, interval, expected) => {
+				const completionDate = calculateCompletionDateFromCount(
+					startDate,
+					count,
+					frequency,
+					interval,
+				);
+				expect(completionDate).toEqual(expected);
+			},
+		);
+>>>>>>> upstream
 	});
 
 	describe("estimateInstanceCount", () => {
@@ -296,6 +345,7 @@ describe("recurringEventHelpers", () => {
 					recurrenceRuleString: "RRULE:FREQ=MONTHLY",
 				},
 				12,
+<<<<<<< HEAD
 				undefined,
 			],
 			// YEARLY never-ending - covers line 103
@@ -390,6 +440,16 @@ describe("recurringEventHelpers", () => {
 				),
 			).toBe(expected);
 		});
+=======
+				12,
+			],
+		] as const)(
+			"should estimate the instance count",
+			(rule, expected, estimationWindow) => {
+				expect(estimateInstanceCount(rule, estimationWindow)).toBe(expected);
+			},
+		);
+>>>>>>> upstream
 	});
 
 	describe("Event Type Functions", () => {
@@ -431,6 +491,7 @@ describe("recurringEventHelpers", () => {
 				true,
 				"HYBRID",
 			],
+<<<<<<< HEAD
 			// Edge case: count = 0 should be treated as no count (falsy)
 			[{ ...baseRule, count: 0 }, true, false, false, "NEVER_ENDING"],
 		] as const)("should correctly classify event types", (rule, isNever, isCount, isEndDate, eventType) => {
@@ -439,6 +500,17 @@ describe("recurringEventHelpers", () => {
 			expect(isEndDateBasedEvent(rule)).toBe(isEndDate);
 			expect(getEventType(rule)).toBe(eventType);
 		});
+=======
+		] as const)(
+			"should correctly classify event types",
+			(rule, isNever, isCount, isEndDate, eventType) => {
+				expect(isNeverEndingEvent(rule)).toBe(isNever);
+				expect(isCountBasedEvent(rule)).toBe(isCount);
+				expect(isEndDateBasedEvent(rule)).toBe(isEndDate);
+				expect(getEventType(rule)).toBe(eventType);
+			},
+		);
+>>>>>>> upstream
 	});
 
 	describe("calculateInstancesPerMonth", () => {
@@ -451,6 +523,7 @@ describe("recurringEventHelpers", () => {
 			["MONTHLY", 3, 0.33],
 			["YEARLY", 1, 0.083],
 			["YEARLY", 2, 0.041],
+<<<<<<< HEAD
 		] as const)("should calculate instances per month for %s frequency with interval %i", (frequency, interval, expected) => {
 			expect(calculateInstancesPerMonth(frequency, interval)).toBeCloseTo(
 				expected,
@@ -475,6 +548,17 @@ describe("recurringEventHelpers", () => {
 		it("should default to daily calculation for unknown frequency", () => {
 			expect(calculateInstancesPerMonth("UNKNOWN", 1)).toBe(30);
 		});
+=======
+		] as const)(
+			"should calculate instances per month for %s frequency with interval %i",
+			(frequency, interval, expected) => {
+				expect(calculateInstancesPerMonth(frequency, interval)).toBeCloseTo(
+					expected,
+					2,
+				);
+			},
+		);
+>>>>>>> upstream
 	});
 
 	describe("validateRecurrenceRule", () => {
@@ -512,6 +596,7 @@ describe("recurringEventHelpers", () => {
 				false,
 				["End date must be after start date"],
 			],
+<<<<<<< HEAD
 			// Invalid frequency value
 			[
 				{ ...baseRule, frequency: "INVALID" },
@@ -537,6 +622,8 @@ describe("recurringEventHelpers", () => {
 			],
 			// Null/undefined recurrenceEndDate (should pass)
 			[{ ...baseRule, recurrenceEndDate: null }, true, []],
+=======
+>>>>>>> upstream
 		])("should validate various recurrence rules", (rule, isValid, errors) => {
 			const result = validateRecurrenceRule(
 				rule as typeof recurrenceRulesTable.$inferSelect,

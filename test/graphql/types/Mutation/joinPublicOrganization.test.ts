@@ -91,7 +91,11 @@ interface TestOrganization {
 }
 
 async function createTestOrganization(
+<<<<<<< HEAD
 	_userRegistrationRequired = false,
+=======
+	userRegistrationRequired = false,
+>>>>>>> upstream
 ): Promise<TestOrganization> {
 	const { cachedAdminToken: adminAuthToken } = await getAdminAuthTokenAndId();
 
@@ -190,7 +194,11 @@ suite("Mutation joinPublicOrganization", () => {
 			);
 		});
 
+<<<<<<< HEAD
 		test("Returns not_found when the user is present in the token but not found in the database", async () => {
+=======
+		test("Returns an error when the user is present in the token but not found in the database", async () => {
+>>>>>>> upstream
 			// Create a regular user
 			const regularUser = await createRegularUserUsingAdmin();
 			// Get the user's auth token
@@ -225,8 +233,13 @@ suite("Mutation joinPublicOrganization", () => {
 			expect(joinPublicOrganizationResult.errors).toEqual(
 				expect.arrayContaining<TalawaGraphQLFormattedError>([
 					expect.objectContaining<TalawaGraphQLFormattedError>({
+<<<<<<< HEAD
 						extensions: expect.objectContaining({
 							code: "not_found",
+=======
+						extensions: expect.objectContaining<UnauthenticatedExtensions>({
+							code: "unauthenticated",
+>>>>>>> upstream
 						}),
 						message: expect.any(String),
 						path: ["joinPublicOrganization"],

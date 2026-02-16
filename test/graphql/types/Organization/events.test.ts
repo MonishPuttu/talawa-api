@@ -4,6 +4,7 @@ import type {
 	GraphQLResolveInfo,
 } from "graphql";
 import { createMockGraphQLContext } from "test/_Mocks_/mockContextCreator/mockContextCreator";
+<<<<<<< HEAD
 import {
 	afterEach,
 	beforeAll,
@@ -35,6 +36,21 @@ vi.mock("~/src/graphql/types/Query/eventQueries", () => ({
 
 const mockGetUnifiedEventsInDateRange = vi.mocked(getUnifiedEventsInDateRange);
 const mockFilterInviteOnlyEvents = vi.mocked(filterInviteOnlyEvents);
+=======
+import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
+import type { GraphQLContext } from "~/src/graphql/context";
+import { schema } from "~/src/graphql/schema";
+import type { Organization as OrganizationType } from "~/src/graphql/types/Organization/Organization";
+import { getUnifiedEventsInDateRange } from "~/src/graphql/types/Query/eventQueries";
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+
+// Mock the external dependency
+vi.mock("~/src/graphql/types/Query/eventQueries", () => ({
+	getUnifiedEventsInDateRange: vi.fn(),
+}));
+
+const mockGetUnifiedEventsInDateRange = vi.mocked(getUnifiedEventsInDateRange);
+>>>>>>> upstream
 
 type MockUser = {
 	id: string;
@@ -75,7 +91,10 @@ describe("Organization Events Resolver Tests", () => {
 			allDay: false,
 			isPublic: true,
 			isRegisterable: true,
+<<<<<<< HEAD
 			isInviteOnly: false,
+=======
+>>>>>>> upstream
 			location: "Test Location",
 			registrationClosesAt: new Date(),
 			attachments: [],
@@ -97,7 +116,10 @@ describe("Organization Events Resolver Tests", () => {
 			allDay: false,
 			isPublic: true,
 			isRegisterable: true,
+<<<<<<< HEAD
 			isInviteOnly: false,
+=======
+>>>>>>> upstream
 			location: "Test Location",
 			registrationClosesAt: new Date(),
 			attachments: [],
@@ -146,11 +168,15 @@ describe("Organization Events Resolver Tests", () => {
 			postalCode: null,
 			userRegistrationRequired: false,
 		};
+<<<<<<< HEAD
 		// Mock filterInviteOnlyEvents to return events as-is (identity function)
 		// This allows unit tests to focus on resolver logic without filtering complexity
 		mockFilterInviteOnlyEvents.mockImplementation(
 			async (input) => input.events,
 		);
+=======
+		mockGetUnifiedEventsInDateRange.mockClear();
+>>>>>>> upstream
 	});
 
 	describe("Authentication and Authorization", () => {
@@ -180,6 +206,7 @@ describe("Organization Events Resolver Tests", () => {
 				role: "administrator",
 				organizationMembershipsWhereMember: [],
 			};
+<<<<<<< HEAD
 			const eqSpy = vi.fn();
 
 			mocks.drizzleClient.query.usersTable.findFirst.mockImplementation(
@@ -211,6 +238,10 @@ describe("Organization Events Resolver Tests", () => {
 					}
 					return Promise.resolve(mockUserData);
 				},
+=======
+			mocks.drizzleClient.query.usersTable.findFirst.mockResolvedValue(
+				mockUserData,
+>>>>>>> upstream
 			);
 			mockGetUnifiedEventsInDateRange.mockResolvedValue(mockEvents);
 
@@ -238,6 +269,7 @@ describe("Organization Events Resolver Tests", () => {
 				},
 				where: expect.any(Function),
 			});
+<<<<<<< HEAD
 
 			// Verify that the where clauses were actually executed with correct values
 			expect(eqSpy).toHaveBeenCalledWith("users.id", "user-123");
@@ -245,6 +277,8 @@ describe("Organization Events Resolver Tests", () => {
 				"organizationMemberships.organizationId",
 				mockOrganization.id,
 			);
+=======
+>>>>>>> upstream
 		});
 
 		it("should throw unauthorized_action for non-admin with no organization membership", async () => {
@@ -385,6 +419,7 @@ describe("Organization Events Resolver Tests", () => {
 				}),
 			);
 		});
+<<<<<<< HEAD
 
 		it("should throw invalid_arguments error for invalid cursor with last", async () => {
 			await expect(
@@ -408,6 +443,8 @@ describe("Organization Events Resolver Tests", () => {
 				}),
 			);
 		});
+=======
+>>>>>>> upstream
 	});
 
 	describe("Data Fetching", () => {
@@ -459,6 +496,7 @@ describe("Organization Events Resolver Tests", () => {
 		});
 
 		it("should handle backward pagination with 'last' argument", async () => {
+<<<<<<< HEAD
 			const mockUserData: MockUser = {
 				id: "user-123",
 				role: "administrator",
@@ -469,6 +507,8 @@ describe("Organization Events Resolver Tests", () => {
 			mocks.drizzleClient.query.usersTable.findFirst.mockResolvedValue(
 				mockUserData,
 			);
+=======
+>>>>>>> upstream
 			mockGetUnifiedEventsInDateRange.mockResolvedValue(mockEvents);
 			const result = await eventsResolver(
 				mockOrganization,
@@ -477,14 +517,21 @@ describe("Organization Events Resolver Tests", () => {
 				mockResolveInfo,
 			);
 			expect(result).toBeDefined();
+<<<<<<< HEAD
 			// With over-fetching: limit=6, fetchLimit = min(max(6*2, 6+50), 200) = min(max(12, 56), 200) = 56
+=======
+>>>>>>> upstream
 			expect(mockGetUnifiedEventsInDateRange).toHaveBeenCalledWith(
 				expect.objectContaining({
 					organizationId: mockOrganization.id,
 					startDate: expect.any(Date),
 					endDate: expect.any(Date),
 					includeRecurring: true,
+<<<<<<< HEAD
 					limit: 56,
+=======
+					limit: 6,
+>>>>>>> upstream
 				}),
 				ctx.drizzleClient,
 				ctx.log,
@@ -510,7 +557,10 @@ describe("Organization Events Resolver Tests", () => {
 				allDay: false,
 				isPublic: true,
 				isRegisterable: true,
+<<<<<<< HEAD
 				isInviteOnly: false,
+=======
+>>>>>>> upstream
 				location: "Test Location",
 				registrationClosesAt: new Date(),
 				attachments: [],
@@ -572,7 +622,10 @@ describe("Organization Events Resolver Tests", () => {
 					allDay: false,
 					isPublic: true,
 					isRegisterable: true,
+<<<<<<< HEAD
 					isInviteOnly: false,
+=======
+>>>>>>> upstream
 					location: "Test Location",
 					registrationClosesAt: new Date(),
 					attachments: [],
@@ -622,6 +675,7 @@ describe("Organization Events Resolver Tests", () => {
 				}),
 			);
 		});
+<<<<<<< HEAD
 
 		it("should throw arguments_associated_resources_not_found for cursor not found in results with last", async () => {
 			// Create valid cursor format but for non-existent event
@@ -654,6 +708,8 @@ describe("Organization Events Resolver Tests", () => {
 				}),
 			);
 		});
+=======
+>>>>>>> upstream
 	});
 
 	describe("Pagination Edge Cases", () => {
@@ -758,6 +814,7 @@ describe("Organization Events Resolver Tests", () => {
 				}),
 			);
 		});
+<<<<<<< HEAD
 
 		it("should handle null values for optional pagination arguments", async () => {
 			mocks.drizzleClient.query.usersTable.findFirst.mockResolvedValue({
@@ -1155,5 +1212,7 @@ describe("Organization Events Resolver Tests", () => {
 				}),
 			);
 		});
+=======
+>>>>>>> upstream
 	});
 });

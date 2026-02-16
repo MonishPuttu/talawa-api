@@ -546,7 +546,10 @@ suite("Mutation field createUser", () => {
 						ResultOf<typeof Mutation_createUser>["createUser"]
 					>({
 						authenticationToken: expect.any(String),
+<<<<<<< HEAD
 						refreshToken: expect.any(String),
+=======
+>>>>>>> upstream
 						user: expect.objectContaining<
 							Partial<
 								NonNullable<
@@ -639,7 +642,10 @@ suite("Mutation field createUser", () => {
 						ResultOf<typeof Mutation_createUser>["createUser"]
 					>({
 						authenticationToken: expect.any(String),
+<<<<<<< HEAD
 						refreshToken: expect.any(String),
+=======
+>>>>>>> upstream
 						user: expect.objectContaining<
 							Partial<
 								NonNullable<
@@ -711,7 +717,10 @@ suite("Mutation field createUser", () => {
 						ResultOf<typeof Mutation_createUser>["createUser"]
 					>({
 						authenticationToken: expect.any(String),
+<<<<<<< HEAD
 						refreshToken: expect.any(String),
+=======
+>>>>>>> upstream
 						user: expect.objectContaining<
 							Partial<
 								NonNullable<

@@ -10,13 +10,22 @@ import type {
 	ImplicitMercuriusContext,
 } from "~/src/graphql/context";
 import { Organization } from "~/src/graphql/types/Organization/Organization";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+>>>>>>> upstream
 import {
 	defaultGraphQLConnectionArgumentsSchema,
 	transformDefaultGraphQLConnectionArguments,
 	transformToDefaultGraphQLConnection,
+<<<<<<< HEAD
 } from "~/src/utilities/graphqlConnection";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+=======
+} from "~/src/utilities/defaultGraphQLConnection";
+import envConfig from "~/src/utilities/graphqLimits";
+>>>>>>> upstream
 import { User } from "./User";
 
 interface OrganizationMembershipRawNode {
@@ -39,12 +48,15 @@ const cursorSchema = organizationMembershipsTableInsertSchema
 		organizationId: arg.organizationId,
 	}));
 
+<<<<<<< HEAD
 export type OrganizationsWhereMemberArgs = z.input<
 	typeof defaultGraphQLConnectionArgumentsSchema
 > & {
 	filter?: string | null;
 };
 
+=======
+>>>>>>> upstream
 const organizationsWhereMemberArgumentsSchema =
 	defaultGraphQLConnectionArgumentsSchema
 		.extend({
@@ -59,7 +71,11 @@ const organizationsWhereMemberArgumentsSchema =
 						JSON.parse(Buffer.from(arg.cursor, "base64url").toString("utf-8")),
 					);
 				}
+<<<<<<< HEAD
 			} catch (_error) {
+=======
+			} catch (error) {
+>>>>>>> upstream
 				ctx.addIssue({
 					code: "custom",
 					message: "Not a valid cursor.",
@@ -67,7 +83,18 @@ const organizationsWhereMemberArgumentsSchema =
 				});
 			}
 			return {
+<<<<<<< HEAD
 				cursor: cursorObj,
+=======
+				cursor: cursorObj
+					? Buffer.from(
+							JSON.stringify({
+								createdAt: cursorObj.createdAt.toISOString(),
+								organizationId: cursorObj.organizationId,
+							}),
+						).toString("base64url")
+					: undefined,
+>>>>>>> upstream
 				isInversed: arg.isInversed,
 				limit: arg.limit,
 				filter: arg.filter,
@@ -152,6 +179,7 @@ export const resolveOrganizationsWhereMember = async (
 					? isInversed
 						? or(
 								and(
+<<<<<<< HEAD
 									eq(organizationMembershipsTable.createdAt, cursor.createdAt),
 									gt(
 										organizationMembershipsTable.organizationId,
@@ -171,6 +199,60 @@ export const resolveOrganizationsWhereMember = async (
 								),
 
 								lt(organizationMembershipsTable.createdAt, cursor.createdAt),
+=======
+									eq(
+										organizationMembershipsTable.createdAt,
+
+										new Date(
+											JSON.parse(
+												Buffer.from(cursor, "base64url").toString("utf-8"),
+											).createdAt,
+										),
+									),
+									gt(
+										organizationMembershipsTable.organizationId,
+										JSON.parse(
+											Buffer.from(cursor, "base64url").toString("utf-8"),
+										).organizationId,
+									),
+								),
+
+								gt(
+									organizationMembershipsTable.createdAt,
+									new Date(
+										JSON.parse(
+											Buffer.from(cursor, "base64url").toString("utf-8"),
+										).createdAt,
+									),
+								),
+							)
+						: or(
+								and(
+									eq(
+										organizationMembershipsTable.createdAt,
+										new Date(
+											JSON.parse(
+												Buffer.from(cursor, "base64url").toString("utf-8"),
+											).createdAt,
+										),
+									),
+									lt(
+										organizationMembershipsTable.organizationId,
+										JSON.parse(
+											Buffer.from(cursor, "base64url").toString("utf-8"),
+										).organizationId,
+									),
+								),
+
+								lt(
+									organizationMembershipsTable.createdAt,
+									new Date(
+										JSON.parse(
+											Buffer.from(cursor, "base64url").toString("utf-8"),
+										).createdAt,
+									),
+								),
+>>>>>>> upstream
 							)
 					: sql`TRUE`,
 			),
@@ -183,6 +265,7 @@ export const resolveOrganizationsWhereMember = async (
 	// Transform the raw nodes into a connection.
 	return transformToDefaultGraphQLConnection<
 		OrganizationMembershipRawNode,
+<<<<<<< HEAD
 		Organization,
 		{ createdAt: Date; organizationId: string }
 	>({
@@ -190,6 +273,17 @@ export const resolveOrganizationsWhereMember = async (
 			createdAt: row.membershipCreatedAt,
 			organizationId: row.membershipOrganizationId,
 		}),
+=======
+		Organization
+	>({
+		createCursor: (row) =>
+			Buffer.from(
+				JSON.stringify({
+					createdAt: row.membershipCreatedAt.toISOString(),
+					organizationId: row.membershipOrganizationId,
+				}),
+			).toString("base64url"),
+>>>>>>> upstream
 
 		createNode: (row) => row.organization,
 		parsedArgs,

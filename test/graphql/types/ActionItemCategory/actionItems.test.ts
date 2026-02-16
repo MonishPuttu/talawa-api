@@ -17,9 +17,12 @@ import {
 	Query_signIn,
 } from "../documentNodes";
 
+<<<<<<< HEAD
 const ONE_DAY_MS = 24 * 60 * 60 * 1000;
 const ONE_HOUR_MS = 60 * 60 * 1000;
 
+=======
+>>>>>>> upstream
 const signInResult = await mercuriusClient.query(Query_signIn, {
 	variables: {
 		input: {
@@ -98,8 +101,13 @@ async function createEventAndVolunteer(organizationId: string) {
 				organizationId,
 				name: "Test Event",
 				description: "Test event for action items",
+<<<<<<< HEAD
 				startAt: new Date(Date.now() + ONE_DAY_MS).toISOString(),
 				endAt: new Date(Date.now() + ONE_DAY_MS + ONE_HOUR_MS).toISOString(),
+=======
+				startAt: new Date().toISOString(),
+				endAt: new Date(Date.now() + 3600000).toISOString(),
+>>>>>>> upstream
 				location: "Test Location",
 			},
 		},

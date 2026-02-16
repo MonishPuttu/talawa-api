@@ -1,5 +1,9 @@
 import { faker } from "@faker-js/faker";
+<<<<<<< HEAD
 import { afterEach, expect, suite, test, vi } from "vitest";
+=======
+import { expect, suite, test, vi } from "vitest";
+>>>>>>> upstream
 import type { eventsTable } from "~/src/drizzle/tables/events";
 import type { recurrenceRulesTable } from "~/src/drizzle/tables/recurrenceRules";
 import type { eventExceptionsTable } from "~/src/drizzle/tables/recurringEventExceptions";
@@ -14,10 +18,13 @@ import type {
 	ServiceDependencies,
 } from "~/src/services/eventGeneration/types";
 
+<<<<<<< HEAD
 afterEach(() => {
 	vi.clearAllMocks();
 });
 
+=======
+>>>>>>> upstream
 suite("occurrenceCalculator", () => {
 	const mockLogger = {
 		info: vi.fn(),
@@ -598,8 +605,13 @@ suite("occurrenceCalculator", () => {
 			const nextDate = getNextOccurrenceDate(currentDate, monthlyByDayRule);
 
 			// Should advance to February and calculate first Friday
+<<<<<<< HEAD
 			expect(nextDate.getUTCMonth()).toBe(1);
 			expect(nextDate.getUTCDay()).toBe(5);
+=======
+			expect(nextDate.getMonth()).toBe(1); // February
+			expect(nextDate.getDay()).toBe(5); // Friday
+>>>>>>> upstream
 		});
 
 		test("handles monthly recurrence without byDay patterns", () => {
@@ -629,9 +641,15 @@ suite("occurrenceCalculator", () => {
 			const nextDate = getNextOccurrenceDate(currentDate, monthlyByDayRule);
 
 			// Should advance to February and calculate second Wednesday
+<<<<<<< HEAD
 			expect(nextDate.getUTCMonth()).toBe(1);
 			expect(nextDate.getUTCDay()).toBe(3); // Wednesday
 			expect(nextDate.getUTCDate()).toBe(12); // Second Wednesday of February 2025
+=======
+			expect(nextDate.getMonth()).toBe(1); // February
+			expect(nextDate.getDay()).toBe(3); // Wednesday
+			expect(nextDate.getDate()).toBe(12); // Second Wednesday of February 2025
+>>>>>>> upstream
 		});
 	});
 
@@ -710,6 +728,7 @@ suite("occurrenceCalculator", () => {
 			expect(result).toBe(true);
 		});
 	});
+<<<<<<< HEAD
 
 	suite("yearly frequency handling", () => {
 		test("handles yearly events without windowing", () => {
@@ -1112,4 +1131,6 @@ suite("occurrenceCalculator", () => {
 			expect(result).toHaveLength(0);
 		});
 	});
+=======
+>>>>>>> upstream
 });

@@ -1,16 +1,25 @@
 import { z } from "zod";
+<<<<<<< HEAD
 import { agendaItemAttachmentsTable } from "~/src/drizzle/tables/agendaItemAttachments";
 import { agendaItemsTable } from "~/src/drizzle/tables/agendaItems";
 import { agendaItemUrlTable } from "~/src/drizzle/tables/agendaItemUrls";
+=======
+import { agendaItemsTable } from "~/src/drizzle/tables/agendaItems";
+>>>>>>> upstream
 import { builder } from "~/src/graphql/builder";
 import {
 	MutationCreateAgendaItemInput,
 	mutationCreateAgendaItemInputSchema,
 } from "~/src/graphql/inputs/MutationCreateAgendaItemInput";
 import { AgendaItem } from "~/src/graphql/types/AgendaItem/AgendaItem";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+>>>>>>> upstream
 const mutationCreateAgendaItemArgumentsSchema = z.object({
 	input: mutationCreateAgendaItemInputSchema,
 });
@@ -54,6 +63,7 @@ builder.mutationField("createAgendaItem", (t) =>
 			}
 
 			const currentUserId = ctx.currentClient.user.id;
+<<<<<<< HEAD
 			const { folderId, categoryId, eventId } = parsedArgs.input;
 			const isCategoryProvidedByUser = categoryId !== undefined;
 			let resolvedFolderId = folderId;
@@ -114,6 +124,8 @@ builder.mutationField("createAgendaItem", (t) =>
 
 				resolvedCategoryId = defaultCategory.id;
 			}
+=======
+>>>>>>> upstream
 
 			const [currentUser, existingAgendaFolder] = await Promise.all([
 				ctx.drizzleClient.query.usersTable.findFirst({
@@ -124,7 +136,11 @@ builder.mutationField("createAgendaItem", (t) =>
 				}),
 				ctx.drizzleClient.query.agendaFoldersTable.findFirst({
 					columns: {
+<<<<<<< HEAD
 						eventId: true,
+=======
+						isAgendaItemFolder: true,
+>>>>>>> upstream
 					},
 					with: {
 						event: {
@@ -150,7 +166,11 @@ builder.mutationField("createAgendaItem", (t) =>
 						},
 					},
 					where: (fields, operators) =>
+<<<<<<< HEAD
 						operators.eq(fields.id, resolvedFolderId),
+=======
+						operators.eq(fields.id, parsedArgs.input.folderId),
+>>>>>>> upstream
 				}),
 			]);
 
@@ -168,23 +188,38 @@ builder.mutationField("createAgendaItem", (t) =>
 						code: "arguments_associated_resources_not_found",
 						issues: [
 							{
+<<<<<<< HEAD
 								argumentPath: ["input", "folderId"],
+=======
+								argumentPath: ["input", "id"],
+>>>>>>> upstream
 							},
 						],
 					},
 				});
 			}
 
+<<<<<<< HEAD
 			if (existingAgendaFolder.eventId !== parsedArgs.input.eventId) {
 				throw new TalawaGraphQLError({
 					message: "folderId does not belong to the provided eventId.",
+=======
+			if (!existingAgendaFolder.isAgendaItemFolder) {
+				throw new TalawaGraphQLError({
+>>>>>>> upstream
 					extensions: {
 						code: "forbidden_action_on_arguments_associated_resources",
 						issues: [
 							{
+<<<<<<< HEAD
 								argumentPath: ["input", "eventId"],
 								message:
 									"You do not have permission to perform this action on the specified event.",
+=======
+								argumentPath: ["input", "folderId"],
+								message:
+									"This agenda folder cannot be a folder to agenda items.",
+>>>>>>> upstream
 							},
 						],
 					},
@@ -204,13 +239,18 @@ builder.mutationField("createAgendaItem", (t) =>
 						code: "unauthorized_action_on_arguments_associated_resources",
 						issues: [
 							{
+<<<<<<< HEAD
 								argumentPath: ["input", "folderId"],
+=======
+								argumentPath: ["input", "id"],
+>>>>>>> upstream
 							},
 						],
 					},
 				});
 			}
 
+<<<<<<< HEAD
 			const existingAgendaCategory =
 				await ctx.drizzleClient.query.agendaCategoriesTable.findFirst({
 					columns: { id: true },
@@ -232,10 +272,35 @@ builder.mutationField("createAgendaItem", (t) =>
 									: ["input", "eventId"],
 							},
 						],
+=======
+			const [createdAgendaItem] = await ctx.drizzleClient
+				.insert(agendaItemsTable)
+				.values({
+					creatorId: currentUserId,
+					description: parsedArgs.input.description,
+					duration: parsedArgs.input.duration,
+					folderId: parsedArgs.input.folderId,
+					key: parsedArgs.input.key,
+					name: parsedArgs.input.name,
+					type: parsedArgs.input.type,
+				})
+				.returning();
+
+			// Inserted agenda item not being returned is an external defect unrelated to this code. It is very unlikely for this error to occur.
+			if (createdAgendaItem === undefined) {
+				ctx.log.error(
+					"Postgres insert operation unexpectedly returned an empty array instead of throwing an error.",
+				);
+
+				throw new TalawaGraphQLError({
+					extensions: {
+						code: "unexpected",
+>>>>>>> upstream
 					},
 				});
 			}
 
+<<<<<<< HEAD
 			return await ctx.drizzleClient.transaction(async (tx) => {
 				const [createdAgendaItem] = await tx
 					.insert(agendaItemsTable)
@@ -328,6 +393,9 @@ builder.mutationField("createAgendaItem", (t) =>
 					attachments: createdAttachments,
 				};
 			});
+=======
+			return createdAgendaItem;
+>>>>>>> upstream
 		},
 		type: AgendaItem,
 	}),

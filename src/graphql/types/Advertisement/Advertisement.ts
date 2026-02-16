@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 import { advertisementTypeEnum } from "~/src/drizzle/enums/advertisementType";
+=======
+>>>>>>> upstream
 import type { advertisementsTable } from "~/src/drizzle/tables/advertisements";
 import { builder } from "~/src/graphql/builder";
 import { AdvertisementType } from "~/src/graphql/enums/AdvertisementType";
@@ -6,7 +9,10 @@ import {
 	AdvertisementAttachment,
 	type AdvertisementAttachment as AdvertisementAttachmentType,
 } from "~/src/graphql/types/AdvertisementAttachment/AdvertisementAttachment";
+<<<<<<< HEAD
 import { escapeHTML } from "~/src/utilities/sanitizer";
+=======
+>>>>>>> upstream
 
 export type Advertisement = typeof advertisementsTable.$inferSelect & {
 	attachments: AdvertisementAttachmentType[] | null;
@@ -22,12 +28,17 @@ Advertisement.implement({
 			description: "Array of attachments.",
 			type: t.listRef(AdvertisementAttachment),
 		}),
+<<<<<<< HEAD
 		description: t.string({
 			description: "Custom information about the advertisement.",
 			resolve: (advertisement) =>
 				advertisement.description
 					? escapeHTML(advertisement.description)
 					: null,
+=======
+		description: t.exposeString("description", {
+			description: "Custom information about the advertisement.",
+>>>>>>> upstream
 		}),
 		endAt: t.expose("endAt", {
 			description: "Date time at the time the advertised event ends at.",
@@ -37,18 +48,28 @@ Advertisement.implement({
 			description: "Global identifier of the advertisement.",
 			nullable: false,
 		}),
+<<<<<<< HEAD
 		name: t.string({
 			description: "Name of the advertisement.",
 			resolve: (advertisement) => escapeHTML(advertisement.name),
+=======
+		name: t.exposeString("name", {
+			description: "Name of the advertisement.",
+>>>>>>> upstream
 		}),
 		startAt: t.expose("startAt", {
 			description: "Date time at the time the advertised event starts at.",
 			type: "DateTime",
 		}),
+<<<<<<< HEAD
 		type: t.field({
 			description: "Type of the advertisement.",
 			resolve: (advertisement) =>
 				advertisementTypeEnum.parse(advertisement.type),
+=======
+		type: t.expose("type", {
+			description: "Type of the advertisement.",
+>>>>>>> upstream
 			type: AdvertisementType,
 		}),
 	}),

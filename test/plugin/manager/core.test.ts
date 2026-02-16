@@ -2,11 +2,18 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import PluginManager from "../../../src/plugin/manager/core";
 import type { ExtensionLoader } from "../../../src/plugin/manager/extensions";
 import type { PluginLifecycle } from "../../../src/plugin/manager/lifecycle";
+<<<<<<< HEAD
+=======
+import { PluginStatus } from "../../../src/plugin/types";
+>>>>>>> upstream
 import type {
 	IPluginContext,
 	IPluginManifest,
 } from "../../../src/plugin/types";
+<<<<<<< HEAD
 import { PluginStatus } from "../../../src/plugin/types";
+=======
+>>>>>>> upstream
 
 // Mocks
 vi.mock("../../../src/plugin/utils", () => ({
@@ -121,7 +128,12 @@ describe("PluginManager", () => {
 	it("should initialize and load plugins from DB", async () => {
 		const context = createPluginContext();
 		const manager = new PluginManager(context, "/plugins");
+<<<<<<< HEAD
 		await manager.initialize();
+=======
+		// Wait for async initialization
+		await new Promise((resolve) => setTimeout(resolve, 50));
+>>>>>>> upstream
 		expect(manager.isSystemInitialized()).toBe(true);
 		expect(manager.getLoadedPluginIds()).toContain("test-plugin");
 		expect(manager.getPlugin("test-plugin")).toBeDefined();
@@ -130,6 +142,7 @@ describe("PluginManager", () => {
 	it("should handle no plugins in DB gracefully", async () => {
 		const context = createPluginContext([]);
 		const manager = new PluginManager(context, "/plugins");
+<<<<<<< HEAD
 		await manager.initialize();
 		expect(manager.isSystemInitialized()).toBe(true);
 		expect(manager.getLoadedPluginIds()).toHaveLength(0);
@@ -155,6 +168,11 @@ describe("PluginManager", () => {
 			}),
 		);
 		expect(manager.getLoadedPluginIds()).toHaveLength(0);
+=======
+		await new Promise((resolve) => setTimeout(resolve, 10));
+		expect(manager.isSystemInitialized()).toBe(true);
+		expect(manager.getLoadedPluginIds()).toHaveLength(0);
+>>>>>>> upstream
 	});
 
 	it("should not load plugin if manifest file is missing", async () => {
@@ -163,7 +181,11 @@ describe("PluginManager", () => {
 		});
 		const context = createPluginContext();
 		const manager = new PluginManager(context, "/plugins");
+<<<<<<< HEAD
 		await manager.initialize();
+=======
+		await new Promise((resolve) => setTimeout(resolve, 10));
+>>>>>>> upstream
 		expect(manager.getLoadedPluginIds()).not.toContain("test-plugin");
 	});
 
@@ -173,7 +195,11 @@ describe("PluginManager", () => {
 		);
 		const context = createPluginContext();
 		const manager = new PluginManager(context, "/plugins");
+<<<<<<< HEAD
 		await manager.initialize();
+=======
+		await new Promise((resolve) => setTimeout(resolve, 10));
+>>>>>>> upstream
 		expect(manager.getLoadedPluginIds()).not.toContain("test-plugin");
 	});
 
@@ -183,14 +209,23 @@ describe("PluginManager", () => {
 		);
 		const context = createPluginContext();
 		const manager = new PluginManager(context, "/plugins");
+<<<<<<< HEAD
 		await manager.initialize();
+=======
+		await new Promise((resolve) => setTimeout(resolve, 10));
+>>>>>>> upstream
 		expect(manager.getLoadedPluginIds()).not.toContain("test-plugin");
 	});
 
 	it("should not load plugin if extension loading fails", async () => {
+<<<<<<< HEAD
 		const context = createPluginContext([]);
 		const manager = new TestablePluginManager(context, "/plugins");
 		await manager.initialize();
+=======
+		const context = createPluginContext();
+		const manager = new TestablePluginManager(context, "/plugins");
+>>>>>>> upstream
 		// Patch the extensionLoader to throw
 		vi.spyOn(
 			manager.getTestExtensionLoader(),
@@ -204,7 +239,11 @@ describe("PluginManager", () => {
 	it("should activate and deactivate plugin", async () => {
 		const context = createPluginContext();
 		const manager = new TestablePluginManager(context, "/plugins");
+<<<<<<< HEAD
 		await manager.initialize();
+=======
+		await new Promise((resolve) => setTimeout(resolve, 10));
+>>>>>>> upstream
 		// Patch lifecycle methods
 		vi.spyOn(manager.getTestLifecycle(), "activatePlugin").mockResolvedValue(
 			true,
@@ -219,7 +258,11 @@ describe("PluginManager", () => {
 	it("should unload plugin", async () => {
 		const context = createPluginContext();
 		const manager = new TestablePluginManager(context, "/plugins");
+<<<<<<< HEAD
 		await manager.initialize();
+=======
+		await new Promise((resolve) => setTimeout(resolve, 10));
+>>>>>>> upstream
 		vi.spyOn(manager.getTestLifecycle(), "unloadPlugin").mockResolvedValue(
 			true,
 		);
@@ -229,7 +272,11 @@ describe("PluginManager", () => {
 	it("should handle plugin errors and update status", async () => {
 		const context = createPluginContext();
 		const manager = new TestablePluginManager(context, "/plugins");
+<<<<<<< HEAD
 		await manager.initialize();
+=======
+		await new Promise((resolve) => setTimeout(resolve, 10));
+>>>>>>> upstream
 		// Ensure plugin is loaded
 		await manager.loadPlugin("test-plugin");
 		(
@@ -251,7 +298,11 @@ describe("PluginManager", () => {
 	it("should return correct plugin status and info", async () => {
 		const context = createPluginContext();
 		const manager = new TestablePluginManager(context, "/plugins");
+<<<<<<< HEAD
 		await manager.initialize();
+=======
+		await new Promise((resolve) => setTimeout(resolve, 10));
+>>>>>>> upstream
 		expect(manager.isPluginLoaded("test-plugin")).toBe(true);
 		expect(manager.getPlugin("test-plugin")).toBeDefined();
 		expect(manager.getPluginsDirectory()).toBe("/plugins");
@@ -261,7 +312,11 @@ describe("PluginManager", () => {
 	it("should execute pre and post hooks", async () => {
 		const context = createPluginContext();
 		const manager = new TestablePluginManager(context, "/plugins");
+<<<<<<< HEAD
 		await manager.initialize();
+=======
+		await new Promise((resolve) => setTimeout(resolve, 10));
+>>>>>>> upstream
 		// Add hooks
 		manager.getExtensionRegistry().hooks.pre.event = [
 			vi.fn((...args: unknown[]) => (args[0] as number) + 1),
@@ -277,7 +332,11 @@ describe("PluginManager", () => {
 	it("should return true for isPluginActive if plugin is active, false otherwise", async () => {
 		const context = createPluginContext();
 		const manager = new TestablePluginManager(context, "/plugins");
+<<<<<<< HEAD
 		await manager.initialize();
+=======
+		await new Promise((resolve) => setTimeout(resolve, 10));
+>>>>>>> upstream
 		const plugin = manager.getPlugin("test-plugin");
 		if (plugin) plugin.status = PluginStatus.ACTIVE;
 		expect(manager.isPluginActive("test-plugin")).toBe(true);
@@ -288,31 +347,48 @@ describe("PluginManager", () => {
 	it("should handle errors in pre hooks and continue execution", async () => {
 		const context = createPluginContext();
 		const manager = new TestablePluginManager(context, "/plugins");
+<<<<<<< HEAD
 		await manager.initialize();
+=======
+		await new Promise((resolve) => setTimeout(resolve, 10));
+>>>>>>> upstream
 		const errorHook = vi.fn(() => {
 			throw new Error("pre hook fail");
 		});
 		const goodHook = vi.fn((x) => (x as number) + 1);
 		manager.getExtensionRegistry().hooks.pre.event = [errorHook, goodHook];
+<<<<<<< HEAD
+=======
+		const spy = vi.spyOn(console, "error").mockImplementation(() => {});
+>>>>>>> upstream
 		const result = await manager.executePreHooks("event", 1);
 		expect(errorHook).toHaveBeenCalled();
 		expect(goodHook).toHaveBeenCalled();
 		expect(result).toBe(2);
+<<<<<<< HEAD
 		// Wait for async error handling - we expect logger.error to be called
 		await vi.waitFor(() => {
 			expect(context.logger.error).toHaveBeenCalled();
 		});
+=======
+		spy.mockRestore();
+>>>>>>> upstream
 	});
 
 	it("should handle errors in post hooks and continue execution", async () => {
 		const context = createPluginContext();
 		const manager = new TestablePluginManager(context, "/plugins");
+<<<<<<< HEAD
 		await manager.initialize();
+=======
+		await new Promise((resolve) => setTimeout(resolve, 10));
+>>>>>>> upstream
 		const errorHook = vi.fn(async () => {
 			throw new Error("post hook fail");
 		});
 		const goodHook = vi.fn(async () => undefined);
 		manager.getExtensionRegistry().hooks.post.event = [errorHook, goodHook];
+<<<<<<< HEAD
 		await manager.executePostHooks("event", 1);
 		expect(errorHook).toHaveBeenCalled();
 		expect(goodHook).toHaveBeenCalled();
@@ -320,12 +396,23 @@ describe("PluginManager", () => {
 		await vi.waitFor(() => {
 			expect(context.logger.error).toHaveBeenCalled();
 		});
+=======
+		const spy = vi.spyOn(console, "error").mockImplementation(() => {});
+		await expect(manager.executePostHooks("event", 1)).resolves.toBeUndefined();
+		expect(errorHook).toHaveBeenCalled();
+		expect(goodHook).toHaveBeenCalled();
+		spy.mockRestore();
+>>>>>>> upstream
 	});
 
 	it("should return a copy of errors from getErrors", async () => {
 		const context = createPluginContext();
 		const manager = new TestablePluginManager(context, "/plugins");
+<<<<<<< HEAD
 		await manager.initialize();
+=======
+		await new Promise((resolve) => setTimeout(resolve, 10));
+>>>>>>> upstream
 		(
 			manager as unknown as {
 				handlePluginError: (
@@ -351,6 +438,7 @@ describe("PluginManager", () => {
 	it("should return the plugin context from getPluginContext", async () => {
 		const context = createPluginContext();
 		const manager = new TestablePluginManager(context, "/plugins");
+<<<<<<< HEAD
 		await manager.initialize();
 		expect(manager.getPluginContext()).toBe(context);
 	});
@@ -390,6 +478,37 @@ describe("PluginManager", () => {
 		const context = createPluginContext();
 		const manager = new TestablePluginManager(context, "/plugins");
 		await manager.initialize();
+=======
+		expect(manager.getPluginContext()).toBe(context);
+	});
+
+	it("should handle initializePlugins error in constructor", async () => {
+		const context = createPluginContext();
+		const spy = vi.spyOn(console, "error").mockImplementation(() => {});
+		const origInit = (
+			PluginManager.prototype as unknown as {
+				initializePlugins: () => Promise<void>;
+			}
+		).initializePlugins;
+		(
+			PluginManager.prototype as unknown as {
+				initializePlugins: () => Promise<void>;
+			}
+		).initializePlugins = vi.fn().mockRejectedValue(new Error("init fail"));
+		// Should not throw
+		new PluginManager(context, "/plugins");
+		(
+			PluginManager.prototype as unknown as {
+				initializePlugins: () => Promise<void>;
+			}
+		).initializePlugins = origInit;
+		spy.mockRestore();
+	});
+
+	it("should call emit in markAsInitialized", () => {
+		const context = createPluginContext();
+		const manager = new TestablePluginManager(context, "/plugins");
+>>>>>>> upstream
 		const emitSpy = vi.spyOn(manager, "emit");
 		(
 			manager as unknown as { markAsInitialized: () => void }
@@ -400,21 +519,34 @@ describe("PluginManager", () => {
 	it("should handle error in getInstalledPlugins and return []", async () => {
 		const context = createPluginContext();
 		const manager = new TestablePluginManager(context, "/plugins");
+<<<<<<< HEAD
 		await manager.initialize();
 		const origDb = context.db;
 		context.db = null as unknown as typeof context.db;
+=======
+		const origDb = context.db;
+		context.db = null as unknown as typeof context.db;
+		const spy = vi.spyOn(console, "error").mockImplementation(() => {});
+>>>>>>> upstream
 		const result = await (
 			manager as unknown as { getInstalledPlugins: () => Promise<unknown[]> }
 		).getInstalledPlugins();
 		expect(Array.isArray(result)).toBe(true);
+<<<<<<< HEAD
 		expect(context.logger.error).toHaveBeenCalled();
+=======
+		spy.mockRestore();
+>>>>>>> upstream
 		context.db = origDb;
 	});
 
 	it("should handle error in loadPlugin outer catch", async () => {
 		const context = createPluginContext();
 		const manager = new TestablePluginManager(context, "/plugins");
+<<<<<<< HEAD
 		await manager.initialize();
+=======
+>>>>>>> upstream
 		const spy = vi.spyOn(
 			manager as TestablePluginManager,
 			"handlePluginError" as keyof TestablePluginManager,
@@ -434,10 +566,16 @@ describe("PluginManager", () => {
 		spy.mockRestore();
 	});
 
+<<<<<<< HEAD
 	it("should handle handlePluginError when plugin is not found", async () => {
 		const context = createPluginContext([]); // no plugins loaded
 		const manager = new TestablePluginManager(context, "/plugins");
 		await manager.initialize();
+=======
+	it("should handle handlePluginError when plugin is not found", () => {
+		const context = createPluginContext([]); // no plugins loaded
+		const manager = new TestablePluginManager(context, "/plugins");
+>>>>>>> upstream
 		const emitSpy = vi.spyOn(manager, "emit");
 		(
 			manager as unknown as {
@@ -450,7 +588,11 @@ describe("PluginManager", () => {
 	it("should return empty array from getActivePlugins if none are active", async () => {
 		const context = createPluginContext();
 		const manager = new TestablePluginManager(context, "/plugins");
+<<<<<<< HEAD
 		await manager.initialize();
+=======
+		await new Promise((resolve) => setTimeout(resolve, 10));
+>>>>>>> upstream
 		const plugin = manager.getPlugin("test-plugin");
 		if (plugin) plugin.status = PluginStatus.INACTIVE;
 		expect(manager.getActivePlugins()).toHaveLength(0);
@@ -459,28 +601,44 @@ describe("PluginManager", () => {
 	it("should handle plugin not found in getPlugin", async () => {
 		const context = createPluginContext();
 		const manager = new TestablePluginManager(context, "/plugins");
+<<<<<<< HEAD
 		await manager.initialize();
+=======
+		await new Promise((resolve) => setTimeout(resolve, 10));
+>>>>>>> upstream
 		expect(manager.getPlugin("non-existent-plugin")).toBeUndefined();
 	});
 
 	it("should return false for isPluginLoaded when plugin not found", async () => {
 		const context = createPluginContext();
 		const manager = new TestablePluginManager(context, "/plugins");
+<<<<<<< HEAD
 		await manager.initialize();
+=======
+		await new Promise((resolve) => setTimeout(resolve, 10));
+>>>>>>> upstream
 		expect(manager.isPluginLoaded("non-existent-plugin")).toBe(false);
 	});
 
 	it("should return false for isPluginActive when plugin not found", async () => {
 		const context = createPluginContext();
 		const manager = new TestablePluginManager(context, "/plugins");
+<<<<<<< HEAD
 		await manager.initialize();
+=======
+		await new Promise((resolve) => setTimeout(resolve, 10));
+>>>>>>> upstream
 		expect(manager.isPluginActive("non-existent-plugin")).toBe(false);
 	});
 
 	it("should handle empty hooks in executePreHooks", async () => {
 		const context = createPluginContext();
 		const manager = new TestablePluginManager(context, "/plugins");
+<<<<<<< HEAD
 		await manager.initialize();
+=======
+		await new Promise((resolve) => setTimeout(resolve, 10));
+>>>>>>> upstream
 		manager.getExtensionRegistry().hooks.pre.event = [];
 		const result = await manager.executePreHooks("event", 1);
 		expect(result).toBe(1);
@@ -489,7 +647,11 @@ describe("PluginManager", () => {
 	it("should handle empty hooks in executePostHooks", async () => {
 		const context = createPluginContext();
 		const manager = new TestablePluginManager(context, "/plugins");
+<<<<<<< HEAD
 		await manager.initialize();
+=======
+		await new Promise((resolve) => setTimeout(resolve, 10));
+>>>>>>> upstream
 		manager.getExtensionRegistry().hooks.post.event = [];
 		await expect(manager.executePostHooks("event", 1)).resolves.toBeUndefined();
 	});
@@ -497,7 +659,11 @@ describe("PluginManager", () => {
 	it("should handle lifecycle activation failure", async () => {
 		const context = createPluginContext();
 		const manager = new TestablePluginManager(context, "/plugins");
+<<<<<<< HEAD
 		await manager.initialize();
+=======
+		await new Promise((resolve) => setTimeout(resolve, 10));
+>>>>>>> upstream
 		vi.spyOn(manager.getTestLifecycle(), "activatePlugin").mockResolvedValue(
 			false,
 		);
@@ -507,7 +673,11 @@ describe("PluginManager", () => {
 	it("should handle lifecycle deactivation failure", async () => {
 		const context = createPluginContext();
 		const manager = new TestablePluginManager(context, "/plugins");
+<<<<<<< HEAD
 		await manager.initialize();
+=======
+		await new Promise((resolve) => setTimeout(resolve, 10));
+>>>>>>> upstream
 		vi.spyOn(manager.getTestLifecycle(), "deactivatePlugin").mockResolvedValue(
 			false,
 		);
@@ -517,7 +687,11 @@ describe("PluginManager", () => {
 	it("should handle lifecycle unload failure", async () => {
 		const context = createPluginContext();
 		const manager = new TestablePluginManager(context, "/plugins");
+<<<<<<< HEAD
 		await manager.initialize();
+=======
+		await new Promise((resolve) => setTimeout(resolve, 10));
+>>>>>>> upstream
 		vi.spyOn(manager.getTestLifecycle(), "unloadPlugin").mockResolvedValue(
 			false,
 		);
@@ -527,7 +701,11 @@ describe("PluginManager", () => {
 	it("should handle plugin not found in lifecycle operations", async () => {
 		const context = createPluginContext();
 		const manager = new TestablePluginManager(context, "/plugins");
+<<<<<<< HEAD
 		await manager.initialize();
+=======
+		await new Promise((resolve) => setTimeout(resolve, 10));
+>>>>>>> upstream
 		await expect(manager.activatePlugin("non-existent-plugin")).rejects.toThrow(
 			"Plugin non-existent-plugin is not loaded",
 		);
@@ -543,7 +721,11 @@ describe("PluginManager", () => {
 	it("should handle loadPlugin for non-existent plugin", async () => {
 		const context = createPluginContext();
 		const manager = new TestablePluginManager(context, "/plugins");
+<<<<<<< HEAD
 		await manager.initialize();
+=======
+		await new Promise((resolve) => setTimeout(resolve, 10));
+>>>>>>> upstream
 		// loadPlugin returns true for non-existent plugins (tries to load them)
 		await expect(manager.loadPlugin("non-existent-plugin")).resolves.toBe(true);
 	});
@@ -551,7 +733,11 @@ describe("PluginManager", () => {
 	it("should return correct plugin count in getLoadedPlugins", async () => {
 		const context = createPluginContext();
 		const manager = new TestablePluginManager(context, "/plugins");
+<<<<<<< HEAD
 		await manager.initialize();
+=======
+		await new Promise((resolve) => setTimeout(resolve, 10));
+>>>>>>> upstream
 		const plugins = manager.getLoadedPlugins();
 		expect(plugins).toHaveLength(1);
 		expect(plugins[0]?.manifest.pluginId).toBe("test-plugin");
@@ -560,7 +746,11 @@ describe("PluginManager", () => {
 	it("should return correct plugin IDs in getLoadedPluginIds", async () => {
 		const context = createPluginContext();
 		const manager = new TestablePluginManager(context, "/plugins");
+<<<<<<< HEAD
 		await manager.initialize();
+=======
+		await new Promise((resolve) => setTimeout(resolve, 10));
+>>>>>>> upstream
 		const pluginIds = manager.getLoadedPluginIds();
 		expect(pluginIds).toContain("test-plugin");
 		expect(pluginIds).toHaveLength(1);
@@ -573,8 +763,13 @@ describe("PluginManager", () => {
 			const fs = await import("node:fs/promises");
 			const mkdirSpy = vi.spyOn(fs, "mkdir").mockResolvedValue(undefined);
 
+<<<<<<< HEAD
 			const manager = new TestablePluginManager(context, "/plugins");
 			await manager.initialize();
+=======
+			new TestablePluginManager(context, "/plugins");
+			await new Promise((resolve) => setTimeout(resolve, 10));
+>>>>>>> upstream
 
 			expect(mkdirSpy).toHaveBeenCalledWith("/plugins", { recursive: true });
 		});
@@ -586,6 +781,7 @@ describe("PluginManager", () => {
 			const mkdirSpy = vi
 				.spyOn(fs, "mkdir")
 				.mockRejectedValue(new Error("Permission denied"));
+<<<<<<< HEAD
 
 			const manager = new TestablePluginManager(context, "/plugins");
 			await manager.initialize();
@@ -598,6 +794,23 @@ describe("PluginManager", () => {
 				}),
 			);
 			expect(manager.isSystemInitialized()).toBe(true);
+=======
+			const consoleSpy = vi
+				.spyOn(console, "error")
+				.mockImplementation(() => {});
+
+			const manager = new TestablePluginManager(context, "/plugins");
+			await new Promise((resolve) => setTimeout(resolve, 10));
+
+			expect(mkdirSpy).toHaveBeenCalledWith("/plugins", { recursive: true });
+			expect(consoleSpy).toHaveBeenCalledWith(
+				"Failed to create plugins directory:",
+				expect.any(Error),
+			);
+			expect(manager.isSystemInitialized()).toBe(true);
+
+			consoleSpy.mockRestore();
+>>>>>>> upstream
 		});
 	});
 
@@ -605,7 +818,11 @@ describe("PluginManager", () => {
 		it("should activate plugin during load if it should be active", async () => {
 			const context = createPluginContext([]); // No plugins in DB to avoid initialization
 			const manager = new TestablePluginManager(context, "/plugins");
+<<<<<<< HEAD
 			await manager.initialize();
+=======
+			await new Promise((resolve) => setTimeout(resolve, 10));
+>>>>>>> upstream
 
 			const lifecycle = manager.getTestLifecycle();
 			const activateSpy = vi
@@ -641,12 +858,22 @@ describe("PluginManager", () => {
 		it("should handle activation failure during load gracefully", async () => {
 			const context = createPluginContext([]); // No plugins in DB to avoid initialization
 			const manager = new TestablePluginManager(context, "/plugins");
+<<<<<<< HEAD
 			await manager.initialize();
+=======
+			await new Promise((resolve) => setTimeout(resolve, 10));
+>>>>>>> upstream
 
 			const lifecycle = manager.getTestLifecycle();
 			const activateSpy = vi
 				.spyOn(lifecycle, "activatePlugin")
 				.mockRejectedValue(new Error("Activation failed"));
+<<<<<<< HEAD
+=======
+			const consoleSpy = vi
+				.spyOn(console, "error")
+				.mockImplementation(() => {});
+>>>>>>> upstream
 
 			// Mock file access to succeed
 			const fs = await import("node:fs/promises");
@@ -672,12 +899,21 @@ describe("PluginManager", () => {
 			const result = await manager.loadPlugin("test-plugin");
 			expect(result).toBe(true); // Plugin is still loaded even if activation fails
 			expect(activateSpy).toHaveBeenCalledWith("test-plugin", manager);
+<<<<<<< HEAD
 			expect(context.logger.error).toHaveBeenCalledWith(
 				expect.objectContaining({
 					msg: "Failed to activate plugin test-plugin during load",
 					err: expect.any(Error),
 				}),
 			);
+=======
+			expect(consoleSpy).toHaveBeenCalledWith(
+				"❌ Failed to activate plugin test-plugin during load:",
+				expect.any(Error),
+			);
+
+			consoleSpy.mockRestore();
+>>>>>>> upstream
 		});
 	});
 
@@ -685,11 +921,16 @@ describe("PluginManager", () => {
 		it("should handle plugin module loading failure", async () => {
 			const context = createPluginContext([]); // No plugins in DB to avoid initialization
 			const manager = new TestablePluginManager(context, "/plugins");
+<<<<<<< HEAD
 			await manager.initialize();
+=======
+			await new Promise((resolve) => setTimeout(resolve, 10));
+>>>>>>> upstream
 
 			(safeRequire as ReturnType<typeof vi.fn>).mockRejectedValueOnce(
 				new Error("Module load failed"),
 			);
+<<<<<<< HEAD
 			const result = await manager.loadPlugin("test-plugin");
 			expect(result).toBe(false);
 			expect(context.logger.error).toHaveBeenCalledWith(
@@ -698,11 +939,26 @@ describe("PluginManager", () => {
 					err: expect.any(Error),
 				}),
 			);
+=======
+			const consoleSpy = vi
+				.spyOn(console, "error")
+				.mockImplementation(() => {});
+
+			const result = await manager.loadPlugin("test-plugin");
+			expect(result).toBe(false);
+			expect(consoleSpy).toHaveBeenCalledWith(
+				"❌ Failed to load module for plugin test-plugin:",
+				expect.any(Error),
+			);
+
+			consoleSpy.mockRestore();
+>>>>>>> upstream
 		});
 
 		it("should handle null plugin module", async () => {
 			const context = createPluginContext([]); // No plugins in DB to avoid initialization
 			const manager = new TestablePluginManager(context, "/plugins");
+<<<<<<< HEAD
 			await manager.initialize();
 
 			(safeRequire as ReturnType<typeof vi.fn>).mockResolvedValueOnce(null);
@@ -714,6 +970,23 @@ describe("PluginManager", () => {
 					err: expect.any(Error),
 				}),
 			);
+=======
+			await new Promise((resolve) => setTimeout(resolve, 10));
+
+			(safeRequire as ReturnType<typeof vi.fn>).mockResolvedValueOnce(null);
+			const consoleSpy = vi
+				.spyOn(console, "error")
+				.mockImplementation(() => {});
+
+			const result = await manager.loadPlugin("test-plugin");
+			expect(result).toBe(false);
+			expect(consoleSpy).toHaveBeenCalledWith(
+				"❌ Failed to load module for plugin test-plugin:",
+				expect.any(Error),
+			);
+
+			consoleSpy.mockRestore();
+>>>>>>> upstream
 		});
 	});
 
@@ -721,6 +994,7 @@ describe("PluginManager", () => {
 		it("should handle plugin file access failure", async () => {
 			const context = createPluginContext([]); // No plugins in DB to avoid initialization
 			const manager = new TestablePluginManager(context, "/plugins");
+<<<<<<< HEAD
 			await manager.initialize();
 
 			const fs = await import("node:fs/promises");
@@ -734,6 +1008,21 @@ describe("PluginManager", () => {
 					pluginPath: "/plugins/test-plugin",
 				}),
 			);
+=======
+			await new Promise((resolve) => setTimeout(resolve, 10));
+
+			const fs = await import("node:fs/promises");
+			vi.spyOn(fs, "access").mockRejectedValue(new Error("File not found"));
+			const consoleSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+
+			const result = await manager.loadPlugin("test-plugin");
+			expect(result).toBe(false);
+			expect(consoleSpy).toHaveBeenCalledWith(
+				"⚠️  Plugin test-plugin is in database but files are missing at /plugins/test-plugin",
+			);
+
+			consoleSpy.mockRestore();
+>>>>>>> upstream
 		});
 	});
 
@@ -741,7 +1030,11 @@ describe("PluginManager", () => {
 		it("should throw error for invalid plugin ID", async () => {
 			const context = createPluginContext();
 			const manager = new TestablePluginManager(context, "/plugins");
+<<<<<<< HEAD
 			await manager.initialize();
+=======
+			await new Promise((resolve) => setTimeout(resolve, 10));
+>>>>>>> upstream
 
 			(isValidPluginId as ReturnType<typeof vi.fn>).mockReturnValueOnce(false);
 
@@ -755,7 +1048,11 @@ describe("PluginManager", () => {
 		it("should return true if plugin is already loaded", async () => {
 			const context = createPluginContext();
 			const manager = new TestablePluginManager(context, "/plugins");
+<<<<<<< HEAD
 			await manager.initialize();
+=======
+			await new Promise((resolve) => setTimeout(resolve, 10));
+>>>>>>> upstream
 
 			// Plugin is already loaded from initialization, but we need to ensure it's actually loaded
 			// by mocking file access to succeed
@@ -775,7 +1072,11 @@ describe("PluginManager", () => {
 		it("should gracefully shutdown plugin system", async () => {
 			const context = createPluginContext();
 			const manager = new TestablePluginManager(context, "/plugins");
+<<<<<<< HEAD
 			await manager.initialize();
+=======
+			await new Promise((resolve) => setTimeout(resolve, 10));
+>>>>>>> upstream
 
 			// Ensure plugin is loaded by mocking file access
 			const fs = await import("node:fs/promises");
@@ -806,7 +1107,11 @@ describe("PluginManager", () => {
 		it("should handle errors during graceful shutdown", async () => {
 			const context = createPluginContext();
 			const manager = new TestablePluginManager(context, "/plugins");
+<<<<<<< HEAD
 			await manager.initialize();
+=======
+			await new Promise((resolve) => setTimeout(resolve, 10));
+>>>>>>> upstream
 
 			// Ensure plugin is loaded by mocking file access
 			const fs = await import("node:fs/promises");
@@ -817,14 +1122,21 @@ describe("PluginManager", () => {
 			const getPluginModuleSpy = vi
 				.spyOn(lifecycle, "getPluginModule")
 				.mockRejectedValue(new Error("Module error"));
+<<<<<<< HEAD
 			const loggerSpy = vi.spyOn(
 				manager.getPluginContext().logger,
 				"error",
 			) as ReturnType<typeof vi.spyOn>;
+=======
+			const consoleSpy = vi
+				.spyOn(console, "error")
+				.mockImplementation(() => {});
+>>>>>>> upstream
 
 			await manager.gracefulShutdown();
 
 			expect(getPluginModuleSpy).toHaveBeenCalledWith("test-plugin");
+<<<<<<< HEAD
 			expect(loggerSpy).toHaveBeenCalledWith(
 				expect.objectContaining({
 					msg: "Error during graceful shutdown of plugin test-plugin",
@@ -833,6 +1145,14 @@ describe("PluginManager", () => {
 			);
 
 			loggerSpy.mockRestore();
+=======
+			expect(consoleSpy).toHaveBeenCalledWith(
+				"Error during graceful shutdown of plugin test-plugin:",
+				expect.any(Error),
+			);
+
+			consoleSpy.mockRestore();
+>>>>>>> upstream
 		});
 
 		it("should handle plugin without onUnload hook during shutdown", async () => {
@@ -894,14 +1214,21 @@ describe("PluginManager", () => {
 				.mockResolvedValue({
 					onUnload: vi.fn().mockRejectedValue(new Error("Unload failed")),
 				});
+<<<<<<< HEAD
 			const loggerSpy = vi.spyOn(
 				manager.getPluginContext().logger,
 				"error",
 			) as ReturnType<typeof vi.spyOn>;
+=======
+			const consoleSpy = vi
+				.spyOn(console, "error")
+				.mockImplementation(() => {});
+>>>>>>> upstream
 
 			await manager.gracefulShutdown();
 
 			expect(getPluginModuleSpy).toHaveBeenCalledWith("test-plugin");
+<<<<<<< HEAD
 			expect(loggerSpy).toHaveBeenCalledWith(
 				expect.objectContaining({
 					msg: "Error during graceful shutdown of plugin test-plugin",
@@ -910,6 +1237,14 @@ describe("PluginManager", () => {
 			);
 
 			loggerSpy.mockRestore();
+=======
+			expect(consoleSpy).toHaveBeenCalledWith(
+				"Error during graceful shutdown of plugin test-plugin:",
+				expect.any(Error),
+			);
+
+			consoleSpy.mockRestore();
+>>>>>>> upstream
 		});
 
 		it("should handle graceful shutdown error", async () => {
@@ -927,6 +1262,7 @@ describe("PluginManager", () => {
 			vi.spyOn(lifecycle, "getPluginModule").mockImplementation(() => {
 				throw new Error("Lifecycle error");
 			});
+<<<<<<< HEAD
 			const loggerSpy = vi.spyOn(
 				manager.getPluginContext().logger,
 				"error",
@@ -968,6 +1304,20 @@ describe("PluginManager", () => {
 			);
 
 			loggerSpy.mockRestore();
+=======
+			const consoleSpy = vi
+				.spyOn(console, "error")
+				.mockImplementation(() => {});
+
+			await manager.gracefulShutdown();
+
+			expect(consoleSpy).toHaveBeenCalledWith(
+				"Error during graceful shutdown of plugin test-plugin:",
+				expect.any(Error),
+			);
+
+			consoleSpy.mockRestore();
+>>>>>>> upstream
 		});
 	});
 
@@ -1103,6 +1453,7 @@ describe("PluginManager", () => {
 			expect(emitSpy).toHaveBeenCalledWith("plugins:ready");
 		});
 	});
+<<<<<<< HEAD
 
 	describe("Initialize with failed plugins", () => {
 		it("should log summary when some plugins fail to load", async () => {
@@ -1181,4 +1532,6 @@ describe("PluginManager", () => {
 			);
 		});
 	});
+=======
+>>>>>>> upstream
 });

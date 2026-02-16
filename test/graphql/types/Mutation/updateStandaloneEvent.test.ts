@@ -1,5 +1,9 @@
 import { faker } from "@faker-js/faker";
+<<<<<<< HEAD
 import { afterEach, expect, suite, test, vi } from "vitest";
+=======
+import { expect, suite, test, vi } from "vitest";
+>>>>>>> upstream
 import { assertToBeNonNullish } from "../../../helpers";
 import { server } from "../../../server";
 import { mercuriusClient } from "../client";
@@ -11,10 +15,13 @@ import {
 	Query_signIn,
 } from "../documentNodes";
 
+<<<<<<< HEAD
 afterEach(() => {
 	vi.clearAllMocks();
 });
 
+=======
+>>>>>>> upstream
 // Helper function to create a test organization
 async function createTestOrganization(authToken: string) {
 	const createOrgResult = await mercuriusClient.mutate(
@@ -55,7 +62,10 @@ function mockStandaloneEvent(
 		isPublic: true,
 		isRegisterable: true,
 		location: "Original Location",
+<<<<<<< HEAD
 		isInviteOnly: false,
+=======
+>>>>>>> upstream
 		organizationId: orgId,
 		attachmentsWhereEvent: [
 			{
@@ -343,6 +353,7 @@ suite("Mutation field updateStandaloneEvent", () => {
 				]),
 			);
 		});
+<<<<<<< HEAD
 
 		test("should return an error when both isPublic and isInviteOnly are set to true", async () => {
 			const eventId = faker.string.uuid();
@@ -613,6 +624,8 @@ suite("Mutation field updateStandaloneEvent", () => {
 					originalEventFindFirst;
 			}
 		});
+=======
+>>>>>>> upstream
 	});
 
 	suite("when timing validation fails in resolver", () => {
@@ -744,7 +757,11 @@ suite("Mutation field updateStandaloneEvent", () => {
 	});
 
 	suite("when update operation fails unexpectedly", () => {
+<<<<<<< HEAD
 		test("should return an error with unexpected extensions code when updatedEvent is undefined", async () => {
+=======
+		test("should return an error with unexpected extensions code", async () => {
+>>>>>>> upstream
 			const eventId = faker.string.uuid();
 			const orgId = await createTestOrganization(adminToken);
 
@@ -764,11 +781,19 @@ suite("Mutation field updateStandaloneEvent", () => {
 					mockStandaloneEvent(eventId, orgId, "admin-user-id"),
 				);
 
+<<<<<<< HEAD
 			// Mock update that returns empty array (which makes updatedEvent undefined)
 			server.drizzleClient.update = vi.fn().mockReturnValue({
 				set: vi.fn().mockReturnValue({
 					where: vi.fn().mockReturnValue({
 						returning: vi.fn().mockResolvedValue([]), // Empty array causes updatedEvent to be undefined
+=======
+			// Mock update that returns empty array
+			server.drizzleClient.update = vi.fn().mockReturnValue({
+				set: vi.fn().mockReturnValue({
+					where: vi.fn().mockReturnValue({
+						returning: vi.fn().mockResolvedValue([]), // Empty array causes error
+>>>>>>> upstream
 					}),
 				}),
 			});
@@ -1111,6 +1136,7 @@ suite("Mutation field updateStandaloneEvent", () => {
 				server.drizzleClient.update = originalUpdate;
 			}
 		});
+<<<<<<< HEAD
 
 		test("should successfully update isInviteOnly field", async () => {
 			const eventId = faker.string.uuid();
@@ -1255,5 +1281,7 @@ suite("Mutation field updateStandaloneEvent", () => {
 				server.drizzleClient.update = originalUpdate;
 			}
 		});
+=======
+>>>>>>> upstream
 	});
 });

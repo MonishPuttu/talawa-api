@@ -1,5 +1,6 @@
 import type { GraphQLContext } from "~/src/graphql/context";
 import { User } from "~/src/graphql/types/User/User";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 import type { Tag as TagType } from "./Tag";
@@ -18,6 +19,12 @@ import { Tag } from "./Tag";
  * @throws {TalawaGraphQLError} With code "unauthorized_action" if user lacks admin permissions
  * @throws {TalawaGraphQLError} With code "unexpected" if updater user is not found despite non-null updaterId
  */
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+import { Tag } from "./Tag";
+import type { Tag as TagType } from "./Tag";
+>>>>>>> upstream
 export const resolveUpdater = async (
 	parent: TagType,
 	_args: Record<string, never>,
@@ -79,10 +86,19 @@ export const resolveUpdater = async (
 
 	const updaterId = parent.updaterId;
 
+<<<<<<< HEAD
 	const existingUser = await ctx.dataloaders.user.load(updaterId);
 
 	// Updater id existing but the associated user not existing is a business logic error and probably means that the corresponding data in the database is in a corrupted state. It must be investigated and fixed as soon as possible to prevent additional data corruption.
 	if (existingUser === null) {
+=======
+	const existingUser = await ctx.drizzleClient.query.usersTable.findFirst({
+		where: (fields, operators) => operators.eq(fields.id, updaterId),
+	});
+
+	// Updater id existing but the associated user not existing is a business logic error and probably means that the corresponding data in the database is in a corrupted state. It must be investigated and fixed as soon as possible to prevent additional data corruption.
+	if (existingUser === undefined) {
+>>>>>>> upstream
 		ctx.log.error(
 			"Postgres select operation returned an empty array for a tag's updater id that isn't null.",
 		);

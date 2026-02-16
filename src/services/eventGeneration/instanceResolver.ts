@@ -1,13 +1,21 @@
+<<<<<<< HEAD
+=======
+import type { eventsTable } from "~/src/drizzle/tables/events";
+>>>>>>> upstream
 import type { eventExceptionsTable } from "~/src/drizzle/tables/recurringEventExceptions";
 import type {
 	ResolvedRecurringEventInstance,
 	recurringEventInstancesTable,
 } from "~/src/drizzle/tables/recurringEventInstances";
+<<<<<<< HEAD
 import type {
 	EventTemplateWithAttachments,
 	ResolveInstanceInput,
 	ServiceDependencies,
 } from "./types";
+=======
+import type { ResolveInstanceInput, ServiceDependencies } from "./types";
+>>>>>>> upstream
 
 /**
  * Resolves a single generated instance by combining the properties of the base event template
@@ -15,7 +23,11 @@ import type {
  * ensuring that each instance accurately reflects its intended state.
  *
  * @param input - An object containing the generated instance, base template, and optional exception.
+<<<<<<< HEAD
  * @returns - A fully resolved generated event instance with all properties correctly inherited and overridden.
+=======
+ * @returns A fully resolved generated event instance with all properties correctly inherited and overridden.
+>>>>>>> upstream
  */
 export function resolveInstanceWithInheritance(
 	input: ResolveInstanceInput,
@@ -49,7 +61,10 @@ export function resolveInstanceWithInheritance(
 		allDay: baseTemplate.allDay,
 		isPublic: baseTemplate.isPublic,
 		isRegisterable: baseTemplate.isRegisterable,
+<<<<<<< HEAD
 		isInviteOnly: baseTemplate.isInviteOnly,
+=======
+>>>>>>> upstream
 		creatorId: baseTemplate.creatorId,
 		updaterId: baseTemplate.updaterId,
 		createdAt: baseTemplate.createdAt,
@@ -63,9 +78,12 @@ export function resolveInstanceWithInheritance(
 		> | null,
 		exceptionCreatedBy: exception?.creatorId || null,
 		exceptionCreatedAt: exception?.createdAt || null,
+<<<<<<< HEAD
 
 		// Attachments
 		attachments: baseTemplate.attachments,
+=======
+>>>>>>> upstream
 	};
 
 	// Apply exception data if it exists
@@ -137,7 +155,10 @@ function isValidExceptionField(
 		"allDay",
 		"isPublic",
 		"isRegisterable",
+<<<<<<< HEAD
 		"isInviteOnly",
+=======
+>>>>>>> upstream
 		"actualStartTime",
 		"actualEndTime",
 		"isCancelled",
@@ -156,11 +177,19 @@ function isValidExceptionField(
  * @param templatesMap - A map of base event templates, keyed by their IDs.
  * @param exceptionsMap - A map of event exceptions, keyed by a composite key.
  * @param logger - The logger for logging warnings or errors.
+<<<<<<< HEAD
  * @returns - An array of fully resolved generated event instances.
  */
 export function resolveMultipleInstances(
 	instances: (typeof recurringEventInstancesTable.$inferSelect)[],
 	templatesMap: Map<string, EventTemplateWithAttachments>,
+=======
+ * @returns An array of fully resolved generated event instances.
+ */
+export function resolveMultipleInstances(
+	instances: (typeof recurringEventInstancesTable.$inferSelect)[],
+	templatesMap: Map<string, typeof eventsTable.$inferSelect>,
+>>>>>>> upstream
 	exceptionsMap: Map<string, typeof eventExceptionsTable.$inferSelect>,
 	logger: ServiceDependencies["logger"],
 ): ResolvedRecurringEventInstance[] {
@@ -207,7 +236,11 @@ export function resolveMultipleInstances(
  *
  * @param recurringEventId - The ID of the recurring event.
  * @param instanceStartTime - The original start time of the instance.
+<<<<<<< HEAD
  * @returns - A string representing the composite key.
+=======
+ * @returns A string representing the composite key.
+>>>>>>> upstream
  */
 export function createExceptionKey(
 	recurringEventId: string,
@@ -221,7 +254,11 @@ export function createExceptionKey(
  * The map is keyed by a composite key of the recurring event ID and instance start time.
  *
  * @param exceptions - An array of event exceptions.
+<<<<<<< HEAD
  * @returns - A map of exceptions, keyed for quick lookup.
+=======
+ * @returns A map of exceptions, keyed for quick lookup.
+>>>>>>> upstream
  */
 export function createExceptionLookupMap(
 	exceptions: (typeof eventExceptionsTable.$inferSelect)[],
@@ -245,12 +282,21 @@ export function createExceptionLookupMap(
  * The map is keyed by the event template ID.
  *
  * @param templates - An array of event templates.
+<<<<<<< HEAD
  * @returns - A map of templates, keyed by their IDs.
  */
 export function createTemplateLookupMap(
 	templates: EventTemplateWithAttachments[],
 ): Map<string, EventTemplateWithAttachments> {
 	const templateMap = new Map<string, EventTemplateWithAttachments>();
+=======
+ * @returns A map of templates, keyed by their IDs.
+ */
+export function createTemplateLookupMap(
+	templates: (typeof eventsTable.$inferSelect)[],
+): Map<string, typeof eventsTable.$inferSelect> {
+	const templateMap = new Map<string, typeof eventsTable.$inferSelect>();
+>>>>>>> upstream
 
 	for (const template of templates) {
 		templateMap.set(template.id, template);

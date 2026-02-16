@@ -14,6 +14,7 @@ import {
 	mutationSignUpInputSchema,
 } from "~/src/graphql/inputs/MutationSignUpInput";
 import { AuthenticationPayload } from "~/src/graphql/types/AuthenticationPayload";
+<<<<<<< HEAD
 import { emailService } from "~/src/services/email/emailServiceInstance";
 import {
 	formatExpiryTime,
@@ -36,6 +37,11 @@ import {
 	storeRefreshToken,
 } from "~/src/utilities/refreshTokenUtils";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+import { isNotNullish } from "~/src/utilities/isNotNullish";
+>>>>>>> upstream
 import type { CurrentClient } from "../../context";
 
 const mutationSignUpArgumentsSchema = z.object({
@@ -111,6 +117,7 @@ builder.mutationField("signUp", (t) =>
 				});
 			}
 
+<<<<<<< HEAD
 			// Verify reCAPTCHA if required
 			await validateRecaptchaIfRequired(
 				parsedArgs.input.recaptchaToken,
@@ -120,6 +127,8 @@ builder.mutationField("signUp", (t) =>
 				ctx.envConfig.RECAPTCHA_SCORE_THRESHOLD ?? 0.5,
 			);
 
+=======
+>>>>>>> upstream
 			const [[existingUserWithEmailAddress], existingOrganization] =
 				await Promise.all([
 					ctx.drizzleClient
@@ -169,7 +178,11 @@ builder.mutationField("signUp", (t) =>
 				avatarMimeType = parsedArgs.input.avatar.mimetype;
 			}
 
+<<<<<<< HEAD
 			const result = await ctx.drizzleClient.transaction(async (tx) => {
+=======
+			return await ctx.drizzleClient.transaction(async (tx) => {
+>>>>>>> upstream
 				const [createdUser] = await tx
 					.insert(usersTable)
 					.values({
@@ -273,6 +286,7 @@ builder.mutationField("signUp", (t) =>
 					id: createdUser.id,
 				} as CurrentClient["user"];
 
+<<<<<<< HEAD
 				// Generate refresh token
 				const rawRefreshToken = generateRefreshToken();
 				const refreshTokenHash = hashRefreshToken(rawRefreshToken);
@@ -357,6 +371,17 @@ builder.mutationField("signUp", (t) =>
 			}
 
 			return result;
+=======
+				return {
+					authenticationToken: ctx.jwt.sign({
+						user: {
+							id: createdUser.id,
+						},
+					}),
+					user: createdUser,
+				};
+			});
+>>>>>>> upstream
 		},
 		type: AuthenticationPayload,
 	}),

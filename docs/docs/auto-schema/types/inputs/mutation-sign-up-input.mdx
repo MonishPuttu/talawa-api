@@ -90,7 +90,10 @@ input MutationSignUpInput {
   naturalLanguageCode: Iso639Set1LanguageCode
   password: String!
   postalCode: String
+<<<<<<< HEAD
   recaptchaToken: String
+=======
+>>>>>>> upstream
   selectedOrganization: ID!
   state: String
   workPhoneNumber: PhoneNumber
@@ -167,10 +170,13 @@ Password of the user to sign in to the application.
 
 Postal code of the user.
 
+<<<<<<< HEAD
 #### [<code style={{ fontWeight: 'normal' }}>MutationSignUpInput.<b>recaptchaToken</b></code>](#)<Bullet />[<code style={{ fontWeight: 'normal' }}><b>String</b></code>](/auto-schema/types/scalars/string.mdx) <Badge class="badge badge--secondary " text="scalar"/>
 
 Optional reCAPTCHA token for verification (required when server-side reCAPTCHA is enabled)
 
+=======
+>>>>>>> upstream
 #### [<code style={{ fontWeight: 'normal' }}>MutationSignUpInput.<b>selectedOrganization</b></code>](#)<Bullet />[<code style={{ fontWeight: 'normal' }}><b>ID!</b></code>](/auto-schema/types/scalars/id.mdx) <Badge class="badge badge--secondary badge--non_null" text="non-null"/> <Badge class="badge badge--secondary " text="scalar"/>
 
 The organization the user is signing up for

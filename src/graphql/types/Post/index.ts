@@ -11,4 +11,7 @@ import "./upVotesCount";
 import "./sorting";
 import "./UploadUrlResponse";
 import "./hasUserVoted";
+<<<<<<< HEAD
 import "./attachmentURL";
+=======
+>>>>>>> upstream

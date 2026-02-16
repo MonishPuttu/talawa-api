@@ -4,7 +4,11 @@
 
 # Variable: postVoteTypeEnum
 
+<<<<<<< HEAD
 > `const` **postVoteTypeEnum**: `ZodEnum`\<\{ `down_vote`: `"down_vote"`; `up_vote`: `"up_vote"`; \}\>
+=======
+> `const` **postVoteTypeEnum**: `ZodEnum`\<\[`"down_vote"`, `"up_vote"`\]\>
+>>>>>>> upstream
 
 Defined in: [src/drizzle/enums/postVoteType.ts:6](https://github.com/PalisadoesFoundation/talawa-api/tree/mainsrc/drizzle/enums/postVoteType.ts#L6)
 

@@ -7,7 +7,10 @@ import {
 	unique,
 	uuid,
 } from "drizzle-orm/pg-core";
+<<<<<<< HEAD
 import { createInsertSchema } from "drizzle-zod";
+=======
+>>>>>>> upstream
 import { actionItemCategoriesTable } from "./actionItemCategories";
 import { actionItemsTable } from "./actionItems";
 import { eventVolunteerGroupsTable } from "./eventVolunteerGroups";
@@ -98,7 +101,10 @@ export const actionItemExceptionsTableRelations = relations(
 		}),
 	}),
 );
+<<<<<<< HEAD
 
 export const actionItemExceptionsTableInsertSchema = createInsertSchema(
 	actionItemExceptionsTable,
 );
+=======
+>>>>>>> upstream

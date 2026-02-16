@@ -10,8 +10,13 @@ import {
 	mutationDeleteThisAndFollowingEventsInputSchema,
 } from "~/src/graphql/inputs/MutationDeleteThisAndFollowingEventsInput";
 import { Event } from "~/src/graphql/types/Event/Event";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+>>>>>>> upstream
 
 const mutationDeleteThisAndFollowingEventsArgumentsSchema = z.object({
 	input: mutationDeleteThisAndFollowingEventsInputSchema,
@@ -107,7 +112,10 @@ builder.mutationField("deleteThisAndFollowingEvents", (t) =>
 								allDay: true,
 								isPublic: true,
 								isRegisterable: true,
+<<<<<<< HEAD
 								isInviteOnly: true,
+=======
+>>>>>>> upstream
 								creatorId: true,
 								updaterId: true,
 								createdAt: true,

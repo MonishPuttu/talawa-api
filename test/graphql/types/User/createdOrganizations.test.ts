@@ -4,10 +4,16 @@ import type {
 	ExplicitGraphQLContext,
 	ImplicitMercuriusContext,
 } from "~/src/graphql/context";
+<<<<<<< HEAD
 import { resolveCreatedOrganizations } from "~/src/graphql/types/User/createdOrganizations";
 import type { User } from "~/src/graphql/types/User/User";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 
+=======
+import type { User } from "~/src/graphql/types/User/User";
+import { resolveCreatedOrganizations } from "~/src/graphql/types/User/createdOrganizations";
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+>>>>>>> upstream
 type ContextType = ExplicitGraphQLContext & ImplicitMercuriusContext;
 
 const mockDrizzleClient = {

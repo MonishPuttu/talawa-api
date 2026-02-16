@@ -1,9 +1,13 @@
 import "../../../../../src/graphql/types/Mutation/plugin/index";
+<<<<<<< HEAD
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 afterEach(() => {
 	vi.clearAllMocks();
 });
+=======
+import { describe, expect, it, vi } from "vitest";
+>>>>>>> upstream
 
 // Mock the imported modules to avoid side effects during testing
 vi.mock(

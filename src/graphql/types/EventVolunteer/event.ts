@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { Event } from "~/src/graphql/types/Event/Event";
 import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
@@ -15,6 +16,17 @@ import { EventVolunteer } from "./EventVolunteer";
  * @throws TalawaGraphQLError with code "unauthenticated" if user is not authenticated.
  * @throws TalawaGraphQLError with code "unexpected" if event is not found (indicates data corruption).
  */
+=======
+import { eq } from "drizzle-orm";
+import { eventsTable } from "~/src/drizzle/tables/events";
+import { Event } from "~/src/graphql/types/Event/Event";
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+import type { GraphQLContext } from "../../context";
+import { EventVolunteer } from "./EventVolunteer";
+import type { EventVolunteer as EventVolunteerType } from "./EventVolunteer";
+
+>>>>>>> upstream
 export const EventVolunteerEventResolver = async (
 	parent: EventVolunteerType,
 	_args: Record<string, never>,
@@ -28,6 +40,7 @@ export const EventVolunteerEventResolver = async (
 		});
 	}
 
+<<<<<<< HEAD
 	const event = await ctx.dataloaders.event.load(parent.eventId);
 
 	if (event === null) {
@@ -37,6 +50,15 @@ export const EventVolunteerEventResolver = async (
 				eventId: parent.eventId,
 			},
 			"DataLoader returned null for an event volunteer's event id that isn't null.",
+=======
+	const event = await ctx.drizzleClient.query.eventsTable.findFirst({
+		where: eq(eventsTable.id, parent.eventId),
+	});
+
+	if (event === undefined) {
+		ctx.log.warn(
+			"Postgres select operation returned an empty array for an event volunteer's event id that isn't null.",
+>>>>>>> upstream
 		);
 		throw new TalawaGraphQLError({
 			extensions: {

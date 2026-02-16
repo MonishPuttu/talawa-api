@@ -6,6 +6,11 @@
 
 Defined in: [src/workers/eventGeneration/eventGenerationPipeline.ts:30](https://github.com/PalisadoesFoundation/talawa-api/tree/mainsrc/workers/eventGeneration/eventGenerationPipeline.ts#L30)
 
+<<<<<<< HEAD
+=======
+## Description
+
+>>>>>>> upstream
 Represents the result of a materialization worker run, summarizing the work done.
 
 ## Properties

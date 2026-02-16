@@ -61,7 +61,11 @@ export class NotificationEngine {
 	 * @param variables - Object containing variables to be replaced in template
 	 * @param audience - Target audience for the notification
 	 * @param channelType - Channel to deliver notification (in_app, email)
+<<<<<<< HEAD
 	 * @returns - The created notification log ID
+=======
+	 * @returns The created notification log ID
+>>>>>>> upstream
 	 */
 	async createNotification(
 		eventType: string,
@@ -127,6 +131,7 @@ export class NotificationEngine {
 				variables,
 			);
 		} else {
+<<<<<<< HEAD
 			// Collect all user IDs from all audiences (aligns with email notification flow)
 			const allUserIds: string[] = [];
 			for (const audienceSpec of audiences) {
@@ -151,6 +156,10 @@ export class NotificationEngine {
 				);
 			} else {
 				this.ctx.log.warn("No users found for in-app notification");
+=======
+			for (const audienceSpec of audiences) {
+				await this.createAudienceEntries(notificationLog.id, audienceSpec);
+>>>>>>> upstream
 			}
 		}
 
@@ -175,15 +184,26 @@ export class NotificationEngine {
 			? this.ctx.currentClient.user.id
 			: null;
 
+<<<<<<< HEAD
 		const allUserIds: string[] = [];
+=======
+		let allUserIds: string[] = [];
+>>>>>>> upstream
 		for (const audienceSpec of audiences) {
 			const userIds = await this.resolveAudienceToUserIds(
 				audienceSpec,
 				senderId,
 			);
+<<<<<<< HEAD
 			allUserIds.push(...userIds);
 		}
 
+=======
+			allUserIds = [...allUserIds, ...userIds];
+		}
+
+		// Remove duplicates
+>>>>>>> upstream
 		const uniqueUserIds = [...new Set(allUserIds)];
 
 		if (uniqueUserIds.length === 0) {
@@ -212,7 +232,11 @@ export class NotificationEngine {
 		const subject = renderedTemplate.title;
 		const htmlBody = renderedTemplate.body;
 
+<<<<<<< HEAD
 		// Creating email notification records
+=======
+		// Create email notification records
+>>>>>>> upstream
 		const emailNotifications = usersWithEmail.map((user) => ({
 			id: uuidv7(),
 			notificationLogId,
@@ -225,7 +249,11 @@ export class NotificationEngine {
 			maxRetries: 3,
 		}));
 
+<<<<<<< HEAD
 		// Inserting email notifications
+=======
+		// Insert email notifications
+>>>>>>> upstream
 		await this.ctx.drizzleClient
 			.insert(emailNotificationsTable)
 			.values(emailNotifications);
@@ -296,11 +324,93 @@ export class NotificationEngine {
 	}
 
 	/**
+<<<<<<< HEAD
+=======
+	 * Creates audience entries for a notification
+	 *
+	 * @param notificationId - ID of the notification log
+	 * @param audience - Specification of the target audience
+	 */
+	private async createAudienceEntries(
+		notificationId: string,
+		audience: NotificationAudience,
+	): Promise<void> {
+		const { targetType, targetIds } = audience;
+		const senderId = this.ctx.currentClient.isAuthenticated
+			? this.ctx.currentClient.user.id
+			: null;
+
+		let userIds: string[] = [];
+
+		if (targetType === NotificationTargetType.USER) {
+			userIds = targetIds.filter((id) => id !== senderId);
+		} else if (targetType === NotificationTargetType.ORGANIZATION_ADMIN) {
+			const orgId = targetIds[0];
+			if (!orgId) return;
+
+			const adminMembers =
+				await this.ctx.drizzleClient.query.organizationMembershipsTable.findMany(
+					{
+						columns: { memberId: true },
+						where: (fields, operators) =>
+							and(
+								operators.eq(fields.organizationId, orgId),
+								operators.eq(fields.role, "administrator"),
+							),
+					},
+				);
+
+			userIds = adminMembers
+				.map((member) => member.memberId)
+				.filter((id) => id !== senderId);
+		} else if (targetType === NotificationTargetType.ADMIN) {
+			const admins = await this.ctx.drizzleClient.query.usersTable.findMany({
+				columns: { id: true },
+				where: (fields, operators) =>
+					operators.eq(fields.role, "administrator"),
+			});
+
+			userIds = admins.map((admin) => admin.id).filter((id) => id !== senderId);
+		} else if (targetType === NotificationTargetType.ORGANIZATION) {
+			const orgId = targetIds[0];
+			if (!orgId) return;
+
+			const members =
+				await this.ctx.drizzleClient.query.organizationMembershipsTable.findMany(
+					{
+						columns: { memberId: true },
+						where: (fields, operators) =>
+							operators.eq(fields.organizationId, orgId),
+					},
+				);
+
+			userIds = members
+				.map((member) => member.memberId)
+				.filter((id) => id !== senderId);
+		}
+
+		if (userIds.length > 0) {
+			await this.ctx.drizzleClient.insert(notificationAudienceTable).values(
+				userIds.map((userId) => ({
+					notificationId,
+					userId,
+					isRead: false,
+				})),
+			);
+		}
+	}
+
+	/**
+>>>>>>> upstream
 	 * Renders a template by replacing variables
 	 *
 	 * @param template - The notification template
 	 * @param variables - Variables to replace in the template
+<<<<<<< HEAD
 	 * @returns - Rendered content object
+=======
+	 * @returns Rendered content object
+>>>>>>> upstream
 	 */
 	private renderTemplate(
 		template: typeof notificationTemplatesTable.$inferSelect,
@@ -317,6 +427,7 @@ export class NotificationEngine {
 		}
 		return { title, body };
 	}
+<<<<<<< HEAD
 
 	/**
 	 * Creates a direct email notification for external recipients (non-users).
@@ -404,4 +515,6 @@ export class NotificationEngine {
 
 		return notificationLog.id;
 	}
+=======
+>>>>>>> upstream
 }

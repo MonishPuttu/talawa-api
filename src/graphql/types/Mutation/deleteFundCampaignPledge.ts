@@ -1,16 +1,27 @@
+<<<<<<< HEAD
 import { eq, sql } from "drizzle-orm";
 import { z } from "zod";
 import { fundCampaignPledgesTable } from "~/src/drizzle/tables/fundCampaignPledges";
 import { fundCampaignsTable } from "~/src/drizzle/tables/fundCampaigns";
+=======
+import { eq } from "drizzle-orm";
+import { z } from "zod";
+import { fundCampaignPledgesTable } from "~/src/drizzle/tables/fundCampaignPledges";
+>>>>>>> upstream
 import { builder } from "~/src/graphql/builder";
 import {
 	MutationDeleteFundCampaignPledgeInput,
 	mutationDeleteFundCampaignPledgeInputSchema,
 } from "~/src/graphql/inputs/MutationDeleteFundCampaignPledgeInput";
 import { FundCampaignPledge } from "~/src/graphql/types/FundCampaignPledge/FundCampaignPledge";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+>>>>>>> upstream
 const mutationDeleteFundCampaignPledgeArgumentsSchema = z.object({
 	input: mutationDeleteFundCampaignPledgeInputSchema,
 });
@@ -65,8 +76,11 @@ builder.mutationField("deleteFundCampaignPledge", (t) =>
 				ctx.drizzleClient.query.fundCampaignPledgesTable.findFirst({
 					columns: {
 						pledgerId: true,
+<<<<<<< HEAD
 						amount: true,
 						campaignId: true,
+=======
+>>>>>>> upstream
 					},
 					with: {
 						campaign: {
@@ -77,13 +91,28 @@ builder.mutationField("deleteFundCampaignPledge", (t) =>
 								fund: {
 									columns: {
 										isTaxDeductible: true,
+<<<<<<< HEAD
 										organizationId: true,
+=======
+>>>>>>> upstream
 									},
 									with: {
 										organization: {
 											columns: {
 												countryCode: true,
 											},
+<<<<<<< HEAD
+=======
+											with: {
+												membershipsWhereOrganization: {
+													columns: {
+														role: true,
+													},
+													where: (fields, operators) =>
+														operators.eq(fields.memberId, currentUserId),
+												},
+											},
+>>>>>>> upstream
 										},
 									},
 								},
@@ -117,6 +146,7 @@ builder.mutationField("deleteFundCampaignPledge", (t) =>
 			}
 
 			const currentUserOrganizationMembership =
+<<<<<<< HEAD
 				await ctx.drizzleClient.query.organizationMembershipsTable.findFirst({
 					columns: { role: true },
 					where: (fields, operators) =>
@@ -128,6 +158,10 @@ builder.mutationField("deleteFundCampaignPledge", (t) =>
 							operators.eq(fields.memberId, currentUserId),
 						),
 				});
+=======
+				existingFundCampaignPledge.campaign.fund.organization
+					.membershipsWhereOrganization[0];
+>>>>>>> upstream
 
 			if (
 				currentUser.role !== "administrator" &&
@@ -147,6 +181,7 @@ builder.mutationField("deleteFundCampaignPledge", (t) =>
 				});
 			}
 
+<<<<<<< HEAD
 			const deletedFundCampaignPledge = await ctx.drizzleClient.transaction(
 				async (tx) => {
 					const [deletedPledge] = await tx
@@ -169,6 +204,12 @@ builder.mutationField("deleteFundCampaignPledge", (t) =>
 					return deletedPledge;
 				},
 			);
+=======
+			const [deletedFundCampaignPledge] = await ctx.drizzleClient
+				.delete(fundCampaignPledgesTable)
+				.where(eq(fundCampaignPledgesTable.id, parsedArgs.input.id))
+				.returning();
+>>>>>>> upstream
 
 			// Deleted fund campaign pledge not being returned means that either it was deleted or its `id` column was changed by external entities before this delete operation could take place.
 			if (deletedFundCampaignPledge === undefined) {

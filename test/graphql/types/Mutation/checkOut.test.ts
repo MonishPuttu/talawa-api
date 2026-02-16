@@ -13,7 +13,10 @@ import {
 	Mutation_createOrganizationMembership,
 	Query_signIn,
 } from "../documentNodes";
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream
 const signInResult = await mercuriusClient.query(Query_signIn, {
 	variables: {
 		input: {

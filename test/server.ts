@@ -9,6 +9,7 @@ const testEnvConfig = envSchema<TestEnvConfig>({
 	schema: testEnvConfigSchema,
 });
 
+<<<<<<< HEAD
 // Ensure API_COOKIE_SECRET is set in process.env for createServer's internal validation
 // This uses the default value from testEnvConfigSchema if not present in env
 if (!process.env.API_COOKIE_SECRET) {
@@ -24,6 +25,14 @@ export const server = await createServer({
 		 * This makes the server test instance listen on a random port that is free at the time of initialization.
 		 */
 		API_PORT: 0,
+=======
+export const server = await createServer({
+	envConfig: {
+		/**
+		 * This makes the server test instance listen on a random port that is free at the time of initialization. This way the tests don't make use of ports that are already acquired by other tests or unrelated processes external to the tests. More information at this link: {@link https://fastify.dev/docs/latest/Reference/Server/#listentextresolver}.
+		 */
+		API_PORT: undefined,
+>>>>>>> upstream
 		/**
 		 * This makes the server test instance connect to the minio test server.
 		 */
@@ -32,6 +41,7 @@ export const server = await createServer({
 		 * This makes the server test instance connect to the postgres test database.
 		 */
 		API_POSTGRES_HOST: testEnvConfig.API_POSTGRES_TEST_HOST,
+<<<<<<< HEAD
 		/**
 		 * This makes the server test instance connect to the redis test database.
 		 */
@@ -46,5 +56,7 @@ export const server = await createServer({
 		 */
 		API_RATE_LIMIT_BUCKET_CAPACITY: 10000,
 		API_RATE_LIMIT_REFILL_RATE: 10000,
+=======
+>>>>>>> upstream
 	},
 });

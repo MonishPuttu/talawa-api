@@ -1,4 +1,5 @@
 import { faker } from "@faker-js/faker";
+<<<<<<< HEAD
 import { afterEach, expect, suite, test, vi } from "vitest";
 import type { eventAttachmentsTable } from "~/src/drizzle/tables/eventAttachments";
 import type { eventsTable } from "~/src/drizzle/tables/events";
@@ -7,6 +8,12 @@ import type {
 	ResolvedRecurringEventInstance,
 	recurringEventInstancesTable,
 } from "~/src/drizzle/tables/recurringEventInstances";
+=======
+import { expect, suite, test, vi } from "vitest";
+import type { eventsTable } from "~/src/drizzle/tables/events";
+import type { eventExceptionsTable } from "~/src/drizzle/tables/recurringEventExceptions";
+import type { recurringEventInstancesTable } from "~/src/drizzle/tables/recurringEventInstances";
+>>>>>>> upstream
 import {
 	createExceptionKey,
 	createExceptionLookupMap,
@@ -20,9 +27,13 @@ import type {
 	ServiceDependencies,
 } from "~/src/services/eventGeneration/types";
 
+<<<<<<< HEAD
 afterEach(() => {
 	vi.clearAllMocks();
 });
+=======
+import type { ResolvedRecurringEventInstance } from "~/src/drizzle/tables/recurringEventInstances";
+>>>>>>> upstream
 
 type ResolvedEventInstance = ResolvedRecurringEventInstance;
 
@@ -67,10 +78,14 @@ suite("instanceResolver", () => {
 		updaterId: faker.string.uuid(),
 		createdAt: new Date(),
 		updatedAt: new Date(),
+<<<<<<< HEAD
 		attachments: [],
 	} as unknown as typeof eventsTable.$inferSelect & {
 		attachments: (typeof eventAttachmentsTable.$inferSelect)[];
 	};
+=======
+	} as typeof eventsTable.$inferSelect;
+>>>>>>> upstream
 
 	suite("resolveInstanceWithInheritance", () => {
 		test("resolves instance with base template properties", () => {
@@ -365,16 +380,24 @@ suite("instanceResolver", () => {
 				{
 					id: faker.string.uuid(),
 					name: "Template 1",
+<<<<<<< HEAD
 					attachments: [],
+=======
+>>>>>>> upstream
 				},
 				{
 					id: faker.string.uuid(),
 					name: "Template 2",
+<<<<<<< HEAD
 					attachments: [],
 				},
 			] as unknown as (typeof eventsTable.$inferSelect & {
 				attachments: (typeof eventAttachmentsTable.$inferSelect)[];
 			})[];
+=======
+				},
+			] as (typeof eventsTable.$inferSelect)[];
+>>>>>>> upstream
 
 			const map = createTemplateLookupMap(templates);
 

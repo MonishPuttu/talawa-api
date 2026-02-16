@@ -1,8 +1,14 @@
 import { Post } from "~/src/graphql/types/Post/Post";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 import { Comment } from "./Comment";
 
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+import { Comment } from "./Comment";
+>>>>>>> upstream
 Comment.implement({
 	fields: (t) => ({
 		post: t.field({

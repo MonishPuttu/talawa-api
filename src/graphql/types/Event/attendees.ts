@@ -1,11 +1,19 @@
 import { and, eq, or } from "drizzle-orm";
 import { eventAttendeesTable } from "~/src/drizzle/tables/eventAttendees";
 import { User } from "~/src/graphql/types/User/User";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 import type { GraphQLContext } from "../../context";
 import type { Event as EventType } from "./Event";
 import { Event } from "./Event";
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+import type { GraphQLContext } from "../../context";
+import { Event } from "./Event";
+import type { Event as EventType } from "./Event";
+>>>>>>> upstream
 
 export const eventAttendeesResolver = async (
 	parent: EventType,
@@ -28,20 +36,28 @@ export const eventAttendeesResolver = async (
 					// For standalone events
 					and(
 						eq(eventAttendeesTable.eventId, parent.id),
+<<<<<<< HEAD
 						or(
 							eq(eventAttendeesTable.isCheckedIn, true),
 							eq(eventAttendeesTable.isRegistered, true),
 							eq(eventAttendeesTable.isInvited, true),
 						),
+=======
+						eq(eventAttendeesTable.isCheckedIn, true),
+>>>>>>> upstream
 					),
 					// For recurring event instances
 					and(
 						eq(eventAttendeesTable.recurringEventInstanceId, parent.id),
+<<<<<<< HEAD
 						or(
 							eq(eventAttendeesTable.isCheckedIn, true),
 							eq(eventAttendeesTable.isRegistered, true),
 							eq(eventAttendeesTable.isInvited, true),
 						),
+=======
+						eq(eventAttendeesTable.isCheckedIn, true),
+>>>>>>> upstream
 					),
 				),
 				with: {

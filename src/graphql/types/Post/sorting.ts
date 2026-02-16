@@ -3,15 +3,23 @@ import { postAttachmentsTable } from "~/src/drizzle/tables/postAttachments";
 import { postsTable } from "~/src/drizzle/tables/posts";
 import { builder } from "~/src/graphql/builder";
 import { Post, type Post as PostType } from "~/src/graphql/types/Post/Post";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+>>>>>>> upstream
 
 const GetPostsByOrgInput = builder.inputType("GetPostsByOrgInput", {
 	fields: (t) => ({
 		organizationId: t.string({ required: true }),
 		sortOrder: t.string({ required: false }),
+<<<<<<< HEAD
 		limit: t.int({ required: false }),
 		offset: t.int({ required: false }),
+=======
+>>>>>>> upstream
 	}),
 });
 
@@ -29,6 +37,7 @@ builder.queryField("postsByOrganization", (t) =>
 				});
 			}
 
+<<<<<<< HEAD
 			const { organizationId, sortOrder, limit, offset } = input;
 
 			// Validate limit parameter
@@ -75,6 +84,9 @@ builder.queryField("postsByOrganization", (t) =>
 					},
 				});
 			}
+=======
+			const { organizationId, sortOrder } = input;
+>>>>>>> upstream
 
 			const orderBy =
 				sortOrder === "ASC"
@@ -84,9 +96,12 @@ builder.queryField("postsByOrganization", (t) =>
 			const posts = await ctx.drizzleClient.query.postsTable.findMany({
 				where: eq(postsTable.organizationId, organizationId),
 				orderBy: [orderBy],
+<<<<<<< HEAD
 				// nullish coalescing required: GraphQL returns null but Drizzle expects undefined
 				limit: limit ?? undefined,
 				offset: offset ?? undefined,
+=======
+>>>>>>> upstream
 			});
 
 			const postIds = posts.map((post) => post.id);

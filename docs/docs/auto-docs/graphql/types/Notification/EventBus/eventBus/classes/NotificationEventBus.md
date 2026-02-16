@@ -16,7 +16,11 @@ Defined in: [src/graphql/types/Notification/EventBus/eventBus.ts:9](https://gith
 
 > **new NotificationEventBus**(`options?`): `NotificationEventBus`
 
+<<<<<<< HEAD
 Defined in: node\_modules/.pnpm/@types+node@22.19.9/node\_modules/@types/node/events.d.ts:101
+=======
+Defined in: node\_modules/.pnpm/@types+node@22.19.0/node\_modules/@types/node/events.d.ts:101
+>>>>>>> upstream
 
 #### Parameters
 
@@ -402,6 +406,7 @@ Defined in: [src/graphql/types/Notification/EventBus/eventBus.ts:10](https://git
 
 ***
 
+<<<<<<< HEAD
 ### emitSendEventInvite()
 
 > **emitSendEventInvite**(`data`, `ctx`): `Promise`\<`void`\>
@@ -454,6 +459,8 @@ Defined in: [src/graphql/types/Notification/EventBus/eventBus.ts:429](https://gi
 
 ***
 
+=======
+>>>>>>> upstream
 ### emitUserBlocked()
 
 > **emitUserBlocked**(`data`, `ctx`): `Promise`\<`void`\>

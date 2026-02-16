@@ -22,8 +22,12 @@ Thanks for submitting a pull request! Please provide enough information so that 
 
 **Issue Number:**
 
+<<<<<<< HEAD
 <!--Add related issue number here.-->
 Fixes #
+=======
+Fixes #<!--Add related issue number here.-->
+>>>>>>> upstream
 
 **Snapshots/Videos:**
 

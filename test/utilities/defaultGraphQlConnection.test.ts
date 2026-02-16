@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { afterEach, expect, suite, test, vi } from "vitest";
 import { z } from "zod";
 import {
@@ -20,6 +21,15 @@ afterEach(() => {
 const decodeCursor = (encodedCursor: string): string => {
 	return JSON.parse(Buffer.from(encodedCursor, "base64url").toString("utf-8"));
 };
+=======
+import { expect, suite, test, vi } from "vitest";
+import {
+	type ParsedDefaultGraphQLConnectionArguments,
+	defaultGraphQLConnectionArgumentsSchema,
+	transformDefaultGraphQLConnectionArguments,
+	transformToDefaultGraphQLConnection,
+} from "../../src/utilities/defaultGraphQLConnection";
+>>>>>>> upstream
 
 suite("defaultGraphQLConnection utilities", () => {
 	suite("defaultGraphQLConnectionArgumentsSchema", () => {
@@ -128,7 +138,11 @@ suite("defaultGraphQLConnection utilities", () => {
 
 	suite("transformDefaultGraphQLConnectionArguments", () => {
 		test("transforms first/after arguments correctly", () => {
+<<<<<<< HEAD
 			const ctx = { addIssue: vi.fn(), path: [] } as unknown as z.RefinementCtx;
+=======
+			const ctx = { addIssue: vi.fn(), path: [] };
+>>>>>>> upstream
 			const result = transformDefaultGraphQLConnectionArguments(
 				{
 					first: 10,
@@ -148,7 +162,11 @@ suite("defaultGraphQLConnection utilities", () => {
 		});
 
 		test("transforms first without after arguments correctly", () => {
+<<<<<<< HEAD
 			const ctx = { addIssue: vi.fn(), path: [] } as unknown as z.RefinementCtx;
+=======
+			const ctx = { addIssue: vi.fn(), path: [] };
+>>>>>>> upstream
 			const result = transformDefaultGraphQLConnectionArguments(
 				{
 					first: 10,
@@ -168,7 +186,11 @@ suite("defaultGraphQLConnection utilities", () => {
 		});
 
 		test("transforms last/before arguments correctly", () => {
+<<<<<<< HEAD
 			const ctx = { addIssue: vi.fn(), path: [] } as unknown as z.RefinementCtx;
+=======
+			const ctx = { addIssue: vi.fn(), path: [] };
+>>>>>>> upstream
 			const result = transformDefaultGraphQLConnectionArguments(
 				{
 					last: 10,
@@ -188,7 +210,11 @@ suite("defaultGraphQLConnection utilities", () => {
 		});
 
 		test("transforms last without before arguments correctly", () => {
+<<<<<<< HEAD
 			const ctx = { addIssue: vi.fn(), path: [] } as unknown as z.RefinementCtx;
+=======
+			const ctx = { addIssue: vi.fn(), path: [] };
+>>>>>>> upstream
 			const result = transformDefaultGraphQLConnectionArguments(
 				{
 					last: 10,
@@ -208,7 +234,11 @@ suite("defaultGraphQLConnection utilities", () => {
 		});
 
 		test("errors when both first and last are provided", () => {
+<<<<<<< HEAD
 			const ctx = { addIssue: vi.fn(), path: [] } as unknown as z.RefinementCtx;
+=======
+			const ctx = { addIssue: vi.fn(), path: [] };
+>>>>>>> upstream
 			const result = transformDefaultGraphQLConnectionArguments(
 				{
 					first: 10,
@@ -228,7 +258,11 @@ suite("defaultGraphQLConnection utilities", () => {
 		});
 
 		test("errors when first is provided with before", () => {
+<<<<<<< HEAD
 			const ctx = { addIssue: vi.fn(), path: [] } as unknown as z.RefinementCtx;
+=======
+			const ctx = { addIssue: vi.fn(), path: [] };
+>>>>>>> upstream
 			const result = transformDefaultGraphQLConnectionArguments(
 				{
 					first: 10,
@@ -248,7 +282,11 @@ suite("defaultGraphQLConnection utilities", () => {
 		});
 
 		test("errors when last is provided with after", () => {
+<<<<<<< HEAD
 			const ctx = { addIssue: vi.fn(), path: [] } as unknown as z.RefinementCtx;
+=======
+			const ctx = { addIssue: vi.fn(), path: [] };
+>>>>>>> upstream
 			const result = transformDefaultGraphQLConnectionArguments(
 				{
 					last: 10,
@@ -268,7 +306,11 @@ suite("defaultGraphQLConnection utilities", () => {
 		});
 
 		test("errors when neither first nor last is provided", () => {
+<<<<<<< HEAD
 			const ctx = { addIssue: vi.fn(), path: [] } as unknown as z.RefinementCtx;
+=======
+			const ctx = { addIssue: vi.fn(), path: [] };
+>>>>>>> upstream
 			const result = transformDefaultGraphQLConnectionArguments(
 				{
 					first: undefined,
@@ -294,7 +336,11 @@ suite("defaultGraphQLConnection utilities", () => {
 		});
 
 		test("preserves custom arguments", () => {
+<<<<<<< HEAD
 			const ctx = { addIssue: vi.fn(), path: [] } as unknown as z.RefinementCtx;
+=======
+			const ctx = { addIssue: vi.fn(), path: [] };
+>>>>>>> upstream
 			const customArgs = {
 				first: 10,
 				after: undefined,
@@ -348,8 +394,13 @@ suite("defaultGraphQLConnection utilities", () => {
 			expect(result.edges[3]?.node.id).toBe("4");
 			expect(result.pageInfo.hasNextPage).toBe(true);
 			expect(result.pageInfo.hasPreviousPage).toBe(false);
+<<<<<<< HEAD
 			expect(decodeCursor(result.pageInfo.startCursor ?? "")).toBe("1");
 			expect(decodeCursor(result.pageInfo.endCursor ?? "")).toBe("4");
+=======
+			expect(result.pageInfo.startCursor).toBe("1");
+			expect(result.pageInfo.endCursor).toBe("4");
+>>>>>>> upstream
 		});
 
 		test("transforms forward pagination with hasNextPage=false", () => {
@@ -369,8 +420,13 @@ suite("defaultGraphQLConnection utilities", () => {
 			expect(result.edges).toHaveLength(5);
 			expect(result.pageInfo.hasNextPage).toBe(false);
 			expect(result.pageInfo.hasPreviousPage).toBe(false);
+<<<<<<< HEAD
 			expect(decodeCursor(result.pageInfo.startCursor ?? "")).toBe("1");
 			expect(decodeCursor(result.pageInfo.endCursor ?? "")).toBe("5");
+=======
+			expect(result.pageInfo.startCursor).toBe("1");
+			expect(result.pageInfo.endCursor).toBe("5");
+>>>>>>> upstream
 		});
 
 		test("transforms forward pagination with cursor (hasPreviousPage=true)", () => {
@@ -393,8 +449,13 @@ suite("defaultGraphQLConnection utilities", () => {
 			expect(result.edges).toHaveLength(3);
 			expect(result.pageInfo.hasNextPage).toBe(false);
 			expect(result.pageInfo.hasPreviousPage).toBe(true);
+<<<<<<< HEAD
 			expect(decodeCursor(result.pageInfo.startCursor ?? "")).toBe("3");
 			expect(decodeCursor(result.pageInfo.endCursor ?? "")).toBe("5");
+=======
+			expect(result.pageInfo.startCursor).toBe("3");
+			expect(result.pageInfo.endCursor).toBe("5");
+>>>>>>> upstream
 		});
 
 		test("transforms backward pagination with hasPreviousPage=true", () => {
@@ -416,8 +477,13 @@ suite("defaultGraphQLConnection utilities", () => {
 			expect(result.edges[3]?.node.id).toBe("1");
 			expect(result.pageInfo.hasNextPage).toBe(false);
 			expect(result.pageInfo.hasPreviousPage).toBe(true);
+<<<<<<< HEAD
 			expect(decodeCursor(result.pageInfo.startCursor ?? "")).toBe("4");
 			expect(decodeCursor(result.pageInfo.endCursor ?? "")).toBe("1");
+=======
+			expect(result.pageInfo.startCursor).toBe("4");
+			expect(result.pageInfo.endCursor).toBe("1");
+>>>>>>> upstream
 		});
 
 		test("transforms backward pagination with hasPreviousPage=false", () => {
@@ -437,8 +503,13 @@ suite("defaultGraphQLConnection utilities", () => {
 			expect(result.edges).toHaveLength(5);
 			expect(result.pageInfo.hasNextPage).toBe(false);
 			expect(result.pageInfo.hasPreviousPage).toBe(false);
+<<<<<<< HEAD
 			expect(decodeCursor(result.pageInfo.startCursor ?? "")).toBe("5");
 			expect(decodeCursor(result.pageInfo.endCursor ?? "")).toBe("1");
+=======
+			expect(result.pageInfo.startCursor).toBe("5");
+			expect(result.pageInfo.endCursor).toBe("1");
+>>>>>>> upstream
 		});
 
 		test("transforms backward pagination with cursor (hasNextPage=true)", () => {
@@ -463,8 +534,13 @@ suite("defaultGraphQLConnection utilities", () => {
 			expect(result.edges[1]?.node.id).toBe("1");
 			expect(result.pageInfo.hasNextPage).toBe(true);
 			expect(result.pageInfo.hasPreviousPage).toBe(true);
+<<<<<<< HEAD
 			expect(decodeCursor(result.pageInfo.startCursor ?? "")).toBe("2");
 			expect(decodeCursor(result.pageInfo.endCursor ?? "")).toBe("1");
+=======
+			expect(result.pageInfo.startCursor).toBe("2");
+			expect(result.pageInfo.endCursor).toBe("1");
+>>>>>>> upstream
 		});
 
 		test("handles empty results", () => {
@@ -554,6 +630,7 @@ suite("defaultGraphQLConnection utilities", () => {
 			// Verify cursor is base64 encoded
 			expect(result.edges[0]?.cursor).toMatch(/^[A-Za-z0-9_-]+$/);
 
+<<<<<<< HEAD
 			// Double-decode: implementation wraps createCursor output in JSON.stringify + base64
 			const innerCursor = JSON.parse(
 				Buffer.from(
@@ -1063,6 +1140,16 @@ suite("defaultGraphQLConnection utilities", () => {
 			expect(page1.edges[1]?.node.id).toBe("2");
 			expect(page2.edges[0]?.node.id).toBe("3");
 			expect(page2.edges[1]?.node.id).toBe("4");
+=======
+			// Verify we can decode the cursor back
+			const decodedCursor = JSON.parse(
+				Buffer.from(result.edges[0]?.cursor || "", "base64url").toString(
+					"utf-8",
+				),
+			);
+			expect(decodedCursor).toHaveProperty("id", "1");
+			expect(decodedCursor).toHaveProperty("createdAt");
+>>>>>>> upstream
 		});
 	});
 });

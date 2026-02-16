@@ -1,5 +1,6 @@
 import type { GraphQLContext } from "~/src/graphql/context";
 import { User } from "~/src/graphql/types/User/User";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 import type { ActionItem as ActionItemType } from "./ActionItem";
@@ -18,6 +19,14 @@ import { ActionItem } from "./ActionItem";
  * @throws {TalawaGraphQLError} With code "unauthorized_action" if user lacks admin permissions
  * @throws {TalawaGraphQLError} With code "unexpected" if updater user is not found despite non-null updaterId
  */
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+import { ActionItem } from "./ActionItem";
+import type { ActionItem as ActionItemType } from "./ActionItem";
+
+// Export the resolver function so it can be tested
+>>>>>>> upstream
 export const resolveUpdater = async (
 	parent: ActionItemType,
 	_args: Record<string, never>,
@@ -79,9 +88,17 @@ export const resolveUpdater = async (
 
 	const updaterId = parent.updaterId;
 
+<<<<<<< HEAD
 	const existingUser = await ctx.dataloaders.user.load(updaterId);
 
 	if (existingUser === null) {
+=======
+	const existingUser = await ctx.drizzleClient.query.usersTable.findFirst({
+		where: (fields, operators) => operators.eq(fields.id, updaterId),
+	});
+
+	if (existingUser === undefined) {
+>>>>>>> upstream
 		ctx.log.error(
 			"Postgres select operation returned an empty array for an action item's updater id that isn't null.",
 		);

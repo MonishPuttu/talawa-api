@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { afterEach, describe, expect, test, vi } from "vitest";
+=======
+import { describe, expect, test, vi } from "vitest";
+>>>>>>> upstream
 import type { GraphQLContext } from "~/src/graphql/context";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 import {
@@ -6,10 +10,13 @@ import {
 	resolveVolunteerGroup,
 } from "../../../../src/graphql/types/ActionItem/eventVolunteersAndGroups";
 
+<<<<<<< HEAD
 afterEach(() => {
 	vi.clearAllMocks();
 });
 
+=======
+>>>>>>> upstream
 interface TestFields {
 	id: string;
 }

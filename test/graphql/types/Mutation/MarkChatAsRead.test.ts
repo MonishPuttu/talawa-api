@@ -446,7 +446,11 @@ suite("Mutation markChatAsRead", () => {
 		});
 
 		expect(res.errors).toBeDefined();
+<<<<<<< HEAD
 		expect(res.errors?.[0]?.extensions?.code).toBe("not_found");
+=======
+		expect(res.errors?.[0]?.extensions?.code).toBe("unauthenticated");
+>>>>>>> upstream
 	});
 
 	test("unauthorized: non-member cannot mark chat as read", async () => {

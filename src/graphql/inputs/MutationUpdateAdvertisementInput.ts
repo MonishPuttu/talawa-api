@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { z } from "zod";
+=======
+import type { z } from "zod";
+>>>>>>> upstream
 import { advertisementsTableInsertSchema } from "~/src/drizzle/tables/advertisements";
 import { builder } from "~/src/graphql/builder";
 import { AdvertisementType } from "~/src/graphql/enums/AdvertisementType";
@@ -6,6 +10,7 @@ import { isNotNullish } from "~/src/utilities/isNotNullish";
 
 export const mutationUpdateAdvertisementInputSchema =
 	advertisementsTableInsertSchema
+<<<<<<< HEAD
 		.pick({})
 		.extend({
 			description: z.string().trim().min(1).max(2048).nullable().optional(),
@@ -16,6 +21,17 @@ export const mutationUpdateAdvertisementInputSchema =
 				.nullable()
 				.optional(),
 			type: advertisementsTableInsertSchema.shape.type.nullable().optional(),
+=======
+		.pick({
+			description: true,
+		})
+		.extend({
+			endAt: advertisementsTableInsertSchema.shape.endAt.optional(),
+			id: advertisementsTableInsertSchema.shape.id.unwrap(),
+			name: advertisementsTableInsertSchema.shape.name.optional(),
+			startAt: advertisementsTableInsertSchema.shape.startAt.optional(),
+			type: advertisementsTableInsertSchema.shape.type.optional(),
+>>>>>>> upstream
 		})
 		.superRefine(({ id, ...remainingArg }, ctx) => {
 			if (!Object.values(remainingArg).some((value) => value !== undefined)) {
@@ -47,6 +63,7 @@ export const MutationUpdateAdvertisementInput = builder
 		fields: (t) => ({
 			description: t.string({
 				description: "Custom information about the advertisement.",
+<<<<<<< HEAD
 				required: false,
 			}),
 			endAt: t.field({
@@ -56,20 +73,38 @@ export const MutationUpdateAdvertisementInput = builder
 			}),
 			id: t.id({
 				description: "ID of the advertisement to update.",
+=======
+			}),
+			endAt: t.field({
+				description: "Date time at which the advertised event ends.",
+				type: "DateTime",
+			}),
+			id: t.id({
+				description: "Global identifier of the associated organization.",
+>>>>>>> upstream
 				required: true,
 			}),
 			name: t.string({
 				description: "Name of the advertisement.",
+<<<<<<< HEAD
 				required: false,
 			}),
 			startAt: t.field({
 				description: "Date time at which the advertised event starts.",
 				required: false,
+=======
+			}),
+			startAt: t.field({
+				description: "Date time at which the advertised event starts.",
+>>>>>>> upstream
 				type: "DateTime",
 			}),
 			type: t.field({
 				description: "Type of the advertisement.",
+<<<<<<< HEAD
 				required: false,
+=======
+>>>>>>> upstream
 				type: AdvertisementType,
 			}),
 		}),

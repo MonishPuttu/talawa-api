@@ -26,7 +26,10 @@ const MockEvent = {
 	allDay: false,
 	isPublic: true,
 	isRegisterable: true,
+<<<<<<< HEAD
 	isInviteOnly: false,
+=======
+>>>>>>> upstream
 	location: "Test Location",
 	isRecurringEventTemplate: false,
 	attachments: [],

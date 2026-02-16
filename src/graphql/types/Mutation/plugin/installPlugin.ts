@@ -86,22 +86,33 @@ builder.mutationField("installPlugin", (t) =>
 				const pluginManager = getPluginManagerInstance();
 				if (pluginManager) {
 					try {
+<<<<<<< HEAD
 						ctx.log.info(
 							{ pluginId },
 							"Installing plugin via lifecycle manager",
 						);
+=======
+						console.log("Installing plugin via lifecycle manager:", pluginId);
+>>>>>>> upstream
 
 						// Use the plugin manager to handle installation
 						const success = await pluginManager.installPlugin(pluginId);
 
 						if (!success) {
+<<<<<<< HEAD
 							ctx.log.error(
 								{ pluginId },
 								"Plugin installation failed in lifecycle manager",
+=======
+							console.error(
+								"Plugin installation failed in lifecycle manager:",
+								pluginId,
+>>>>>>> upstream
 							);
 							// Don't throw error here - plugin is marked as installed but lifecycle failed
 							// User can retry activation later
 						} else {
+<<<<<<< HEAD
 							ctx.log.info(
 								{ pluginId },
 								"Plugin installed successfully via lifecycle manager",
@@ -112,6 +123,15 @@ builder.mutationField("installPlugin", (t) =>
 							{ pluginId, err: error },
 							"Error during plugin lifecycle installation",
 						);
+=======
+							console.log(
+								"Plugin installed successfully via lifecycle manager:",
+								pluginId,
+							);
+						}
+					} catch (error) {
+						console.error("Error during plugin lifecycle installation:", error);
+>>>>>>> upstream
 						// Don't throw error here - plugin is installed but lifecycle failed
 						// User can retry activation later
 					}
@@ -124,9 +144,15 @@ builder.mutationField("installPlugin", (t) =>
 					throw error;
 				}
 				// Handle other errors
+<<<<<<< HEAD
 				ctx.log.error(
 					{ pluginId, err: error },
 					"Error during plugin installation",
+=======
+				console.error(
+					`Error during plugin installation for ${pluginId}:`,
+					error,
+>>>>>>> upstream
 				);
 				throw new TalawaGraphQLError({
 					extensions: {

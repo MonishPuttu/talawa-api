@@ -1,12 +1,17 @@
 import { z } from "zod";
+<<<<<<< HEAD
 import {
 	COMMENT_BODY_MAX_LENGTH,
 	commentsTableInsertSchema,
 } from "~/src/drizzle/tables/comments";
+=======
+import { commentsTableInsertSchema } from "~/src/drizzle/tables/comments";
+>>>>>>> upstream
 import { builder } from "~/src/graphql/builder";
 
 export const mutationUpdateCommentInputSchema = z
 	.object({
+<<<<<<< HEAD
 		/**
 		 * Body of the comment.
 		 * We persist the raw (trimmed) text and perform HTML escaping at output time
@@ -20,6 +25,9 @@ export const mutationUpdateCommentInputSchema = z
 			.transform((val) => val.trim())
 			.pipe(z.string().min(1).max(COMMENT_BODY_MAX_LENGTH))
 			.optional(),
+=======
+		body: commentsTableInsertSchema.shape.body.optional(),
+>>>>>>> upstream
 		id: commentsTableInsertSchema.shape.id.unwrap(),
 	})
 	.refine(
@@ -39,7 +47,10 @@ export const MutationUpdateCommentInput = builder
 		fields: (t) => ({
 			body: t.string({
 				description: "Body of the comment.",
+<<<<<<< HEAD
 				required: false,
+=======
+>>>>>>> upstream
 			}),
 			id: t.id({
 				description: "Global identifier of the comment.",

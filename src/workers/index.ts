@@ -7,6 +7,7 @@
  * - Functional worker modules: Direct access to functional components
  */
 
+<<<<<<< HEAD
 export {
 	cleanupOldGeneratedInstances,
 	extendGenerationWindow,
@@ -35,17 +36,57 @@ export {
 	createEventGenerationJobs,
 	type DiscoveredWorkload,
 	discoverEventGenerationWorkloads,
+=======
+export * from "./backgroundWorkerService";
+export * from "./eventCleanupWorker";
+
+// Functional worker API - imported directly from modules
+export {
+	runMaterializationWorker,
+	runSingleOrganizationWorker,
+	createDefaultWorkerConfig,
+	type WorkerConfig,
+	type WorkerResult,
+} from "./eventGeneration/eventGenerationPipeline";
+
+export {
+	executeEventGeneration,
+	executeBatchEventGeneration,
+	type EventGenerationJob,
+	type EventGenerationExecutionResult,
+} from "./eventGeneration/executionEngine";
+
+export {
+	discoverEventGenerationWorkloads,
+	createEventGenerationJobs,
+	createDefaultJobDiscoveryConfig,
+	type DiscoveredWorkload,
+>>>>>>> upstream
 	type JobDiscoveryConfig,
 } from "./eventGeneration/jobDiscovery";
 
 export {
+<<<<<<< HEAD
 	createDefaultPostProcessingConfig,
 	executePostProcessing,
+=======
+	initializeGenerationWindow,
+	extendGenerationWindow,
+	cleanupOldGeneratedInstances,
+	getCleanupStats,
+	validateWindowConfig,
+} from "../services/eventGeneration/windowManager";
+
+export {
+	executePostProcessing,
+	createDefaultPostProcessingConfig,
+>>>>>>> upstream
 	type PostProcessingConfig,
 	type PostProcessingResult,
 } from "./eventGeneration/postProcessor";
 
 export type {
+<<<<<<< HEAD
 	ProcessingMetrics,
 	ProcessingResult,
 	ResourceUsage,
@@ -60,3 +101,10 @@ export type {
 	OperationMetrics,
 	TimeSeriesMetrics,
 } from "./metrics/types";
+=======
+	WorkerDependencies,
+	ProcessingMetrics,
+	ResourceUsage,
+	ProcessingResult,
+} from "./eventGeneration/types";
+>>>>>>> upstream

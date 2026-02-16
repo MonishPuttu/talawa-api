@@ -15,15 +15,24 @@ It is important to test our code. If you are a contributor, please follow the gu
 
 All our workflows use Linux based commands, therefore if you are a developer who codes in Microsoft Windows then we strongly suggest that you use the Windows Subsystem for Linux (WSL) as your command line interface (CLI).
 
+<<<<<<< HEAD
 ### The `test/` Directory
 
 The `test/` directory contains the code for performing api tests against Talawa API. The tests in this directory and its various subdirectories must follow the practices of black box testing and most of them should be written to be able to run concurrently.
 
 1. Tests for files in the `src/` directory must only be placed in the equivalent subdirectory under the `test/` directory.
+=======
+### The `tests/` Directory
+
+The `tests/` directory contains the code for performing api tests against Talawa API. The tests in this directory and its various subdirectories must follow the practices of black box testing and most of them should be written to be able to run concurrently.
+
+1. Tests for files in the `src/` directory must only be placed in the equivalent subdirectory under the `tests/` directory.
+>>>>>>> upstream
 2. Test files must have a `.test.ts` extension.
 
 The rest of this page will assist you in being an active contributor to the code base.
 
+<<<<<<< HEAD
 ## Quick Start
 
 ### Running Tests
@@ -222,6 +231,8 @@ pnpm run validate:error-handling:fix
 - **Pre-commit Hook**: A pre-commit hook is configured via Lefthook to run validation before you commit, catching issues early.
 - **Scope**: The validator only scans modified files (not the entire codebase).
 
+=======
+>>>>>>> upstream
 ## Testing Philosophy
 
 Black box testing in this context means we test Talawa API from the perspective of a client making requests to it. This also means that we must only communicate with Talawa API during the tests with its publicly exposed interface.
@@ -240,13 +251,22 @@ The GraphQL schema cannot be tested without running the graphql server itself be
 
 The end users will be interacting with the graphql schema and not the typescript graphql resolvers. So, the tests should be written in a way that asserts against the runtime behavior of that graphql schema.
 
+<<<<<<< HEAD
+=======
+This does mean that code coverage is not possible because vitest cannot know what typescript module paths are being traversed inside the tests because at runtime those typescript modules are compiled into node.js(v8) internal implementation of byte code.
+>>>>>>> upstream
 
 #### Integration Testing
 
 Based on this design, we only do integration testing for GraphQL queries and mutations in these folders.
 
+<<<<<<< HEAD
 1. `src/graphql/types/Mutation`
 1. `src/graphql/types/Query`
+=======
+1. `src/Graphql/mutation`
+1. `src/Graphql/query`
+>>>>>>> upstream
 
 **NOTE:** No unit testing is done in these folders.
 
@@ -260,7 +280,11 @@ We only do unit testing the return type of the Graphql types resolver in these f
 
 ### Directory Structure
 
+<<<<<<< HEAD
 The `test/server.ts` file exports the Talawa API server instance that can be imported and used in different api tests. This Talawa API server instance is shared between api tests.
+=======
+The `tests/server.ts` file exports the Talawa API server instance that can be imported and used in different api tests. This Talawa API server instance is shared between api tests.
+>>>>>>> upstream
 
 There aren't any other strict structure requirements for the this directory.
 
@@ -1271,6 +1295,7 @@ Sometimes you may want to start all over again from scratch. These steps will re
    ```
 
 Now you can resume your development work.
+<<<<<<< HEAD
 
 ## Mock Isolation & Cleanup
 
@@ -1364,3 +1389,5 @@ afterEach(() => {
   vi.restoreAllMocks();
 });
 ```
+=======
+>>>>>>> upstream

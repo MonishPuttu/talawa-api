@@ -5,6 +5,7 @@ language: "en-US"
 early_access: false
 chat:
   auto_reply: true
+<<<<<<< HEAD
 issue_enrichment:
   auto_enrich:
     enabled: false
@@ -18,12 +19,21 @@ reviews:
   review_details: false
   auto_apply_labels: false
   suggested_labels: false
+=======
+reviews:
+  profile: "assertive"
+  poem: false
+  request_changes_workflow: true
+  high_level_summary: true
+  review_status: true
+>>>>>>> upstream
   collapse_walkthrough: false
   auto_review:
     enabled: true
     drafts: false
     base_branches:
       - develop
+<<<<<<< HEAD
       - main
   path_filters:
     - "!**/docs/docs/**"
@@ -408,3 +418,12 @@ reviews:
         - Prioritize substantive issues over minor stylistic suggestions
         - Focus on issues causing CI failures or production bugs
         - Post response as single easily readable comment
+=======
+      - develop
+      - main
+  path_filters:
+    - '!**/docs/docs/**'
+    - "!*.html"
+    - "!*.md"
+    - "!*.svg"
+>>>>>>> upstream

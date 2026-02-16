@@ -41,6 +41,7 @@ describe("chatMessageCreate subscription", () => {
 		const builderModule = await import("~/src/graphql/builder");
 		const builder = builderModule.builder;
 
+<<<<<<< HEAD
 		const fieldMock = vi
 			.fn()
 			.mockImplementation(
@@ -58,6 +59,23 @@ describe("chatMessageCreate subscription", () => {
 					return config;
 				},
 			);
+=======
+		const fieldMock = vi.fn().mockImplementation(
+			(config: {
+				description?: string;
+				subscribe?: (
+					parent: unknown,
+					args: { input: { id: string } },
+					context: GraphQLContext,
+					info: unknown,
+				) => Promise<unknown>;
+			}) => {
+				fieldDescription = config.description;
+				subscribeFunction = config.subscribe as typeof subscribeFunction;
+				return config;
+			},
+		);
+>>>>>>> upstream
 
 		const argMock = vi.fn().mockImplementation((config: unknown) => {
 			capturedArgConfig = config;
@@ -108,7 +126,11 @@ describe("chatMessageCreate subscription", () => {
 
 	it("throws unauthenticated when user id is missing", async () => {
 		ctx.currentClient.user = undefined;
+<<<<<<< HEAD
 		const validChatId = "11111111-1111-4111-8111-111111111111";
+=======
+		const validChatId = "11111111-1111-1111-1111-111111111111";
+>>>>>>> upstream
 
 		await expect(
 			subscribeFunction({}, { input: { id: validChatId } }, ctx, {}),
@@ -129,7 +151,11 @@ describe("chatMessageCreate subscription", () => {
 			organization: { membershipsWhereOrganization: [] },
 			chatMembershipsWhereChat: [],
 		});
+<<<<<<< HEAD
 		const validChatId = "22222222-2222-4222-8222-222222222222";
+=======
+		const validChatId = "22222222-2222-2222-2222-222222222222";
+>>>>>>> upstream
 
 		await expect(
 			subscribeFunction({}, { input: { id: validChatId } }, ctx, {}),
@@ -147,7 +173,11 @@ describe("chatMessageCreate subscription", () => {
 		(
 			ctx.drizzleClient.query.chatsTable.findFirst as ReturnType<typeof vi.fn>
 		).mockResolvedValue(undefined);
+<<<<<<< HEAD
 		const validChatId = "33333333-3333-4333-8333-333333333333";
+=======
+		const validChatId = "33333333-3333-3333-3333-333333333333";
+>>>>>>> upstream
 
 		await expect(
 			subscribeFunction({}, { input: { id: validChatId } }, ctx, {}),
@@ -171,7 +201,11 @@ describe("chatMessageCreate subscription", () => {
 			organization: { membershipsWhereOrganization: [] },
 			chatMembershipsWhereChat: [],
 		});
+<<<<<<< HEAD
 		const validChatId = "44444444-4444-4444-8444-444444444444";
+=======
+		const validChatId = "44444444-4444-4444-4444-444444444444";
+>>>>>>> upstream
 
 		await expect(
 			subscribeFunction({}, { input: { id: validChatId } }, ctx, {}),
@@ -195,7 +229,11 @@ describe("chatMessageCreate subscription", () => {
 			organization: { membershipsWhereOrganization: [{ role: "member" }] },
 			chatMembershipsWhereChat: [],
 		});
+<<<<<<< HEAD
 		const validChatId = "55555555-5555-4555-8555-555555555555";
+=======
+		const validChatId = "55555555-5555-5555-5555-555555555555";
+>>>>>>> upstream
 
 		await expect(
 			subscribeFunction({}, { input: { id: validChatId } }, ctx, {}),
@@ -221,7 +259,11 @@ describe("chatMessageCreate subscription", () => {
 		(ctx.pubsub.subscribe as ReturnType<typeof vi.fn>).mockResolvedValue(
 			"subscription-id",
 		);
+<<<<<<< HEAD
 		const validChatId = "66666666-6666-4666-8666-666666666666";
+=======
+		const validChatId = "66666666-6666-6666-6666-666666666666";
+>>>>>>> upstream
 
 		const result = await subscribeFunction(
 			{},
@@ -251,7 +293,11 @@ describe("chatMessageCreate subscription", () => {
 		(ctx.pubsub.subscribe as ReturnType<typeof vi.fn>).mockResolvedValue(
 			"subscription-id",
 		);
+<<<<<<< HEAD
 		const validChatId = "77777777-7777-4777-8777-777777777777";
+=======
+		const validChatId = "77777777-7777-7777-7777-777777777777";
+>>>>>>> upstream
 
 		const result = await subscribeFunction(
 			{},
@@ -279,7 +325,11 @@ describe("chatMessageCreate subscription", () => {
 		(ctx.pubsub.subscribe as ReturnType<typeof vi.fn>).mockResolvedValue(
 			"subscription-id",
 		);
+<<<<<<< HEAD
 		const validChatId = "88888888-8888-4888-8888-888888888888";
+=======
+		const validChatId = "88888888-8888-8888-8888-888888888888";
+>>>>>>> upstream
 
 		const result = await subscribeFunction(
 			{},

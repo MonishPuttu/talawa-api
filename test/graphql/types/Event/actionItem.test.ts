@@ -114,7 +114,11 @@ async function createEvent(organizationId: string) {
 				name: "Test Event for Action Items",
 				description: "An event for testing action items",
 				organizationId,
+<<<<<<< HEAD
 				startAt: new Date(Date.now() + 5 * 60 * 1000).toISOString(),
+=======
+				startAt: new Date().toISOString(),
+>>>>>>> upstream
 				endAt: new Date(Date.now() + 3600 * 1000).toISOString(),
 			},
 		},
@@ -225,7 +229,10 @@ suite("Event.actionItems", () => {
 			allDay: false,
 			isPublic: true,
 			isRegisterable: true,
+<<<<<<< HEAD
 			isInviteOnly: false,
+=======
+>>>>>>> upstream
 			location: "Test Location",
 			isRecurringEventTemplate: false,
 			attachments: [],
@@ -258,7 +265,10 @@ suite("Event.actionItems", () => {
 			allDay: false,
 			isPublic: true,
 			isRegisterable: true,
+<<<<<<< HEAD
 			isInviteOnly: false,
+=======
+>>>>>>> upstream
 			location: "Test Location",
 			isRecurringEventTemplate: false,
 			attachments: [],
@@ -294,7 +304,10 @@ suite("Event.actionItems", () => {
 			allDay: false,
 			isPublic: true,
 			isRegisterable: true,
+<<<<<<< HEAD
 			isInviteOnly: false,
+=======
+>>>>>>> upstream
 			location: "Test Location",
 			isRecurringEventTemplate: false,
 			attachments: [],
@@ -337,7 +350,10 @@ suite("Event.actionItems", () => {
 			allDay: false,
 			isPublic: true,
 			isRegisterable: true,
+<<<<<<< HEAD
 			isInviteOnly: false,
+=======
+>>>>>>> upstream
 			location: "Test Location",
 			isRecurringEventTemplate: false,
 			attachments: [],
@@ -382,7 +398,10 @@ suite("Event.actionItems", () => {
 			allDay: false,
 			isPublic: true,
 			isRegisterable: true,
+<<<<<<< HEAD
 			isInviteOnly: false,
+=======
+>>>>>>> upstream
 			location: "Test Location",
 			isRecurringEventTemplate: false,
 			attachments: [],
@@ -432,7 +451,10 @@ suite("Event.actionItems", () => {
 			allDay: false,
 			isPublic: true,
 			isRegisterable: true,
+<<<<<<< HEAD
 			isInviteOnly: false,
+=======
+>>>>>>> upstream
 			location: "Test Location",
 			isRecurringEventTemplate: false,
 			baseRecurringEventId,
@@ -476,7 +498,10 @@ suite("Event.actionItems", () => {
 			allDay: false,
 			isPublic: true,
 			isRegisterable: true,
+<<<<<<< HEAD
 			isInviteOnly: false,
+=======
+>>>>>>> upstream
 			location: "Test Location",
 			isRecurringEventTemplate: false,
 			baseRecurringEventId: null, // falsy value
@@ -520,7 +545,10 @@ suite("Event.actionItems", () => {
 			allDay: false,
 			isPublic: true,
 			isRegisterable: true,
+<<<<<<< HEAD
 			isInviteOnly: false,
+=======
+>>>>>>> upstream
 			location: "Test Location",
 			isRecurringEventTemplate: false,
 			attachments: [],
@@ -565,7 +593,10 @@ suite("Event.actionItems", () => {
 			allDay: false,
 			isPublic: true,
 			isRegisterable: true,
+<<<<<<< HEAD
 			isInviteOnly: false,
+=======
+>>>>>>> upstream
 			location: "Test Location",
 			isRecurringEventTemplate: false,
 			baseRecurringEventId,
@@ -613,7 +644,10 @@ suite("Event.actionItems", () => {
 			allDay: false,
 			isPublic: true,
 			isRegisterable: true,
+<<<<<<< HEAD
 			isInviteOnly: false,
+=======
+>>>>>>> upstream
 			location: "Test Location",
 			isRecurringEventTemplate: false,
 			attachments: [],
@@ -657,7 +691,10 @@ suite("Event.actionItems", () => {
 			allDay: false,
 			isPublic: true,
 			isRegisterable: true,
+<<<<<<< HEAD
 			isInviteOnly: false,
+=======
+>>>>>>> upstream
 			location: "Test Location",
 			isRecurringEventTemplate: false,
 			attachments: [],
@@ -777,7 +814,10 @@ suite("Event.actionItems", () => {
 			allDay: false,
 			isPublic: true,
 			isRegisterable: true,
+<<<<<<< HEAD
 			isInviteOnly: false,
+=======
+>>>>>>> upstream
 			location: "Test Location",
 			isRecurringEventTemplate: false,
 			attachments: [],

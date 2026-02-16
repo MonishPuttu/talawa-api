@@ -2,8 +2,13 @@ import { createMockGraphQLContext } from "test/_Mocks_/mockContextCreator/mockCo
 import { beforeEach, describe, expect, it } from "vitest";
 import type { ResolvedRecurringEventInstance } from "~/src/drizzle/tables/recurringEventInstances";
 import type { GraphQLContext } from "~/src/graphql/context";
+<<<<<<< HEAD
 import { userEventsAttendedResolver } from "~/src/graphql/types/User/eventsAttended";
 import type { User as UserType } from "~/src/graphql/types/User/User";
+=======
+import type { User as UserType } from "~/src/graphql/types/User/User";
+import { userEventsAttendedResolver } from "~/src/graphql/types/User/eventsAttended";
+>>>>>>> upstream
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 
 describe("User EventsAttended Resolver Tests", () => {
@@ -30,6 +35,7 @@ describe("User EventsAttended Resolver Tests", () => {
 		} as UserType;
 	});
 
+<<<<<<< HEAD
 	describe("Authentication", () => {
 		it("should throw unauthenticated error when user is not authenticated", async () => {
 			const { context: unauthCtx } = createMockGraphQLContext(false);
@@ -50,6 +56,8 @@ describe("User EventsAttended Resolver Tests", () => {
 		});
 	});
 
+=======
+>>>>>>> upstream
 	describe("Empty Attendances", () => {
 		it("should return empty array when user has no event attendances", async () => {
 			mocks.drizzleClient.query.eventAttendeesTable.findMany.mockResolvedValue(
@@ -64,11 +72,15 @@ describe("User EventsAttended Resolver Tests", () => {
 			).toHaveBeenCalledWith({
 				where: expect.any(Object), // eq() function result
 				with: {
+<<<<<<< HEAD
 					event: {
 						with: {
 							attachmentsWhereEvent: true,
 						},
 					},
+=======
+					event: true,
+>>>>>>> upstream
 					recurringEventInstance: {
 						with: {
 							baseRecurringEvent: true,
@@ -160,6 +172,7 @@ describe("User EventsAttended Resolver Tests", () => {
 				expect(event?.attachments).toEqual([]);
 			}
 		});
+<<<<<<< HEAD
 
 		it("should handle standalone events with undefined attachmentsWhereEvent", async () => {
 			const mockAttendances = [
@@ -271,6 +284,8 @@ describe("User EventsAttended Resolver Tests", () => {
 			expect(result[0]?.attachments[1]?.name).toBe("image.png");
 			expect(result[0]?.attachments[1]?.mimeType).toBe("image/png");
 		});
+=======
+>>>>>>> upstream
 	});
 
 	describe("Recurring Event Instance Attendances", () => {

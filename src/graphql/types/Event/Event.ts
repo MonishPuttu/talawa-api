@@ -7,7 +7,10 @@ import {
 } from "~/src/graphql/types/EventAttachment/EventAttachment";
 import { RecurrenceRule } from "~/src/graphql/types/RecurrenceRule/RecurrenceRule";
 import { formatRecurrenceDescription } from "~/src/utilities/recurrenceFormatter";
+<<<<<<< HEAD
 import { escapeHTML } from "~/src/utilities/sanitizer";
+=======
+>>>>>>> upstream
 
 // Unified Event type supporting both standalone events and materialized instances
 export type Event =
@@ -22,6 +25,7 @@ Event.implement({
 	description:
 		"Represents an event, which can be a standalone occurrence or a materialized instance of a recurring series. This unified type allows for consistent handling of all events.",
 	fields: (t) => ({
+<<<<<<< HEAD
 		attachments: t.field({
 			description:
 				"A list of attachments associated with the event, such as images or documents. For generated instances, this falls back to the base event's attachments if none are specific to the instance.",
@@ -58,6 +62,16 @@ Event.implement({
 			nullable: true,
 			resolve: (event) =>
 				event.description ? escapeHTML(event.description) : null,
+=======
+		attachments: t.expose("attachments", {
+			description:
+				"A list of attachments associated with the event, such as images or documents.",
+			type: t.listRef(EventAttachment),
+		}),
+		description: t.exposeString("description", {
+			description:
+				"A detailed description of the event, providing custom information and context.",
+>>>>>>> upstream
 		}),
 		endAt: t.field({
 			description:
@@ -71,9 +85,14 @@ Event.implement({
 				"The unique global identifier for the event. For recurring instances, this ID refers to the specific materialized instance.",
 			nullable: false,
 		}),
+<<<<<<< HEAD
 		name: t.string({
 			description: "The name or title of the event.",
 			resolve: (event) => escapeHTML(event.name),
+=======
+		name: t.exposeString("name", {
+			description: "The name or title of the event.",
+>>>>>>> upstream
 		}),
 		startAt: t.field({
 			description:
@@ -87,9 +106,12 @@ Event.implement({
 			description:
 				"A boolean flag indicating if the event lasts for the entire day.",
 		}),
+<<<<<<< HEAD
 		isInviteOnly: t.exposeBoolean("isInviteOnly", {
 			description: "A boolean flag indicating if the event is invite-only.",
 		}),
+=======
+>>>>>>> upstream
 		isPublic: t.exposeBoolean("isPublic", {
 			description:
 				"A boolean flag indicating if the event is visible to the public.",
@@ -108,11 +130,14 @@ Event.implement({
 			resolve: (event) =>
 				"isRecurringEventTemplate" in event && event.isRecurringEventTemplate,
 		}),
+<<<<<<< HEAD
 		isCancelled: t.boolean({
 			description:
 				"A boolean flag indicating if this instance has been cancelled.",
 			resolve: (event) => "isCancelled" in event && !!event.isCancelled,
 		}),
+=======
+>>>>>>> upstream
 		baseEvent: t.field({
 			description:
 				"The base event from which this materialized instance was generated.",
@@ -156,9 +181,15 @@ Event.implement({
 					const sequence = event.sequenceNumber;
 					const total = event.totalCount;
 					if (total) {
+<<<<<<< HEAD
 						return escapeHTML(`${sequence} of ${total}`);
 					}
 					return escapeHTML(`#${sequence}`);
+=======
+						return `${sequence} of ${total}`;
+					}
+					return `#${sequence}`;
+>>>>>>> upstream
 				}
 				return null;
 			},
@@ -244,6 +275,7 @@ Event.implement({
 					return null;
 				}
 
+<<<<<<< HEAD
 				return escapeHTML(formatRecurrenceDescription(recurrenceRule));
 			},
 		}),
@@ -272,5 +304,10 @@ Event.implement({
 					? event.baseRecurringEventId
 					: null,
 		}),
+=======
+				return formatRecurrenceDescription(recurrenceRule);
+			},
+		}),
+>>>>>>> upstream
 	}),
 });

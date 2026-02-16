@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 import { ulid } from "ulidx";
+=======
+>>>>>>> upstream
 import { uuidv7 } from "uuidv7";
 import { z } from "zod";
 import { postAttachmentsTable } from "~/src/drizzle/tables/postAttachments";
@@ -10,11 +13,17 @@ import {
 } from "~/src/graphql/inputs/MutationCreatePostInput";
 import { notificationEventBus } from "~/src/graphql/types/Notification/EventBus/eventBus";
 import { Post } from "~/src/graphql/types/Post/Post";
+<<<<<<< HEAD
 import { zParseOrThrow } from "~/src/graphql/validators/helpers";
 import { getKeyPathsWithNonUndefinedValues } from "~/src/utilities/getKeyPathsWithNonUndefinedValues";
 import envConfig from "~/src/utilities/graphqLimits";
 import { isNotNullish } from "~/src/utilities/isNotNullish";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import { getKeyPathsWithNonUndefinedValues } from "~/src/utilities/getKeyPathsWithNonUndefinedValues";
+import envConfig from "~/src/utilities/graphqLimits";
+>>>>>>> upstream
 
 const mutationCreatePostArgumentsSchema = z.object({
 	input: mutationCreatePostInputSchema,
@@ -40,10 +49,30 @@ builder.mutationField("createPost", (t) =>
 				});
 			}
 
+<<<<<<< HEAD
 			const parsedArgs = await zParseOrThrow(
 				mutationCreatePostArgumentsSchema,
 				args,
 			);
+=======
+			const {
+				data: parsedArgs,
+				error,
+				success,
+			} = await mutationCreatePostArgumentsSchema.safeParseAsync(args);
+
+			if (!success) {
+				throw new TalawaGraphQLError({
+					extensions: {
+						code: "invalid_arguments",
+						issues: error.issues.map((issue) => ({
+							argumentPath: issue.path,
+							message: issue.message,
+						})),
+					},
+				});
+			}
+>>>>>>> upstream
 
 			const currentUserId = ctx.currentClient.user.id;
 
@@ -137,7 +166,10 @@ builder.mutationField("createPost", (t) =>
 					.values({
 						creatorId: currentUserId,
 						caption: parsedArgs.input.caption,
+<<<<<<< HEAD
 						body: parsedArgs.input.body,
+=======
+>>>>>>> upstream
 						pinnedAt:
 							parsedArgs.input.isPinned === undefined ||
 							parsedArgs.input.isPinned === false
@@ -157,6 +189,7 @@ builder.mutationField("createPost", (t) =>
 					});
 				}
 
+<<<<<<< HEAD
 				// Handle direct file upload
 				let createdAttachment: typeof postAttachmentsTable.$inferSelect | null =
 					null;
@@ -223,6 +256,39 @@ builder.mutationField("createPost", (t) =>
 					attachments: createdAttachment ? [createdAttachment] : [],
 				});
 
+=======
+				let finalPost: typeof createdPost & {
+					attachments: (typeof postAttachmentsTable.$inferSelect)[];
+				};
+
+				if (parsedArgs.input.attachments !== undefined) {
+					const attachments = parsedArgs.input.attachments;
+
+					const createdPostAttachments = await tx
+						.insert(postAttachmentsTable)
+						.values(
+							attachments.map((attachment) => ({
+								creatorId: currentUserId,
+								mimeType: attachment.mimetype,
+								id: uuidv7(),
+								name: attachment.name,
+								postId: createdPost.id,
+								objectName: attachment.objectName,
+								fileHash: attachment.fileHash,
+							})),
+						)
+						.returning();
+
+					finalPost = Object.assign(createdPost, {
+						attachments: createdPostAttachments,
+					});
+				} else {
+					finalPost = Object.assign(createdPost, {
+						attachments: [],
+					});
+				}
+
+>>>>>>> upstream
 				notificationEventBus.emitPostCreated(
 					{
 						postId: createdPost.id,

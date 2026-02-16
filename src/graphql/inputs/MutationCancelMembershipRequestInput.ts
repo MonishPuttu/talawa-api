@@ -1,9 +1,15 @@
 import { z } from "zod";
 import { builder } from "~/src/graphql/builder";
+<<<<<<< HEAD
 import { uuid } from "~/src/graphql/validators/core";
 
 export const cancelMembershipRequestInputSchema = z.object({
 	membershipRequestId: uuid,
+=======
+
+export const cancelMembershipRequestInputSchema = z.object({
+	membershipRequestId: z.string().uuid(),
+>>>>>>> upstream
 });
 
 export const MutationCancelMembershipRequestInput = builder

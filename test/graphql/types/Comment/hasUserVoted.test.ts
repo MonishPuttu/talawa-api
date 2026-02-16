@@ -164,7 +164,11 @@ async function createTestComment(creatorId: string): Promise<{
 	const [organizationRow] = await server.drizzleClient
 		.insert(organizationsTable)
 		.values({
+<<<<<<< HEAD
 			name: `${faker.company.name()} ${faker.string.ulid()}`,
+=======
+			name: faker.company.name(),
+>>>>>>> upstream
 			countryCode: "us",
 			userRegistrationRequired: false,
 		})
@@ -646,7 +650,11 @@ suite("Comment: hasUserVoted field", () => {
 		const [organizationRow] = await server.drizzleClient
 			.insert(organizationsTable)
 			.values({
+<<<<<<< HEAD
 				name: `${faker.company.name()} ${faker.string.ulid()}`,
+=======
+				name: faker.company.name(),
+>>>>>>> upstream
 				countryCode: "us",
 				userRegistrationRequired: false,
 			})
@@ -731,7 +739,11 @@ suite("Comment: hasUserVoted field", () => {
 		const [organizationRow] = await server.drizzleClient
 			.insert(organizationsTable)
 			.values({
+<<<<<<< HEAD
 				name: `${faker.company.name()} ${faker.string.ulid()}`,
+=======
+				name: faker.company.name(),
+>>>>>>> upstream
 				countryCode: "us",
 				userRegistrationRequired: false,
 			})

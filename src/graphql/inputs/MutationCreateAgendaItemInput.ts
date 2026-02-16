@@ -1,14 +1,22 @@
+<<<<<<< HEAD
 import { z } from "zod";
 import { postAttachmentMimeTypeEnum } from "~/src/drizzle/enums/postAttachmentMimeType";
 import { agendaItemsTableInsertSchema } from "~/src/drizzle/tables/agendaItems";
 import { builder } from "~/src/graphql/builder";
 import { AgendaItemType } from "~/src/graphql/enums/AgendaItemType";
 import { PostAttachmentMimeType } from "../enums/PostAttachmentMimeType";
+=======
+import type { z } from "zod";
+import { agendaItemsTableInsertSchema } from "~/src/drizzle/tables/agendaItems";
+import { builder } from "~/src/graphql/builder";
+import { AgendaItemType } from "~/src/graphql/enums/AgendaItemType";
+>>>>>>> upstream
 
 export const mutationCreateAgendaItemInputSchema = agendaItemsTableInsertSchema
 	.pick({
 		description: true,
 		duration: true,
+<<<<<<< HEAD
 		eventId: true,
 		folderId: true,
 		categoryId: true,
@@ -41,6 +49,13 @@ export const mutationCreateAgendaItemInputSchema = agendaItemsTableInsertSchema
 			.max(10)
 			.optional(),
 	})
+=======
+		folderId: true,
+		key: true,
+		name: true,
+		type: true,
+	})
+>>>>>>> upstream
 	.superRefine((arg, ctx) => {
 		if (arg.type === "note") {
 			if (arg.duration !== undefined && arg.key !== undefined) {
@@ -60,7 +75,11 @@ export const mutationCreateAgendaItemInputSchema = agendaItemsTableInsertSchema
 					message: `Cannot be provided for an agenda item of type "${arg.type}".`,
 					path: ["duration"],
 				});
+<<<<<<< HEAD
 			} else if (arg.key !== undefined) {
+=======
+			} else {
+>>>>>>> upstream
 				ctx.addIssue({
 					code: "custom",
 					message: `Cannot be provided for an agenda item of type "${arg.type}".`,
@@ -81,6 +100,7 @@ export const mutationCreateAgendaItemInputSchema = agendaItemsTableInsertSchema
 		}
 	});
 
+<<<<<<< HEAD
 const AgendaItemUrlInput = builder.inputType("AgendaItemUrlInput", {
 	description: "URL associated with an agenda item",
 	fields: (t) => ({
@@ -107,11 +127,14 @@ const AgendaItemAttachmentInput = builder.inputType(
 	},
 );
 
+=======
+>>>>>>> upstream
 export const MutationCreateAgendaItemInput = builder
 	.inputRef<z.infer<typeof mutationCreateAgendaItemInputSchema>>(
 		"MutationCreateAgendaItemInput",
 	)
 	.implement({
+<<<<<<< HEAD
 		description: "Input type for creating a new agenda item.",
 		fields: (t) => ({
 			attachments: t.field({
@@ -136,6 +159,20 @@ export const MutationCreateAgendaItemInput = builder
 			folderId: t.id({
 				description:
 					"Global identifier of the agenda folder the agenda item is associated to.",
+=======
+		description: "",
+		fields: (t) => ({
+			description: t.string({
+				description: "Custom information about the agenda item.",
+			}),
+			duration: t.string({
+				description: "Duration of the agenda item.",
+			}),
+			folderId: t.id({
+				description:
+					"Global identifier of the agenda folder the agenda item is associated to.",
+				required: true,
+>>>>>>> upstream
 			}),
 			key: t.string({
 				description: `Key of the agenda item if it's of a "song" type. More information at [this](https://en.wikipedia.org/wiki/Key_(music)) link.`,
@@ -144,6 +181,7 @@ export const MutationCreateAgendaItemInput = builder
 				description: "Name of the agenda item.",
 				required: true,
 			}),
+<<<<<<< HEAD
 			notes: t.string({
 				description: "Notes for the agenda item",
 				required: false,
@@ -152,15 +190,20 @@ export const MutationCreateAgendaItemInput = builder
 				description: "Sequence of the AgendaItem.",
 				required: true,
 			}),
+=======
+>>>>>>> upstream
 			type: t.field({
 				description: "Type of the agenda item.",
 				required: true,
 				type: AgendaItemType,
 			}),
+<<<<<<< HEAD
 			url: t.field({
 				description: "URLs associated with the agenda item.",
 				type: [AgendaItemUrlInput],
 				required: false,
 			}),
+=======
+>>>>>>> upstream
 		}),
 	});

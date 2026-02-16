@@ -47,10 +47,18 @@ suite("Query field getEventInvitesByUserId", () => {
 							issues: expect.arrayContaining([
 								expect.objectContaining({
 									argumentPath: ["userId"],
+<<<<<<< HEAD
 									message: "Invalid UUID",
 								}),
 							]),
 						}),
+=======
+									message: "Invalid uuid",
+								}),
+							]),
+						}),
+						path: ["getEventInvitesByUserId"],
+>>>>>>> upstream
 					}),
 				]),
 			);

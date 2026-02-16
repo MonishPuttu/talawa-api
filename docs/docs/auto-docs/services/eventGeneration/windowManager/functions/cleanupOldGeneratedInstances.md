@@ -35,4 +35,8 @@ The logger for logging debug and error messages.
 
 `Promise`\<`number`\>
 
+<<<<<<< HEAD
 - A promise that resolves to the number of deleted instances.
+=======
+A promise that resolves to the number of deleted instances.
+>>>>>>> upstream

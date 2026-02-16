@@ -3,8 +3,13 @@ import { z } from "zod";
 import { membershipRequestsTable } from "~/src/drizzle/tables/membershipRequests";
 import { builder } from "~/src/graphql/builder";
 import {
+<<<<<<< HEAD
 	cancelMembershipRequestInputSchema,
 	MutationCancelMembershipRequestInput,
+=======
+	MutationCancelMembershipRequestInput,
+	cancelMembershipRequestInputSchema,
+>>>>>>> upstream
 } from "~/src/graphql/inputs/MutationCancelMembershipRequestInput";
 import { CancelMembershipResponse } from "~/src/graphql/types/Organization/CancelMembershipResponse";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";

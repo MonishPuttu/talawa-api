@@ -36,7 +36,11 @@ jobs:
 
     steps:
     - name: Checkout repository
+<<<<<<< HEAD
       uses: actions/checkout@v4
+=======
+      uses: actions/checkout@v4.2.2
+>>>>>>> upstream
 
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v4

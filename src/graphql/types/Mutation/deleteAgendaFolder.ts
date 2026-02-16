@@ -1,16 +1,24 @@
 import { eq } from "drizzle-orm";
 import { z } from "zod";
 import { agendaFoldersTable } from "~/src/drizzle/tables/agendaFolders";
+<<<<<<< HEAD
 import { agendaItemsTable } from "~/src/drizzle/tables/agendaItems";
+=======
+>>>>>>> upstream
 import { builder } from "~/src/graphql/builder";
 import {
 	MutationDeleteAgendaFolderInput,
 	mutationDeleteAgendaFolderInputSchema,
 } from "~/src/graphql/inputs/MutationDeleteAgendaFolderInput";
 import { AgendaFolder } from "~/src/graphql/types/AgendaFolder/AgendaFolder";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+>>>>>>> upstream
 const mutationDeleteAgendaFolderArgumentsSchema = z.object({
 	input: mutationDeleteAgendaFolderInputSchema,
 });
@@ -64,8 +72,12 @@ builder.mutationField("deleteAgendaFolder", (t) =>
 				}),
 				ctx.drizzleClient.query.agendaFoldersTable.findFirst({
 					columns: {
+<<<<<<< HEAD
 						isDefaultFolder: true,
 						eventId: true,
+=======
+						isAgendaItemFolder: true,
+>>>>>>> upstream
 					},
 					with: {
 						event: {
@@ -116,6 +128,7 @@ builder.mutationField("deleteAgendaFolder", (t) =>
 				});
 			}
 
+<<<<<<< HEAD
 			if (existingAgendaFolder.isDefaultFolder) {
 				throw new TalawaGraphQLError({
 					extensions: {
@@ -130,6 +143,8 @@ builder.mutationField("deleteAgendaFolder", (t) =>
 				});
 			}
 
+=======
+>>>>>>> upstream
 			const currentUserOrganizationMembership =
 				existingAgendaFolder.event.organization.membershipsWhereOrganization[0];
 
@@ -150,6 +165,7 @@ builder.mutationField("deleteAgendaFolder", (t) =>
 				});
 			}
 
+<<<<<<< HEAD
 			return await ctx.drizzleClient.transaction(async (tx) => {
 				const defaultFolder = await tx.query.agendaFoldersTable.findFirst({
 					columns: { id: true },
@@ -192,6 +208,23 @@ builder.mutationField("deleteAgendaFolder", (t) =>
 
 				return deletedAgendaFolder;
 			});
+=======
+			const [deletedAgendaFolder] = await ctx.drizzleClient
+				.delete(agendaFoldersTable)
+				.where(eq(agendaFoldersTable.id, parsedArgs.input.id))
+				.returning();
+
+			// Deleted agenda folder not being returned means that either it was deleted or its `id` column was changed by external entities before this delete operation could take place.
+			if (deletedAgendaFolder === undefined) {
+				throw new TalawaGraphQLError({
+					extensions: {
+						code: "unexpected",
+					},
+				});
+			}
+
+			return deletedAgendaFolder;
+>>>>>>> upstream
 		},
 		type: AgendaFolder,
 	}),

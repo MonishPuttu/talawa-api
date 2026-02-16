@@ -1,5 +1,9 @@
 import { faker } from "@faker-js/faker";
 import { afterAll, beforeAll, expect, suite, test } from "vitest";
+<<<<<<< HEAD
+=======
+import { organizationMembershipRoleEnum } from "~/src/drizzle/enums/organizationMembershipRole";
+>>>>>>> upstream
 import { assertToBeNonNullish } from "../../../helpers";
 import { server } from "../../../server";
 import { mercuriusClient } from "../client";
@@ -429,7 +433,11 @@ suite("Organization Members Query", () => {
 					first: 5,
 					where: {
 						role: {
+<<<<<<< HEAD
 							equal: "administrator",
+=======
+							equal: organizationMembershipRoleEnum.Values.administrator,
+>>>>>>> upstream
 						},
 					},
 				},
@@ -455,7 +463,11 @@ suite("Organization Members Query", () => {
 					first: 5,
 					where: {
 						role: {
+<<<<<<< HEAD
 							notEqual: "administrator",
+=======
+							notEqual: organizationMembershipRoleEnum.Values.administrator,
+>>>>>>> upstream
 						},
 					},
 				},

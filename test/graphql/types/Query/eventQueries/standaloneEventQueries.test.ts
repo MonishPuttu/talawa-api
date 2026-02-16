@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 import type { Mock } from "vitest";
 import { afterEach, describe, expect, it, vi } from "vitest";
+=======
+import { afterEach, describe, expect, it, vi } from "vitest";
+import type { Mock } from "vitest";
+>>>>>>> upstream
 import {
 	getStandaloneEventsByIds,
 	getStandaloneEventsInDateRange,
@@ -173,6 +178,7 @@ describe("getStandaloneEventsByIds", () => {
 			"Failed to retrieve standalone events by IDs",
 		);
 	});
+<<<<<<< HEAD
 
 	it("returns empty array immediately if eventIds is empty", async () => {
 		const { drizzle, findManyMock } = makeDrizzle();
@@ -229,4 +235,6 @@ describe("getStandaloneEventsByIds", () => {
 			}),
 		);
 	});
+=======
+>>>>>>> upstream
 });

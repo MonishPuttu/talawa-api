@@ -2,14 +2,22 @@ import type { EventGenerationExecutionResult } from "./executionEngine";
 import type { ProcessingMetrics, WorkerDependencies } from "./types";
 
 /**
+<<<<<<< HEAD
  * Configuration for post-processing operations, allowing features like cleanup to be toggled.
+=======
+ * @description Configuration for post-processing operations, allowing features like cleanup to be toggled.
+>>>>>>> upstream
  */
 export interface PostProcessingConfig {
 	enableCleanup: boolean;
 }
 
 /**
+<<<<<<< HEAD
  * Represents the result of post-processing operations, including whether cleanup was performed and any errors encountered.
+=======
+ * @description Represents the result of post-processing operations, including whether cleanup was performed and any errors encountered.
+>>>>>>> upstream
  */
 export interface PostProcessingResult {
 	cleanupPerformed: boolean;
@@ -25,11 +33,19 @@ export interface PostProcessingResult {
  * @param metrics - The metrics collected during the materialization process.
  * @param config - The configuration for post-processing.
  * @param deps - The dependencies required for the worker.
+<<<<<<< HEAD
  * @returns - A promise that resolves to the result of the post-processing operations.
  */
 export async function executePostProcessing(
 	executionResults: EventGenerationExecutionResult[],
 	_metrics: ProcessingMetrics,
+=======
+ * @returns A promise that resolves to the result of the post-processing operations.
+ */
+export async function executePostProcessing(
+	executionResults: EventGenerationExecutionResult[],
+	metrics: ProcessingMetrics,
+>>>>>>> upstream
 	config: PostProcessingConfig,
 	deps: WorkerDependencies,
 ): Promise<PostProcessingResult> {
@@ -91,7 +107,11 @@ async function performCleanupOperations(
 /**
  * Creates a default configuration object for post-processing operations.
  *
+<<<<<<< HEAD
  * @returns - A default post-processing configuration.
+=======
+ * @returns A default post-processing configuration.
+>>>>>>> upstream
  */
 export function createDefaultPostProcessingConfig(): PostProcessingConfig {
 	return {

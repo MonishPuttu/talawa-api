@@ -12,6 +12,7 @@ vi.mock("~/src/plugin/registry", () => ({
 	getPluginManagerInstance: vi.fn(),
 }));
 
+<<<<<<< HEAD
 import { rootLogger } from "~/src/utilities/logging/logger";
 
 // Mock rootLogger
@@ -24,6 +25,8 @@ vi.mock("~/src/utilities/logging/logger", () => ({
 	},
 }));
 
+=======
+>>>>>>> upstream
 // Mock core schema imports to prevent them from using the real builder
 vi.mock("~/src/graphql/scalars/index", () => ({}));
 vi.mock("~/src/graphql/enums/index", () => ({}));
@@ -606,6 +609,7 @@ describe("GraphQLSchemaManager", () => {
 				false;
 		});
 
+<<<<<<< HEAD
 		it("should return current schema when rebuild is in progress and schema exists (covers lines 67-68)", async () => {
 			const mockSchema = { kind: "Document" } as unknown as GraphQLSchema;
 
@@ -625,6 +629,8 @@ describe("GraphQLSchemaManager", () => {
 				false;
 		});
 
+=======
+>>>>>>> upstream
 		it("should handle rebuild errors gracefully", async () => {
 			vi.mocked(builder).toSchema.mockImplementation(() => {
 				throw new Error("Schema build failed");
@@ -792,6 +798,7 @@ describe("GraphQLSchemaManager", () => {
 			await setupPluginListeners();
 			// Should not throw
 		});
+<<<<<<< HEAD
 
 		it("should call rebuildSchema when schema:rebuild event is fired (covers line 29)", async () => {
 			const mockSchema = {} as GraphQLSchema;
@@ -904,6 +911,8 @@ describe("GraphQLSchemaManager", () => {
 			expect(rebuildSchemaSpy).toHaveBeenCalled();
 			rebuildSchemaSpy.mockRestore();
 		});
+=======
+>>>>>>> upstream
 	});
 
 	describe("Current Schema Management", () => {
@@ -930,6 +939,7 @@ describe("GraphQLSchemaManager", () => {
 	});
 
 	describe("Error Handling", () => {
+<<<<<<< HEAD
 		let loggerSpy: ReturnType<typeof vi.spyOn>;
 
 		beforeEach(() => {
@@ -940,6 +950,16 @@ describe("GraphQLSchemaManager", () => {
 
 		afterEach(() => {
 			loggerSpy.mockRestore();
+=======
+		let consoleSpy: ReturnType<typeof vi.spyOn>;
+
+		beforeEach(() => {
+			consoleSpy = vi.spyOn(console, "log").mockImplementation(() => {});
+		});
+
+		afterEach(() => {
+			consoleSpy.mockRestore();
+>>>>>>> upstream
 		});
 
 		it("should handle missing plugin manager during extension registration", async () => {
@@ -952,7 +972,11 @@ describe("GraphQLSchemaManager", () => {
 			).registerActivePluginExtensions.bind(schemaManager);
 			await registerActivePluginExtensions();
 
+<<<<<<< HEAD
 			expect(loggerSpy).toHaveBeenCalledWith(
+=======
+			expect(consoleSpy).toHaveBeenCalledWith(
+>>>>>>> upstream
 				"Plugin Manager Not Available or Not Initialized",
 			);
 		});
@@ -967,7 +991,11 @@ describe("GraphQLSchemaManager", () => {
 			).registerActivePluginExtensions.bind(schemaManager);
 			await registerActivePluginExtensions();
 
+<<<<<<< HEAD
 			expect(loggerSpy).toHaveBeenCalledWith(
+=======
+			expect(consoleSpy).toHaveBeenCalledWith(
+>>>>>>> upstream
 				"Plugin Manager Not Available or Not Initialized",
 			);
 		});
@@ -983,13 +1011,20 @@ describe("GraphQLSchemaManager", () => {
 			).registerActivePluginExtensions.bind(schemaManager);
 			await registerActivePluginExtensions();
 
+<<<<<<< HEAD
 			expect(loggerSpy).toHaveBeenCalledWith(
+=======
+			expect(consoleSpy).toHaveBeenCalledWith(
+>>>>>>> upstream
 				"No plugins loaded, skipping plugin extension registration",
 			);
 		});
 
 		it("should log when plugin types file is not found", async () => {
+<<<<<<< HEAD
 			const debugSpy = vi.spyOn(rootLogger, "debug");
+=======
+>>>>>>> upstream
 			const mockBuilderFunction = vi.fn();
 			const mockExtensionRegistry: IExtensionRegistry = {
 				graphql: {
@@ -1041,6 +1076,7 @@ describe("GraphQLSchemaManager", () => {
 			).registerActivePluginExtensions.bind(schemaManager);
 			await registerActivePluginExtensions();
 
+<<<<<<< HEAD
 			expect(debugSpy).toHaveBeenCalledWith(
 				expect.objectContaining({ pluginId: "test_plugin" }),
 				"No types file found for plugin",
@@ -1053,6 +1089,14 @@ describe("GraphQLSchemaManager", () => {
 				"Registered builder extension",
 			);
 			debugSpy.mockRestore();
+=======
+			expect(consoleSpy).toHaveBeenCalledWith(
+				"No types file found for plugin test_plugin",
+			);
+			expect(consoleSpy).toHaveBeenCalledWith(
+				"Registered builder extension: test_plugin.getTestData",
+			);
+>>>>>>> upstream
 		});
 
 		it("should log successful builder extension registration", async () => {
@@ -1107,12 +1151,17 @@ describe("GraphQLSchemaManager", () => {
 			).registerActivePluginExtensions.bind(schemaManager);
 			await registerActivePluginExtensions();
 
+<<<<<<< HEAD
 			expect(loggerSpy).toHaveBeenCalledWith(
 				expect.objectContaining({
 					pluginId: "test_plugin",
 					fieldName: "getTestData",
 				}),
 				"Registered builder extension",
+=======
+			expect(consoleSpy).toHaveBeenCalledWith(
+				"Registered builder extension: test_plugin.getTestData",
+>>>>>>> upstream
 			);
 		});
 	});

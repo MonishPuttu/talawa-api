@@ -10,7 +10,10 @@ import {
 } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { uuidv7 } from "uuidv7";
+<<<<<<< HEAD
 import { z } from "zod";
+=======
+>>>>>>> upstream
 import { fundCampaignsTable } from "./fundCampaigns";
 import { usersTable } from "./users";
 
@@ -132,6 +135,7 @@ export const fundCampaignPledgesTableRelations = relations(
 	}),
 );
 
+<<<<<<< HEAD
 export const NOTE_MAX_LENGTH = 2048;
 
 export const fundCampaignPledgesTableInsertSchema = createInsertSchema(
@@ -141,5 +145,12 @@ export const fundCampaignPledgesTableInsertSchema = createInsertSchema(
 		note: () => z.string().min(1).max(NOTE_MAX_LENGTH).nullish(),
 		creatorId: () => z.string().uuid().nullish(),
 		updaterId: () => z.string().uuid().nullish(),
+=======
+export const fundCampaignPledgesTableInsertSchema = createInsertSchema(
+	fundCampaignPledgesTable,
+	{
+		amount: (schema) => schema.min(1),
+		note: (schema) => schema.min(1).max(2048).optional(),
+>>>>>>> upstream
 	},
 );

@@ -7,9 +7,12 @@ export const mutationUpdateFundInputSchema = z
 		isTaxDeductible: fundsTableInsertSchema.shape.isTaxDeductible.optional(),
 		id: fundsTableInsertSchema.shape.id.unwrap(),
 		name: fundsTableInsertSchema.shape.name.optional(),
+<<<<<<< HEAD
 		isDefault: fundsTableInsertSchema.shape.isDefault.optional(),
 		isArchived: fundsTableInsertSchema.shape.isArchived.optional(),
 		referenceNumber: fundsTableInsertSchema.shape.referenceNumber.optional(),
+=======
+>>>>>>> upstream
 	})
 	.refine(
 		({ id, ...arg }) => Object.values(arg).some((value) => value !== undefined),
@@ -35,6 +38,7 @@ export const MutationUpdateFundInput = builder
 			name: t.string({
 				description: "Name of the fund.",
 			}),
+<<<<<<< HEAD
 			isDefault: t.boolean({
 				description: "Boolean to tell if the fund is the default fund.",
 			}),
@@ -44,5 +48,7 @@ export const MutationUpdateFundInput = builder
 			referenceNumber: t.string({
 				description: "Reference number of the fund.",
 			}),
+=======
+>>>>>>> upstream
 		}),
 	});

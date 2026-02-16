@@ -1,18 +1,33 @@
 ---
 id: pagination
+<<<<<<< HEAD
 title: GraphQL Filters & Pagination
+=======
+title: GraphQL Filtering & Pagination
+>>>>>>> upstream
 slug: /developer-resources/graphql-filtering
 sidebar_position: 40
 ---
 
+<<<<<<< HEAD
 ## Introduction
 
 **Pagination using graphQL connections:** Connections in graphQL are an approach to pagination popularized by relay client, the graphQL library developed by meta for managing graphQL state on the client applications and its server specification for designing graphQL schema. Though this specification specifically caters towards relay because the library is opinionated about certain patterns for data fetching with graphQL, these schema design principles are not limited to relay and are actually quite ingenious such that they became kind of a best pratice in graphQL ecosystem for implementing a performant pagination system. Here are some resources to learn more about relay style graphQL connections
+=======
+## Pagination using graphQL connections
+
+Connections in graphQL are an approach to pagination popularized by relay client, the graphQL library developed by meta for managing graphQL state on the client applications and its server specification for designing graphQL schema. Though this specification specifically caters towards relay because the library is opinionated about certain patterns for data fetching with graphQL, these schema design principles are not limited to relay and are actually quite ingenious such that they became kind of a best pratice in graphQL ecosystem for implementing a performant pagination system. Here are some resources to learn more about relay style graphQL connections
+>>>>>>> upstream
 
 1. [Global Object Identification](https://graphql.org/learn/global-object-identification/)
 2. [Relay GraphQL Server Specification](https://relay.dev/docs/guides/graphql-server-specification/)
 3. [Relay Connections](https://relay.dev/graphql/connections.htm)
 
+<<<<<<< HEAD
+=======
+<br />
+
+>>>>>>> upstream
 ## Two rules to keep in mind 
 
 Both these rules are essential to maintain uniformity in the implementations for pagination in talawa
@@ -21,7 +36,11 @@ Both these rules are essential to maintain uniformity in the implementations for
 
 2. All connections that need to provide filtering and sorting capabilities must conform to the graphQL schema design described below in this document.
 
+<<<<<<< HEAD
 
+=======
+<br />
+>>>>>>> upstream
 
 ## Filtering and sorting on graphQL connections
 
@@ -43,7 +62,11 @@ The `sortedBy` field should be graphQL input that should be named according to s
 
 Naming conventions for schema fields related to the `where` and `sortedBy` connection arguments can be understood by taking a look at the following schema implementations below
 
+<<<<<<< HEAD
 
+=======
+<br />
+>>>>>>> upstream
 
 ### Filtering and sorting on non root Query field connections
 
@@ -119,7 +142,11 @@ We expose the argument `where` which is a graphQL input `UserPostsWhereInput` co
 
 We expose the argument `sortedBy` which is a graphQL input `UserPostsSortedByInput` containing two fields named `body` which is a graphQL enum `SortedByOrder` and `creator` which is a graphQL input `PostCreatorSortedByInput` for applying recursive sorting on the nested structure `creator` of a `post`. It contains one field named `id` which is a graphQL enum `SortedByOrder`. The graphQL enum `SortedByOrder` contains two variants `ASCENDING` and `DESCENDING` which are the only two possible values to sort any field by.
 
+<<<<<<< HEAD
 
+=======
+<br />
+>>>>>>> upstream
 
 ### Filtering and sorting on root Query field connections
 
@@ -223,7 +250,11 @@ query for **first** `10` posts **after** cursor `1` **where** field **body** **c
 
 query for **first** `10` query posts **after** cursor `1` **sorted by** field **body** in `ascending` **order where** the field **body** **contains** the string `somebody`
 
+<<<<<<< HEAD
 
+=======
+<br />
+>>>>>>> upstream
 
 ## Caution on filtering and sorting graphQL connections
 
@@ -233,7 +264,11 @@ Filtering and sorting can become very complicated very quickly both in the appli
 
 Most of the time, filtering and sorting capabilities are only required in dashboards and administrator panels. Role-based access control can be applied to these filtering and sorting capabilities to only allow the users with elevated permissions to utilize these capabilities. This could be enforced either within the graphQL schema or within the resolver implementation for the connection. The graphQL schema would be the more preferred option as it is the source of truth for both the clients and the server.
 
+<<<<<<< HEAD
 
+=======
+<br />
+>>>>>>> upstream
 
 ## When are graphQL connections not needed?
 

@@ -11,11 +11,18 @@ import {
 	mutationUpdateCurrentUserInputSchema,
 } from "~/src/graphql/inputs/MutationUpdateCurrentUserInput";
 import { User } from "~/src/graphql/types/User/User";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { isNotNullish } from "~/src/utilities/isNotNullish";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 
 export const mutationUpdateCurrentUserArgumentsSchema = z.object({
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+import { isNotNullish } from "~/src/utilities/isNotNullish";
+const mutationUpdateCurrentUserArgumentsSchema = z.object({
+>>>>>>> upstream
 	input: mutationUpdateCurrentUserInputSchema.transform(async (arg, ctx) => {
 		let avatar:
 			| (FileUpload & {
@@ -111,16 +118,24 @@ builder.mutationField("updateCurrentUser", (t) =>
 				const existingUserWithEmailAddress =
 					await ctx.drizzleClient.query.usersTable.findFirst({
 						columns: {
+<<<<<<< HEAD
 							id: true,
+=======
+							role: true,
+>>>>>>> upstream
 						},
 						where: (fields, operators) =>
 							operators.eq(fields.emailAddress, emailAddress),
 					});
 
+<<<<<<< HEAD
 				if (
 					existingUserWithEmailAddress !== undefined &&
 					existingUserWithEmailAddress.id !== currentUserId
 				) {
+=======
+				if (existingUserWithEmailAddress !== undefined) {
+>>>>>>> upstream
 					throw new TalawaGraphQLError({
 						extensions: {
 							code: "forbidden_action_on_arguments_associated_resources",
@@ -135,6 +150,7 @@ builder.mutationField("updateCurrentUser", (t) =>
 				}
 			}
 
+<<<<<<< HEAD
 			const avatarUpdate = isNotNullish(parsedArgs.input.avatar)
 				? {
 						avatarName:
@@ -145,10 +161,24 @@ builder.mutationField("updateCurrentUser", (t) =>
 
 			return await ctx.drizzleClient.transaction(async (tx) => {
 				const updateResult = await tx
+=======
+			let avatarMimeType: z.infer<typeof imageMimeTypeEnum>;
+			let avatarName: string;
+
+			if (isNotNullish(parsedArgs.input.avatar)) {
+				avatarName =
+					currentUser.avatarName === null ? ulid() : currentUser.avatarName;
+				avatarMimeType = parsedArgs.input.avatar.mimetype;
+			}
+
+			return await ctx.drizzleClient.transaction(async (tx) => {
+				const [updatedCurrentUser] = await tx
+>>>>>>> upstream
 					.update(usersTable)
 					.set({
 						addressLine1: parsedArgs.input.addressLine1,
 						addressLine2: parsedArgs.input.addressLine2,
+<<<<<<< HEAD
 						avatarMimeType:
 							parsedArgs.input.avatar === undefined
 								? undefined // Do not update if undefined
@@ -161,6 +191,14 @@ builder.mutationField("updateCurrentUser", (t) =>
 								: avatarUpdate !== null
 									? avatarUpdate.avatarName
 									: null, // Set to null if null
+=======
+						avatarMimeType: isNotNullish(parsedArgs.input.avatar)
+							? avatarMimeType
+							: null,
+						avatarName: isNotNullish(parsedArgs.input.avatar)
+							? avatarName
+							: null,
+>>>>>>> upstream
 						birthDate: parsedArgs.input.birthDate,
 						city: parsedArgs.input.city,
 						countryCode: parsedArgs.input.countryCode,
@@ -187,7 +225,11 @@ builder.mutationField("updateCurrentUser", (t) =>
 					.returning();
 
 				// Updated user not being returned means that either it was deleted or its `id` column was changed by an external entity before this update operation which correspondingly means that the current client is using an invalid authentication token which hasn't expired yet.
+<<<<<<< HEAD
 				if (updateResult.length === 0) {
+=======
+				if (updatedCurrentUser === undefined) {
+>>>>>>> upstream
 					throw new TalawaGraphQLError({
 						extensions: {
 							code: "unauthenticated",
@@ -195,12 +237,19 @@ builder.mutationField("updateCurrentUser", (t) =>
 					});
 				}
 
+<<<<<<< HEAD
 				const updatedCurrentUser = updateResult[0];
 
 				if (isNotNullish(parsedArgs.input.avatar) && avatarUpdate) {
 					await ctx.minio.client.putObject(
 						ctx.minio.bucketName,
 						avatarUpdate.avatarName,
+=======
+				if (isNotNullish(parsedArgs.input.avatar)) {
+					await ctx.minio.client.putObject(
+						ctx.minio.bucketName,
+						avatarName,
+>>>>>>> upstream
 						parsedArgs.input.avatar.createReadStream(),
 						undefined,
 						{

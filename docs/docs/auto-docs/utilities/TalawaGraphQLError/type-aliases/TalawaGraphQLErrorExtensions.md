@@ -4,6 +4,12 @@
 
 # Type Alias: TalawaGraphQLErrorExtensions
 
+<<<<<<< HEAD
 > **TalawaGraphQLErrorExtensions** = [`AccountLockedExtensions`](AccountLockedExtensions.md) \| [`ArgumentsAssociatedResourcesNotFoundExtensions`](ArgumentsAssociatedResourcesNotFoundExtensions.md) \| [`ForbiddenActionExtensions`](ForbiddenActionExtensions.md) \| [`ForbiddenActionOnArgumentsAssociatedResourcesExtensions`](ForbiddenActionOnArgumentsAssociatedResourcesExtensions.md) \| [`UnauthenticatedExtensions`](UnauthenticatedExtensions.md) \| [`InvalidArgumentsExtensions`](InvalidArgumentsExtensions.md) \| [`InvalidCredentialsExtensions`](InvalidCredentialsExtensions.md) \| [`UnauthorizedActionExtensions`](UnauthorizedActionExtensions.md) \| [`UnauthorizedActionOnArgumentsAssociatedResourcesExtensions`](UnauthorizedActionOnArgumentsAssociatedResourcesExtensions.md) \| [`UnauthorizedArgumentsExtensions`](UnauthorizedArgumentsExtensions.md) \| [`UnexpectedExtensions`](UnexpectedExtensions.md) \| [`TooManyRequestsExtensions`](TooManyRequestsExtensions.md) \| \{ `code`: [`ErrorCode`](../../errors/errorCodes/enumerations/ErrorCode.md); `correlationId?`: `string`; `details?`: `unknown`; `httpStatus?`: `number`; \}
 
 Defined in: [src/utilities/TalawaGraphQLError.ts:249](https://github.com/PalisadoesFoundation/talawa-api/tree/mainsrc/utilities/TalawaGraphQLError.ts#L249)
+=======
+> **TalawaGraphQLErrorExtensions** = [`ArgumentsAssociatedResourcesNotFoundExtensions`](ArgumentsAssociatedResourcesNotFoundExtensions.md) \| [`ForbiddenActionExtensions`](ForbiddenActionExtensions.md) \| [`ForbiddenActionOnArgumentsAssociatedResourcesExtensions`](ForbiddenActionOnArgumentsAssociatedResourcesExtensions.md) \| [`UnauthenticatedExtensions`](UnauthenticatedExtensions.md) \| [`InvalidArgumentsExtensions`](InvalidArgumentsExtensions.md) \| [`UnauthorizedActionExtensions`](UnauthorizedActionExtensions.md) \| [`UnauthorizedActionOnArgumentsAssociatedResourcesExtensions`](UnauthorizedActionOnArgumentsAssociatedResourcesExtensions.md) \| [`UnauthorizedArgumentsExtensions`](UnauthorizedArgumentsExtensions.md) \| [`UnexpectedExtensions`](UnexpectedExtensions.md) \| [`TooManyRequestsExtensions`](TooManyRequestsExtensions.md)
+
+Defined in: [src/utilities/TalawaGraphQLError.ts:204](https://github.com/PalisadoesFoundation/talawa-api/tree/mainsrc/utilities/TalawaGraphQLError.ts#L204)
+>>>>>>> upstream

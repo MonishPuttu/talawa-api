@@ -1,4 +1,5 @@
 import { faker } from "@faker-js/faker";
+<<<<<<< HEAD
 import { sql } from "drizzle-orm";
 import type { VariablesOf } from "gql.tada";
 import { print } from "graphql";
@@ -20,6 +21,15 @@ import type {
 	ForbiddenActionExtensions,
 	InvalidArgumentsExtensions,
 	InvalidCredentialsExtensions,
+=======
+import type { VariablesOf } from "gql.tada";
+import { assertToBeNonNullish } from "test/helpers";
+import { afterAll, beforeAll, expect, suite, test } from "vitest";
+import type {
+	ArgumentsAssociatedResourcesNotFoundExtensions,
+	ForbiddenActionExtensions,
+	InvalidArgumentsExtensions,
+>>>>>>> upstream
 	TalawaGraphQLFormattedError,
 } from "~/src/utilities/TalawaGraphQLError";
 import { server } from "../../../server";
@@ -38,6 +48,7 @@ suite("Query field signIn", () => {
 	let user1Email = "";
 	let adminAuth = "";
 	let orgId = "";
+<<<<<<< HEAD
 	let originalRecaptchaSecret: string | undefined;
 	beforeAll(async () => {
 		// Save original value for restoration
@@ -45,6 +56,10 @@ suite("Query field signIn", () => {
 
 		// make reCaptcha key undefined as they are tested in different test suite
 		server.envConfig.RECAPTCHA_SECRET_KEY = undefined;
+=======
+
+	beforeAll(async () => {
+>>>>>>> upstream
 		const administratorUserSignInResult = await mercuriusClient.query(
 			Query_signIn,
 			{
@@ -119,9 +134,12 @@ suite("Query field signIn", () => {
 	});
 
 	afterAll(async () => {
+<<<<<<< HEAD
 		// Restore original env config
 		server.envConfig.RECAPTCHA_SECRET_KEY = originalRecaptchaSecret;
 
+=======
+>>>>>>> upstream
 		await mercuriusClient.mutate(Mutation_deleteUser, {
 			headers: {
 				authorization: `bearer ${adminAuth}`,
@@ -203,7 +221,11 @@ suite("Query field signIn", () => {
 	);
 
 	suite(
+<<<<<<< HEAD
 		"results in a graphql error with invalid_credentials extensions code in the errors field and null as the value of data.signIn field if",
+=======
+		"results in a graphql error with arguments_associated_resources_not_found extensions code in the errors field and null as the value of data.signIn field if",
+>>>>>>> upstream
 		() => {
 			test("value of the input.emailAddress does not correspond to an existing user.", async () => {
 				const result = await mercuriusClient.query(Query_signIn, {
@@ -219,6 +241,7 @@ suite("Query field signIn", () => {
 				expect(result.errors).toEqual(
 					expect.arrayContaining<TalawaGraphQLFormattedError>([
 						expect.objectContaining<TalawaGraphQLFormattedError>({
+<<<<<<< HEAD
 							extensions: expect.objectContaining<InvalidCredentialsExtensions>(
 								{
 									code: "invalid_credentials",
@@ -232,13 +255,37 @@ suite("Query field signIn", () => {
 									]),
 								},
 							),
+=======
+							extensions:
+								expect.objectContaining<ArgumentsAssociatedResourcesNotFoundExtensions>(
+									{
+										code: "arguments_associated_resources_not_found",
+										issues: expect.arrayContaining<
+											ArgumentsAssociatedResourcesNotFoundExtensions["issues"][number]
+										>([
+											{
+												argumentPath: ["input", "emailAddress"],
+											},
+										]),
+									},
+								),
+>>>>>>> upstream
 							message: expect.any(String),
 							path: ["signIn"],
 						}),
 					]),
 				);
 			});
+<<<<<<< HEAD
 
+=======
+		},
+	);
+
+	suite(
+		"results in a graphql error with invalid_arguments extensions code in the errors field and null as the value of data.signIn field if",
+		() => {
+>>>>>>> upstream
 			test("value of the argument input.password is not equal to the password of the existing user corresponding to the value of the argument input.emailAddress", async () => {
 				const result = await mercuriusClient.query(Query_signIn, {
 					variables: {
@@ -254,6 +301,7 @@ suite("Query field signIn", () => {
 				expect(result.errors).toEqual(
 					expect.arrayContaining<TalawaGraphQLFormattedError>([
 						expect.objectContaining<TalawaGraphQLFormattedError>({
+<<<<<<< HEAD
 							extensions: expect.objectContaining<InvalidCredentialsExtensions>(
 								{
 									code: "invalid_credentials",
@@ -267,6 +315,19 @@ suite("Query field signIn", () => {
 									]),
 								},
 							),
+=======
+							extensions: expect.objectContaining<InvalidArgumentsExtensions>({
+								code: "invalid_arguments",
+								issues: expect.arrayContaining<
+									InvalidArgumentsExtensions["issues"][number]
+								>([
+									{
+										argumentPath: ["input", "password"],
+										message: expect.any(String),
+									},
+								]),
+							}),
+>>>>>>> upstream
 							message: expect.any(String),
 							path: ["signIn"],
 						}),
@@ -276,6 +337,7 @@ suite("Query field signIn", () => {
 		},
 	);
 
+<<<<<<< HEAD
 	suite("handles malformed password hash gracefully", () => {
 		let malformedHashUserEmail = "";
 		let malformedHashUserId = "";
@@ -371,6 +433,8 @@ suite("Query field signIn", () => {
 		});
 	});
 
+=======
+>>>>>>> upstream
 	test("results in an empty errors field and the expected value for the data.signIn field.", async () => {
 		const variables: VariablesOf<typeof Query_signIn> = {
 			input: {
@@ -387,7 +451,10 @@ suite("Query field signIn", () => {
 		expect(result.data.signIn).toEqual(
 			expect.objectContaining({
 				authenticationToken: expect.any(String),
+<<<<<<< HEAD
 				refreshToken: expect.any(String),
+=======
+>>>>>>> upstream
 				user: expect.objectContaining({
 					emailAddress: server.envConfig.API_ADMINISTRATOR_USER_EMAIL_ADDRESS,
 				}),
@@ -395,6 +462,7 @@ suite("Query field signIn", () => {
 		);
 	});
 
+<<<<<<< HEAD
 	test("should set HTTP-Only cookies on successful sign-in", async () => {
 		const response = await server.inject({
 			method: "POST",
@@ -503,6 +571,8 @@ suite("Query field signIn", () => {
 		});
 	});
 
+=======
+>>>>>>> upstream
 	test("sign in", async () => {
 		const result = await mercuriusClient.query(Query_signIn, {
 			variables: {
@@ -514,6 +584,7 @@ suite("Query field signIn", () => {
 		});
 
 		assertToBeNonNullish(result.data.signIn?.authenticationToken);
+<<<<<<< HEAD
 		assertToBeNonNullish(result.data.signIn?.refreshToken);
 
 		expect(result.errors).toBeUndefined();
@@ -573,12 +644,15 @@ suite("Query field signIn", () => {
 				},
 			},
 		});
+=======
+>>>>>>> upstream
 
 		expect(result.errors).toBeUndefined();
 		expect(result.data.signIn).toEqual(
 			expect.objectContaining({
 				authenticationToken: expect.any(String),
 				user: expect.objectContaining({
+<<<<<<< HEAD
 					emailAddress: regularUserEmail,
 					role: "regular", // Should remain regular, not upgraded to administrator
 				}),
@@ -590,6 +664,12 @@ suite("Query field signIn", () => {
 			headers: { authorization: `bearer ${adminAuth}` },
 			variables: { input: { id: createResult.data.createUser?.user?.id } },
 		});
+=======
+					emailAddress: user1Email,
+				}),
+			}),
+		);
+>>>>>>> upstream
 	});
 
 	test("sign in with invalid arguments", async () => {
@@ -612,7 +692,11 @@ suite("Query field signIn", () => {
 						>([
 							expect.objectContaining({
 								argumentPath: ["input", "password"],
+<<<<<<< HEAD
 								message: "Too small: expected string to have >=1 characters",
+=======
+								message: "String must contain at least 1 character(s)",
+>>>>>>> upstream
 							}),
 						]),
 					}),
@@ -622,6 +706,7 @@ suite("Query field signIn", () => {
 			]),
 		);
 	});
+<<<<<<< HEAD
 
 	suite("account lockout functionality", () => {
 		let lockoutTestUserEmail = "";
@@ -1235,4 +1320,6 @@ suite("Query field signIn", () => {
 			);
 		});
 	});
+=======
+>>>>>>> upstream
 });

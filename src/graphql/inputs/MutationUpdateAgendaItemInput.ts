@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { z } from "zod";
 import {
 	AGENDA_ITEM_DESCRIPTION_MAX_LENGTH,
@@ -40,6 +41,22 @@ export const MutationUpdateAgendaItemInputSchema = agendaItemsTableInsertSchema
 			.array(z.object({ url: z.string().url() }))
 			.max(5)
 			.optional(),
+=======
+import type { z } from "zod";
+import { agendaItemsTableInsertSchema } from "~/src/drizzle/tables/agendaItems";
+import { builder } from "~/src/graphql/builder";
+
+export const MutationUpdateAgendaItemInputSchema = agendaItemsTableInsertSchema
+	.pick({
+		description: true,
+		duration: true,
+		key: true,
+	})
+	.extend({
+		folderId: agendaItemsTableInsertSchema.shape.folderId.optional(),
+		id: agendaItemsTableInsertSchema.shape.id.unwrap(),
+		name: agendaItemsTableInsertSchema.shape.name.optional(),
+>>>>>>> upstream
 	})
 	.refine(
 		({ id, ...remainingArg }) =>
@@ -49,6 +66,7 @@ export const MutationUpdateAgendaItemInputSchema = agendaItemsTableInsertSchema
 		},
 	);
 
+<<<<<<< HEAD
 const UpdateAgendaItemUrlInput = builder.inputType("UpdateAgendaItemUrlInput", {
 	description: "URL associated with an agenda item",
 	fields: (t) => ({
@@ -59,6 +77,8 @@ const UpdateAgendaItemUrlInput = builder.inputType("UpdateAgendaItemUrlInput", {
 	}),
 });
 
+=======
+>>>>>>> upstream
 export const MutationUpdateAgendaItemInput = builder
 	.inputRef<z.infer<typeof MutationUpdateAgendaItemInputSchema>>(
 		"MutationUpdateAgendaItemInput",
@@ -66,6 +86,7 @@ export const MutationUpdateAgendaItemInput = builder
 	.implement({
 		description: "",
 		fields: (t) => ({
+<<<<<<< HEAD
 			attachments: t.field({
 				description:
 					"File metadata for attachments uploaded via MinIO presigned URLs.",
@@ -87,6 +108,16 @@ export const MutationUpdateAgendaItemInput = builder
 			folderId: t.id({
 				description: "Global identifier of the associated agenda folder.",
 				required: false,
+=======
+			description: t.string({
+				description: "Custom information about the agenda item.",
+			}),
+			duration: t.string({
+				description: "Duration of the agenda item.",
+			}),
+			folderId: t.id({
+				description: "Global identifier of the associated agenda folder.",
+>>>>>>> upstream
 			}),
 			id: t.id({
 				description: "Global identifier of the agenda item.",
@@ -94,6 +125,7 @@ export const MutationUpdateAgendaItemInput = builder
 			}),
 			key: t.string({
 				description: `Key of the agenda item if it's of a "song" type. More information at [this](https://en.wikipedia.org/wiki/Key_(music)) link.`,
+<<<<<<< HEAD
 				required: false,
 			}),
 			name: t.string({
@@ -107,6 +139,11 @@ export const MutationUpdateAgendaItemInput = builder
 			url: t.field({
 				type: [UpdateAgendaItemUrlInput],
 				required: false,
+=======
+			}),
+			name: t.string({
+				description: "Name of the agenda item.",
+>>>>>>> upstream
 			}),
 		}),
 	});

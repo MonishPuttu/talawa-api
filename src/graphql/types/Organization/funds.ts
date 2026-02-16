@@ -1,12 +1,21 @@
+<<<<<<< HEAD
 import { and, asc, desc, eq, exists, gt, lt, type SQL } from "drizzle-orm";
 import type { z } from "zod";
 import { fundsTable, fundsTableInsertSchema } from "~/src/drizzle/tables/funds";
 import { Fund } from "~/src/graphql/types/Fund/Fund";
 import envConfig from "~/src/utilities/graphqLimits";
+=======
+import { type SQL, and, asc, desc, eq, exists, gt, lt } from "drizzle-orm";
+import type { z } from "zod";
+import { fundsTable, fundsTableInsertSchema } from "~/src/drizzle/tables/funds";
+import { Fund } from "~/src/graphql/types/Fund/Fund";
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+>>>>>>> upstream
 import {
 	defaultGraphQLConnectionArgumentsSchema,
 	transformDefaultGraphQLConnectionArguments,
 	transformToDefaultGraphQLConnection,
+<<<<<<< HEAD
 } from "~/src/utilities/graphqlConnection";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 import { Organization } from "./Organization";
@@ -15,6 +24,15 @@ const fundsArgumentsSchema = defaultGraphQLConnectionArgumentsSchema
 	.transform(transformDefaultGraphQLConnectionArguments)
 	.transform((arg, ctx) => {
 		let cursor: z.infer<typeof cursorSchema> | undefined;
+=======
+} from "~/src/utilities/defaultGraphQLConnection";
+import envConfig from "~/src/utilities/graphqLimits";
+import { Organization } from "./Organization";
+const fundsArgumentsSchema = defaultGraphQLConnectionArgumentsSchema
+	.transform(transformDefaultGraphQLConnectionArguments)
+	.transform((arg, ctx) => {
+		let cursor: z.infer<typeof cursorSchema> | undefined = undefined;
+>>>>>>> upstream
 
 		try {
 			if (arg.cursor !== undefined) {
@@ -22,7 +40,11 @@ const fundsArgumentsSchema = defaultGraphQLConnectionArgumentsSchema
 					JSON.parse(Buffer.from(arg.cursor, "base64url").toString("utf-8")),
 				);
 			}
+<<<<<<< HEAD
 		} catch (_error) {
+=======
+		} catch (error) {
+>>>>>>> upstream
 			ctx.addIssue({
 				code: "custom",
 				message: "Not a valid cursor.",
@@ -191,9 +213,18 @@ Organization.implement({
 					}
 
 					return transformToDefaultGraphQLConnection({
+<<<<<<< HEAD
 						createCursor: (fund) => ({
 							name: fund.name,
 						}),
+=======
+						createCursor: (fund) =>
+							Buffer.from(
+								JSON.stringify({
+									name: fund.name,
+								}),
+							).toString("base64url"),
+>>>>>>> upstream
 						createNode: (fund) => fund,
 						parsedArgs,
 						rawNodes: funds,

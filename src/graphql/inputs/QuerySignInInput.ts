@@ -8,7 +8,10 @@ export const querySignInInputSchema = usersTableInsertSchema
 	})
 	.extend({
 		password: z.string().min(1).max(64),
+<<<<<<< HEAD
 		recaptchaToken: z.string().optional(),
+=======
+>>>>>>> upstream
 	});
 
 export const QuerySignInInput = builder
@@ -25,10 +28,13 @@ export const QuerySignInInput = builder
 				description: "Password of the user to sign in to talawa.",
 				required: true,
 			}),
+<<<<<<< HEAD
 			recaptchaToken: t.string({
 				description:
 					"Optional reCAPTCHA token for verification (required when server-side reCAPTCHA is enabled)",
 				required: false,
 			}),
+=======
+>>>>>>> upstream
 		}),
 	});

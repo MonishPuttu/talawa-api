@@ -1,5 +1,9 @@
 import { faker } from "@faker-js/faker";
+<<<<<<< HEAD
 import { afterAll, beforeAll, expect, suite, test, vi } from "vitest";
+=======
+import { afterAll, beforeAll, expect, suite, test } from "vitest";
+>>>>>>> upstream
 import type {
 	ArgumentsAssociatedResourcesNotFoundExtensions,
 	InvalidArgumentsExtensions,
@@ -9,7 +13,10 @@ import type {
 } from "~/src/utilities/TalawaGraphQLError";
 
 import { assertToBeNonNullish } from "../../../helpers";
+<<<<<<< HEAD
 import { createRecurringEventWithInstances } from "../../../helpers/recurringEventTestHelpers";
+=======
+>>>>>>> upstream
 import { server } from "../../../server";
 import { mercuriusClient } from "../client";
 import {
@@ -30,10 +37,13 @@ import {
 	Query_signIn,
 } from "../documentNodes";
 
+<<<<<<< HEAD
 vi.mock("~/src/utilities/leakyBucket", () => ({
 	complexityLeakyBucket: vi.fn().mockResolvedValue(true),
 }));
 
+=======
+>>>>>>> upstream
 suite("Query field getEventVolunteerGroups", () => {
 	let adminAuthToken: string;
 	let adminUserId: string;
@@ -46,6 +56,10 @@ suite("Query field getEventVolunteerGroups", () => {
 	// Minimal setup to reduce rate limiting
 	beforeAll(async () => {
 		// Add delay to avoid rate limiting
+<<<<<<< HEAD
+=======
+		await new Promise((resolve) => setTimeout(resolve, 100));
+>>>>>>> upstream
 
 		// Sign in as admin
 		const adminSignInResult = await mercuriusClient.query(Query_signIn, {
@@ -63,6 +77,10 @@ suite("Query field getEventVolunteerGroups", () => {
 		adminUserId = adminSignInResult.data.signIn.user.id;
 
 		// Add delay between requests
+<<<<<<< HEAD
+=======
+		await new Promise((resolve) => setTimeout(resolve, 200));
+>>>>>>> upstream
 
 		// Create organization
 		const orgResult = await mercuriusClient.mutate(
@@ -83,6 +101,11 @@ suite("Query field getEventVolunteerGroups", () => {
 		assertToBeNonNullish(orgResult.data?.createOrganization);
 		organizationId = orgResult.data.createOrganization.id;
 
+<<<<<<< HEAD
+=======
+		await new Promise((resolve) => setTimeout(resolve, 200));
+
+>>>>>>> upstream
 		// Create organization membership for admin
 		await mercuriusClient.mutate(Mutation_createOrganizationMembership, {
 			headers: {
@@ -97,6 +120,11 @@ suite("Query field getEventVolunteerGroups", () => {
 			},
 		});
 
+<<<<<<< HEAD
+=======
+		await new Promise((resolve) => setTimeout(resolve, 200));
+
+>>>>>>> upstream
 		// Create event
 		const eventResult = await mercuriusClient.mutate(Mutation_createEvent, {
 			headers: {
@@ -116,6 +144,11 @@ suite("Query field getEventVolunteerGroups", () => {
 		assertToBeNonNullish(eventResult.data?.createEvent);
 		eventId = eventResult.data.createEvent.id;
 
+<<<<<<< HEAD
+=======
+		await new Promise((resolve) => setTimeout(resolve, 200));
+
+>>>>>>> upstream
 		// Create one regular user
 		const regularUserResult = await mercuriusClient.mutate(
 			Mutation_createUser,
@@ -140,6 +173,11 @@ suite("Query field getEventVolunteerGroups", () => {
 		regularUserAuthToken = regularUserResult.data.createUser
 			.authenticationToken as string;
 
+<<<<<<< HEAD
+=======
+		await new Promise((resolve) => setTimeout(resolve, 200));
+
+>>>>>>> upstream
 		// Create organization membership
 		await mercuriusClient.mutate(Mutation_createOrganizationMembership, {
 			headers: {
@@ -154,6 +192,11 @@ suite("Query field getEventVolunteerGroups", () => {
 			},
 		});
 
+<<<<<<< HEAD
+=======
+		await new Promise((resolve) => setTimeout(resolve, 200));
+
+>>>>>>> upstream
 		// Create volunteer group
 		const volunteerGroupResult = await mercuriusClient.mutate(
 			Mutation_createEventVolunteerGroup,
@@ -193,6 +236,10 @@ suite("Query field getEventVolunteerGroups", () => {
 				} catch (error) {
 					console.warn(`Failed to delete volunteer group: ${error}`);
 				}
+<<<<<<< HEAD
+=======
+				await new Promise((resolve) => setTimeout(resolve, 100));
+>>>>>>> upstream
 			}
 
 			// Delete organization memberships (prevents foreign key issues)
@@ -212,6 +259,10 @@ suite("Query field getEventVolunteerGroups", () => {
 				} catch (error) {
 					console.warn(`Failed to delete regular user membership: ${error}`);
 				}
+<<<<<<< HEAD
+=======
+				await new Promise((resolve) => setTimeout(resolve, 100));
+>>>>>>> upstream
 			}
 
 			if (adminUserId && organizationId) {
@@ -230,6 +281,10 @@ suite("Query field getEventVolunteerGroups", () => {
 				} catch (error) {
 					console.warn(`Failed to delete admin membership: ${error}`);
 				}
+<<<<<<< HEAD
+=======
+				await new Promise((resolve) => setTimeout(resolve, 100));
+>>>>>>> upstream
 			}
 
 			// Delete regular user
@@ -244,6 +299,10 @@ suite("Query field getEventVolunteerGroups", () => {
 				} catch (error) {
 					console.warn(`Failed to delete regular user: ${error}`);
 				}
+<<<<<<< HEAD
+=======
+				await new Promise((resolve) => setTimeout(resolve, 100));
+>>>>>>> upstream
 			}
 
 			// Delete organization last (it may have dependencies)
@@ -326,7 +385,11 @@ suite("Query field getEventVolunteerGroups", () => {
 		});
 
 		test("should throw error for non-existent eventId", async () => {
+<<<<<<< HEAD
 			const fakeEventId = faker.string.uuid();
+=======
+			const fakeEventId = "01234567-89ab-cdef-0123-456789abcdef";
+>>>>>>> upstream
 
 			const result = await mercuriusClient.query(
 				Query_getEventVolunteerGroups,
@@ -390,7 +453,11 @@ suite("Query field getEventVolunteerGroups", () => {
 							issues: expect.arrayContaining([
 								expect.objectContaining({
 									argumentPath: ["where", "eventId"],
+<<<<<<< HEAD
 									message: expect.stringContaining("Must be a valid UUID"),
+=======
+									message: "Invalid uuid",
+>>>>>>> upstream
 								}),
 							]),
 						}),
@@ -424,6 +491,11 @@ suite("Query field getEventVolunteerGroups", () => {
 			const eventVolunteerId = eventVolunteerResult.data.createEventVolunteer
 				.id as string;
 
+<<<<<<< HEAD
+=======
+			await new Promise((resolve) => setTimeout(resolve, 200));
+
+>>>>>>> upstream
 			// Update volunteer to be accepted
 			await mercuriusClient.mutate(Mutation_updateEventVolunteer, {
 				headers: {
@@ -437,6 +509,11 @@ suite("Query field getEventVolunteerGroups", () => {
 				},
 			});
 
+<<<<<<< HEAD
+=======
+			await new Promise((resolve) => setTimeout(resolve, 200));
+
+>>>>>>> upstream
 			// Create volunteer membership
 			await mercuriusClient.mutate(Mutation_createVolunteerMembership, {
 				headers: {
@@ -452,6 +529,11 @@ suite("Query field getEventVolunteerGroups", () => {
 				},
 			});
 
+<<<<<<< HEAD
+=======
+			await new Promise((resolve) => setTimeout(resolve, 200));
+
+>>>>>>> upstream
 			// Test user path query
 			const result = await mercuriusClient.query(
 				Query_getEventVolunteerGroups,
@@ -515,6 +597,11 @@ suite("Query field getEventVolunteerGroups", () => {
 			const nonMemberUserId = nonMemberResult.data.createUser.user
 				?.id as string;
 
+<<<<<<< HEAD
+=======
+			await new Promise((resolve) => setTimeout(resolve, 200));
+
+>>>>>>> upstream
 			const result = await mercuriusClient.query(
 				Query_getEventVolunteerGroups,
 				{
@@ -603,6 +690,7 @@ suite("Query field getEventVolunteerGroups", () => {
 			expect(group?.leader?.name).toContain("Test User");
 		});
 
+<<<<<<< HEAD
 		test("should filter groups by leader name with whitespace", async () => {
 			const result = await mercuriusClient.query(
 				Query_getEventVolunteerGroups,
@@ -628,6 +716,8 @@ suite("Query field getEventVolunteerGroups", () => {
 			expect(group?.leader?.name).toContain("Test User");
 		});
 
+=======
+>>>>>>> upstream
 		test("should return empty array when name filter matches no groups", async () => {
 			const result = await mercuriusClient.query(
 				Query_getEventVolunteerGroups,
@@ -653,6 +743,10 @@ suite("Query field getEventVolunteerGroups", () => {
 	suite("Ordering", () => {
 		test("should handle volunteers_ASC ordering", async () => {
 			// Extra long delay since this test runs after many previous tests
+<<<<<<< HEAD
+=======
+			await new Promise((resolve) => setTimeout(resolve, 1000));
+>>>>>>> upstream
 
 			const result = await mercuriusClient.query(
 				Query_getEventVolunteerGroups,
@@ -676,6 +770,10 @@ suite("Query field getEventVolunteerGroups", () => {
 
 		test("should handle volunteers_DESC ordering", async () => {
 			// Extra long delay since this is the last test and rate limits accumulate
+<<<<<<< HEAD
+=======
+			await new Promise((resolve) => setTimeout(resolve, 1200));
+>>>>>>> upstream
 
 			const result = await mercuriusClient.query(
 				Query_getEventVolunteerGroups,
@@ -697,6 +795,7 @@ suite("Query field getEventVolunteerGroups", () => {
 			expect(Array.isArray(result.data?.getEventVolunteerGroups)).toBe(true);
 		});
 	});
+<<<<<<< HEAD
 
 	suite(
 		"Event Creator Authorization - Coverage for isEventCreator path",
@@ -959,4 +1058,6 @@ suite("Query field getEventVolunteerGroups", () => {
 			}
 		});
 	});
+=======
+>>>>>>> upstream
 });

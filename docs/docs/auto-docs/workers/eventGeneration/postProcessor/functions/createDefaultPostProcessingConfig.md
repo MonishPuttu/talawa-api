@@ -14,4 +14,8 @@ Creates a default configuration object for post-processing operations.
 
 [`PostProcessingConfig`](../interfaces/PostProcessingConfig.md)
 
+<<<<<<< HEAD
 - A default post-processing configuration.
+=======
+A default post-processing configuration.
+>>>>>>> upstream

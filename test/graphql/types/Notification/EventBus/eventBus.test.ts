@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 import type { MockInstance } from "vitest";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+=======
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import type { MockInstance } from "vitest";
+>>>>>>> upstream
 import type { GraphQLContext } from "~/src/graphql/context";
 import { NotificationEventBus } from "~/src/graphql/types/Notification/EventBus/eventBus";
 import {
@@ -557,6 +562,7 @@ describe("NotificationEventBus", () => {
 		});
 	});
 
+<<<<<<< HEAD
 	describe("emitMembershipRequestRejected", () => {
 		it("should emit 'membership_request.rejected' event with correct data", async () => {
 			const data = {
@@ -793,6 +799,11 @@ describe("NotificationEventBus", () => {
 
 	describe("additional error handling coverage", () => {
 		it("should handle all event methods gracefully when notifications fail", async () => {
+=======
+	describe("additional error handling coverage", () => {
+		it("should handle all event methods gracefully when notifications fail", async () => {
+			// Mock all notification calls to fail
+>>>>>>> upstream
 			const commonError = new Error("Notification service down");
 			createNotificationSpy.mockRejectedValue(commonError);
 
@@ -855,6 +866,7 @@ describe("NotificationEventBus", () => {
 				"Failed to send user blocked notification:",
 			);
 		});
+<<<<<<< HEAD
 
 		it("should handle emitMembershipRequestRejected and emitSendEventInvite failures", async () => {
 			const commonError = new Error("Notification service down");
@@ -903,5 +915,7 @@ describe("NotificationEventBus", () => {
 
 			createDirectEmailNotificationSpy.mockRestore();
 		});
+=======
+>>>>>>> upstream
 	});
 });

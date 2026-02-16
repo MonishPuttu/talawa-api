@@ -1,5 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { IPluginManifest } from "../../src/plugin/types";
+<<<<<<< HEAD
 
 // Mock rootLogger
 vi.mock("~/src/utilities/logging/logger", () => ({
@@ -11,6 +12,8 @@ vi.mock("~/src/utilities/logging/logger", () => ({
 	},
 }));
 
+=======
+>>>>>>> upstream
 import * as utils from "../../src/plugin/utils";
 
 // Mocks
@@ -32,11 +35,14 @@ vi.mock("node:path", async () => {
 });
 
 import { promises as fs } from "node:fs";
+<<<<<<< HEAD
 
 afterEach(() => {
 	vi.restoreAllMocks();
 });
 
+=======
+>>>>>>> upstream
 const mockedFs = vi.mocked(fs);
 
 // --- validatePluginManifest ---
@@ -206,6 +212,7 @@ describe("deepClone", () => {
 		expect(clone.d).not.toBe(obj.d);
 		expect(clone.d[2]).not.toBe(obj.d[2]);
 	});
+<<<<<<< HEAD
 
 	it("returns primitives unchanged (covers line 218)", () => {
 		// Test various primitive types that should be returned as-is
@@ -218,6 +225,8 @@ describe("deepClone", () => {
 		const sym = Symbol("test");
 		expect(utils.deepClone(sym)).toBe(sym);
 	});
+=======
+>>>>>>> upstream
 });
 
 // --- generateCreateTableSQL & generateCreateIndexSQL ---
@@ -264,6 +273,7 @@ describe("generateCreateTableSQL & generateCreateIndexSQL", () => {
 		const indexes = utils.generateCreateIndexSQL(tableDef, "pluginid");
 		expect(indexes).toHaveLength(0); // No valid indexes should be processed
 	});
+<<<<<<< HEAD
 
 	it("logs warning when table name is automatically prefixed (covers warnAboutTablePrefixing)", async () => {
 		const { rootLogger } = await import("~/src/utilities/logging/logger");
@@ -287,6 +297,8 @@ describe("generateCreateTableSQL & generateCreateIndexSQL", () => {
 		);
 		warnSpy.mockRestore();
 	});
+=======
+>>>>>>> upstream
 });
 
 // --- createPluginTables & dropPluginTables ---
@@ -316,9 +328,12 @@ describe("createPluginTables & dropPluginTables", () => {
 		);
 	});
 	it("handles table creation error", async () => {
+<<<<<<< HEAD
 		const { rootLogger } = await import("~/src/utilities/logging/logger");
 		const loggerSpy = vi.spyOn(rootLogger, "error");
 
+=======
+>>>>>>> upstream
 		const db = { execute: vi.fn().mockRejectedValue(new Error("fail")) };
 		const drizzleName = Symbol.for("drizzle:Name");
 		const drizzleColumns = Symbol.for("drizzle:Columns");
@@ -331,6 +346,7 @@ describe("createPluginTables & dropPluginTables", () => {
 		await expect(
 			utils.createPluginTables(db, "pluginid", { mytable: tableDef }),
 		).rejects.toThrow("fail");
+<<<<<<< HEAD
 
 		expect(loggerSpy).toHaveBeenCalledWith(
 			expect.objectContaining({
@@ -338,6 +354,8 @@ describe("createPluginTables & dropPluginTables", () => {
 			}),
 		);
 		loggerSpy.mockRestore();
+=======
+>>>>>>> upstream
 	});
 	it("handles drop error and continues", async () => {
 		const db = { execute: vi.fn().mockRejectedValue(new Error("fail")) };
@@ -371,6 +389,7 @@ describe("createPluginTables & dropPluginTables", () => {
 		);
 	});
 
+<<<<<<< HEAD
 	it("logs success with provided logger in createPluginTables (covers lines 493-495)", async () => {
 		const db = { execute: vi.fn().mockResolvedValue(undefined) };
 		const logger = { info: vi.fn() };
@@ -425,6 +444,8 @@ describe("createPluginTables & dropPluginTables", () => {
 		);
 	});
 
+=======
+>>>>>>> upstream
 	it("handles error in dropPluginTables outer try/catch (covers error log)", async () => {
 		const db = {
 			execute: vi.fn().mockImplementation(() => {
@@ -448,6 +469,7 @@ describe("createPluginTables & dropPluginTables", () => {
 
 	it("handles inner error in dropPluginTables (covers inner catch)", async () => {
 		const db = { execute: vi.fn().mockRejectedValue(new Error("db fail")) };
+<<<<<<< HEAD
 		const logger = { info: vi.fn(), error: vi.fn() };
 		const drizzleName = Symbol.for("drizzle:Name");
 		const tableDef = {
@@ -591,6 +613,17 @@ describe("createPluginTables & dropPluginTables", () => {
 				),
 				err: expect.objectContaining({ message: "outer catch fail" }),
 			}),
+=======
+		const logger = { info: vi.fn() };
+		const drizzleName = Symbol.for("drizzle:Name");
+		const tableDef = {
+			[drizzleName]: "mytable",
+			id: { name: "id", columnType: "PgUUID", notNull: true, primary: true },
+		};
+		await utils.dropPluginTables(db, "pluginid", { mytable: tableDef }, logger);
+		expect(logger.info).toHaveBeenCalledWith(
+			expect.stringContaining("Error dropping table mytable"),
+>>>>>>> upstream
 		);
 	});
 });
@@ -615,9 +648,12 @@ describe("removePluginDirectory & clearPluginModuleCache", () => {
 		).resolves.toBeUndefined();
 	});
 	it("throws on fs.rm error", async () => {
+<<<<<<< HEAD
 		const { rootLogger } = await import("~/src/utilities/logging/logger");
 		const loggerSpy = vi.spyOn(rootLogger, "error");
 
+=======
+>>>>>>> upstream
 		vi.spyOn(utils, "clearPluginModuleCache").mockImplementation(() => {});
 		mockedFs.stat.mockResolvedValue({
 			isDirectory: () => true,
@@ -626,6 +662,7 @@ describe("removePluginDirectory & clearPluginModuleCache", () => {
 		await expect(utils.removePluginDirectory("pluginid")).rejects.toThrow(
 			"fail",
 		);
+<<<<<<< HEAD
 
 		expect(loggerSpy).toHaveBeenCalledWith(
 			expect.objectContaining({
@@ -634,6 +671,8 @@ describe("removePluginDirectory & clearPluginModuleCache", () => {
 			expect.stringContaining("Failed to remove plugin directory"),
 		);
 		loggerSpy.mockRestore();
+=======
+>>>>>>> upstream
 	});
 });
 
@@ -672,7 +711,11 @@ describe("clearPluginModuleCache", () => {
 		const badCache = new Proxy(
 			{},
 			{
+<<<<<<< HEAD
 				get(_target, prop) {
+=======
+				get(target, prop) {
+>>>>>>> upstream
 					if (prop === "constructor") return Object;
 					return undefined;
 				},
@@ -688,6 +731,7 @@ describe("clearPluginModuleCache", () => {
 			),
 		).not.toThrow();
 	});
+<<<<<<< HEAD
 	// NOTE: This test is intentionally fragile - it forces rootLogger.info to throw
 	// to cover the catch block that logs via rootLogger.warn (lines 637-639).
 	// The trigger depends on the logging call being the first operation in the try block.
@@ -725,6 +769,8 @@ describe("clearPluginModuleCache", () => {
 		// of meaningful behavior for this compatibility stub.
 		expect(() => utils.clearPluginModuleCache("/plugin/path")).not.toThrow();
 	});
+=======
+>>>>>>> upstream
 });
 
 // --- loadPluginManifest ---
@@ -757,6 +803,7 @@ describe("loadPluginManifest", () => {
 		await expect(utils.loadPluginManifest("/plugin")).rejects.toThrow("fail");
 	});
 });
+<<<<<<< HEAD
 
 // --- deepClone additional edge cases ---
 describe("deepClone edge cases", () => {
@@ -1053,3 +1100,5 @@ describe("generateCreateIndexSQL additional cases", () => {
 		expect(indexes[0]).toContain("plugin_mytable_col1_col2_index");
 	});
 });
+=======
+>>>>>>> upstream

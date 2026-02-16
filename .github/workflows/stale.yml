@@ -2,7 +2,12 @@ name: Mark stale issues and pull requests
 
 on:
   schedule:
+<<<<<<< HEAD
     - cron: "*/20 0 * * *"
+=======
+  - cron: "*/20 0 * * *"
+
+>>>>>>> upstream
 jobs:
   stale:
     uses: PalisadoesFoundation/.github/.github/workflows/stale.yml@main

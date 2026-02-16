@@ -1,5 +1,9 @@
 import { faker } from "@faker-js/faker";
+<<<<<<< HEAD
 import { afterEach, expect, suite, test, vi } from "vitest";
+=======
+import { expect, suite, test, vi } from "vitest";
+>>>>>>> upstream
 import { assertToBeNonNullish } from "../../../helpers";
 import { server } from "../../../server";
 import { mercuriusClient } from "../client";
@@ -15,10 +19,13 @@ import {
 	Query_signIn,
 } from "../documentNodes";
 
+<<<<<<< HEAD
 afterEach(() => {
 	vi.clearAllMocks();
 });
 
+=======
+>>>>>>> upstream
 // Sign in as admin to get an authentication token and admin user id.
 const signInResult = await mercuriusClient.query(Query_signIn, {
 	variables: {
@@ -99,8 +106,13 @@ async function createActionItem(
 				name: "Test Event",
 				description: "Test event for action items",
 				organizationId: organizationId,
+<<<<<<< HEAD
 				startAt: new Date(Date.now() + 86400000).toISOString(), // 1 day from now
 				endAt: new Date(Date.now() + 90000000).toISOString(), // 1 day + 1 hour from now
+=======
+				startAt: new Date().toISOString(),
+				endAt: new Date(Date.now() + 3600000).toISOString(),
+>>>>>>> upstream
 				isPublic: true,
 				isRegisterable: true,
 				location: "Test Location",
@@ -289,12 +301,21 @@ suite("Mutation field markActionItemAsPendingForInstance", () => {
 						organizationId: orgId,
 						name: "Test Event",
 						description: "Test Event Description",
+<<<<<<< HEAD
 						startAt: new Date(Date.now() + 86400000).toISOString(), // 1 day from now
 						endAt: new Date(Date.now() + 90000000).toISOString(), // 1 day + 1 hour from now
 						recurrence: {
 							frequency: "DAILY",
 							interval: 1,
 							endDate: new Date(Date.now() + 172800000).toISOString(), // 2 days from now
+=======
+						startAt: "2025-01-01T00:00:00Z",
+						endAt: "2025-01-01T01:00:00Z",
+						recurrence: {
+							frequency: "DAILY",
+							interval: 1,
+							endDate: "2025-01-02T00:00:00Z",
+>>>>>>> upstream
 						},
 					},
 				},
@@ -405,12 +426,21 @@ suite("Mutation field markActionItemAsPendingForInstance", () => {
 							organizationId: orgId,
 							name: "Test Event",
 							description: "Test Event Description",
+<<<<<<< HEAD
 							startAt: new Date(Date.now() + 86400000).toISOString(), // 1 day from now
 							endAt: new Date(Date.now() + 90000000).toISOString(), // 1 day + 1 hour from now
 							recurrence: {
 								frequency: "DAILY",
 								interval: 1,
 								endDate: new Date(Date.now() + 172800000).toISOString(), // 2 days from now
+=======
+							startAt: "2025-01-01T00:00:00Z",
+							endAt: "2025-01-01T01:00:00Z",
+							recurrence: {
+								frequency: "DAILY",
+								interval: 1,
+								endDate: "2025-01-02T00:00:00Z",
+>>>>>>> upstream
 							},
 						},
 					},

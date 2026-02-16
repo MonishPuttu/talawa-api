@@ -6,11 +6,49 @@
  */
 
 export { default as PluginManager } from "./manager";
+<<<<<<< HEAD
+=======
+
+export type {
+	IPluginManifest,
+	IExtensionPoints,
+	IGraphQLExtension,
+	IDatabaseExtension,
+	IHookExtension,
+	ILoadedPlugin,
+	IExtensionRegistry,
+	IPluginContext,
+	IPluginLifecycle,
+	IPluginError,
+} from "./types";
+
+export {
+	PluginStatus,
+	ExtensionPointType,
+} from "./types";
+
+export {
+	validatePluginManifest,
+	generatePluginId,
+	loadPluginManifest,
+	isValidPluginId,
+	normalizeImportPath,
+	safeRequire,
+	directoryExists,
+	ensureDirectory,
+	sortExtensionPoints,
+	filterActiveExtensions,
+	debounce,
+	deepClone,
+} from "./utils";
+
+>>>>>>> upstream
 // Plugin discovery and registry utilities
 export {
 	createPluginContext,
 	initializePluginSystem,
 } from "./registry";
+<<<<<<< HEAD
 export type {
 	IDatabaseExtension,
 	IExtensionPoints,
@@ -41,3 +79,5 @@ export {
 	sortExtensionPoints,
 	validatePluginManifest,
 } from "./utils";
+=======
+>>>>>>> upstream

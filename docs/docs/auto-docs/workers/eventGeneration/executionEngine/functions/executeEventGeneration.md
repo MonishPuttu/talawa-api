@@ -29,4 +29,8 @@ The dependencies required for the worker, such as the database client and logger
 
 `Promise`\<[`ProcessingResult`](../../types/interfaces/ProcessingResult.md)\<[`EventGenerationExecutionResult`](../interfaces/EventGenerationExecutionResult.md)\>\>
 
+<<<<<<< HEAD
 - A promise that resolves to a processing result, including metrics and resource usage.
+=======
+A promise that resolves to a processing result, including metrics and resource usage.
+>>>>>>> upstream

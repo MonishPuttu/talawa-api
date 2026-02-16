@@ -1,4 +1,5 @@
 import { z } from "zod";
+<<<<<<< HEAD
 import { builder } from "~/src/graphql/builder";
 
 const uuidV7Regex =
@@ -8,6 +9,13 @@ export const queryFundInputSchema = z.object({
 	id: z.string().regex(uuidV7Regex, {
 		message: "Fund ID must be a valid UUID v7.",
 	}),
+=======
+import { fundsTableInsertSchema } from "~/src/drizzle/tables/funds";
+import { builder } from "~/src/graphql/builder";
+
+export const queryFundInputSchema = z.object({
+	id: fundsTableInsertSchema.shape.id.unwrap(),
+>>>>>>> upstream
 });
 
 export const QueryFundInput = builder

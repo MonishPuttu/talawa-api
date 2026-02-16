@@ -1,6 +1,11 @@
 import { faker } from "@faker-js/faker";
 import { eq } from "drizzle-orm";
+<<<<<<< HEAD
 import type { GraphQLObjectType, GraphQLResolveInfo } from "graphql";
+=======
+import type { GraphQLObjectType } from "graphql";
+import type { GraphQLResolveInfo } from "graphql";
+>>>>>>> upstream
 import { afterAll, beforeAll, expect, suite, test } from "vitest";
 import { chatsTable } from "~/src/drizzle/schema";
 import { schemaManager } from "~/src/graphql/schemaManager";
@@ -21,9 +26,15 @@ import {
 	Mutation_deleteChat,
 	Mutation_deleteOrganization,
 	Mutation_deleteUser,
+<<<<<<< HEAD
 	Query_chat_with_creator,
 	Query_signIn,
 } from "../documentNodes";
+=======
+	Query_signIn,
+} from "../documentNodes";
+import { Query_chat_with_creator } from "../documentNodes";
+>>>>>>> upstream
 
 async function getAdminToken() {
 	const signInResult = await mercuriusClient.query(Query_signIn, {
@@ -125,28 +136,44 @@ suite("Chat field creator", () => {
 				headers: { authorization: `Bearer ${adminAuthToken}` },
 				variables: { input: { id: testChatId } },
 			});
+<<<<<<< HEAD
 		} catch (_e) {}
+=======
+		} catch (e) {}
+>>>>>>> upstream
 
 		try {
 			await mercuriusClient.mutate(Mutation_deleteUser, {
 				headers: { authorization: `Bearer ${adminAuthToken}` },
 				variables: { input: { id: regularUserId } },
 			});
+<<<<<<< HEAD
 		} catch (_e) {}
+=======
+		} catch (e) {}
+>>>>>>> upstream
 
 		try {
 			await mercuriusClient.mutate(Mutation_deleteUser, {
 				headers: { authorization: `Bearer ${adminAuthToken}` },
 				variables: { input: { id: outsiderUserId } },
 			});
+<<<<<<< HEAD
 		} catch (_e) {}
+=======
+		} catch (e) {}
+>>>>>>> upstream
 
 		try {
 			await mercuriusClient.mutate(Mutation_deleteOrganization, {
 				headers: { authorization: `Bearer ${adminAuthToken}` },
 				variables: { input: { id: organizationId } },
 			});
+<<<<<<< HEAD
 		} catch (_e) {}
+=======
+		} catch (e) {}
+>>>>>>> upstream
 	});
 
 	test("unauthenticated caller results in unauthenticated error for creator field", async () => {
@@ -220,7 +247,11 @@ suite("Chat field creator", () => {
 		expect(res.data.chat).toBeNull();
 		expect(res.errors).toBeDefined();
 		const maybeExt = res.errors?.[0] as unknown;
+<<<<<<< HEAD
 		let code: string | undefined;
+=======
+		let code: string | undefined = undefined;
+>>>>>>> upstream
 		if (maybeExt && typeof maybeExt === "object") {
 			const obj = maybeExt as Record<string, unknown>;
 			const ext = obj.extensions as Record<string, unknown> | undefined;

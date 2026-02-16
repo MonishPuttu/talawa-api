@@ -18,6 +18,7 @@ Defined in: [src/graphql/types/AuthenticationPayload.ts:6](https://github.com/Pa
 
 ***
 
+<<<<<<< HEAD
 ### refreshToken
 
 > **refreshToken**: `string`
@@ -26,8 +27,14 @@ Defined in: [src/graphql/types/AuthenticationPayload.ts:7](https://github.com/Pa
 
 ***
 
+=======
+>>>>>>> upstream
 ### user
 
 > **user**: [`User`](../../User/User/type-aliases/User.md)
 
+<<<<<<< HEAD
 Defined in: [src/graphql/types/AuthenticationPayload.ts:8](https://github.com/PalisadoesFoundation/talawa-api/tree/mainsrc/graphql/types/AuthenticationPayload.ts#L8)
+=======
+Defined in: [src/graphql/types/AuthenticationPayload.ts:7](https://github.com/PalisadoesFoundation/talawa-api/tree/mainsrc/graphql/types/AuthenticationPayload.ts#L7)
+>>>>>>> upstream

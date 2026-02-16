@@ -1,10 +1,13 @@
 import { faker } from "@faker-js/faker";
 import { expect, suite, test, vi } from "vitest";
+<<<<<<< HEAD
 import {
 	POST_BODY_MAX_LENGTH,
 	POST_CAPTION_MAX_LENGTH,
 } from "~/src/drizzle/tables/posts";
 import type { InvalidArgumentsExtensions } from "~/src/utilities/TalawaGraphQLError";
+=======
+>>>>>>> upstream
 import { assertToBeNonNullish } from "../../../helpers";
 import { server } from "../../../server";
 import { mercuriusClient } from "../client";
@@ -37,6 +40,17 @@ suite("Mutation field createPost", () => {
 					input: {
 						caption: "Test Post",
 						organizationId: faker.string.uuid(),
+<<<<<<< HEAD
+=======
+						attachments: [
+							{
+								mimetype: "IMAGE_PNG",
+								objectName: "test-object-name-isPinned",
+								name: "test-image.png",
+								fileHash: "test-file-hash-isPinned",
+							},
+						],
+>>>>>>> upstream
 					},
 				},
 			});
@@ -60,6 +74,17 @@ suite("Mutation field createPost", () => {
 					input: {
 						caption: "Test Post",
 						organizationId: faker.string.uuid(),
+<<<<<<< HEAD
+=======
+						attachments: [
+							{
+								mimetype: "IMAGE_PNG",
+								objectName: "test-object-name-isPinned",
+								name: "test-image.png",
+								fileHash: "test-file-hash-isPinned",
+							},
+						],
+>>>>>>> upstream
 					},
 				},
 			});
@@ -122,6 +147,17 @@ suite("Mutation field createPost", () => {
 						caption: "Pinned Post Attempt",
 						organizationId: orgId,
 						isPinned: true,
+<<<<<<< HEAD
+=======
+						attachments: [
+							{
+								mimetype: "IMAGE_PNG",
+								objectName: "test-object-name-3",
+								name: "test-image.png",
+								fileHash: "test-file-hash-3",
+							},
+						],
+>>>>>>> upstream
 					},
 				},
 			});
@@ -168,6 +204,17 @@ suite("Mutation field createPost", () => {
 						caption: "Pinned Post",
 						organizationId: orgId,
 						isPinned: true,
+<<<<<<< HEAD
+=======
+						attachments: [
+							{
+								mimetype: "IMAGE_PNG",
+								objectName: "test-object-name-4",
+								name: "test-image.png",
+								fileHash: "test-file-hash-4",
+							},
+						],
+>>>>>>> upstream
 					},
 				},
 			});
@@ -211,6 +258,17 @@ suite("Mutation field createPost", () => {
 						caption: "Unpinned Post",
 						organizationId: orgId,
 						isPinned: false,
+<<<<<<< HEAD
+=======
+						attachments: [
+							{
+								mimetype: "IMAGE_PNG",
+								objectName: "test-object-name-5",
+								name: "test-image.png",
+								fileHash: "test-file-hash-5",
+							},
+						],
+>>>>>>> upstream
 					},
 				},
 			});
@@ -274,6 +332,17 @@ suite("Mutation field createPost", () => {
 					input: {
 						caption: "Test Post",
 						organizationId: orgId,
+<<<<<<< HEAD
+=======
+						attachments: [
+							{
+								mimetype: "IMAGE_PNG",
+								objectName: "test-object-name-00",
+								name: "test-image.png",
+								fileHash: "test-file-hash-00",
+							},
+						],
+>>>>>>> upstream
 					},
 				},
 			});
@@ -299,6 +368,17 @@ suite("Mutation field createPost", () => {
 					input: {
 						caption: "Test Post",
 						organizationId: invalidOrganizationId,
+<<<<<<< HEAD
+=======
+						attachments: [
+							{
+								mimetype: "IMAGE_PNG",
+								objectName: "test-object-name-01",
+								name: "test-image.png",
+								fileHash: "test-file-hash-01",
+							},
+						],
+>>>>>>> upstream
 					},
 				},
 			});
@@ -387,6 +467,17 @@ suite("Mutation field createPost", () => {
 						caption: "Unauthorized Pinned Post Attempt",
 						organizationId: orgId,
 						isPinned: true,
+<<<<<<< HEAD
+=======
+						attachments: [
+							{
+								mimetype: "IMAGE_PNG",
+								objectName: "test-object-name-unauth",
+								name: "test-image.png",
+								fileHash: "test-file-hash-unauth",
+							},
+						],
+>>>>>>> upstream
 					},
 				},
 			});
@@ -458,6 +549,17 @@ suite("Mutation field createPost", () => {
 						input: {
 							caption: "Post that should fail",
 							organizationId: orgId,
+<<<<<<< HEAD
+=======
+							attachments: [
+								{
+									mimetype: "IMAGE_PNG",
+									objectName: "test-object-name-error",
+									name: "test-image.png",
+									fileHash: "test-file-hash-error",
+								},
+							],
+>>>>>>> upstream
 						},
 					},
 				});
@@ -483,7 +585,11 @@ suite("Mutation field createPost", () => {
 	suite(
 		"when the client is authorized and the post is created successfully",
 		() => {
+<<<<<<< HEAD
 			test("should create a post and return the post data", async () => {
+=======
+			test("should create a post and return the post data attachments", async () => {
+>>>>>>> upstream
 				const createOrgResult = await mercuriusClient.mutate(
 					Mutation_createOrganization,
 					{
@@ -510,6 +616,17 @@ suite("Mutation field createPost", () => {
 						input: {
 							caption: "Successful Post",
 							organizationId: orgId,
+<<<<<<< HEAD
+=======
+							attachments: [
+								{
+									mimetype: "IMAGE_PNG",
+									objectName: "test-object-name-99",
+									name: "test-image.png",
+									fileHash: "test-file-hash-99",
+								},
+							],
+>>>>>>> upstream
 						},
 					},
 				});
@@ -518,6 +635,17 @@ suite("Mutation field createPost", () => {
 					expect.objectContaining({
 						id: expect.any(String),
 						caption: "Successful Post",
+<<<<<<< HEAD
+=======
+						attachments: [
+							{
+								mimeType: "image/png",
+								objectName: "test-object-name-99",
+								name: "test-image.png",
+								fileHash: "test-file-hash-99",
+							},
+						],
+>>>>>>> upstream
 						organization: expect.objectContaining({
 							id: orgId,
 						}),
@@ -525,6 +653,7 @@ suite("Mutation field createPost", () => {
 					}),
 				);
 			});
+<<<<<<< HEAD
 		},
 	);
 
@@ -1107,4 +1236,77 @@ test("removes MinIO object and returns unexpected error when attachment DB inser
 		server.drizzleClient.transaction = originalTransaction;
 		server.minio.client.removeObject = originalRemoveObject;
 	}
+=======
+
+			test("should create a post with attachments if provided", async () => {
+				const fakeAttachment: {
+					mimetype:
+						| "IMAGE_JPEG"
+						| "IMAGE_AVIF"
+						| "IMAGE_PNG"
+						| "IMAGE_WEBP"
+						| "VIDEO_MP4"
+						| "VIDEO_WEBM";
+					objectName: string;
+					fileHash: string;
+					name: string;
+				} = {
+					mimetype: "IMAGE_JPEG",
+					objectName: "fake-object-name",
+					fileHash: "fake-file-hash",
+					name: "fake-name",
+				};
+				const createOrgResult = await mercuriusClient.mutate(
+					Mutation_createOrganization,
+					{
+						headers: { authorization: `bearer ${authToken}` },
+						variables: {
+							input: {
+								name: "Post Org With Attachments",
+								description: "Organization for post with attachments",
+								countryCode: "us",
+								state: "CA",
+								city: "San Francisco",
+								postalCode: "94101",
+								addressLine1: "123 Main St",
+								addressLine2: "Suite 100",
+							},
+						},
+					},
+				);
+				const orgId = createOrgResult.data?.createOrganization?.id;
+				assertToBeNonNullish(orgId);
+				const result = await mercuriusClient.mutate(Mutation_createPost, {
+					headers: { authorization: `bearer ${authToken}` },
+					variables: {
+						input: {
+							caption: "Post with Attachments",
+							organizationId: orgId,
+							attachments: [fakeAttachment],
+						},
+					},
+				});
+				expect(result.errors).toBeUndefined();
+				expect(result.data?.createPost).toEqual(
+					expect.objectContaining({
+						id: expect.any(String),
+						caption: "Post with Attachments",
+						attachments: expect.arrayContaining([
+							expect.objectContaining({
+								mimeType: "image/jpeg",
+								objectName: fakeAttachment.objectName,
+								name: fakeAttachment.name,
+								fileHash: fakeAttachment.fileHash,
+							}),
+						]),
+						organization: expect.objectContaining({
+							id: expect.any(String),
+						}),
+						pinnedAt: null,
+					}),
+				);
+			});
+		},
+	);
+>>>>>>> upstream
 });

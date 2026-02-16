@@ -1,18 +1,28 @@
 import { eq } from "drizzle-orm";
 import { z } from "zod";
+<<<<<<< HEAD
 import { agendaItemAttachmentsTable } from "~/src/drizzle/tables/agendaItemAttachments";
 import { agendaItemsTable } from "~/src/drizzle/tables/agendaItems";
 import { agendaItemUrlTable } from "~/src/drizzle/tables/agendaItemUrls";
+=======
+import { agendaItemsTable } from "~/src/drizzle/tables/agendaItems";
+>>>>>>> upstream
 import { builder } from "~/src/graphql/builder";
 import {
 	MutationUpdateAgendaItemInput,
 	MutationUpdateAgendaItemInputSchema,
 } from "~/src/graphql/inputs/MutationUpdateAgendaItemInput";
 import { AgendaItem } from "~/src/graphql/types/AgendaItem/AgendaItem";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { isNotNullish } from "~/src/utilities/isNotNullish";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+import { isNotNullish } from "~/src/utilities/isNotNullish";
+>>>>>>> upstream
 const mutationUpdateAgendaItemArgumentsSchema = z.object({
 	input: MutationUpdateAgendaItemInputSchema,
 });
@@ -175,6 +185,10 @@ builder.mutationField("updateAgendaItem", (t) =>
 					await ctx.drizzleClient.query.agendaFoldersTable.findFirst({
 						columns: {
 							eventId: true,
+<<<<<<< HEAD
+=======
+							isAgendaItemFolder: true,
+>>>>>>> upstream
 						},
 						where: (fields, operators) => operators.eq(fields.id, folderId),
 					});
@@ -208,6 +222,7 @@ builder.mutationField("updateAgendaItem", (t) =>
 						},
 					});
 				}
+<<<<<<< HEAD
 			}
 
 			if (isNotNullish(parsedArgs.input.categoryId)) {
@@ -237,14 +252,24 @@ builder.mutationField("updateAgendaItem", (t) =>
 				if (
 					existingAgendaCategory.eventId !== existingAgendaItem.folder.eventId
 				) {
+=======
+
+				if (!existingAgendaFolder.isAgendaItemFolder) {
+>>>>>>> upstream
 					throw new TalawaGraphQLError({
 						extensions: {
 							code: "forbidden_action_on_arguments_associated_resources",
 							issues: [
 								{
+<<<<<<< HEAD
 									argumentPath: ["input", "categoryId"],
 									message:
 										"This agenda category does not belong to the event of the agenda item.",
+=======
+									argumentPath: ["input", "folderId"],
+									message:
+										"This agenda folder cannot be a folder to agenda items.",
+>>>>>>> upstream
 								},
 							],
 						},
@@ -273,6 +298,7 @@ builder.mutationField("updateAgendaItem", (t) =>
 				});
 			}
 
+<<<<<<< HEAD
 			// Use transaction to atomically update agenda item and replace attachments
 			return await ctx.drizzleClient.transaction(async (tx) => {
 				// Build explicit partial update object to protect NOT NULL columns
@@ -365,6 +391,31 @@ builder.mutationField("updateAgendaItem", (t) =>
 
 				return updatedAgendaItem;
 			});
+=======
+			const [updatedAgendaItem] = await ctx.drizzleClient
+				.update(agendaItemsTable)
+				.set({
+					description: parsedArgs.input.description,
+					duration: parsedArgs.input.duration,
+					folderId: parsedArgs.input.folderId,
+					key: parsedArgs.input.key,
+					name: parsedArgs.input.name,
+					updaterId: currentUserId,
+				})
+				.where(eq(agendaItemsTable.id, parsedArgs.input.id))
+				.returning();
+
+			// Updated agenda item not being returned means that either it was deleted or its `id` column was changed by external entities before this update operation could take place.
+			if (updatedAgendaItem === undefined) {
+				throw new TalawaGraphQLError({
+					extensions: {
+						code: "unexpected",
+					},
+				});
+			}
+
+			return updatedAgendaItem;
+>>>>>>> upstream
 		},
 		type: AgendaItem,
 	}),

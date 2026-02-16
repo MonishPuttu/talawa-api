@@ -35,4 +35,8 @@ The logger for logging the worker's progress and any errors.
 
 `Promise`\<[`WorkerResult`](../interfaces/WorkerResult.md)\>
 
+<<<<<<< HEAD
 - A promise that resolves to a summary result of the worker's run.
+=======
+A promise that resolves to a summary result of the worker's run.
+>>>>>>> upstream

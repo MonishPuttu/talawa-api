@@ -1,13 +1,25 @@
+<<<<<<< HEAD
+=======
+import { GraphQLError } from "graphql"; // New import
+>>>>>>> upstream
 import { z } from "zod";
 import { organizationMembershipsTable } from "~/src/drizzle/tables/organizationMemberships";
 import { builder } from "~/src/graphql/builder";
 import {
+<<<<<<< HEAD
 	joinPublicOrganizationInputSchema,
 	MutationJoinPublicOrganizationInput,
 } from "~/src/graphql/inputs/MutationJoinPublicOrganizationInput";
 import { notificationEventBus } from "~/src/graphql/types/Notification/EventBus/eventBus";
 import { OrganizationMembershipObject } from "~/src/graphql/types/Organization/OrganizationMembership";
 import { ErrorCode } from "~/src/utilities/errors/errorCodes";
+=======
+	MutationJoinPublicOrganizationInput,
+	joinPublicOrganizationInputSchema,
+} from "~/src/graphql/inputs/MutationJoinPublicOrganizationInput";
+import { notificationEventBus } from "~/src/graphql/types/Notification/EventBus/eventBus";
+import { OrganizationMembershipObject } from "~/src/graphql/types/Organization/OrganizationMembership";
+>>>>>>> upstream
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 
 const mutationJoinPublicOrganizationArgumentsSchema = z.object({
@@ -28,7 +40,11 @@ builder.mutationField("joinPublicOrganization", (t) =>
 			// Ensure user is authenticated
 			if (!ctx.currentClient.isAuthenticated) {
 				throw new TalawaGraphQLError({
+<<<<<<< HEAD
 					extensions: { code: ErrorCode.UNAUTHENTICATED },
+=======
+					extensions: { code: "unauthenticated" },
+>>>>>>> upstream
 				});
 			}
 
@@ -42,7 +58,11 @@ builder.mutationField("joinPublicOrganization", (t) =>
 			if (!success) {
 				throw new TalawaGraphQLError({
 					extensions: {
+<<<<<<< HEAD
 						code: ErrorCode.INVALID_ARGUMENTS,
+=======
+						code: "invalid_arguments",
+>>>>>>> upstream
 						issues: error.issues.map((issue) => ({
 							argumentPath: issue.path,
 							message: issue.message,
@@ -67,16 +87,25 @@ builder.mutationField("joinPublicOrganization", (t) =>
 			]);
 
 			if (!user) {
+<<<<<<< HEAD
 				throw new TalawaGraphQLError({
 					message: "User not found",
 					extensions: { code: ErrorCode.NOT_FOUND },
+=======
+				throw new GraphQLError("User not found", {
+					extensions: { code: "unauthenticated" },
+>>>>>>> upstream
 				});
 			}
 
 			if (!organization) {
 				throw new TalawaGraphQLError({
 					extensions: {
+<<<<<<< HEAD
 						code: ErrorCode.ARGUMENTS_ASSOCIATED_RESOURCES_NOT_FOUND,
+=======
+						code: "arguments_associated_resources_not_found",
+>>>>>>> upstream
 						issues: [{ argumentPath: ["input", "organizationId"] }],
 					},
 				});
@@ -86,7 +115,11 @@ builder.mutationField("joinPublicOrganization", (t) =>
 			if (organization.userRegistrationRequired) {
 				throw new TalawaGraphQLError({
 					extensions: {
+<<<<<<< HEAD
 						code: ErrorCode.FORBIDDEN_ACTION,
+=======
+						code: "forbidden_action",
+>>>>>>> upstream
 						message:
 							"This organization requires user registration before joining.",
 					},
@@ -111,7 +144,11 @@ builder.mutationField("joinPublicOrganization", (t) =>
 				if (existingMembership) {
 					throw new TalawaGraphQLError({
 						extensions: {
+<<<<<<< HEAD
 							code: ErrorCode.INVALID_ARGUMENTS,
+=======
+							code: "invalid_arguments",
+>>>>>>> upstream
 							issues: [
 								{
 									argumentPath: ["input", "organizationId"],
@@ -136,9 +173,13 @@ builder.mutationField("joinPublicOrganization", (t) =>
 
 			// Ensure membership creation was successful
 			if (newMemberships.length === 0) {
+<<<<<<< HEAD
 				throw new TalawaGraphQLError({
 					extensions: { code: ErrorCode.UNEXPECTED },
 				});
+=======
+				throw new TalawaGraphQLError({ extensions: { code: "unexpected" } });
+>>>>>>> upstream
 			}
 
 			// Notify organization admins about new member

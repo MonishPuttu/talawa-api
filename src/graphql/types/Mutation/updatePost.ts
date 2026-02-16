@@ -1,5 +1,8 @@
 import { eq } from "drizzle-orm";
+<<<<<<< HEAD
 import { ulid } from "ulidx";
+=======
+>>>>>>> upstream
 import { uuidv7 } from "uuidv7";
 import { z } from "zod";
 import { postAttachmentsTable } from "~/src/drizzle/tables/postAttachments";
@@ -10,10 +13,16 @@ import {
 	mutationUpdatePostInputSchema,
 } from "~/src/graphql/inputs/MutationUpdatePostInput";
 import { Post } from "~/src/graphql/types/Post/Post";
+<<<<<<< HEAD
 import { getKeyPathsWithNonUndefinedValues } from "~/src/utilities/getKeyPathsWithNonUndefinedValues";
 import envConfig from "~/src/utilities/graphqLimits";
 import { isNotNullish } from "~/src/utilities/isNotNullish";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import { getKeyPathsWithNonUndefinedValues } from "~/src/utilities/getKeyPathsWithNonUndefinedValues";
+import envConfig from "~/src/utilities/graphqLimits";
+>>>>>>> upstream
 
 const mutationUpdatePostArgumentsSchema = z.object({
 	input: mutationUpdatePostInputSchema,
@@ -43,7 +52,11 @@ builder.mutationField("updatePost", (t) =>
 				data: parsedArgs,
 				error,
 				success,
+<<<<<<< HEAD
 			} = await mutationUpdatePostArgumentsSchema.safeParseAsync(args);
+=======
+			} = mutationUpdatePostArgumentsSchema.safeParse(args);
+>>>>>>> upstream
 
 			if (!success) {
 				throw new TalawaGraphQLError({
@@ -201,12 +214,21 @@ builder.mutationField("updatePost", (t) =>
 				}
 			}
 
+<<<<<<< HEAD
+=======
+			// ...existing code...
+
+			// Replace the simple update with a transaction
+>>>>>>> upstream
 			return await ctx.drizzleClient.transaction(async (tx) => {
 				const [updatedPost] = await tx
 					.update(postsTable)
 					.set({
 						caption: parsedArgs.input.caption,
+<<<<<<< HEAD
 						body: parsedArgs.input.body,
+=======
+>>>>>>> upstream
 						pinnedAt:
 							parsedArgs.input.isPinned === undefined
 								? undefined
@@ -222,9 +244,12 @@ builder.mutationField("updatePost", (t) =>
 
 				// Updated post not being returned means that either it was deleted or its `id` column was changed
 				if (updatedPost === undefined) {
+<<<<<<< HEAD
 					ctx.log.error(
 						"Postgres update operation unexpectedly returned an empty array instead of throwing an error.",
 					);
+=======
+>>>>>>> upstream
 					throw new TalawaGraphQLError({
 						extensions: {
 							code: "unexpected",
@@ -232,6 +257,7 @@ builder.mutationField("updatePost", (t) =>
 					});
 				}
 
+<<<<<<< HEAD
 				// Handle direct file upload
 				let createdAttachment: typeof postAttachmentsTable.$inferSelect | null =
 					null;
@@ -279,11 +305,16 @@ builder.mutationField("updatePost", (t) =>
 						}
 					}
 
+=======
+				// Handle attachments if they're provided in the input
+				if (parsedArgs.input.attachments !== undefined) {
+>>>>>>> upstream
 					// First delete existing attachments
 					await tx
 						.delete(postAttachmentsTable)
 						.where(eq(postAttachmentsTable.postId, updatedPost.id));
 
+<<<<<<< HEAD
 					// Create attachment record
 					const attachmentRecord = {
 						creatorId: currentUserId,
@@ -333,6 +364,32 @@ builder.mutationField("updatePost", (t) =>
 						}
 					}
 
+=======
+					// Then insert new attachments
+					const attachments = parsedArgs.input.attachments;
+					if (attachments.length > 0) {
+						const createdPostAttachments = await tx
+							.insert(postAttachmentsTable)
+							.values(
+								attachments.map((attachment) => ({
+									updaterId: currentUserId,
+									mimeType: attachment.mimetype,
+									id: uuidv7(),
+									name: attachment.name,
+									postId: updatedPost.id,
+									objectName: attachment.objectName,
+									fileHash: attachment.fileHash,
+								})),
+							)
+							.returning();
+
+						return Object.assign(updatedPost, {
+							attachments: createdPostAttachments,
+						});
+					}
+
+					// Return empty attachments array if no new attachments
+>>>>>>> upstream
 					return Object.assign(updatedPost, {
 						attachments: [],
 					});

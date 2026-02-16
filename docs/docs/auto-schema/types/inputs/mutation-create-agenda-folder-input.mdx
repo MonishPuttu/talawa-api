@@ -71,6 +71,7 @@ export const Details = ({
   );
 };
 
+<<<<<<< HEAD
 Input type for creating a new agenda folder.
 
 ```graphql
@@ -80,23 +81,42 @@ input MutationCreateAgendaFolderInput {
   name: String!
   organizationId: ID!
   sequence: Int
+=======
+```graphql
+input MutationCreateAgendaFolderInput {
+  eventId: ID!
+  isAgendaItemFolder: Boolean!
+  name: String!
+  parentFolderId: ID
+>>>>>>> upstream
 }
 ```
 
 ### Fields
 
+<<<<<<< HEAD
 #### [<code style={{ fontWeight: 'normal' }}>MutationCreateAgendaFolderInput.<b>description</b></code>](#)<Bullet />[<code style={{ fontWeight: 'normal' }}><b>String</b></code>](/auto-schema/types/scalars/string.mdx) <Badge class="badge badge--secondary " text="scalar"/>
 
 Description of Agenda Folder
 
+=======
+>>>>>>> upstream
 #### [<code style={{ fontWeight: 'normal' }}>MutationCreateAgendaFolderInput.<b>eventId</b></code>](#)<Bullet />[<code style={{ fontWeight: 'normal' }}><b>ID!</b></code>](/auto-schema/types/scalars/id.mdx) <Badge class="badge badge--secondary badge--non_null" text="non-null"/> <Badge class="badge badge--secondary " text="scalar"/>
 
 Global identifier of the event the agenda folder is associated to.
 
+<<<<<<< HEAD
+=======
+#### [<code style={{ fontWeight: 'normal' }}>MutationCreateAgendaFolderInput.<b>isAgendaItemFolder</b></code>](#)<Bullet />[<code style={{ fontWeight: 'normal' }}><b>Boolean!</b></code>](/auto-schema/types/scalars/boolean.mdx) <Badge class="badge badge--secondary badge--non_null" text="non-null"/> <Badge class="badge badge--secondary " text="scalar"/>
+
+Boolean to tell if the agenda folder is meant to be a folder for agenda items or a parent folder for other agenda folders.
+
+>>>>>>> upstream
 #### [<code style={{ fontWeight: 'normal' }}>MutationCreateAgendaFolderInput.<b>name</b></code>](#)<Bullet />[<code style={{ fontWeight: 'normal' }}><b>String!</b></code>](/auto-schema/types/scalars/string.mdx) <Badge class="badge badge--secondary badge--non_null" text="non-null"/> <Badge class="badge badge--secondary " text="scalar"/>
 
 Name of the agenda folder.
 
+<<<<<<< HEAD
 #### [<code style={{ fontWeight: 'normal' }}>MutationCreateAgendaFolderInput.<b>organizationId</b></code>](#)<Bullet />[<code style={{ fontWeight: 'normal' }}><b>ID!</b></code>](/auto-schema/types/scalars/id.mdx) <Badge class="badge badge--secondary badge--non_null" text="non-null"/> <Badge class="badge badge--secondary " text="scalar"/>
 
 ID of the organization this folder belongs to.
@@ -104,6 +124,11 @@ ID of the organization this folder belongs to.
 #### [<code style={{ fontWeight: 'normal' }}>MutationCreateAgendaFolderInput.<b>sequence</b></code>](#)<Bullet />[<code style={{ fontWeight: 'normal' }}><b>Int</b></code>](/auto-schema/types/scalars/int.mdx) <Badge class="badge badge--secondary " text="scalar"/>
 
 Sequence of the Agenda Folder.
+=======
+#### [<code style={{ fontWeight: 'normal' }}>MutationCreateAgendaFolderInput.<b>parentFolderId</b></code>](#)<Bullet />[<code style={{ fontWeight: 'normal' }}><b>ID</b></code>](/auto-schema/types/scalars/id.mdx) <Badge class="badge badge--secondary " text="scalar"/>
+
+Global identifier of the agenda folder the agenda folder is contained within.
+>>>>>>> upstream
 
 ### Member Of
 

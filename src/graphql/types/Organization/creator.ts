@@ -1,9 +1,17 @@
 import { User } from "~/src/graphql/types/User/User";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 import type { GraphQLContext } from "../../context";
 import type { Organization as Organizationtype } from "./Organization";
 import { Organization } from "./Organization";
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+import type { GraphQLContext } from "../../context";
+import { Organization } from "./Organization";
+import type { Organization as Organizationtype } from "./Organization";
+>>>>>>> upstream
 export const OrganizationCreatorResolver = async (
 	parent: Organizationtype,
 	_args: Record<string, never>,

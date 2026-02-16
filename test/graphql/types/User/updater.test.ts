@@ -1,5 +1,9 @@
 import { faker } from "@faker-js/faker";
+<<<<<<< HEAD
 import { expect, suite, test, vi } from "vitest";
+=======
+import { expect, suite, test } from "vitest";
+>>>>>>> upstream
 import type {
 	TalawaGraphQLFormattedError,
 	UnauthenticatedExtensions,
@@ -14,7 +18,10 @@ import {
 	Mutation_updateUser,
 	Query_signIn,
 	Query_user_updater,
+<<<<<<< HEAD
 	Query_user_updater_simple,
+=======
+>>>>>>> upstream
 } from "../documentNodes";
 
 suite("User field updater", () => {
@@ -348,6 +355,7 @@ suite("User field updater", () => {
 			});
 		},
 	);
+<<<<<<< HEAD
 
 	suite(
 		`results in the expected value for "data.user.updater" field where`,
@@ -551,4 +559,6 @@ suite("User field updater", () => {
 			});
 		},
 	);
+=======
+>>>>>>> upstream
 });

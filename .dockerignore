@@ -797,5 +797,9 @@ FodyWeavers.xsd
 .ignore
 .pnpm-store
 package-lock.json
+<<<<<<< HEAD
 yarn.lock
 venv
+=======
+yarn.lock
+>>>>>>> upstream

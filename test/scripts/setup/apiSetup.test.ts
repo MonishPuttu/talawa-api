@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 vi.mock("inquirer");
 
+=======
+>>>>>>> upstream
 import crypto from "node:crypto";
 import fs from "node:fs";
 import dotenv from "dotenv";
@@ -8,11 +11,15 @@ import {
 	apiSetup,
 	checkEnvFile,
 	generateJwtSecret,
+<<<<<<< HEAD
 	type SetupAnswers,
+=======
+>>>>>>> upstream
 	setup,
 	validatePort,
 	validateURL,
 } from "scripts/setup/setup";
+<<<<<<< HEAD
 import { validateSecurePassword } from "scripts/setup/validators";
 import {
 	afterEach,
@@ -46,6 +53,11 @@ async function waitFor(
 		);
 	}
 }
+=======
+import { afterEach, beforeAll, describe, expect, it, vi } from "vitest";
+
+vi.mock("inquirer");
+>>>>>>> upstream
 
 describe("Setup -> apiSetup", () => {
 	const originalEnv = { ...process.env };
@@ -58,6 +70,7 @@ describe("Setup -> apiSetup", () => {
 		vi.resetAllMocks();
 	});
 
+<<<<<<< HEAD
 	it("should prompt the user for API configuration and update environment variables", async () => {
 		process.env.MINIO_ROOT_PASSWORD = "password";
 		process.env.POSTGRES_PASSWORD = "password";
@@ -69,6 +82,20 @@ describe("Setup -> apiSetup", () => {
 			{ useDefaultMinio: true },
 			{ useDefaultPostgres: true },
 			{ useDefaultCaddy: true },
+=======
+	const isEnvConfigured = checkEnvFile();
+
+	it("should prompt the user for API configuration and update environment variables", async () => {
+		process.env.MINIO_ROOT_PASSWORD = "password";
+		process.env.POSTGRES_PASSWORD = "password";
+		const mockResponses = [
+			...(isEnvConfigured ? [{ envReconfigure: true }] : []),
+			{ CI: "true" },
+			{ useDefaultMinio: true },
+			{ useDefaultPostgres: true },
+			{ useDefaultCaddy: true },
+			{ useDefaultApi: false },
+>>>>>>> upstream
 			{ API_BASE_URL: "http://localhost:5000" },
 			{ API_HOST: "127.0.0.1" },
 			{ API_PORT: "5000" },
@@ -81,8 +108,21 @@ describe("Setup -> apiSetup", () => {
 			{ API_MINIO_ACCESS_KEY: "mocked-access-key" },
 			{ API_MINIO_END_POINT: "mocked-endpoint" },
 			{ API_MINIO_PORT: "9001" },
+<<<<<<< HEAD
 			{ API_MINIO_TEST_END_POINT: "mocked-test-endpoint" },
 			{ API_MINIO_USE_SSL: "false" },
+=======
+			{ API_MINIO_SECRET_KEY: "password" },
+			{ API_MINIO_TEST_END_POINT: "mocked-test-endpoint" },
+			{ API_MINIO_USE_SSL: "true" },
+			{ API_POSTGRES_DATABASE: "mocked-database" },
+			{ API_POSTGRES_HOST: "mocked-host" },
+			{ API_POSTGRES_PASSWORD: "password" },
+			{ API_POSTGRES_PORT: "5433" },
+			{ API_POSTGRES_SSL_MODE: "true" },
+			{ API_POSTGRES_TEST_HOST: "mocked-test-host" },
+			{ API_POSTGRES_USER: "mocked-user" },
+>>>>>>> upstream
 			{ API_ADMINISTRATOR_USER_EMAIL_ADDRESS: "test@email.com" },
 		];
 
@@ -107,8 +147,21 @@ describe("Setup -> apiSetup", () => {
 			API_MINIO_ACCESS_KEY: "mocked-access-key",
 			API_MINIO_END_POINT: "mocked-endpoint",
 			API_MINIO_PORT: "9001",
+<<<<<<< HEAD
 			API_MINIO_TEST_END_POINT: "mocked-test-endpoint",
 			API_MINIO_USE_SSL: "false",
+=======
+			API_MINIO_SECRET_KEY: "password",
+			API_MINIO_TEST_END_POINT: "mocked-test-endpoint",
+			API_MINIO_USE_SSL: "true",
+			API_POSTGRES_DATABASE: "mocked-database",
+			API_POSTGRES_HOST: "mocked-host",
+			API_POSTGRES_PASSWORD: "password",
+			API_POSTGRES_PORT: "5433",
+			API_POSTGRES_SSL_MODE: "true",
+			API_POSTGRES_TEST_HOST: "mocked-test-host",
+			API_POSTGRES_USER: "mocked-user",
+>>>>>>> upstream
 			API_ADMINISTRATOR_USER_EMAIL_ADDRESS: "test@email.com",
 		};
 
@@ -121,6 +174,7 @@ describe("Setup -> apiSetup", () => {
 		const processExitSpy = vi
 			.spyOn(process, "exit")
 			.mockImplementation(() => undefined as never);
+<<<<<<< HEAD
 		vi.spyOn(fs, "existsSync").mockImplementation((path) => {
 			if (path === ".backup") return true;
 			return false;
@@ -130,6 +184,9 @@ describe("Setup -> apiSetup", () => {
 				(path: fs.PathLike) => string[]
 			>
 		).mockImplementation(() => [".env.1600000000", ".env.1700000000"]);
+=======
+		const fsExistsSyncSpy = vi.spyOn(fs, "existsSync").mockReturnValue(true);
+>>>>>>> upstream
 		const fsCopyFileSyncSpy = vi
 			.spyOn(fs, "copyFileSync")
 			.mockImplementation(() => undefined);
@@ -142,21 +199,36 @@ describe("Setup -> apiSetup", () => {
 		await apiSetup({});
 
 		expect(consoleErrorSpy).toHaveBeenCalledWith(mockError);
+<<<<<<< HEAD
 		expect(fsCopyFileSyncSpy).toHaveBeenCalledWith(
 			".backup/.env.1700000000",
 			".env",
 		);
+=======
+		expect(fsExistsSyncSpy).toHaveBeenCalledWith(".env.backup");
+		expect(fsCopyFileSyncSpy).toHaveBeenCalledWith(".env.backup", ".env");
+>>>>>>> upstream
 		expect(processExitSpy).toHaveBeenCalledWith(1);
 
 		vi.clearAllMocks();
 	});
 
+<<<<<<< HEAD
 	it("should not prompt for API_MINIO_SECRET_KEY or API_POSTGRES_* (set in service functions)", async () => {
 		// These values are now set automatically in minioSetup() and postgresSetup()
 		// apiSetup() should NOT prompt for them
 		const promptMock = vi.spyOn(inquirer, "prompt");
 
 		// Mock all prompts that apiSetup actually makes (PostgreSQL prompts moved to postgresSetup)
+=======
+	it("should prompt the user until mandatory parameters match", async () => {
+		process.env.POSTGRES_PASSWORD = "password";
+		process.env.MINIO_ROOT_PASSWORD = "password";
+
+		const promptMock = vi.spyOn(inquirer, "prompt");
+
+		// First response is incorrect, second response is correct
+>>>>>>> upstream
 		promptMock
 			.mockResolvedValueOnce({ API_BASE_URL: "http://localhost:5000" })
 			.mockResolvedValueOnce({ API_HOST: "127.0.0.1" })
@@ -168,6 +240,7 @@ describe("Setup -> apiSetup", () => {
 			.mockResolvedValueOnce({ API_JWT_SECRET: "mocked-secret" })
 			.mockResolvedValueOnce({ API_LOG_LEVEL: "info" })
 			.mockResolvedValueOnce({ API_MINIO_ACCESS_KEY: "mocked-access-key" })
+<<<<<<< HEAD
 			.mockResolvedValueOnce({ API_MINIO_END_POINT: "mocked-endpoint" })
 			.mockResolvedValueOnce({ API_MINIO_PORT: "9001" })
 			.mockResolvedValueOnce({
@@ -182,6 +255,38 @@ describe("Setup -> apiSetup", () => {
 		// API_MINIO_SECRET_KEY is set in minioSetup()
 		// All API_POSTGRES_* are now set in postgresSetup()
 		expect(promptMock).toHaveBeenCalledTimes(14);
+=======
+			.mockResolvedValueOnce({ API_MINIO_END_POINT: "mocked-test-endpoint" })
+			.mockResolvedValueOnce({ API_MINIO_PORT: "9001" })
+			.mockResolvedValueOnce({ API_MINIO_SECRET_KEY: "mocked-secret-key" })
+			.mockResolvedValueOnce({ API_MINIO_SECRET_KEY: "password" })
+			.mockResolvedValueOnce({
+				API_MINIO_TEST_END_POINT: "mocked-test-endpoint",
+			})
+			.mockResolvedValueOnce({ API_MINIO_USE_SSL: "true" })
+			.mockResolvedValueOnce({ API_POSTGRES_DATABASE: "mocked-database" })
+			.mockResolvedValueOnce({ API_POSTGRES_HOST: "mocked-host" })
+			.mockResolvedValueOnce({ API_POSTGRES_PASSWORD: "postgres-password" })
+			.mockResolvedValueOnce({ API_POSTGRES_PASSWORD: "password" })
+			.mockResolvedValueOnce({ API_POSTGRES_PORT: "5433" })
+			.mockResolvedValueOnce({ API_POSTGRES_SSL_MODE: "true" })
+			.mockResolvedValueOnce({ API_POSTGRES_TEST_HOST: "mocked-test-host" })
+			.mockResolvedValueOnce({ API_POSTGRES_USER: "mocked-user" });
+		const consoleWarnSpy = vi.spyOn(console, "warn");
+
+		let answers: Record<string, string> = {};
+		answers = await apiSetup(answers);
+
+		// Verify user is prompted twice because first attempt was incorrect
+		expect(promptMock).toHaveBeenCalledTimes(24);
+		expect(answers.API_POSTGRES_PASSWORD).toBe("password");
+
+		// Verify warning message was shown
+		expect(consoleWarnSpy.mock.calls).toEqual([
+			["⚠️ API_MINIO_SECRET_KEY must match MINIO_ROOT_PASSWORD."],
+			["⚠️ API_POSTGRES_PASSWORD must match POSTGRES_PASSWORD."],
+		]);
+>>>>>>> upstream
 	});
 });
 describe("validateURL", () => {
@@ -290,7 +395,11 @@ describe("generateJwtSecret", () => {
 
 		expect(() => generateJwtSecret()).toThrow("Failed to generate JWT secret");
 		expect(consoleErrorSpy).toHaveBeenCalledWith(
+<<<<<<< HEAD
 			"⚠️ Warning: Failed to generate random bytes for JWT secret. This may indicate a system entropy issue.",
+=======
+			"⚠️ Warning: Permission denied while generating JWT secret. Ensure the process has sufficient filesystem access.",
+>>>>>>> upstream
 			expect.any(Error),
 		);
 
@@ -299,6 +408,7 @@ describe("generateJwtSecret", () => {
 	});
 });
 
+<<<<<<< HEAD
 describe("validateSecurePassword", () => {
 	it("should return true for valid secure passwords", () => {
 		expect(validateSecurePassword("Password1!")).toBe(true);
@@ -351,6 +461,9 @@ describe("Error handling without backup", () => {
 		vi.clearAllMocks();
 	});
 
+=======
+describe("Error handling without backup", () => {
+>>>>>>> upstream
 	it("should handle prompt errors when backup doesn't exist", async () => {
 		const processExitSpy = vi
 			.spyOn(process, "exit")
@@ -368,7 +481,11 @@ describe("Error handling without backup", () => {
 		await apiSetup({});
 
 		expect(consoleErrorSpy).toHaveBeenCalledWith(mockError);
+<<<<<<< HEAD
 		expect(fsExistsSyncSpy).toHaveBeenCalledWith(".backup");
+=======
+		expect(fsExistsSyncSpy).toHaveBeenCalledWith(".env.backup");
+>>>>>>> upstream
 		expect(fsCopyFileSyncSpy).not.toHaveBeenCalled();
 		expect(processExitSpy).toHaveBeenCalledWith(1);
 
@@ -379,6 +496,7 @@ describe("Error handling without backup", () => {
 		const processExitSpy = vi
 			.spyOn(process, "exit")
 			.mockImplementation(() => undefined as never);
+<<<<<<< HEAD
 		const consoleLogSpy = vi.spyOn(console, "log").mockImplementation(() => {});
 
 		// Mock file system to indicate no .env file exists (so no backup will be created)
@@ -430,5 +548,24 @@ describe("Error handling without backup", () => {
 		);
 		// When no backup exists, it should exit with 0 (success, nothing to restore)
 		expect(processExitSpy).toHaveBeenCalledWith(0);
+=======
+		const fsExistsSyncSpy = vi.spyOn(fs, "existsSync").mockReturnValue(false);
+		const fsCopyFileSyncSpy = vi
+			.spyOn(fs, "copyFileSync")
+			.mockImplementation(() => undefined);
+
+		const consoleLogSpy = vi.spyOn(console, "log");
+
+		process.emit("SIGINT");
+
+		expect(consoleLogSpy).toHaveBeenCalledWith(
+			"\nProcess interrupted! Undoing changes...",
+		);
+		expect(fsExistsSyncSpy).toHaveBeenCalledWith(".env.backup");
+		expect(fsCopyFileSyncSpy).not.toHaveBeenCalled();
+		expect(processExitSpy).toHaveBeenCalledWith(1);
+
+		vi.clearAllMocks();
+>>>>>>> upstream
 	});
 });

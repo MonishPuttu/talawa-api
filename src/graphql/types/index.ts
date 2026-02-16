@@ -5,9 +5,12 @@ import "./AdvertisementAttachment/index";
 import "./RecurrenceRule/index";
 import "./AgendaFolder/index";
 import "./AgendaItem/index";
+<<<<<<< HEAD
 import "./AgendaItemAttachement/index";
 import "./AgendaItemUrl/index";
 import "./AssignUserTag/index";
+=======
+>>>>>>> upstream
 import "./AuthenticationPayload";
 import "./BlockedUser";
 import "./Chat/index";
@@ -32,12 +35,18 @@ import "./Query/index";
 import "./Subscription/index";
 import "./Tag/index";
 import "./TagFolder/index";
+<<<<<<< HEAD
 import "./UnassignUserTag/index";
+=======
+>>>>>>> upstream
 import "./User/index";
 import "./Venue/index";
 import "./VenueAttachment/index";
 import "./Notification/index";
 import "./EventVolunteerMembership/index";
+<<<<<<< HEAD
 import "./EventInvitation/index";
 import "./AgendaCategory/index";
 import "./OAuthAccountInfo/index";
+=======
+>>>>>>> upstream

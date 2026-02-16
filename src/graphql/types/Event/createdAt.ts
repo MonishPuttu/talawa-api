@@ -1,6 +1,11 @@
 import type { GraphQLContext } from "~/src/graphql/context";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+>>>>>>> upstream
 import { Event, type Event as EventType } from "./Event";
 export const eventCreatedAtResolver = async (
 	parent: EventType,

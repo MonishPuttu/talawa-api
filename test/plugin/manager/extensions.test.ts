@@ -2,17 +2,25 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ExtensionLoader } from "../../../src/plugin/manager/extensions";
 import type {
 	IExtensionRegistry,
+<<<<<<< HEAD
 	IGraphQLExtension,
+=======
+>>>>>>> upstream
 	IHookExtension,
 	ILoadedPlugin,
 	IPluginManifest,
 } from "../../../src/plugin/types";
+<<<<<<< HEAD
+=======
+import type { IGraphQLExtension } from "../../../src/plugin/types";
+>>>>>>> upstream
 import { PluginStatus } from "../../../src/plugin/types";
 
 vi.mock("../../../src/plugin/utils", () => ({
 	safeRequire: vi.fn(),
 }));
 
+<<<<<<< HEAD
 vi.mock("../../../src/utilities/logging/logger", () => ({
 	rootLogger: {
 		info: vi.fn(),
@@ -22,6 +30,8 @@ vi.mock("../../../src/utilities/logging/logger", () => ({
 	},
 }));
 
+=======
+>>>>>>> upstream
 import { safeRequire } from "../../../src/plugin/utils";
 
 describe("ExtensionLoader basic", () => {
@@ -319,9 +329,13 @@ describe("ExtensionLoader basic", () => {
 				manifest,
 				pluginModule,
 			),
+<<<<<<< HEAD
 		).rejects.toThrow(
 			"Failed to load extension points: Plugin non-existent not found in loaded plugins",
 		);
+=======
+		).resolves.toBeUndefined(); // Should return early without error
+>>>>>>> upstream
 	});
 
 	it("should initialize databaseTables if not present", async () => {
@@ -437,9 +451,13 @@ describe("ExtensionLoader basic", () => {
 				manifest,
 				pluginModule,
 			),
+<<<<<<< HEAD
 		).rejects.toThrow(
 			"Failed to load extension points: Plugin non-existent not found in loaded plugins",
 		);
+=======
+		).resolves.toBeUndefined(); // Should return early without error
+>>>>>>> upstream
 	});
 
 	it("should initialize hooks if not present", async () => {
@@ -1312,7 +1330,11 @@ describe("ExtensionLoader basic", () => {
 				manifest,
 				pluginModule,
 			),
+<<<<<<< HEAD
 		).rejects.toThrow(/Failed to load GraphQL builder extension/);
+=======
+		).resolves.toBeUndefined(); // Should return early without error
+>>>>>>> upstream
 	});
 
 	describe("Webhook Extensions", () => {
@@ -1462,9 +1484,13 @@ describe("ExtensionLoader basic", () => {
 					manifest,
 					pluginModule,
 				),
+<<<<<<< HEAD
 			).rejects.toThrow(
 				"Failed to load extension points: Plugin non-existent not found in loaded plugins",
 			);
+=======
+			).resolves.toBeUndefined(); // Should return early without error
+>>>>>>> upstream
 		});
 
 		it("should initialize webhooks if not present", async () => {

@@ -321,7 +321,10 @@ export type ResolvedRecurringEventInstance = {
 	allDay: boolean;
 	isPublic: boolean;
 	isRegisterable: boolean;
+<<<<<<< HEAD
 	isInviteOnly: boolean;
+=======
+>>>>>>> upstream
 	creatorId: string | null;
 	updaterId: string | null;
 	createdAt: Date;
@@ -332,9 +335,12 @@ export type ResolvedRecurringEventInstance = {
 	appliedExceptionData: Record<string, unknown> | null;
 	exceptionCreatedBy: string | null;
 	exceptionCreatedAt: Date | null;
+<<<<<<< HEAD
 
 	// Attachments (inherited from template)
 	attachments: (typeof eventAttachmentsTable.$inferSelect)[];
+=======
+>>>>>>> upstream
 };
 
 /**

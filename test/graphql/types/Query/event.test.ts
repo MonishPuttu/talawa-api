@@ -1,7 +1,11 @@
 import { faker } from "@faker-js/faker";
+<<<<<<< HEAD
 import { uuidv7 } from "uuidv7";
 import { afterEach, beforeAll, expect, suite, test } from "vitest";
 import { eventsTable } from "~/src/drizzle/tables/events";
+=======
+import { afterEach, beforeAll, expect, suite, test } from "vitest";
+>>>>>>> upstream
 import type {
 	TalawaGraphQLFormattedError,
 	UnauthenticatedExtensions,
@@ -16,8 +20,11 @@ import {
 	Mutation_createOrganizationMembership,
 	Mutation_createUser,
 	Mutation_deleteUser,
+<<<<<<< HEAD
 	Mutation_inviteEventAttendee,
 	Mutation_registerForEvent,
+=======
+>>>>>>> upstream
 	Query_event,
 	Query_getRecurringEvents,
 	Query_signIn,
@@ -162,8 +169,12 @@ suite("Query field event", () => {
 	) {
 		const {
 			durationInHours = 24,
+<<<<<<< HEAD
 			// Default to 24 hours in future because createEvent rejects past startAt
 			startOffset = 24 * 60 * 60 * 1000,
+=======
+			startOffset = 0,
+>>>>>>> upstream
 			description = "Test Event",
 			name = "Test Event",
 		} = options;
@@ -333,7 +344,11 @@ suite("Query field event", () => {
 				// Validate error structure safely
 				const error = result.errors?.[0];
 				expect(error).toBeDefined();
+<<<<<<< HEAD
 				expect(error?.message).toBe("Internal Server Error");
+=======
+				expect(error?.message).toContain("Failed query:");
+>>>>>>> upstream
 				expect(error?.path).toEqual(["event"]);
 			});
 
@@ -356,7 +371,11 @@ suite("Query field event", () => {
 				// Validate error structure safely
 				const error = result.errors?.[0];
 				expect(error).toBeDefined();
+<<<<<<< HEAD
 				expect(error?.message).toBe("Internal Server Error");
+=======
+				expect(error?.message).toContain("Failed query:");
+>>>>>>> upstream
 				expect(error?.path).toEqual(["event"]);
 			});
 
@@ -391,7 +410,11 @@ suite("Query field event", () => {
 				// Validate error structure safely
 				const error = eventResult.errors?.[0];
 				expect(error).toBeDefined();
+<<<<<<< HEAD
 				expect(error?.message).toBe("Internal Server Error");
+=======
+				expect(error?.message).toContain("Failed query:");
+>>>>>>> upstream
 				expect(error?.path).toEqual(["event"]);
 			});
 		},
@@ -511,6 +534,7 @@ suite("Query field event", () => {
 			const { authToken, userId } = await getAdminTokenAndUserId();
 			const organization = await createTestOrganization(authToken, userId);
 
+<<<<<<< HEAD
 			// Create an event in the past directly in DB to bypass mutation validation
 			const pastEventId = uuidv7();
 			await server.drizzleClient.insert(eventsTable).values({
@@ -532,6 +556,34 @@ suite("Query field event", () => {
 				where: (fields, operators) => operators.eq(fields.id, pastEventId),
 			});
 			assertToBeNonNullish(pastEvent); // Assert exists since we just created it
+=======
+			// Create an event in the past
+			const pastEventResult = await mercuriusClient.mutate(
+				Mutation_createEvent,
+				{
+					headers: {
+						authorization: `bearer ${authToken}`,
+					},
+					variables: {
+						input: {
+							description: "Past Event",
+							// Set dates to last week
+							startAt: new Date(
+								Date.now() - 7 * 24 * 60 * 60 * 1000,
+							).toISOString(),
+							endAt: new Date(
+								Date.now() - 6 * 24 * 60 * 60 * 1000,
+							).toISOString(),
+							name: "Past Event",
+							organizationId: organization.id,
+						},
+					},
+				},
+			);
+
+			const pastEvent = pastEventResult.data?.createEvent;
+			assertToBeNonNullish(pastEvent);
+>>>>>>> upstream
 
 			// Query the past event
 			const queryResult = await mercuriusClient.query(Query_event, {
@@ -673,6 +725,7 @@ suite("Query field event", () => {
 			expect(Array.isArray(generatedInstances)).toBe(true);
 			expect(generatedInstances.length).toBeGreaterThan(0);
 		});
+<<<<<<< HEAD
 
 		suite("Invite-only event visibility", () => {
 			test("registered-but-not-invited user can access invite-only event", async () => {
@@ -1213,5 +1266,7 @@ suite("Query field event", () => {
 				});
 			});
 		});
+=======
+>>>>>>> upstream
 	});
 });

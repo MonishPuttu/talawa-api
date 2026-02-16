@@ -6,10 +6,16 @@ import {
 	MutationDeletePostVoteInput,
 	mutationDeletePostVoteInputSchema,
 } from "~/src/graphql/inputs/MutationDeletePostVoteInput";
+<<<<<<< HEAD
 import { Post, type Post as PostType } from "~/src/graphql/types/Post/Post";
 import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 
+=======
+import { Post } from "~/src/graphql/types/Post/Post";
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+>>>>>>> upstream
 const mutationDeletePostVoteArgumentsSchema = z.object({
 	input: mutationDeletePostVoteInputSchema,
 });
@@ -54,6 +60,7 @@ builder.mutationField("deletePostVote", (t) =>
 
 			const currentUserId = ctx.currentClient.user.id;
 
+<<<<<<< HEAD
 			let currentUser: { role: string } | undefined;
 			let existingCreator: { id: string } | undefined;
 			let existingPost:
@@ -139,6 +146,58 @@ builder.mutationField("deletePostVote", (t) =>
 					throw error;
 				}
 			}
+=======
+			const [currentUser, existingCreator, existingPost] = await Promise.all([
+				ctx.drizzleClient.query.usersTable.findFirst({
+					columns: {
+						role: true,
+					},
+					where: (fields, operators) => operators.eq(fields.id, currentUserId),
+				}),
+				ctx.drizzleClient.query.usersTable.findFirst({
+					where: (fields, operators) =>
+						operators.eq(fields.id, parsedArgs.input.creatorId),
+				}),
+				ctx.drizzleClient.query.postsTable.findFirst({
+					with: {
+						attachmentsWherePost: true,
+						organization: {
+							columns: {
+								countryCode: true,
+							},
+							with: {
+								membershipsWhereOrganization: {
+									columns: {
+										role: true,
+									},
+									where: (fields, operators) =>
+										operators.eq(fields.memberId, parsedArgs.input.creatorId),
+								},
+							},
+						},
+						votesWherePost: {
+							columns: {
+								type: true,
+							},
+							where: (fields, operators) =>
+								operators.eq(fields.creatorId, currentUserId),
+						},
+					},
+					where: (fields, operators) =>
+						operators.eq(fields.id, parsedArgs.input.postId),
+				}),
+				ctx.drizzleClient.query.postVotesTable.findFirst({
+					columns: {
+						type: true,
+					},
+					where: (fields, operators) =>
+						operators.and(
+							operators.eq(fields.creatorId, parsedArgs.input.creatorId),
+							operators.eq(fields.postId, parsedArgs.input.postId),
+						),
+				}),
+			]);
+>>>>>>> upstream
 
 			if (currentUser === undefined) {
 				throw new TalawaGraphQLError({
@@ -232,6 +291,51 @@ builder.mutationField("deletePostVote", (t) =>
 				});
 			}
 
+<<<<<<< HEAD
+=======
+			if (
+				currentUser.role !== "administrator" &&
+				(currentUserOrganizationMembership === undefined ||
+					(currentUserOrganizationMembership.role !== "administrator" &&
+						currentUserId !== parsedArgs.input.creatorId))
+			) {
+				if (currentUserOrganizationMembership === undefined) {
+					throw new TalawaGraphQLError({
+						extensions: {
+							code: "unauthorized_action_on_arguments_associated_resources",
+							issues: [
+								{
+									argumentPath: ["input", "creatorId"],
+								},
+								{
+									argumentPath: ["input", "postId"],
+								},
+							],
+						},
+					});
+				}
+
+				if (
+					currentUserOrganizationMembership.role !== "administrator" ||
+					currentUserId !== parsedArgs.input.creatorId
+				) {
+					throw new TalawaGraphQLError({
+						extensions: {
+							code: "unauthorized_action_on_arguments_associated_resources",
+							issues: [
+								{
+									argumentPath: ["input", "creatorId"],
+								},
+								{
+									argumentPath: ["input", "postId"],
+								},
+							],
+						},
+					});
+				}
+			}
+
+>>>>>>> upstream
 			const [deletedPostVote] = await ctx.drizzleClient
 				.delete(postVotesTable)
 				.where(
@@ -253,7 +357,11 @@ builder.mutationField("deletePostVote", (t) =>
 
 			return Object.assign(existingPost, {
 				attachments: existingPost.attachmentsWherePost,
+<<<<<<< HEAD
 			}) as PostType;
+=======
+			});
+>>>>>>> upstream
 		},
 		type: Post,
 	}),

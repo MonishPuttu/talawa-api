@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import {
 	afterEach,
 	beforeEach,
@@ -14,6 +15,15 @@ import fs from "node:fs";
 import inquirer from "inquirer";
 import * as SetupModule from "scripts/setup/setup";
 import { administratorEmail, validateEmail } from "scripts/setup/setup";
+=======
+import fs from "node:fs";
+import inquirer from "inquirer";
+import { administratorEmail, validateEmail } from "scripts/setup/setup";
+import * as SetupModule from "scripts/setup/setup";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+
+vi.mock("inquirer");
+>>>>>>> upstream
 
 describe("Setup -> askForAdministratorEmail", () => {
 	const originalEmail = process.env.API_ADMINISTRATOR_USER_EMAIL_ADDRESS;
@@ -56,6 +66,7 @@ describe("Setup -> askForAdministratorEmail", () => {
 		);
 	});
 
+<<<<<<< HEAD
 	it("should handle prompt errors correctly", async () => {
 		const processExitSpy = vi
 			.spyOn(process, "exit")
@@ -88,6 +99,32 @@ describe("Setup -> askForAdministratorEmail", () => {
 		expect(processExitSpy).toHaveBeenCalledWith(1);
 
 		vi.clearAllMocks();
+=======
+	it("should restore from backup and exit when inquirer fails with existing backup", async () => {
+		const consoleErrorSpy = vi
+			.spyOn(console, "error")
+			.mockImplementation(() => {});
+		const processExitSpy = vi.spyOn(process, "exit").mockImplementation(() => {
+			throw new Error("process.exit called");
+		});
+
+		vi.spyOn(fs, "existsSync").mockReturnValue(true);
+		vi.spyOn(fs, "copyFileSync").mockImplementation(() => {});
+
+		const promptError = new Error("inquirer failure");
+		vi.spyOn(inquirer, "prompt").mockRejectedValueOnce(promptError);
+
+		await expect(SetupModule.administratorEmail({})).rejects.toThrow(
+			"process.exit called",
+		);
+		expect(consoleErrorSpy).toHaveBeenCalledWith(promptError);
+		expect(fs.existsSync).toHaveBeenCalledWith(".env.backup");
+		expect(fs.copyFileSync).toHaveBeenCalledWith(".env.backup", ".env");
+		expect(processExitSpy).toHaveBeenCalledWith(1);
+
+		processExitSpy.mockRestore();
+		consoleErrorSpy.mockRestore();
+>>>>>>> upstream
 	});
 
 	it("should handle inquirer failure gracefully when no backup exists", async () => {
@@ -107,7 +144,11 @@ describe("Setup -> askForAdministratorEmail", () => {
 		);
 
 		expect(consoleErrorSpy).toHaveBeenCalledWith(promptError);
+<<<<<<< HEAD
 		expect(fs.existsSync).toHaveBeenCalledWith(".backup");
+=======
+		expect(fs.existsSync).toHaveBeenCalledWith(".env.backup");
+>>>>>>> upstream
 		expect(processExitSpy).toHaveBeenCalledWith(1);
 
 		processExitSpy.mockRestore();

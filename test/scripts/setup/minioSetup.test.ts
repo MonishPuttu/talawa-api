@@ -1,11 +1,20 @@
+<<<<<<< HEAD
 import { afterEach, describe, expect, it, type MockInstance, vi } from "vitest";
 
 vi.mock("inquirer");
 
+=======
+>>>>>>> upstream
 import fs from "node:fs";
 import dotenv from "dotenv";
 import inquirer from "inquirer";
 import { minioSetup, setup } from "scripts/setup/setup";
+<<<<<<< HEAD
+=======
+import { afterEach, describe, expect, it, vi } from "vitest";
+
+vi.mock("inquirer");
+>>>>>>> upstream
 
 describe("Setup -> minioSetup", () => {
 	const originalEnv = { ...process.env };
@@ -118,6 +127,7 @@ describe("Setup -> minioSetup", () => {
 		const processExitSpy = vi
 			.spyOn(process, "exit")
 			.mockImplementation(() => undefined as never);
+<<<<<<< HEAD
 		vi.spyOn(fs, "existsSync").mockImplementation((path) => {
 			if (path === ".backup") return true;
 			return false;
@@ -127,6 +137,9 @@ describe("Setup -> minioSetup", () => {
 				(path: fs.PathLike) => string[]
 			>
 		).mockImplementation(() => [".env.1600000000", ".env.1700000000"]);
+=======
+		const fsExistsSyncSpy = vi.spyOn(fs, "existsSync").mockReturnValue(true);
+>>>>>>> upstream
 		const fsCopyFileSyncSpy = vi
 			.spyOn(fs, "copyFileSync")
 			.mockImplementation(() => undefined);
@@ -139,10 +152,15 @@ describe("Setup -> minioSetup", () => {
 		await minioSetup({});
 
 		expect(consoleErrorSpy).toHaveBeenCalledWith(mockError);
+<<<<<<< HEAD
 		expect(fsCopyFileSyncSpy).toHaveBeenCalledWith(
 			".backup/.env.1700000000",
 			".env",
 		);
+=======
+		expect(fsExistsSyncSpy).toHaveBeenCalledWith(".env.backup");
+		expect(fsCopyFileSyncSpy).toHaveBeenCalledWith(".env.backup", ".env");
+>>>>>>> upstream
 		expect(processExitSpy).toHaveBeenCalledWith(1);
 
 		vi.clearAllMocks();

@@ -1,16 +1,26 @@
 import { faker } from "@faker-js/faker";
+<<<<<<< HEAD
 import { beforeAll, beforeEach, expect, suite, test, vi } from "vitest";
+=======
+import { beforeEach, expect, suite, test } from "vitest";
+import { beforeAll } from "vitest";
+>>>>>>> upstream
 import { organizationMembershipsTable } from "~/src/drizzle/tables/organizationMemberships";
 import { assertToBeNonNullish } from "../../../helpers";
 import { server } from "../../../server";
 import { mercuriusClient } from "../client";
 import {
+<<<<<<< HEAD
 	Mutation_createEvent,
 	Mutation_createOrganization,
 	Mutation_createOrganizationMembership,
 	Mutation_createUser,
 	Mutation_inviteEventAttendee,
 	Mutation_registerForEvent,
+=======
+	Mutation_createOrganization,
+	Mutation_createUser,
+>>>>>>> upstream
 	Query_eventsByOrganizationId,
 	Query_signIn,
 	Query_usersByIds,
@@ -23,8 +33,13 @@ async function globalSignInAndGetToken() {
 	const result = await mercuriusClient.query(Query_signIn, {
 		variables: {
 			input: {
+<<<<<<< HEAD
 				emailAddress: server.envConfig.API_ADMINISTRATOR_USER_EMAIL_ADDRESS,
 				password: server.envConfig.API_ADMINISTRATOR_USER_PASSWORD,
+=======
+				emailAddress: process.env.API_ADMINISTRATOR_USER_EMAIL_ADDRESS ?? "",
+				password: process.env.API_ADMINISTRATOR_USER_PASSWORD ?? "",
+>>>>>>> upstream
 			},
 		},
 	});
@@ -165,6 +180,7 @@ suite("Query: usersByIds", () => {
 		const returnedIds = (users as Array<{ id: string }>).map((u) => u.id);
 		expect(returnedIds).toEqual(expect.arrayContaining([user1Id, user2Id]));
 	});
+<<<<<<< HEAD
 
 	test("should return unauthenticated error if not signed in", async () => {
 		const result = await mercuriusClient.query(Query_usersByIds, {
@@ -180,6 +196,8 @@ suite("Query: usersByIds", () => {
 			]),
 		);
 	});
+=======
+>>>>>>> upstream
 });
 
 //
@@ -219,6 +237,7 @@ suite("Query: usersByOrganizationId", () => {
 		const returnedIds = (users as Array<{ id: string }>).map((u) => u.id);
 		expect(returnedIds).toContain(memberUserId);
 	});
+<<<<<<< HEAD
 
 	test("should handle database errors gracefully", async () => {
 		// Mock a database error using vi.spyOn for proper typing
@@ -275,6 +294,8 @@ suite("Query: eventsByOrganizationId", () => {
 		}
 	});
 
+=======
+>>>>>>> upstream
 	test("should return unauthenticated error if not signed in", async () => {
 		// Query without auth token
 		const result = await mercuriusClient.query(Query_eventsByOrganizationId, {
@@ -323,6 +344,7 @@ suite("Query: eventsByOrganizationId", () => {
 		expect(result.errors).toBeUndefined();
 		expect(result.data?.eventsByOrganizationId).toEqual([]);
 	});
+<<<<<<< HEAD
 
 	test("should return unauthenticated error when currentUser is undefined", async () => {
 		// Mock findFirst to return undefined using vi.spyOn for proper typing
@@ -802,4 +824,6 @@ suite("Query: eventsByOrganizationId", () => {
 		expect(matched.isGenerated).toBe(false);
 		expect(matched.baseRecurringEventId).toBeNull();
 	});
+=======
+>>>>>>> upstream
 });

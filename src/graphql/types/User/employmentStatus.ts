@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import type { z } from "zod";
 import type { userEmploymentStatusEnum } from "~/src/drizzle/enums/userEmploymentStatus";
 import { UserEmploymentStatus } from "~/src/graphql/enums/UserEmploymentStatus";
@@ -5,12 +6,21 @@ import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 import { User } from "./User";
 
+=======
+import { UserEmploymentStatus } from "~/src/graphql/enums/UserEmploymentStatus";
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+import { User } from "./User";
+>>>>>>> upstream
 User.implement({
 	fields: (t) => ({
 		employmentStatus: t.field({
 			description: "Employment status of the user.",
 			complexity: envConfig.API_GRAPHQL_SCALAR_RESOLVER_FIELD_COST,
+<<<<<<< HEAD
 			nullable: true,
+=======
+>>>>>>> upstream
 			resolve: async (parent, _args, ctx) => {
 				if (!ctx.currentClient.isAuthenticated) {
 					throw new TalawaGraphQLError({
@@ -48,9 +58,13 @@ User.implement({
 					});
 				}
 
+<<<<<<< HEAD
 				return parent.employmentStatus as z.infer<
 					typeof userEmploymentStatusEnum
 				> | null;
+=======
+				return parent.employmentStatus;
+>>>>>>> upstream
 			},
 			type: UserEmploymentStatus,
 		}),

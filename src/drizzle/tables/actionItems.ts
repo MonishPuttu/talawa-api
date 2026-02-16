@@ -10,9 +10,15 @@ import {
 import { createInsertSchema } from "drizzle-zod";
 import { uuidv7 } from "uuidv7";
 import { actionItemCategoriesTable } from "./actionItemCategories";
+<<<<<<< HEAD
 import { eventsTable } from "./events";
 import { eventVolunteerGroupsTable } from "./eventVolunteerGroups";
 import { eventVolunteersTable } from "./eventVolunteers";
+=======
+import { eventVolunteerGroupsTable } from "./eventVolunteerGroups";
+import { eventVolunteersTable } from "./eventVolunteers";
+import { eventsTable } from "./events";
+>>>>>>> upstream
 import { organizationsTable } from "./organizations";
 import { recurringEventInstancesTable } from "./recurringEventInstances";
 import { usersTable } from "./users";
@@ -136,12 +142,15 @@ export const actionItemsTableRelations = relations(
 			references: [eventsTable.id],
 			relationName: "actionitems.event_id:events.id",
 		}),
+<<<<<<< HEAD
 		recurringEventInstance: one(recurringEventInstancesTable, {
 			fields: [actionItemsTable.recurringEventInstanceId],
 			references: [recurringEventInstancesTable.id],
 			relationName:
 				"actionitems.recurring_event_instance_id:recurring_event_instances.id",
 		}),
+=======
+>>>>>>> upstream
 		organization: one(organizationsTable, {
 			fields: [actionItemsTable.organizationId],
 			references: [organizationsTable.id],

@@ -133,6 +133,17 @@ async function createTestPost(
 			input: {
 				organizationId,
 				caption: `Test post ${faker.lorem.words(3)}`,
+<<<<<<< HEAD
+=======
+				attachments: [
+					{
+						mimetype: "IMAGE_PNG",
+						objectName: `test-object-${faker.string.uuid()}`,
+						name: `test-image-${faker.string.uuid()}.png`,
+						fileHash: `test-file-hash-${faker.string.uuid()}`,
+					},
+				],
+>>>>>>> upstream
 			},
 		},
 	});

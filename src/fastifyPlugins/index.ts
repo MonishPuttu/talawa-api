@@ -1,5 +1,6 @@
 import fastifyPlugin from "fastify-plugin";
 import backgroundWorkers from "./backgroundWorkers";
+<<<<<<< HEAD
 import cacheService from "./cacheService";
 import drizzleClient from "./drizzleClient";
 import emailQueue from "./emailQueue";
@@ -20,6 +21,18 @@ export const plugins = fastifyPlugin(async (fastify) => {
 	await fastify.register(oauthProviderRegistry); // Register OAuth provider registry
 	await fastify.register(pluginSystem); // Initialize plugin system after database
 	await fastify.register(performance); // Register performance tracking
+=======
+import drizzleClient from "./drizzleClient";
+import emailQueue from "./emailQueue";
+import minioClient from "./minioClient";
+import pluginSystem from "./pluginSystem";
+import seedInitialData from "./seedInitialData";
+
+export const plugins = fastifyPlugin(async (fastify) => {
+	await fastify.register(drizzleClient);
+	await fastify.register(minioClient);
+	await fastify.register(pluginSystem); // Initialize plugin system after database
+>>>>>>> upstream
 	await fastify.register(seedInitialData);
 	// Conditionally register the email queue plugin to avoid starting background
 	// processors in environments (tests/CI) where it's not needed.

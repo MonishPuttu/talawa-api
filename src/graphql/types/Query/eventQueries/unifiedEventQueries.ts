@@ -1,9 +1,14 @@
 import type { InferSelectModel } from "drizzle-orm";
+<<<<<<< HEAD
 import { and, eq, inArray, or } from "drizzle-orm";
 import type { eventAttachmentsTable } from "~/src/drizzle/tables/eventAttachments";
 import { eventAttendeesTable } from "~/src/drizzle/tables/eventAttendees";
 import type { eventsTable } from "~/src/drizzle/tables/events";
 import { mapRecurringInstanceToEvent } from "~/src/graphql/utils/mapRecurringInstanceToEvent";
+=======
+import type { eventAttachmentsTable } from "~/src/drizzle/tables/eventAttachments";
+import type { eventsTable } from "~/src/drizzle/tables/events";
+>>>>>>> upstream
 import type { ServiceDependencies } from "~/src/services/eventGeneration/types";
 import {
 	type GetRecurringEventInstancesInput,
@@ -17,7 +22,11 @@ import {
 } from "./standaloneEventQueries";
 
 /**
+<<<<<<< HEAD
  * Represents a unified event object that includes attachments and metadata
+=======
+ * @description Represents a unified event object that includes attachments and metadata
+>>>>>>> upstream
  * to distinguish between standalone and generated events.
  */
 export type EventWithAttachments = InferSelectModel<typeof eventsTable> & {
@@ -31,7 +40,11 @@ export type EventWithAttachments = InferSelectModel<typeof eventsTable> & {
 };
 
 /**
+<<<<<<< HEAD
  * Defines the input parameters for querying a unified list of events,
+=======
+ * @description Defines the input parameters for querying a unified list of events,
+>>>>>>> upstream
  * including both standalone and recurring instances.
  */
 export interface GetUnifiedEventsInput {
@@ -43,6 +56,7 @@ export interface GetUnifiedEventsInput {
 }
 
 /**
+<<<<<<< HEAD
  * Parameters for filtering events based on invite-only visibility rules.
  */
 export interface FilterInviteOnlyEventsInput {
@@ -217,6 +231,8 @@ export async function filterInviteOnlyEvents(
 }
 
 /**
+=======
+>>>>>>> upstream
  * Retrieves a unified list of events, including both standalone events and generated
  * instances of recurring events, within a specified date range. This is the primary function
  * used by the `organization.events` GraphQL resolver.
@@ -224,7 +240,11 @@ export async function filterInviteOnlyEvents(
  * @param input - The input object containing organizationId, date range, and optional filters.
  * @param drizzleClient - The Drizzle ORM client for database access.
  * @param logger - The logger for logging debug and error messages.
+<<<<<<< HEAD
  * @returns - A promise that resolves to a sorted array of unified event objects.
+=======
+ * @returns A promise that resolves to a sorted array of unified event objects.
+>>>>>>> upstream
  */
 export async function getUnifiedEventsInDateRange(
 	input: GetUnifiedEventsInput,
@@ -282,7 +302,44 @@ export async function getUnifiedEventsInDateRange(
 
 			// Transform generated instances to unified format
 			const enrichedGeneratedInstances: EventWithAttachments[] =
+<<<<<<< HEAD
 				generatedInstances.map(mapRecurringInstanceToEvent);
+=======
+				generatedInstances.map((instance) => {
+					const transformedInstance = {
+						// Core event properties (resolved from template + exceptions)
+						id: instance.id, // Use generated instance ID
+						name: instance.name,
+						description: instance.description,
+						startAt: instance.actualStartTime,
+						endAt: instance.actualEndTime,
+						location: instance.location,
+						allDay: instance.allDay,
+						isPublic: instance.isPublic,
+						isRegisterable: instance.isRegisterable,
+						organizationId: instance.organizationId,
+						creatorId: instance.creatorId,
+						updaterId: instance.updaterId,
+						createdAt: instance.createdAt,
+						updatedAt: instance.updatedAt,
+
+						// Generated instance metadata
+						isRecurringEventTemplate: false, // Instances are never templates
+
+						// Additional generated properties
+						baseRecurringEventId: instance.baseRecurringEventId,
+						sequenceNumber: instance.sequenceNumber,
+						totalCount: instance.totalCount,
+						hasExceptions: instance.hasExceptions,
+						isGenerated: true,
+
+						attachments: [],
+						eventType: "generated" as const,
+					};
+
+					return transformedInstance;
+				});
+>>>>>>> upstream
 
 			allEvents.push(...enrichedGeneratedInstances);
 		}
@@ -323,7 +380,11 @@ export async function getUnifiedEventsInDateRange(
  * @param eventIds - An array of event IDs to retrieve.
  * @param drizzleClient - The Drizzle ORM client for database access.
  * @param logger - The logger for logging debug and error messages.
+<<<<<<< HEAD
  * @returns - A promise that resolves to an array of the requested event objects,
+=======
+ * @returns A promise that resolves to an array of the requested event objects,
+>>>>>>> upstream
  *          unified into a common format.
  */
 export async function getEventsByIds(
@@ -334,13 +395,20 @@ export async function getEventsByIds(
 	try {
 		const events: EventWithAttachments[] = [];
 
+<<<<<<< HEAD
 		// Step 1: Try to get standalone events (and templates if they are requested by ID)
 		// We include templates here so that we can expand them later or display them if needed
+=======
+		// Step 1: Try to get standalone events
+>>>>>>> upstream
 		const standaloneEvents = await getStandaloneEventsByIds(
 			eventIds,
 			drizzleClient,
 			logger,
+<<<<<<< HEAD
 			{ includeTemplates: true },
+=======
+>>>>>>> upstream
 		);
 
 		// Add standalone events to results
@@ -365,7 +433,34 @@ export async function getEventsByIds(
 			);
 
 			const generatedEvents: EventWithAttachments[] = resolvedInstances.map(
+<<<<<<< HEAD
 				mapRecurringInstanceToEvent,
+=======
+				(resolvedInstance) => ({
+					id: resolvedInstance.id,
+					name: resolvedInstance.name,
+					description: resolvedInstance.description,
+					startAt: resolvedInstance.actualStartTime,
+					endAt: resolvedInstance.actualEndTime,
+					location: resolvedInstance.location,
+					allDay: resolvedInstance.allDay,
+					isPublic: resolvedInstance.isPublic,
+					isRegisterable: resolvedInstance.isRegisterable,
+					organizationId: resolvedInstance.organizationId,
+					creatorId: resolvedInstance.creatorId,
+					updaterId: resolvedInstance.updaterId,
+					createdAt: resolvedInstance.createdAt,
+					updatedAt: resolvedInstance.updatedAt,
+					isRecurringEventTemplate: false,
+					baseRecurringEventId: resolvedInstance.baseRecurringEventId,
+					sequenceNumber: resolvedInstance.sequenceNumber,
+					totalCount: resolvedInstance.totalCount,
+					hasExceptions: resolvedInstance.hasExceptions,
+					attachments: [], // TODO: Handle attachments for generated instances
+					eventType: "generated" as const,
+					isGenerated: true,
+				}),
+>>>>>>> upstream
 			);
 			events.push(...generatedEvents);
 		}

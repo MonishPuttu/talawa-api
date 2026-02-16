@@ -1,5 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { initGraphQLTada } from "gql.tada";
+<<<<<<< HEAD
 import type { GraphQLObjectType } from "graphql";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { ClientCustomScalars } from "~/src/graphql/scalars/index";
@@ -9,6 +10,12 @@ import { createMockGraphQLContext } from "test/_Mocks_/mockContextCreator/mockCo
 import type { GraphQLContext } from "~/src/graphql/context";
 import { schema } from "~/src/graphql/schema";
 import type { FundCampaign } from "~/src/graphql/types/FundCampaign/FundCampaign";
+=======
+import { describe, expect, it } from "vitest";
+import type { ClientCustomScalars } from "~/src/graphql/scalars/index";
+// Import the actual implementation to ensure it's loaded for coverage
+import "~/src/graphql/types/FundCampaign/createdAt";
+>>>>>>> upstream
 import { assertToBeNonNullish } from "../../../helpers";
 import { server } from "../../../server";
 import { mercuriusClient } from "../client";
@@ -180,8 +187,13 @@ async function createOrgFundCampaign(
 					fundId,
 					goalAmount: 10000,
 					currencyCode: "USD",
+<<<<<<< HEAD
 					startAt: new Date("2024-01-01T00:00:00.000Z").toISOString(),
 					endAt: new Date("2024-12-31T23:59:59.999Z").toISOString(),
+=======
+					startAt: new Date("2024-01-01T00:00:00.000Z"),
+					endAt: new Date("2024-12-31T23:59:59.999Z"),
+>>>>>>> upstream
 				},
 			},
 		},
@@ -256,6 +268,7 @@ async function createOrgFundCampaign(
 	};
 }
 
+<<<<<<< HEAD
 // Get the createdAt resolver from the schema
 const fundCampaignType = schema.getType("FundCampaign") as GraphQLObjectType;
 const createdAtField = fundCampaignType.getFields().createdAt;
@@ -454,6 +467,8 @@ describe("FundCampaign.createdAt field resolver - Unit tests", () => {
 	});
 });
 
+=======
+>>>>>>> upstream
 describe("FundCampaign.createdAt field resolver - Integration tests", () => {
 	it("throws unauthenticated error when client is not authenticated (query level)", async () => {
 		const adminAuth = await getAdminAuth();

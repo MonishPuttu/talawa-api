@@ -1,8 +1,13 @@
 import { createMockGraphQLContext } from "test/_Mocks_/mockContextCreator/mockContextCreator";
 import { beforeEach, describe, expect, it } from "vitest";
 import type { GraphQLContext } from "~/src/graphql/context";
+<<<<<<< HEAD
 import { eventAttendeesCheckInStatusResolver } from "~/src/graphql/types/Event/attendeesCheckInStatus";
 import type { Event as EventType } from "~/src/graphql/types/Event/Event";
+=======
+import type { Event as EventType } from "~/src/graphql/types/Event/Event";
+import { eventAttendeesCheckInStatusResolver } from "~/src/graphql/types/Event/attendeesCheckInStatus";
+>>>>>>> upstream
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 
 describe("Event AttendeesCheckInStatus Resolver Tests", () => {
@@ -33,7 +38,10 @@ describe("Event AttendeesCheckInStatus Resolver Tests", () => {
 			allDay: false,
 			isPublic: true,
 			isRegisterable: true,
+<<<<<<< HEAD
 			isInviteOnly: false,
+=======
+>>>>>>> upstream
 			isRecurringEventTemplate: false,
 		} as EventType;
 	});

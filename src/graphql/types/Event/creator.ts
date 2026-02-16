@@ -1,9 +1,17 @@
 import { User } from "~/src/graphql/types/User/User";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 import type { GraphQLContext } from "../../context";
 import type { Event as EventType } from "./Event";
 import { Event } from "./Event";
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+import type { GraphQLContext } from "../../context";
+import { Event } from "./Event";
+import type { Event as EventType } from "./Event";
+>>>>>>> upstream
 export const eventCreatorResolver = async (
 	parent: EventType,
 	_args: Record<string, never>,
@@ -41,8 +49,25 @@ export const eventCreatorResolver = async (
 			});
 		}
 
+<<<<<<< HEAD
 		// Creator information is visible to all authenticated users who can see the event.
 		// No additional authorization check is needed here.
+=======
+		const currentUserOrganizationMembership =
+			currentUser.organizationMembershipsWhereMember[0];
+
+		if (
+			currentUser.role !== "administrator" &&
+			(currentUserOrganizationMembership === undefined ||
+				currentUserOrganizationMembership.role !== "administrator")
+		) {
+			throw new TalawaGraphQLError({
+				extensions: {
+					code: "unauthorized_action",
+				},
+			});
+		}
+>>>>>>> upstream
 
 		if (parent.creatorId === null) {
 			return null;

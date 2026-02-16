@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import type { Event as EventType } from "~/src/graphql/types/Event/Event";
 import { Event } from "~/src/graphql/types/Event/Event";
 import { getRecurringEventInstancesByIds } from "~/src/graphql/types/Query/eventQueries/recurringEventInstanceQueries";
@@ -17,11 +18,26 @@ import { EventAttendee } from "./EventAttendee";
  * @throws TalawaGraphQLError with code "unauthenticated" if user is not authenticated.
  * @throws TalawaGraphQLError with code "unexpected" if event is not found (indicates data corruption).
  */
+=======
+import { eq } from "drizzle-orm";
+import { eventsTable } from "~/src/drizzle/tables/events";
+import { Event } from "~/src/graphql/types/Event/Event";
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+import type { GraphQLContext } from "../../context";
+import { EventAttendee } from "./EventAttendee";
+import type { EventAttendee as EventAttendeeType } from "./EventAttendee";
+
+>>>>>>> upstream
 export const eventAttendeeEventResolver = async (
 	parent: EventAttendeeType,
 	_args: Record<string, never>,
 	ctx: GraphQLContext,
+<<<<<<< HEAD
 ): Promise<EventType | null> => {
+=======
+) => {
+>>>>>>> upstream
 	if (!ctx.currentClient.isAuthenticated) {
 		throw new TalawaGraphQLError({
 			extensions: {
@@ -30,6 +46,7 @@ export const eventAttendeeEventResolver = async (
 		});
 	}
 
+<<<<<<< HEAD
 	// Handle standalone events
 	if (parent.eventId) {
 		const event = await ctx.dataloaders.event.load(parent.eventId);
@@ -41,6 +58,18 @@ export const eventAttendeeEventResolver = async (
 					eventId: parent.eventId,
 				},
 				"DataLoader returned null for an event attendee's event id that isn't null.",
+=======
+	// For now, only handle standalone events
+	// TODO: Add recurring instance support later
+	if (parent.eventId) {
+		const event = await ctx.drizzleClient.query.eventsTable.findFirst({
+			where: eq(eventsTable.id, parent.eventId),
+		});
+
+		if (event === undefined) {
+			ctx.log.warn(
+				"Postgres select operation returned an empty array for an event attendee's event id that isn't null.",
+>>>>>>> upstream
 			);
 			throw new TalawaGraphQLError({
 				extensions: {
@@ -53,6 +82,7 @@ export const eventAttendeeEventResolver = async (
 		return {
 			...event,
 			attachments: [],
+<<<<<<< HEAD
 		} as EventType;
 	}
 
@@ -87,6 +117,15 @@ export const eventAttendeeEventResolver = async (
 			...resolvedInstance,
 			attachments: resolvedInstance.attachments ?? [],
 		} as EventType;
+=======
+		};
+	}
+
+	// For recurring instances, return null for now (will implement later)
+	if (parent.recurringEventInstanceId) {
+		// TODO: Implement recurring instance resolution
+		return null;
+>>>>>>> upstream
 	}
 
 	return null;
@@ -95,8 +134,12 @@ export const eventAttendeeEventResolver = async (
 EventAttendee.implement({
 	fields: (t) => ({
 		event: t.field({
+<<<<<<< HEAD
 			description:
 				"The event the attendee is associated with. Supports both standalone events and recurring event instances.",
+=======
+			description: "The event the attendee is associated with.",
+>>>>>>> upstream
 			resolve: eventAttendeeEventResolver,
 			type: Event,
 			complexity: envConfig.API_GRAPHQL_OBJECT_FIELD_COST,

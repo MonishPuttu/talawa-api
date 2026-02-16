@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /**
 * Any CSS included here will be global. The classic template
 * bundles Infima by default. Infima is a CSS framework designed to
@@ -7,6 +8,13 @@
 /* You can override the default Infima variables here. */
 
 :root {
+=======
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap");
+
+:root {
+  /* Root variables remain the same */
+>>>>>>> upstream
   --h1-markdown: #021526;
   --h2-markdown: #3a6d8c;
   --h3-markdown: #474e93;
@@ -18,7 +26,36 @@
   --ifm-color-primary-light: #33925d;
   --ifm-color-primary-lighter: #359962;
   --ifm-color-primary-lightest: #3cad6e;
+<<<<<<< HEAD
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.29);
+=======
+  --ifm-code-font-size: 95%;
+  --ifm-code-background: #e5ecff;
+  --ifm-code-color: #0087ff;
+  --ifm-color-content: #000e33;
+  --ifm-heading-line-height: 1.5;
+  --ifm-h1-font-size: 2.25rem;
+  --ifm-h2-font-size: 1.875rem;
+  --ifm-navbar-shadow: 0 1px 2px 0 #0000001a;
+  --ifm-navbar-search-input-background-color: var(--ifm-color-gray-100);
+  --ifm-navbar-search-input-color: var(--ifm-color-content);
+  --ifm-link-color: #1e56e3;
+  --ifm-button-background-color: #2e8555;
+  --ifm-button-background-color-dark: #205d3b;
+  --ifm-hover-overlay: rgba(0, 0, 0, 0.05);
+  --ifm-background-surface-color: var(--ifm-color-white);
+  --ifm-menu-color: var(--neutral-mid-500);
+  --ifm-menu-color-active: #1e56e3;
+  --ifm-toc-link-color: var(--ifm-color-gray-600);
+  --ifm-breadcrumb-color-active: var(--primary-neutral-600);
+  --ifm-table-stripe-background: #efeff2;
+  --ifm-font-family-base: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu,
+    Cantarell, Noto Sans, sans-serif, BlinkMacSystemFont, "Segoe UI", Helvetica,
+    Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  --ifm-font-family-monospace: "IBM Plex Mono", SFMono-Regular, Menlo, Monaco,
+    Consolas, "Liberation Mono", "Courier New", monospace;
+  --ifm-heading-color: #353232;
+>>>>>>> upstream
   --ifm-color-gray-100: #e3e3e6;
   --ifm-color-gray-200: #c9c9cc;
   --ifm-color-gray-300: #b0b0b3;
@@ -28,6 +65,7 @@
   --ifm-color-gray-700: #4c4c4d;
   --ifm-color-gray-800: #323233;
   --ifm-color-gray-900: #19191a;
+<<<<<<< HEAD
   --ifm-background-surface-color: var(--ifm-color-white);
   --ifm-breadcrumb-color-active: var(--primary-neutral-600);
   --ifm-menu-color: var(--neutral-mid-500);
@@ -51,6 +89,15 @@
   --brand-color: black;
   --base-neutral-0: #ffffff;
   --sidebar-bg-color: #f3f4f6;
+=======
+  --ifm-color-emphasis-100: #f4f8fb;
+  --ifm-color-emphasis-0: #fff;
+  --ifm-toc-border-color: transparent;
+  --ifm-h1-font-size: 1.75rem;
+  --ifm-h2-font-size: 1.5rem;
+  --brand-color: black;
+  --base-neutral-0: #ffffff;
+>>>>>>> upstream
   --neutral-mid-0: #1f2a37;
   --neutral-mid-400: #1f2a37;
   --neutral-mid-500: #6c737f;
@@ -60,6 +107,7 @@
   --secondary-blue-400: #80a3ff;
   --secondary-blue-500: #3970fd;
   --secondary-blue-900: #001c63;
+<<<<<<< HEAD
   --next-prev-border-color: #e5e7eb;
   --ifm-color-emphasis-100: #f4f8fb;
   --ifm-color-emphasis-0: #fff;
@@ -89,12 +137,30 @@
 /* Dark mode css */
 
 html[data-theme='dark'] {
+=======
+  --sidebar-bg-color: #f3f4f6;
+  --next-prev-border-color: #e5e7eb;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.29);
+  --icon-github-width: 20px;
+  --icon-github-height: 20px;
+  --icon-twitter-width: 15px;
+  --icon-twitter-height: 15px;
+  --icon-youtube-width: 25px;
+  --icon-youtube-height: 30px;
+}
+
+html[data-theme="dark"] {
+>>>>>>> upstream
   --ifm-background-color: #111927;
   --ifm-background-surface-color: var(--ifm-background-color);
   --ifm-menu-color: var(--neutral-mid-400);
   --ifm-menu-color-active: var(--secondary-blue-900);
   --ifm-toc-link-color: var(--ifm-color-gray-200);
   --ifm-heading-color: #c6d6ff;
+<<<<<<< HEAD
+=======
+  --ifm-code-background: #001b66;
+>>>>>>> upstream
   --ifm-color-primary: #1e56e3;
   --ifm-color-content: var(--ifm-color-white);
   --ifm-navbar-search-input-background-color: #001b66;
@@ -115,6 +181,7 @@ html[data-theme='dark'] {
   --next-prev-border-color: #293441;
   --ifm-color-emphasis-100: #1d1e30;
   --ifm-color-emphasis-0: #111f3b;
+<<<<<<< HEAD
 }
 
 /* stylelint-disable docusaurus/copyright-header */
@@ -126,6 +193,12 @@ html[data-theme='dark'] {
   padding: 1rem 5rem;
 }
 
+=======
+  --ifm-table-stripe-background: #001242;
+}
+
+/* Class definitions consolidated */
+>>>>>>> upstream
 .docusaurus-highlight-code-line {
   background-color: rgb(72, 77, 91);
   display: block;
@@ -133,6 +206,252 @@ html[data-theme='dark'] {
   padding: 0 var(--ifm-pre-padding);
 }
 
+<<<<<<< HEAD
+=======
+.table-of-contents {
+  font-size: 0.75rem;
+  padding: var(--ifm-toc-padding-vertical) 0;
+}
+
+.menu {
+  background-color: var(--sidebar-bg-color);
+}
+
+.menu__link,
+.menu * {
+  line-height: 1.5;
+  font-size: 0.7rem;
+  padding-bottom: 0;
+  /* padding-left: 0.3rem; */
+  font-weight: 800;
+  background: transparent !important;
+}
+
+.menu__link:hover {
+  color: var(--primary-blue-600);
+}
+
+.menu__list {
+  border-bottom: 1px solid var(--next-prev-border-color);
+}
+
+.menu__list-item {
+  padding: 0.5rem 0;
+}
+
+/* Target specifically the link text */
+.menu__link {
+  white-space: normal !important;
+  word-break: break-word !important;
+  overflow-wrap: break-word !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  /* line-height: 1.2 !important; */
+  padding-right: 1rem !important;
+}
+
+/* Target the container of menu items */
+.menu__list-item {
+  width: 95% !important;
+  padding-right: 0px !important;
+}
+
+/* Ensure the menu itself has proper width */
+.menu__list {
+  width: 100% !important;
+}
+
+/* Target the entire menu container */
+.theme-doc-sidebar-menu {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+/* Markdown styles */
+.markdown > h2 {
+  --ifm-h2-font-size: 1.875rem;
+  margin-bottom: 0.8rem;
+  margin-top: calc(var(--ifm-h2-vertical-rhythm-top) * 0rem);
+  color: var(--h2-markdown);
+  border-bottom: 1px solid var(--hx-markdown-underline);
+  padding-bottom: 5px;
+}
+
+.markdown > h3 {
+  --ifm-h3-font-size: 1.5rem;
+  margin-bottom: 0.8rem;
+  margin-top: calc(var(--ifm-h3-vertical-rhythm-top) * 0rem);
+  color: var(--h3-markdown);
+  border-bottom: 1px solid var(--hx-markdown-underline);
+  padding-bottom: 5px;
+}
+
+.markdown > h4 {
+  color: var(--h4-markdown);
+  border-bottom: 1px solid var(--hx-markdown-underline);
+  padding-bottom: 5px;
+}
+
+.markdown > h5 {
+  color: var(--h5-markdown);
+}
+
+.markdown > h6 {
+  color: var(--h6-markdown);
+}
+
+/* Navbar styles */
+.navbar {
+  background-color: var(--sidebar-bg-color);
+  box-shadow: var(--ifm-navbar-shadow);
+  padding: 24px 48px;
+  height: auto;
+}
+
+.navbar__item {
+  font-size: 0.875rem;
+}
+
+.navbar__link:hover,
+.navbar__link--active {
+  color: var(--primary-blue-600);
+  text-decoration: none;
+}
+
+.navbar__items--right > .navbar__item:not(:first-of-type) {
+  margin-left: 0.25px;
+}
+
+.dropdown__link:hover {
+  color: #2563eb;
+}
+
+.dropdown__link--active {
+  background-color: transparent;
+}
+
+.dropdown__link {
+  color: var(--ifm-navbar-link-color);
+}
+
+.header-github-link:hover {
+  opacity: 0.7;
+}
+
+.header-youtube-link:hover {
+  opacity: 0.7;
+}
+
+.youtube-button {
+  background: linear-gradient(90deg, #ff3600 0%, #ff8100 100%);
+  border: none;
+  border-radius: 4px;
+  padding: 7px 21px;
+  color: #fff;
+  font-weight: bold;
+  font-size: 14px;
+  text-decoration: none;
+  display: inline-flex;
+  margin-right: 2.75rem;
+}
+
+.github-button {
+  background: linear-gradient(90deg, #ff3600 0%, #ff8100 100%);
+  border: none;
+  border-radius: 4px;
+  padding: 7px 21px;
+  color: #fff;
+  font-weight: bold;
+  font-size: 14px;
+  text-decoration: none;
+  display: inline-flex;
+  margin-right: 2.75rem;
+}
+
+.github-button:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+.youtube-button:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+.header-github-link:before {
+  content: "";
+  width: var(--icon-github-width);
+  height: var(--icon-github-height);
+  display: flex;
+  background: url("/img/icons/github-dark.svg") no-repeat;
+  position: relative;
+  right: 8px;
+  top: 1.5px;
+}
+
+.header-twitter-link:before {
+  content: "";
+  width: var(--icon-twitter-width);
+  height: var(--icon-twitter-height);
+  display: flex;
+  background: url("/img/icons/twitter.svg") no-repeat 90% 100%;
+  position: relative;
+  right: 6px;
+  top: 2px;
+}
+
+.header-youtube-link:before {
+  content: "";
+  width: var(--icon-youtube-width);
+  height: var(--icon-youtube-height);
+  display: flex;
+  background: url("/img/icons/youtube.svg") no-repeat;
+  position: relative;
+  right: 8px;
+  top: 4.5px;
+}
+
+h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+
+.Heading {
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: center !important;
+}
+
+a {
+  color: #2563eb;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #86a7ef;
+}
+
+[data-theme="dark"] {
+  --ifm-color-primary: #1e56e3;
+  --ifm-color-primary-light: #29d5b0;
+  --ifm-color-primary-lighter: #32d8b4;
+  --ifm-color-primary-lightest: #4fddbf;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .themedComponent--light_NVdE {
+  display: initial;
+}
+
+[data-theme="dark"] .navbar {
+  border-bottom: 1px solid #2d3956;
+}
+
+.container > div > div:first-child {
+  padding: 1rem 5rem;
+}
+
+>>>>>>> upstream
 .breadcrumbs {
   margin-bottom: 2rem;
 }
@@ -186,10 +505,15 @@ h1 {
 .menu__link--sublist {
   text-transform: uppercase;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream
 .menu {
   background-color: var(--sidebar-bg-color);
 }
 
+<<<<<<< HEAD
 .menu__link,
 .menu * {
   line-height: 1.5;
@@ -200,6 +524,8 @@ h1 {
   background: transparent !important;
 }
 
+=======
+>>>>>>> upstream
 .menu__link:hover {
   color: var(--primary-blue-600);
 }
@@ -212,6 +538,7 @@ h1 {
   padding: 0.5rem 0;
 }
 
+<<<<<<< HEAD
 /* Target specifically the link text */
 .menu__link {
   white-space: normal !important;
@@ -241,11 +568,21 @@ h1 {
 
 @media (min-width: 997px) {
   .menu_SIkG {
+=======
+.menu__list ul {
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+@media (min-width: 997px) {
+  .menu {
+>>>>>>> upstream
     flex-grow: 1;
     padding: 1rem !important;
   }
 }
 
+<<<<<<< HEAD
 .markdown > h2 {
   --ifm-h2-font-size: 1.875rem;
   margin-bottom: 0.8rem;
@@ -278,6 +615,8 @@ h1 {
   color: var(--h6-markdown);
 }
 
+=======
+>>>>>>> upstream
 .navbar {
   background-color: var(--sidebar-bg-color);
   box-shadow: var(--ifm-navbar-shadow);
@@ -287,11 +626,14 @@ h1 {
 
 .navbar__item {
   font-size: 0.875rem;
+<<<<<<< HEAD
   font-weight: 600;
 }
 
 .navbar__brand {
   font-size: 20px;
+=======
+>>>>>>> upstream
 }
 
 .navbar__link:hover,
@@ -324,6 +666,7 @@ h1 {
   --ifm-h1-vertical-rhythm-bottom: 1.25;
 }
 
+<<<<<<< HEAD
 .header-github-link:hover {
   opacity: 0.7;
 }
@@ -332,6 +675,8 @@ h1 {
   opacity: 0.7;
 }
 
+=======
+>>>>>>> upstream
 .youtube-button {
   background: linear-gradient(90deg, #ff3600 0%, #ff8100 100%);
   border: none;
@@ -368,6 +713,7 @@ h1 {
   text-decoration: none;
 }
 
+<<<<<<< HEAD
 .header-github-link:before {
   content: '';
   width: 20px;
@@ -401,6 +747,8 @@ h1 {
   top: 4.5px;
 }
 
+=======
+>>>>>>> upstream
 .footer--dark {
   --ifm-footer-background-color: #111927;
 }
@@ -417,7 +765,11 @@ h1 {
 }
 
 .footer__icon:before {
+<<<<<<< HEAD
   content: '';
+=======
+  content: "";
+>>>>>>> upstream
   display: inline-flex;
   height: 16px;
   width: 16px;
@@ -429,46 +781,84 @@ h1 {
 }
 
 .footer__github:before {
+<<<<<<< HEAD
   mask: url(/img/icons/github.svg) no-repeat 100% 100%;
+=======
+  margin-bottom: 10px;
+  mask: url(/img/github.svg) no-repeat 100% 100%;
+>>>>>>> upstream
   mask-size: cover;
 }
 
 .footer__slack:before {
+<<<<<<< HEAD
   mask: url(/img/icons/slack.svg) no-repeat 100% 100%;
+=======
+  margin-bottom: 10px;
+  mask: url(/img/slack.svg) no-repeat 100% 100%;
+>>>>>>> upstream
   mask-size: cover;
 }
 
 .footer__facebook:before {
+<<<<<<< HEAD
   mask: url(/img/icons/facebook.svg) no-repeat 100% 100%;
+=======
+  margin-top: 10px;
+  mask: url(/img/facebook.svg) no-repeat 100% 100%;
+>>>>>>> upstream
   mask-size: cover;
 }
 
 .footer__instagram:before {
+<<<<<<< HEAD
   mask: url(/img/icons/instagram.svg) no-repeat 100% 100%;
+=======
+  margin-top: 10px;
+  mask: url(/img/instagram.svg) no-repeat 100% 100%;
+>>>>>>> upstream
   mask-size: cover;
 }
 
 .footer__twitter:before {
+<<<<<<< HEAD
   mask: url(/img/icons/twitter.svg) no-repeat 100% 100%;
+=======
+  mask: url(/img/twitter.svg) no-repeat 100% 100%;
+>>>>>>> upstream
   mask-size: cover;
 }
 
 .footer__news:before {
+<<<<<<< HEAD
   mask: url(/img/icons/source.svg) no-repeat 100% 100%;
+=======
+  margin-bottom: 10px;
+  mask: url(/img/source.svg) no-repeat 100% 100%;
+>>>>>>> upstream
   mask-size: cover;
 }
 
 .footer__contact:before {
+<<<<<<< HEAD
   mask: url(/img/icons/source.svg) no-repeat 100% 100%;
+=======
+  mask: url(/img/source.svg) no-repeat 100% 100%;
+>>>>>>> upstream
   mask-size: cover;
 }
 
 .footer__opportunities:before {
+<<<<<<< HEAD
   mask: url(/img/icons/opportunities.svg) no-repeat 100% 100%;
+=======
+  mask: url(/img/opportunities.svg) no-repeat 100% 100%;
+>>>>>>> upstream
   mask-size: cover;
 }
 
 .footer__team:before {
+<<<<<<< HEAD
   mask: url(/img/icons/team.svg) no-repeat 100% 100%;
   mask-size: cover;
 }
@@ -479,6 +869,18 @@ html[data-theme='dark'] .header-github-link:before {
 
 html[data-theme='dark'] .header-youtube-link:before {
   background: url(/img/icons/youtube-white.svg) no-repeat;
+=======
+  mask: url(/img/team.svg) no-repeat 100% 100%;
+  mask-size: cover;
+}
+
+html[data-theme="dark"] .header-github-link:before {
+  background: url(/img/github.svg) no-repeat;
+}
+
+html[data-theme="dark"] .header-youtube-link:before {
+  background: url(/img/youtube-white.svg) no-repeat;
+>>>>>>> upstream
 }
 
 .markdown > button {
@@ -497,6 +899,7 @@ html[data-theme='dark'] .header-youtube-link:before {
   background: linear-gradient(90deg, #ff3600 30%, #ff8100 78%);
 }
 
+<<<<<<< HEAD
 @media (max-width: 996px) {
   .navbar__item.github-button {
     display: none;
@@ -578,6 +981,12 @@ html[data-theme='dark'] .header-youtube-link:before {
     padding-left: 4rem !important;
     padding-right: 4rem !important;
   }
+=======
+.Heading {
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: left !important;
+>>>>>>> upstream
 }
 
 h1,
@@ -591,7 +1000,12 @@ h6 {
 }
 
 p,
+<<<<<<< HEAD
 textarea {
+=======
+textarea,
+.Heading div {
+>>>>>>> upstream
   margin-bottom: 1.25rem;
   color: var(--primary-neutral-800);
   font-size: 0.9375rem;
@@ -599,6 +1013,7 @@ textarea {
   text-align: left;
 }
 
+<<<<<<< HEAD
 a {
   color: #2563eb;
   text-decoration: none;
@@ -614,10 +1029,18 @@ a:hover {
   opacity: 1;
 }
 
+=======
+>>>>>>> upstream
 .my-svg-icon path {
   fill: var(--secondary-blue-900);
 }
 
+<<<<<<< HEAD
+=======
+.HeaderHero {
+  height: clamp(500px, 70vh, 800px);
+}
+>>>>>>> upstream
 /* Hide external link svg on Navbar */
 
 .navbar__item > svg,
@@ -632,6 +1055,7 @@ a:hover {
   clip-path: inset(50%);
   overflow: hidden;
 }
+<<<<<<< HEAD
 
 /* Homepage */
 .homepage {
@@ -813,12 +1237,66 @@ a:hover {
   .navbar__items--right > .navbar__item:not(:first-of-type) {
     margin-left: 0.25rem;
   }
+=======
+/* Small Screen (max-width: 768px) */
+@media (max-width: 768px) {
+  .container > div > div:first-child {
+    padding: 1rem !important;
+  }
+
+  .center {
+    text-align: center;
+  }
+}
+
+/* Medium Screens (max-width: 996px) */
+@media (max-width: 996px) {
+  .navbar__item.github-button,
+  .navbar__item.youtube-button {
+    display: none;
+  }
+
+  .github-button,
+  .youtube-button {
+    margin: var(--ifm-menu-link-padding-vertical)
+      var(--ifm-menu-link-padding-horizontal);
+  }
+
+  .center {
+    text-align: center;
+  }
+}
+
+/* Small to Medium Screens (max-width: 1000px) */
+@media (max-width: 1000px) {
+  .navbar__items--right > .navbar__item:not(:first-of-type) {
+    margin-left: 0.25rem;
+  }
+
+  .github-button,
+  .youtube-button {
+    margin-right: 0.5rem;
+  }
+
+  .hero__title {
+    font-size: 2rem;
+  }
+}
+
+/* Large to Medium Screens (max-width: 1049px) and (min-width: 1001px) */
+@media (max-width: 1049px) and (min-width: 1001px) {
+  .navbar__items--right > .navbar__item:not(:first-of-type) {
+    margin-left: 0.5rem;
+  }
+
+>>>>>>> upstream
   .github-button,
   .youtube-button {
     margin-right: 0.5rem;
   }
 }
 
+<<<<<<< HEAD
 @media (max-width: 996px) {
   .navbar__item.github-button,
   .navbar__item.youtube-button {
@@ -826,5 +1304,55 @@ a:hover {
   }
   .center {
     text-align: center;
+=======
+/* Medium to Large Screens (max-width: 1149px) and (min-width: 1050px) */
+@media (max-width: 1149px) and (min-width: 1050px) {
+  .navbar__items--right > .navbar__item:not(:first-of-type) {
+    margin-left: 1.5rem;
+  }
+
+  .github-button,
+  .youtube-button {
+    margin-right: 0.5rem;
+  }
+}
+
+/* Tablet Responsiveness (min-width: 481px) and (max-width: 960px) */
+@media only screen and (min-width: 481px) and (max-width: 960px) {
+  .ActionButton {
+    max-width: 100%;
+    width: 100%;
+    display: block;
+    white-space: nowrap;
+  }
+
+  .ActionButton.secondary {
+    margin-top: 1rem;
+  }
+
+  .HeaderHero .ActionButton {
+    margin: auto;
+    margin-top: 1rem;
+  }
+
+  .HeaderHero {
+    margin-top: 2rem;
+  }
+}
+
+/* Extra Wide Screens (min-width: 1200px) */
+@media only screen and (min-width: 1200px) {
+  .HeaderHero {
+    height: 50vh;
+    overflow: hidden;
+  }
+}
+
+/* Responsiveness for Medium to Extra Large Screens (min-width: 997px) and (max-width: 1327px) */
+@media (min-width: 997px) and (max-width: 1327px) {
+  .container > div > div:first-child {
+    padding-left: 4rem !important;
+    padding-right: 4rem !important;
+>>>>>>> upstream
   }
 }

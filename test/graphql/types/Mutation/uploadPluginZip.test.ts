@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 import type { Mock } from "vitest";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+=======
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import type { Mock } from "vitest";
+>>>>>>> upstream
 import { builder } from "../../../../src/graphql/builder";
 import { TalawaGraphQLError } from "../../../../src/utilities/TalawaGraphQLError";
 
@@ -78,12 +83,15 @@ type TestCtx = {
 	currentClient: {
 		user: { id: string } | undefined;
 	};
+<<<<<<< HEAD
 	log: {
 		info: ReturnType<typeof vi.fn>;
 		error: ReturnType<typeof vi.fn>;
 		warn: ReturnType<typeof vi.fn>;
 		debug: ReturnType<typeof vi.fn>;
 	};
+=======
+>>>>>>> upstream
 	[key: string]: unknown;
 };
 
@@ -101,12 +109,15 @@ function makeCtx(isAdmin = true, userId = "1"): TestCtx {
 			},
 		},
 		currentClient: { user: userId ? { id: userId } : undefined },
+<<<<<<< HEAD
 		log: {
 			info: vi.fn(),
 			error: vi.fn(),
 			warn: vi.fn(),
 			debug: vi.fn(),
 		},
+=======
+>>>>>>> upstream
 	};
 }
 
@@ -264,11 +275,14 @@ describe("uploadPluginZip mutation", () => {
 			const ctx = makeCtx();
 			const args = { input: validInput };
 			await expect(resolver({}, args, ctx)).rejects.toThrow(TalawaGraphQLError);
+<<<<<<< HEAD
 			// Verify error was logged
 			expect(ctx.log.error).toHaveBeenCalledWith(
 				expect.objectContaining({ err: expect.anything() }),
 				expect.any(String),
 			);
+=======
+>>>>>>> upstream
 		});
 
 		it("handles non-Error objects from installPluginFromZip", async () => {
@@ -278,8 +292,11 @@ describe("uploadPluginZip mutation", () => {
 			const ctx = makeCtx();
 			const args = { input: validInput };
 			await expect(resolver({}, args, ctx)).rejects.toThrow(TalawaGraphQLError);
+<<<<<<< HEAD
 			// Verify error was logged
 			expect(ctx.log.error).toHaveBeenCalled();
+=======
+>>>>>>> upstream
 		});
 
 		it("handles null/undefined errors from installPluginFromZip", async () => {
@@ -289,8 +306,11 @@ describe("uploadPluginZip mutation", () => {
 			const ctx = makeCtx();
 			const args = { input: validInput };
 			await expect(resolver({}, args, ctx)).rejects.toThrow(TalawaGraphQLError);
+<<<<<<< HEAD
 			// Verify error was logged
 			expect(ctx.log.error).toHaveBeenCalled();
+=======
+>>>>>>> upstream
 		});
 
 		it("handles database query errors", async () => {

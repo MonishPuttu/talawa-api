@@ -9,7 +9,10 @@ import {
 } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { uuidv7 } from "uuidv7";
+<<<<<<< HEAD
 import { z } from "zod";
+=======
+>>>>>>> upstream
 import { chatsTable } from "./chats";
 import { usersTable } from "./users";
 
@@ -97,7 +100,11 @@ export const chatMessagesTableRelations = relations(
 		 * One to many relationship from `chat_messages` table to `chat_messages` table.
 		 */
 		chatMessagesWhereParentMessage: many(chatMessagesTable, {
+<<<<<<< HEAD
 			relationName: "chat_messages.parent_message_id:chat_messages.id",
+=======
+			relationName: "chat_messages.id:chat_messages.parent_message_id",
+>>>>>>> upstream
 		}),
 		/**
 		 * Many to one relationship from `chat_messages` table to `users` table.
@@ -113,7 +120,11 @@ export const chatMessagesTableRelations = relations(
 		parentMessage: one(chatMessagesTable, {
 			fields: [chatMessagesTable.parentMessageId],
 			references: [chatMessagesTable.id],
+<<<<<<< HEAD
 			relationName: "chat_messages.parent_message_id:chat_messages.id",
+=======
+			relationName: "chat_messages.id:chat_messages.parent_message_id",
+>>>>>>> upstream
 		}),
 	}),
 );
@@ -122,9 +133,12 @@ export const chatMessagesTableInsertSchema = createInsertSchema(
 	chatMessagesTable,
 	{
 		body: (schema) => schema.min(1).max(2048),
+<<<<<<< HEAD
 		chatId: (_schema) => z.string().uuid(),
 		creatorId: (_schema) => z.string().uuid().nullable().optional(),
 		id: (_schema) => z.string().uuid().optional(),
 		parentMessageId: (_schema) => z.string().uuid().nullable().optional(),
+=======
+>>>>>>> upstream
 	},
 );

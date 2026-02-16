@@ -1,5 +1,9 @@
 import { faker } from "@faker-js/faker";
+<<<<<<< HEAD
 import { afterEach, expect, suite, test, vi } from "vitest";
+=======
+import { expect, suite, test, vi } from "vitest";
+>>>>>>> upstream
 import { assertToBeNonNullish } from "../../../helpers";
 import { server } from "../../../server";
 import { mercuriusClient } from "../client";
@@ -15,10 +19,13 @@ import {
 	Query_signIn,
 } from "../documentNodes";
 
+<<<<<<< HEAD
 afterEach(() => {
 	vi.clearAllMocks();
 });
 
+=======
+>>>>>>> upstream
 // Sign in as admin to get an authentication token and admin user id.
 const signInResult = await mercuriusClient.query(Query_signIn, {
 	variables: {
@@ -99,8 +106,13 @@ async function createActionItem(
 				name: "Test Event",
 				description: "Test event for action items",
 				organizationId: organizationId,
+<<<<<<< HEAD
 				startAt: new Date(Date.now() + 5 * 60 * 1000).toISOString(),
 				endAt: new Date(Date.now() + 2 * 60 * 60 * 1000).toISOString(),
+=======
+				startAt: new Date().toISOString(),
+				endAt: new Date(Date.now() + 3600000).toISOString(),
+>>>>>>> upstream
 				isPublic: true,
 				isRegisterable: true,
 				location: "Test Location",
@@ -133,7 +145,11 @@ async function createActionItem(
 				categoryId: categoryId,
 				volunteerId: volunteerId,
 				organizationId: organizationId,
+<<<<<<< HEAD
 				assignedAt: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
+=======
+				assignedAt: "2025-04-01T00:00:00Z",
+>>>>>>> upstream
 			},
 		},
 	});
@@ -293,6 +309,7 @@ suite("Mutation field completeActionItemForInstance", () => {
 						organizationId: orgId,
 						name: "Test Event",
 						description: "Test Event Description",
+<<<<<<< HEAD
 						startAt: new Date(Date.now() + 5 * 60 * 1000).toISOString(),
 						endAt: new Date(Date.now() + 2 * 60 * 60 * 1000).toISOString(),
 						recurrence: {
@@ -301,6 +318,14 @@ suite("Mutation field completeActionItemForInstance", () => {
 							endDate: new Date(
 								Date.now() + 7 * 24 * 60 * 60 * 1000,
 							).toISOString(),
+=======
+						startAt: "2025-01-01T00:00:00Z",
+						endAt: "2025-01-01T01:00:00Z",
+						recurrence: {
+							frequency: "DAILY",
+							interval: 1,
+							endDate: "2025-01-02T00:00:00Z",
+>>>>>>> upstream
 						},
 					},
 				},
@@ -346,9 +371,13 @@ suite("Mutation field completeActionItemForInstance", () => {
 							volunteerId: volunteerId,
 							organizationId: orgId,
 							recurringEventInstanceId: instanceId,
+<<<<<<< HEAD
 							assignedAt: new Date(
 								Date.now() + 24 * 60 * 60 * 1000,
 							).toISOString(),
+=======
+							assignedAt: "2025-04-01T00:00:00Z",
+>>>>>>> upstream
 						},
 					},
 				},
@@ -409,6 +438,7 @@ suite("Mutation field completeActionItemForInstance", () => {
 						organizationId: orgId,
 						name: "Test Event",
 						description: "Test Event Description",
+<<<<<<< HEAD
 						startAt: new Date(Date.now() + 5 * 60 * 1000).toISOString(),
 						endAt: new Date(Date.now() + 2 * 60 * 60 * 1000).toISOString(),
 						recurrence: {
@@ -417,6 +447,14 @@ suite("Mutation field completeActionItemForInstance", () => {
 							endDate: new Date(
 								Date.now() + 7 * 24 * 60 * 60 * 1000,
 							).toISOString(),
+=======
+						startAt: "2025-01-01T00:00:00Z",
+						endAt: "2025-01-01T01:00:00Z",
+						recurrence: {
+							frequency: "DAILY",
+							interval: 1,
+							endDate: "2025-01-02T00:00:00Z",
+>>>>>>> upstream
 						},
 					},
 				},
@@ -461,9 +499,13 @@ suite("Mutation field completeActionItemForInstance", () => {
 							volunteerId: volunteerId2,
 							organizationId: orgId,
 							recurringEventInstanceId: instanceId, // Use instance ID instead of template ID
+<<<<<<< HEAD
 							assignedAt: new Date(
 								Date.now() + 24 * 60 * 60 * 1000,
 							).toISOString(),
+=======
+							assignedAt: "2025-04-01T00:00:00Z",
+>>>>>>> upstream
 						},
 					},
 				},

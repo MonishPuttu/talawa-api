@@ -3,9 +3,12 @@ import {
 	type GraphQLErrorOptions,
 	type GraphQLFormattedError,
 } from "graphql";
+<<<<<<< HEAD
 import type { ErrorCode } from "./errors/errorCodes";
 
 type JSONArgumentPathKey = PropertyKey;
+=======
+>>>>>>> upstream
 
 // The term action used below is used to refer to read and write operations triggered by the clients. In the context of graphql query, mutation and subscription are the three possible ways to perform these actions.
 
@@ -35,11 +38,16 @@ type JSONArgumentPathKey = PropertyKey;
 export type ArgumentsAssociatedResourcesNotFoundExtensions = {
 	code: "arguments_associated_resources_not_found";
 	issues: {
+<<<<<<< HEAD
 		argumentPath: JSONArgumentPathKey[];
+=======
+		argumentPath: (string | number)[];
+>>>>>>> upstream
 	}[];
 };
 
 /**
+<<<<<<< HEAD
  * When the user's account is temporarily locked due to too many failed login attempts.
  * The retryAfter field indicates when the account will be unlocked (ISO 8601 timestamp).
  *
@@ -57,6 +65,8 @@ export type AccountLockedExtensions = {
 };
 
 /**
+=======
+>>>>>>> upstream
  * When the client tries to perform an action that conflicts with real world expectations of the application.
  *
  * @example
@@ -95,7 +105,11 @@ export type ForbiddenActionExtensions = {
 export type ForbiddenActionOnArgumentsAssociatedResourcesExtensions = {
 	code: "forbidden_action_on_arguments_associated_resources";
 	issues: {
+<<<<<<< HEAD
 		argumentPath: JSONArgumentPathKey[];
+=======
+		argumentPath: (string | number)[];
+>>>>>>> upstream
 		message: string;
 	}[];
 };
@@ -141,6 +155,7 @@ export type UnauthenticatedExtensions = {
 export type InvalidArgumentsExtensions = {
 	code: "invalid_arguments";
 	issues: {
+<<<<<<< HEAD
 		argumentPath: JSONArgumentPathKey[];
 		message: string;
 	}[];
@@ -167,6 +182,9 @@ export type InvalidCredentialsExtensions = {
 	code: "invalid_credentials";
 	issues: {
 		argumentPath: JSONArgumentPathKey[];
+=======
+		argumentPath: (string | number)[];
+>>>>>>> upstream
 		message: string;
 	}[];
 };
@@ -202,7 +220,11 @@ export type UnauthorizedActionExtensions = {
  */
 export type UnauthorizedActionOnArgumentsAssociatedResourcesExtensions = {
 	issues: {
+<<<<<<< HEAD
 		argumentPath: JSONArgumentPathKey[];
+=======
+		argumentPath: (string | number)[];
+>>>>>>> upstream
 	}[];
 	code: "unauthorized_action_on_arguments_associated_resources";
 };
@@ -225,7 +247,11 @@ export type UnauthorizedActionOnArgumentsAssociatedResourcesExtensions = {
  */
 export type UnauthorizedArgumentsExtensions = {
 	issues: {
+<<<<<<< HEAD
 		argumentPath: JSONArgumentPathKey[];
+=======
+		argumentPath: (string | number)[];
+>>>>>>> upstream
 	}[];
 	code: "unauthorized_arguments";
 };
@@ -247,17 +273,24 @@ export type TooManyRequestsExtensions = {
 	code: "too_many_requests";
 };
 export type TalawaGraphQLErrorExtensions =
+<<<<<<< HEAD
 	| AccountLockedExtensions
+=======
+>>>>>>> upstream
 	| ArgumentsAssociatedResourcesNotFoundExtensions
 	| ForbiddenActionExtensions
 	| ForbiddenActionOnArgumentsAssociatedResourcesExtensions
 	| UnauthenticatedExtensions
 	| InvalidArgumentsExtensions
+<<<<<<< HEAD
 	| InvalidCredentialsExtensions
+=======
+>>>>>>> upstream
 	| UnauthorizedActionExtensions
 	| UnauthorizedActionOnArgumentsAssociatedResourcesExtensions
 	| UnauthorizedArgumentsExtensions
 	| UnexpectedExtensions
+<<<<<<< HEAD
 	| TooManyRequestsExtensions
 	| {
 			code: ErrorCode;
@@ -380,6 +413,59 @@ export class TalawaGraphQLError extends GraphQLError {
 	 *   - extensions.details: Optional additional error context
 	 *   - extensions.httpStatus: Optional HTTP status code override
 	 */
+=======
+	| TooManyRequestsExtensions;
+
+export const defaultTalawaGraphQLErrorMessages: {
+	[Key in TalawaGraphQLErrorExtensions["code"]]: string;
+} = {
+	arguments_associated_resources_not_found:
+		"No associated resources found for the provided arguments.",
+	forbidden_action: "This action is forbidden.",
+	forbidden_action_on_arguments_associated_resources:
+		"This action is forbidden on the resources associated to the provided arguments.",
+	invalid_arguments: "You have provided invalid arguments for this action.",
+	unauthenticated: "You must be authenticated to perform this action.",
+	unauthorized_action: "You are not authorized to perform this action.",
+	unauthorized_action_on_arguments_associated_resources:
+		"You are not authorized to perform this action on the resources associated to the provided arguments.",
+	unauthorized_arguments:
+		"You are not authorized to perform this action with the provided arguments.",
+	unexpected: "Something went wrong. Please try again later.",
+	too_many_requests: "Too many requests. Please try again later.",
+};
+
+/**
+ * This class extends the `GraphQLError` class and is used to create graphql error instances with strict typescript assertion on providing the error metadata within the `extensions` field. This assertion prevents talawa api contributers from returning arbitrary, undocumented errors to the talawa api graphql clients.
+ *
+ * This also standardizes the errors that the client developers using talawa api can expect in the graphql responses, helping them design better UI experiences for end users. If necessary, the localization of the error messages(i18n) can be done within the graphql resolvers where this function is used.
+ *
+ * The following example shows the usage of `createTalawaGraphQLError` function within a graphql resolver for resolving the user record of the best friend of a user:
+ * @example
+ * export const user = async (parent, args, ctx) => {
+ *  const existingUser = await ctx.drizzleClient.query.user.findFirst({
+ *      where: (fields, operators) => operators.eq(fields.id, args.input.id),
+ *  });
+ *
+ *	if (user === undefined) {
+ *		throw new TalawaGraphQLError({
+ *			extensions: {
+ *				code: "arguments_associated_resources_not_found",
+ * 				issues: [
+ * 					{
+ * 						argumentPath: ["input", "id"],
+ * 					},
+ * 				],
+ *			},
+ *
+ *      })
+ *	}
+ *
+ *  return user;
+ * }
+ */
+export class TalawaGraphQLError extends GraphQLError {
+>>>>>>> upstream
 	constructor({
 		message,
 		...options
@@ -388,15 +474,20 @@ export class TalawaGraphQLError extends GraphQLError {
 		message?: string;
 	}) {
 		if (message === undefined) {
+<<<<<<< HEAD
 			message =
 				defaultTalawaGraphQLErrorMessages[options.extensions.code] ??
 				"An error occurred";
+=======
+			message = defaultTalawaGraphQLErrorMessages[options.extensions.code];
+>>>>>>> upstream
 		}
 		super(message, options);
 	}
 }
 
 /**
+<<<<<<< HEAD
  * Formatted error type returned by Talawa API's GraphQL implementation.
  *
  * This type extends the standard GraphQLFormattedError with typed extensions
@@ -418,5 +509,10 @@ export class TalawaGraphQLError extends GraphQLError {
  */
 export type TalawaGraphQLFormattedError = GraphQLFormattedError & {
 	/** Typed error extensions with structured metadata */
+=======
+ * Type of the error returned by talawa api's graphql implementation in the root "errors" field of the graphql responses.
+ */
+export type TalawaGraphQLFormattedError = GraphQLFormattedError & {
+>>>>>>> upstream
 	extensions: TalawaGraphQLErrorExtensions;
 };

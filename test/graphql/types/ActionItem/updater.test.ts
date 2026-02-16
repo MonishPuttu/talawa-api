@@ -1,5 +1,9 @@
 import { createMockGraphQLContext } from "test/_Mocks_/mockContextCreator/mockContextCreator";
+<<<<<<< HEAD
 import { beforeEach, describe, expect, it, vi } from "vitest";
+=======
+import { beforeEach, describe, expect, it } from "vitest";
+>>>>>>> upstream
 import type { GraphQLContext } from "~/src/graphql/context";
 import type { ActionItem as ActionItemType } from "~/src/graphql/types/ActionItem/ActionItem";
 import { resolveUpdater } from "~/src/graphql/types/ActionItem/updater";
@@ -12,7 +16,11 @@ describe("ActionItem Resolver - Updater Field", () => {
 
 	beforeEach(() => {
 		mockActionItem = {
+<<<<<<< HEAD
 			id: "01234567-89ab-4def-a123-456789abcdef",
+=======
+			id: "01234567-89ab-cdef-0123-456789abcdef",
+>>>>>>> upstream
 			organizationId: "org-123",
 			updaterId: "user-456",
 			assignedAt: new Date("2024-01-01T10:00:00Z"),
@@ -115,10 +123,16 @@ describe("ActionItem Resolver - Updater Field", () => {
 				role: "member",
 			};
 
+<<<<<<< HEAD
 			mocks.drizzleClient.query.usersTable.findFirst.mockResolvedValueOnce(
 				currentUser,
 			);
 			ctx.dataloaders.user.load = vi.fn().mockResolvedValue(updaterUser);
+=======
+			mocks.drizzleClient.query.usersTable.findFirst
+				.mockResolvedValueOnce(currentUser) // First call: current user
+				.mockResolvedValueOnce(updaterUser); // Second call: updater user
+>>>>>>> upstream
 
 			const result = await resolveUpdater(mockActionItem, {}, ctx);
 			expect(result).toEqual(updaterUser);
@@ -136,10 +150,16 @@ describe("ActionItem Resolver - Updater Field", () => {
 				role: "member",
 			};
 
+<<<<<<< HEAD
 			mocks.drizzleClient.query.usersTable.findFirst.mockResolvedValueOnce(
 				currentUser,
 			);
 			ctx.dataloaders.user.load = vi.fn().mockResolvedValue(updaterUser);
+=======
+			mocks.drizzleClient.query.usersTable.findFirst
+				.mockResolvedValueOnce(currentUser) // First call: current user
+				.mockResolvedValueOnce(updaterUser); // Second call: updater user
+>>>>>>> upstream
 
 			const result = await resolveUpdater(mockActionItem, {}, ctx);
 			expect(result).toEqual(updaterUser);
@@ -192,10 +212,16 @@ describe("ActionItem Resolver - Updater Field", () => {
 				name: "Updater User",
 			};
 
+<<<<<<< HEAD
 			mocks.drizzleClient.query.usersTable.findFirst.mockResolvedValueOnce(
 				currentUser,
 			);
 			ctx.dataloaders.user.load = vi.fn().mockResolvedValue(updaterUser);
+=======
+			mocks.drizzleClient.query.usersTable.findFirst
+				.mockResolvedValueOnce(currentUser) // First call: current user
+				.mockResolvedValueOnce(updaterUser); // Second call: updater user
+>>>>>>> upstream
 
 			const result = await resolveUpdater(mockActionItem, {}, ctx);
 			expect(result).toEqual(updaterUser);
@@ -208,10 +234,16 @@ describe("ActionItem Resolver - Updater Field", () => {
 				organizationMembershipsWhereMember: [{ role: "administrator" }],
 			};
 
+<<<<<<< HEAD
 			mocks.drizzleClient.query.usersTable.findFirst.mockResolvedValueOnce(
 				currentUser,
 			);
 			ctx.dataloaders.user.load = vi.fn().mockResolvedValue(null);
+=======
+			mocks.drizzleClient.query.usersTable.findFirst
+				.mockResolvedValueOnce(currentUser) // First call: current user
+				.mockResolvedValueOnce(undefined); // Second call: updater does not exist
+>>>>>>> upstream
 
 			mockActionItem.updaterId = "user-456";
 
@@ -270,6 +302,7 @@ describe("ActionItem Resolver - Updater Field", () => {
 				role: "member",
 			};
 
+<<<<<<< HEAD
 			mocks.drizzleClient.query.usersTable.findFirst.mockResolvedValueOnce(
 				currentUser,
 			);
@@ -284,11 +317,49 @@ describe("ActionItem Resolver - Updater Field", () => {
 
 			// DataLoader should be called for updater user
 			expect(ctx.dataloaders.user.load).toHaveBeenCalledWith("user-456");
+=======
+			mocks.drizzleClient.query.usersTable.findFirst
+				.mockResolvedValueOnce(currentUser)
+				.mockResolvedValueOnce(updaterUser);
+
+			await resolveUpdater(mockActionItem, {}, ctx);
+
+			// Verify both queries were made
+			expect(
+				mocks.drizzleClient.query.usersTable.findFirst,
+			).toHaveBeenCalledTimes(2);
+
+			// First call should be for current user with organization membership
+			expect(
+				mocks.drizzleClient.query.usersTable.findFirst,
+			).toHaveBeenNthCalledWith(1, {
+				with: {
+					organizationMembershipsWhereMember: {
+						columns: {
+							role: true,
+						},
+						where: expect.any(Function),
+					},
+				},
+				where: expect.any(Function),
+			});
+
+			// Second call should be for updater user (simpler query)
+			expect(
+				mocks.drizzleClient.query.usersTable.findFirst,
+			).toHaveBeenNthCalledWith(2, {
+				where: expect.any(Function),
+			});
+>>>>>>> upstream
 		});
 	});
 
 	describe("Edge Cases", () => {
 		it("should handle mixed authorization scenarios", async () => {
+<<<<<<< HEAD
+=======
+			// Test org admin with non-admin global role
+>>>>>>> upstream
 			const orgAdminUser = {
 				id: "user-789",
 				role: "member",
@@ -300,15 +371,25 @@ describe("ActionItem Resolver - Updater Field", () => {
 				role: "member",
 			};
 
+<<<<<<< HEAD
+=======
+			// Create new context with different authenticated user
+>>>>>>> upstream
 			const { context: newCtx, mocks: newMocks } = createMockGraphQLContext(
 				true,
 				"user-789",
 			);
 
+<<<<<<< HEAD
 			newMocks.drizzleClient.query.usersTable.findFirst.mockResolvedValueOnce(
 				orgAdminUser,
 			);
 			newCtx.dataloaders.user.load = vi.fn().mockResolvedValue(updaterUser);
+=======
+			newMocks.drizzleClient.query.usersTable.findFirst
+				.mockResolvedValueOnce(orgAdminUser)
+				.mockResolvedValueOnce(updaterUser);
+>>>>>>> upstream
 
 			const result = await resolveUpdater(mockActionItem, {}, newCtx);
 			expect(result).toEqual(updaterUser);
@@ -339,10 +420,16 @@ describe("ActionItem Resolver - Updater Field", () => {
 				organizationMembershipsWhereMember: [{ role: "administrator" }],
 			};
 
+<<<<<<< HEAD
 			mocks.drizzleClient.query.usersTable.findFirst.mockResolvedValueOnce(
 				currentUser,
 			);
 			ctx.dataloaders.user.load = vi.fn().mockResolvedValue(null);
+=======
+			mocks.drizzleClient.query.usersTable.findFirst
+				.mockResolvedValueOnce(currentUser)
+				.mockResolvedValueOnce(undefined);
+>>>>>>> upstream
 
 			mockActionItem.updaterId = ""; // Empty string instead of null
 
@@ -371,10 +458,16 @@ describe("ActionItem Resolver - Updater Field", () => {
 				organizationMembershipsWhereMember: [{ role: "administrator" }],
 			};
 
+<<<<<<< HEAD
 			mocks.drizzleClient.query.usersTable.findFirst.mockResolvedValueOnce(
 				currentUser,
 			);
 			ctx.dataloaders.user.load = vi.fn().mockResolvedValue(null);
+=======
+			mocks.drizzleClient.query.usersTable.findFirst
+				.mockResolvedValueOnce(currentUser)
+				.mockResolvedValueOnce(undefined);
+>>>>>>> upstream
 
 			mockActionItem.updaterId = "non-existent-user";
 
@@ -403,10 +496,16 @@ describe("ActionItem Resolver - Updater Field", () => {
 				role: "member",
 			};
 
+<<<<<<< HEAD
 			mocks.drizzleClient.query.usersTable.findFirst.mockResolvedValueOnce(
 				currentUser,
 			);
 			ctx.dataloaders.user.load = vi.fn().mockResolvedValue(updaterUser);
+=======
+			mocks.drizzleClient.query.usersTable.findFirst
+				.mockResolvedValueOnce(currentUser)
+				.mockResolvedValueOnce(updaterUser);
+>>>>>>> upstream
 
 			await resolveUpdater(mockActionItem, {}, ctx);
 
@@ -431,10 +530,16 @@ describe("ActionItem Resolver - Updater Field", () => {
 				createdAt: new Date("2024-01-01"),
 			};
 
+<<<<<<< HEAD
 			mocks.drizzleClient.query.usersTable.findFirst.mockResolvedValueOnce(
 				currentUser,
 			);
 			ctx.dataloaders.user.load = vi.fn().mockResolvedValue(updaterUser);
+=======
+			mocks.drizzleClient.query.usersTable.findFirst
+				.mockResolvedValueOnce(currentUser)
+				.mockResolvedValueOnce(updaterUser);
+>>>>>>> upstream
 
 			const result = await resolveUpdater(mockActionItem, {}, ctx);
 
@@ -461,10 +566,16 @@ describe("ActionItem Resolver - Updater Field", () => {
 				customField: "custom value", // Additional field
 			};
 
+<<<<<<< HEAD
 			mocks.drizzleClient.query.usersTable.findFirst.mockResolvedValueOnce(
 				currentUser,
 			);
 			ctx.dataloaders.user.load = vi.fn().mockResolvedValue(complexUpdaterUser);
+=======
+			mocks.drizzleClient.query.usersTable.findFirst
+				.mockResolvedValueOnce(currentUser)
+				.mockResolvedValueOnce(complexUpdaterUser);
+>>>>>>> upstream
 
 			const result = await resolveUpdater(mockActionItem, {}, ctx);
 

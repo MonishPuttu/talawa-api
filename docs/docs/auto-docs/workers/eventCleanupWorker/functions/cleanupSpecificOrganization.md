@@ -30,5 +30,9 @@ The ID of the organization to clean up.
 
 `Promise`\<\{ `instancesDeleted`: `number`; `retentionCutoffDate`: `Date`; \}\>
 
+<<<<<<< HEAD
 - A promise that resolves to an object containing the number of deleted instances
+=======
+A promise that resolves to an object containing the number of deleted instances
+>>>>>>> upstream
          and the retention cutoff date used.

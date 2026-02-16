@@ -6,10 +6,16 @@ import {
 	mutationCreateOrganizationMembershipInputSchema,
 } from "~/src/graphql/inputs/MutationCreateOrganizationMembershipInput";
 import { Organization } from "~/src/graphql/types/Organization/Organization";
+<<<<<<< HEAD
 import { getKeyPathsWithNonUndefinedValues } from "~/src/utilities/getKeyPathsWithNonUndefinedValues";
 import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import { getKeyPathsWithNonUndefinedValues } from "~/src/utilities/getKeyPathsWithNonUndefinedValues";
+import envConfig from "~/src/utilities/graphqLimits";
+>>>>>>> upstream
 const mutationCreateOrganizationMembershipArgumentsSchema = z.object({
 	input: mutationCreateOrganizationMembershipInputSchema,
 });

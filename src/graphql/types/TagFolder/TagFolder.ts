@@ -1,6 +1,9 @@
 import type { tagFoldersTable } from "~/src/drizzle/tables/tagFolders";
 import { builder } from "~/src/graphql/builder";
+<<<<<<< HEAD
 import { escapeHTML } from "~/src/utilities/sanitizer";
+=======
+>>>>>>> upstream
 
 export type TagFolder = typeof tagFoldersTable.$inferSelect;
 
@@ -18,9 +21,14 @@ TagFolder.implement({
 			description: "Global identifier of the tag folder.",
 			nullable: false,
 		}),
+<<<<<<< HEAD
 		name: t.string({
 			description: "Name of the tag folder.",
 			resolve: (parent) => escapeHTML(parent.name),
+=======
+		name: t.exposeString("name", {
+			description: "Name of the tag folder.",
+>>>>>>> upstream
 		}),
 		updatedAt: t.expose("updatedAt", {
 			description: "Date time at the time the tag folder was last updated.",

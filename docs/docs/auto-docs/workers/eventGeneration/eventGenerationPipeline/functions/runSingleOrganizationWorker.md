@@ -34,4 +34,8 @@ The logger for logging the process.
 
 `Promise`\<[`WorkerResult`](../interfaces/WorkerResult.md)\>
 
+<<<<<<< HEAD
 - A promise that resolves to the result of the processing for the specified organization.
+=======
+A promise that resolves to the result of the processing for the specified organization.
+>>>>>>> upstream

@@ -1,23 +1,40 @@
+<<<<<<< HEAD
 import { and, asc, desc, eq, exists, gt, lt, or, type SQL } from "drizzle-orm";
+=======
+import { type SQL, and, asc, desc, eq, exists, gt, lt, or } from "drizzle-orm";
+>>>>>>> upstream
 import { z } from "zod";
 import {
 	venueBookingsTable,
 	venueBookingsTableInsertSchema,
 } from "~/src/drizzle/tables/venueBookings";
 import { Venue } from "~/src/graphql/types/Venue/Venue";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+>>>>>>> upstream
 import {
 	defaultGraphQLConnectionArgumentsSchema,
 	transformDefaultGraphQLConnectionArguments,
 	transformToDefaultGraphQLConnection,
+<<<<<<< HEAD
 } from "~/src/utilities/graphqlConnection";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+=======
+} from "~/src/utilities/defaultGraphQLConnection";
+import envConfig from "~/src/utilities/graphqLimits";
+>>>>>>> upstream
 import { Event } from "./Event";
 
 const venuesArgumentsSchema = defaultGraphQLConnectionArgumentsSchema
 	.transform(transformDefaultGraphQLConnectionArguments)
 	.transform((arg, ctx) => {
+<<<<<<< HEAD
 		let cursor: z.infer<typeof cursorSchema> | undefined;
+=======
+		let cursor: z.infer<typeof cursorSchema> | undefined = undefined;
+>>>>>>> upstream
 
 		try {
 			if (arg.cursor !== undefined) {
@@ -25,7 +42,11 @@ const venuesArgumentsSchema = defaultGraphQLConnectionArgumentsSchema
 					JSON.parse(Buffer.from(arg.cursor, "base64url").toString("utf-8")),
 				);
 			}
+<<<<<<< HEAD
 		} catch (_error) {
+=======
+		} catch (error) {
+>>>>>>> upstream
 			ctx.addIssue({
 				code: "custom",
 				message: "Not a valid cursor.",
@@ -179,10 +200,20 @@ Event.implement({
 					}
 
 					return transformToDefaultGraphQLConnection({
+<<<<<<< HEAD
 						createCursor: (booking) => ({
 							createdAt: booking.createdAt,
 							venueId: booking.venueId,
 						}),
+=======
+						createCursor: (booking) =>
+							Buffer.from(
+								JSON.stringify({
+									createdAt: booking.createdAt,
+									venueId: booking.venueId,
+								}),
+							).toString("base64url"),
+>>>>>>> upstream
 						createNode: ({ venue: { attachmentsWhereVenue, ...venue } }) =>
 							Object.assign(venue, {
 								attachments: attachmentsWhereVenue,

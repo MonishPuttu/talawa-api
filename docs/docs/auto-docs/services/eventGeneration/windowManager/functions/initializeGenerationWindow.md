@@ -35,4 +35,8 @@ The logger for logging debug and error messages.
 
 `Promise`\<\{ `configurationNotes`: `string` \| `null`; `createdAt`: `Date`; `createdById`: `string`; `currentWindowEndDate`: `Date`; `historyRetentionMonths`: `number`; `hotWindowMonthsAhead`: `number`; `id`: `string`; `isEnabled`: `boolean`; `lastProcessedAt`: `Date`; `lastProcessedInstanceCount`: `number`; `lastUpdatedById`: `string` \| `null`; `maxInstancesPerRun`: `number`; `organizationId`: `string`; `processingPriority`: `number`; `retentionStartDate`: `Date`; `updatedAt`: `Date` \| `null`; \}\>
 
+<<<<<<< HEAD
 - A promise that resolves to the newly created Generation window configuration.
+=======
+A promise that resolves to the newly created Generation window configuration.
+>>>>>>> upstream

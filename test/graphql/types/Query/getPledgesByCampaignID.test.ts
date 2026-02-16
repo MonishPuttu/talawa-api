@@ -61,7 +61,11 @@ suite("Query: getMyPledgesForCampaign", () => {
 				variables: {
 					input: {
 						name: `Test Campaign ${faker.string.uuid()}`,
+<<<<<<< HEAD
 						startAt: new Date(Date.now() + 5 * 60 * 1000).toISOString(),
+=======
+						startAt: new Date().toISOString(),
+>>>>>>> upstream
 						endAt: new Date(Date.now() + 86400000).toISOString(),
 						currencyCode: "USD",
 						goalAmount: 1000,
@@ -90,7 +94,11 @@ suite("Query: getMyPledgesForCampaign", () => {
 						campaign: {
 							id: campaignId,
 							name: "Mock Campaign",
+<<<<<<< HEAD
 							startAt: new Date(Date.now() + 5 * 60 * 1000).toISOString(),
+=======
+							startAt: new Date().toISOString(),
+>>>>>>> upstream
 							endAt: new Date(Date.now() + 86400000).toISOString(),
 							currencyCode: "USD",
 						},

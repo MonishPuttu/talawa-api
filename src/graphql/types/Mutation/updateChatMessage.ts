@@ -7,10 +7,16 @@ import {
 	mutationUpdateChatMessageInputSchema,
 } from "~/src/graphql/inputs/MutationUpdateChatMessageInput";
 import { ChatMessage } from "~/src/graphql/types/ChatMessage/ChatMessage";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 import type { GraphQLContext } from "../../context";
 
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+import type { GraphQLContext } from "../../context";
+>>>>>>> upstream
 // Create a schema for the mutation arguments:
 const mutationUpdateChatMessageArgumentsSchema = z.object({
 	input: mutationUpdateChatMessageInputSchema,

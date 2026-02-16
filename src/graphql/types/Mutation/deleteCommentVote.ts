@@ -7,9 +7,14 @@ import {
 	mutationDeleteCommentVoteInputSchema,
 } from "~/src/graphql/inputs/MutationDeleteCommentVoteInput";
 import { Comment } from "~/src/graphql/types/Comment/Comment";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+>>>>>>> upstream
 const mutationDeleteCommentVoteArgumentsSchema = z.object({
 	input: mutationDeleteCommentVoteInputSchema,
 });
@@ -54,6 +59,7 @@ builder.mutationField("deleteCommentVote", (t) =>
 
 			const currentUserId = ctx.currentClient.user.id;
 
+<<<<<<< HEAD
 			const [currentUser, existingComment] = await Promise.all([
 				ctx.drizzleClient.query.usersTable.findFirst({
 					columns: {
@@ -79,10 +85,41 @@ builder.mutationField("deleteCommentVote", (t) =>
 											},
 											where: (fields, operators) =>
 												operators.eq(fields.memberId, currentUserId),
+=======
+			const [currentUser, existingComment, existingCreator] = await Promise.all(
+				[
+					ctx.drizzleClient.query.usersTable.findFirst({
+						columns: {
+							role: true,
+						},
+						where: (fields, operators) =>
+							operators.eq(fields.id, currentUserId),
+					}),
+					ctx.drizzleClient.query.commentsTable.findFirst({
+						with: {
+							post: {
+								columns: {
+									pinnedAt: true,
+								},
+								with: {
+									organization: {
+										columns: {
+											countryCode: true,
+										},
+										with: {
+											membershipsWhereOrganization: {
+												columns: {
+													role: true,
+												},
+												where: (fields, operators) =>
+													operators.eq(fields.memberId, currentUserId),
+											},
+>>>>>>> upstream
 										},
 									},
 								},
 							},
+<<<<<<< HEAD
 						},
 						votesWhereComment: {
 							columns: {
@@ -96,6 +133,25 @@ builder.mutationField("deleteCommentVote", (t) =>
 						operators.eq(fields.id, parsedArgs.input.commentId),
 				}),
 			]);
+=======
+							votesWhereComment: {
+								columns: {
+									type: true,
+								},
+								where: (fields, operators) =>
+									operators.eq(fields.creatorId, currentUserId),
+							},
+						},
+						where: (fields, operators) =>
+							operators.eq(fields.id, parsedArgs.input.commentId),
+					}),
+					ctx.drizzleClient.query.usersTable.findFirst({
+						where: (fields, operators) =>
+							operators.eq(fields.id, currentUserId),
+					}),
+				],
+			);
+>>>>>>> upstream
 
 			if (currentUser === undefined) {
 				throw new TalawaGraphQLError({
@@ -105,6 +161,25 @@ builder.mutationField("deleteCommentVote", (t) =>
 				});
 			}
 
+<<<<<<< HEAD
+=======
+			if (existingComment === undefined && existingCreator === undefined) {
+				throw new TalawaGraphQLError({
+					extensions: {
+						code: "arguments_associated_resources_not_found",
+						issues: [
+							{
+								argumentPath: ["input", "commentId"],
+							},
+							{
+								argumentPath: ["input", "creatorId"],
+							},
+						],
+					},
+				});
+			}
+
+>>>>>>> upstream
 			if (existingComment === undefined) {
 				throw new TalawaGraphQLError({
 					extensions: {
@@ -118,6 +193,22 @@ builder.mutationField("deleteCommentVote", (t) =>
 				});
 			}
 
+<<<<<<< HEAD
+=======
+			if (existingCreator === undefined) {
+				throw new TalawaGraphQLError({
+					extensions: {
+						code: "arguments_associated_resources_not_found",
+						issues: [
+							{
+								argumentPath: ["input", "creatorId"],
+							},
+						],
+					},
+				});
+			}
+
+>>>>>>> upstream
 			const existingCommentVote = existingComment.votesWhereComment[0];
 
 			if (existingCommentVote === undefined) {

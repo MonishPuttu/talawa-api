@@ -66,7 +66,11 @@ builder.queryField("categoriesByIds", (t) =>
 
 			const categories =
 				await ctx.drizzleClient.query.actionItemCategoriesTable.findMany({
+<<<<<<< HEAD
 					where: (fields, _operators) => inArray(fields.id, categoryIds),
+=======
+					where: (fields, operators) => inArray(fields.id, categoryIds),
+>>>>>>> upstream
 				});
 
 			return categories;

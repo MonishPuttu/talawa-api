@@ -2,6 +2,7 @@
 {
 	// https://biomejs.dev/reference/configuration/#schema
 	"$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+<<<<<<< HEAD
 	// GritQL plugin for escapeHTML enforcement (see biome_plugins/require_escapeHTML.grit)
 	"plugins": ["./biome_plugins/require_escapeHTML.grit"],
 	// https://biomejs.dev/reference/configuration/#files
@@ -22,6 +23,24 @@
 			"!docs/sidebars.ts",
 			"!sample_data",
 			"!**/*.grit"
+=======
+	// https://biomejs.dev/reference/configuration/#files
+	"files": {
+		// https://biomejs.dev/reference/configuration/#filesignore
+		"ignore": [
+			"./drizzle_migrations",
+			"./node_modules",
+			"./package.json",
+			"./pnpm-lock.yaml",
+			"./schema.graphql",
+			"./test/graphql/types/gql.tada.d.ts",
+			"./test/graphql/types/gql.tada-cache.d.ts",
+			"./docs/tsconfig.json",
+			"./docs/docusaurus.config.ts",
+			"./docs/src/**",
+			"./docs/sidebars.ts",
+			"./sample_data/**"
+>>>>>>> upstream
 		],
 		// https://biomejs.dev/reference/configuration/#filesignoreunknown
 		"ignoreUnknown": true
@@ -29,6 +48,7 @@
 	// https://biomejs.dev/reference/configuration/#linter
 	"linter": {
 		// https://biomejs.dev/reference/configuration/#linterenabled
+<<<<<<< HEAD
 		"enabled": true,
 		"rules": {
 			"suspicious": {
@@ -66,6 +86,14 @@
 				"organizeImports": "on"
 			}
 		}
+=======
+		"enabled": true
+	},
+	// https://biomejs.dev/reference/configuration/#vcs
+	"organizeImports": {
+		// https://biomejs.dev/reference/configuration/#organizeimportsenabled
+		"enabled": true
+>>>>>>> upstream
 	},
 	// https://biomejs.dev/reference/configuration/#vcs
 	"vcs": {

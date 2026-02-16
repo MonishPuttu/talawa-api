@@ -8,7 +8,10 @@ import {
 	uuid,
 } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
+<<<<<<< HEAD
 import { z } from "zod";
+=======
+>>>>>>> upstream
 import { organizationMembershipRoleEnum } from "~/src/drizzle/enums/organizationMembershipRole";
 import { organizationsTable } from "./organizations";
 import { usersTable } from "./users";
@@ -58,7 +61,11 @@ export const organizationMembershipsTable = pgTable(
 		 * Role assigned to the user within the organization.
 		 */
 		role: text("role", {
+<<<<<<< HEAD
 			enum: organizationMembershipRoleEnum.options as [string, ...string[]],
+=======
+			enum: organizationMembershipRoleEnum.options,
+>>>>>>> upstream
 		}).notNull(),
 		/**
 		 * Date time at the time the organization membership was last updated.
@@ -130,10 +137,13 @@ export const organizationMembershipsTableRelations = relations(
 
 export const organizationMembershipsTableInsertSchema = createInsertSchema(
 	organizationMembershipsTable,
+<<<<<<< HEAD
 	{
 		creatorId: (_schema) => z.string().uuid().nullable().optional(),
 		memberId: (_schema) => z.string().uuid(),
 		organizationId: (_schema) => z.string().uuid(),
 		updaterId: (_schema) => z.string().uuid().nullable().optional(),
 	},
+=======
+>>>>>>> upstream
 );

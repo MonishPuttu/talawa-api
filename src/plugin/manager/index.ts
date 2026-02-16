@@ -6,7 +6,12 @@
  */
 
 // Main PluginManager class
+<<<<<<< HEAD
 export { default as PluginManager, default } from "./core";
+=======
+export { default as PluginManager } from "./core";
+export { default } from "./core";
+>>>>>>> upstream
 
 // Individual components (for advanced usage)
 export { ExtensionLoader } from "./extensions";

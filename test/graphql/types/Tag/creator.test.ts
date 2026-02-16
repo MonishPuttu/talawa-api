@@ -1,8 +1,15 @@
 import { createMockGraphQLContext } from "test/_Mocks_/mockContextCreator/mockContextCreator";
+<<<<<<< HEAD
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { GraphQLContext } from "~/src/graphql/context";
 import { tagCreatorResolver } from "~/src/graphql/types/Tag/creator";
 import type { Tag as TagType } from "~/src/graphql/types/Tag/Tag";
+=======
+import { beforeEach, describe, expect, it } from "vitest";
+import type { GraphQLContext } from "~/src/graphql/context";
+import type { Tag as TagType } from "~/src/graphql/types/Tag/Tag";
+import { tagCreatorResolver } from "~/src/graphql/types/Tag/creator";
+>>>>>>> upstream
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 
 //mock current user details
@@ -58,8 +65,14 @@ describe("Tag Creator Resolver -Test ", () => {
 				mockUserData,
 			);
 
+<<<<<<< HEAD
 			const result = await tagCreatorResolver(mockTag, {}, ctx);
 			expect(result).toBeNull();
+=======
+			await expect(tagCreatorResolver(mockTag, {}, ctx)).rejects.toThrow(
+				new TalawaGraphQLError({ extensions: { code: "unauthorized_action" } }),
+			);
+>>>>>>> upstream
 		});
 
 		it("should throw unauthorized_action for non admin with member-level organization membership", async () => {
@@ -75,8 +88,14 @@ describe("Tag Creator Resolver -Test ", () => {
 				mockUserData,
 			);
 
+<<<<<<< HEAD
 			const result = await tagCreatorResolver(mockTag, {}, ctx);
 			expect(result).toBeNull();
+=======
+			await expect(tagCreatorResolver(mockTag, {}, ctx)).rejects.toThrow(
+				new TalawaGraphQLError({ extensions: { code: "unauthorized_action" } }),
+			);
+>>>>>>> upstream
 		});
 
 		it("should allow system administrator full access", async () => {
@@ -89,10 +108,13 @@ describe("Tag Creator Resolver -Test ", () => {
 			mocks.drizzleClient.query.usersTable.findFirst.mockResolvedValue(
 				mockUserData,
 			);
+<<<<<<< HEAD
 			// Need to mock DataLoader since creatorId != currentUserId
 			ctx.dataloaders.user.load = vi
 				.fn()
 				.mockResolvedValue({ id: "creator-123" });
+=======
+>>>>>>> upstream
 
 			const result = await tagCreatorResolver(mockTag, {}, ctx);
 			expect(result).toBeDefined();
@@ -109,10 +131,13 @@ describe("Tag Creator Resolver -Test ", () => {
 			mocks.drizzleClient.query.usersTable.findFirst.mockResolvedValue(
 				mockUserData,
 			);
+<<<<<<< HEAD
 			// Need to mock DataLoader since creatorId != currentUserId
 			ctx.dataloaders.user.load = vi
 				.fn()
 				.mockResolvedValue({ id: "creator-123" });
+=======
+>>>>>>> upstream
 
 			const result = await tagCreatorResolver(mockTag, {}, ctx);
 			expect(result).toBeDefined();
@@ -137,6 +162,7 @@ describe("Tag Creator Resolver -Test ", () => {
 				],
 			};
 
+<<<<<<< HEAD
 			// First call returns a valid current user
 			mocks.drizzleClient.query.usersTable.findFirst.mockResolvedValueOnce(
 				mockCurrentUser,
@@ -149,6 +175,21 @@ describe("Tag Creator Resolver -Test ", () => {
 
 			await expect(tagCreatorResolver(mockTag, {}, ctx)).rejects.toBeInstanceOf(
 				Error,
+=======
+			const findFirst = mocks.drizzleClient.query.usersTable.findFirst;
+
+			// First call returns a valid current user
+			findFirst.mockResolvedValueOnce(mockCurrentUser);
+
+			// Simulate a database error when fetching creator
+			findFirst.mockRejectedValueOnce(new Error("Database connection failed"));
+
+			await expect(tagCreatorResolver(mockTag, {}, ctx)).rejects.toThrow(
+				new TalawaGraphQLError({
+					message: "Internal server error",
+					extensions: { code: "unexpected" },
+				}),
+>>>>>>> upstream
 			);
 		});
 	});
@@ -184,8 +225,14 @@ describe("Tag Creator Resolver -Test ", () => {
 				mockUserData,
 			);
 
+<<<<<<< HEAD
 			const result = await tagCreatorResolver(mockTag, {}, ctx);
 			expect(result).toBeNull();
+=======
+			await expect(tagCreatorResolver(mockTag, {}, ctx)).rejects.toThrow(
+				new TalawaGraphQLError({ extensions: { code: "unauthorized_action" } }),
+			);
+>>>>>>> upstream
 		});
 
 		it("should return current user if they are the creator", async () => {
@@ -224,10 +271,17 @@ describe("Tag Creator Resolver -Test ", () => {
 				organizationMembershipsWhereMember: [],
 			};
 
+<<<<<<< HEAD
 			mocks.drizzleClient.query.usersTable.findFirst.mockResolvedValueOnce(
 				mockCurrentUser,
 			);
 			ctx.dataloaders.user.load = vi.fn().mockResolvedValue(mockCreator);
+=======
+			const findFirst = mocks.drizzleClient.query.usersTable.findFirst;
+			findFirst
+				.mockResolvedValueOnce(mockCurrentUser)
+				.mockResolvedValueOnce(mockCreator);
+>>>>>>> upstream
 
 			const result = await tagCreatorResolver(mockTag, {}, ctx);
 			expect(result).toEqual(
@@ -247,10 +301,17 @@ describe("Tag Creator Resolver -Test ", () => {
 				],
 			};
 
+<<<<<<< HEAD
 			mocks.drizzleClient.query.usersTable.findFirst.mockResolvedValueOnce(
 				mockCurrentUser,
 			);
 			ctx.dataloaders.user.load = vi.fn().mockResolvedValue(null);
+=======
+			const findFirst = mocks.drizzleClient.query.usersTable.findFirst;
+			findFirst
+				.mockResolvedValueOnce(mockCurrentUser)
+				.mockResolvedValueOnce(undefined);
+>>>>>>> upstream
 
 			await expect(tagCreatorResolver(mockTag, {}, ctx)).rejects.toThrow(
 				new TalawaGraphQLError({ extensions: { code: "unexpected" } }),
@@ -338,11 +399,18 @@ describe("Tag Creator Resolver -Test ", () => {
 			};
 
 			// First call returns the current user successfully
+<<<<<<< HEAD
 			mocks.drizzleClient.query.usersTable.findFirst.mockResolvedValueOnce(
 				mockUserData,
 			);
 			// Mock DataLoader returning null (simulating concurrent deletion)
 			ctx.dataloaders.user.load = vi.fn().mockResolvedValue(null);
+=======
+			mocks.drizzleClient.query.usersTable.findFirst
+				.mockResolvedValueOnce(mockUserData)
+				// Second call (for creator) returns undefined, simulating concurrent deletion
+				.mockResolvedValueOnce(undefined);
+>>>>>>> upstream
 
 			await expect(tagCreatorResolver(mockTag, {}, ctx)).rejects.toThrow(
 				new TalawaGraphQLError({
@@ -369,6 +437,7 @@ describe("Tag Creator Resolver -Test ", () => {
 			};
 
 			// First call succeeds
+<<<<<<< HEAD
 			mocks.drizzleClient.query.usersTable.findFirst.mockResolvedValueOnce(
 				mockUserData,
 			);
@@ -382,6 +451,24 @@ describe("Tag Creator Resolver -Test ", () => {
 			await expect(tagCreatorResolver(mockTag, {}, ctx)).rejects.toBeInstanceOf(
 				Error,
 			);
+=======
+			mocks.drizzleClient.query.usersTable.findFirst
+				.mockResolvedValueOnce(mockUserData)
+				// Second call fails with database error
+				.mockRejectedValueOnce(
+					new Error("Database error during concurrent access"),
+				);
+
+			await expect(tagCreatorResolver(mockTag, {}, ctx)).rejects.toThrow(
+				new TalawaGraphQLError({
+					message: "Internal server error",
+					extensions: { code: "unexpected" },
+				}),
+			);
+
+			// Verify error was logged
+			expect(ctx.log.error).toHaveBeenCalled();
+>>>>>>> upstream
 		});
 	});
 });

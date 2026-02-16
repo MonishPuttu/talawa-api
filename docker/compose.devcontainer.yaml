@@ -1,7 +1,10 @@
 # https://docs.docker.com/reference/compose-file/networks/
 networks:
   cloudbeaver:
+<<<<<<< HEAD
   mailpit:
+=======
+>>>>>>> upstream
 # https://docs.docker.com/reference/compose-file/services
 services:
   api:
@@ -178,6 +181,7 @@ services:
         name: redis
         published: ${REDIS_MAPPED_PORT:?error}
         target: 6379
+<<<<<<< HEAD
   mailpit:
     # https://github.com/axllent/mailpit
     # https://hub.docker.com/r/axllent/mailpit
@@ -215,6 +219,8 @@ services:
       - source: mailpit_data
         target: /data
         type: volume
+=======
+>>>>>>> upstream
 # https://docs.docker.com/reference/compose-file/volumes/
   redis-test:
     ports:
@@ -231,7 +237,10 @@ volumes:
   api_node_modules:
   api_pnpm_store:
   cloudbeaver_data:
+<<<<<<< HEAD
   mailpit_data:
+=======
+>>>>>>> upstream
   minio_test_data:
   postgres_data:
   postgres_test_data:

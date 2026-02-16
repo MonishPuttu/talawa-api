@@ -7,9 +7,15 @@ import {
 	mutationUpdateEventInputSchema,
 } from "~/src/graphql/inputs/MutationUpdateEventInput";
 import { Event } from "~/src/graphql/types/Event/Event";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { isNotNullish } from "~/src/utilities/isNotNullish";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+import { isNotNullish } from "~/src/utilities/isNotNullish";
+>>>>>>> upstream
 
 const mutationUpdateStandaloneEventArgumentsSchema = z.object({
 	input: mutationUpdateEventInputSchema,
@@ -70,7 +76,10 @@ builder.mutationField("updateStandaloneEvent", (t) =>
 						allDay: true,
 						isPublic: true,
 						isRegisterable: true,
+<<<<<<< HEAD
 						isInviteOnly: true,
+=======
+>>>>>>> upstream
 						location: true,
 						creatorId: true,
 					},
@@ -173,6 +182,7 @@ builder.mutationField("updateStandaloneEvent", (t) =>
 				});
 			}
 
+<<<<<<< HEAD
 			// Build update object with only explicitly provided fields
 			const updateData: Partial<typeof eventsTable.$inferInsert> = {
 				updaterId: currentUserId,
@@ -233,6 +243,21 @@ builder.mutationField("updateStandaloneEvent", (t) =>
 			const [updatedEvent] = await ctx.drizzleClient
 				.update(eventsTable)
 				.set(updateData)
+=======
+			const [updatedEvent] = await ctx.drizzleClient
+				.update(eventsTable)
+				.set({
+					description: parsedArgs.input.description,
+					endAt: parsedArgs.input.endAt,
+					name: parsedArgs.input.name,
+					startAt: parsedArgs.input.startAt,
+					allDay: parsedArgs.input.allDay,
+					isPublic: parsedArgs.input.isPublic,
+					isRegisterable: parsedArgs.input.isRegisterable,
+					location: parsedArgs.input.location,
+					updaterId: currentUserId,
+				})
+>>>>>>> upstream
 				.where(eq(eventsTable.id, parsedArgs.input.id))
 				.returning();
 

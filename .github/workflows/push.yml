@@ -8,6 +8,7 @@ on:
 
 env:
   CODECOV_UNIQUE_NAME: CODECOV_UNIQUE_NAME-${{ github.run_id }}-${{ github.run_number }}
+<<<<<<< HEAD
   TOTAL_SHARDS: 12
 
 jobs:
@@ -27,11 +28,21 @@ jobs:
       fail-fast: false
       matrix:
         shard: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+=======
+  
+jobs:
+  test-and-upload-coverage:
+    runs-on: ubuntu-latest
+>>>>>>> upstream
 
     steps:
       # Checkout the repository
       - name: Checkout code
+<<<<<<< HEAD
         uses: actions/checkout@v4.2.2
+=======
+        uses: actions/checkout@v3
+>>>>>>> upstream
 
       # Create .env file for Talawa API testing environment
       - name: Create .env file for Talawa API testing environment
@@ -41,6 +52,7 @@ jobs:
       - name: Build Talawa API compose testing environment
         run: docker compose build
 
+<<<<<<< HEAD
       # Start test services (postgres-test, minio-test, redis-test, mailpit)
       - name: Start test services
         run: docker compose up -d postgres-test minio-test redis-test mailpit
@@ -290,4 +302,30 @@ jobs:
           files: ./coverage/integration/lcov.info
           flags: integration
 
+=======
+      # Run tests
+      - name: Run tests
+        run: docker compose up --exit-code-from api
+
+      # Copy coverage from container
+      - name: Copy coverage from container
+        run: |
+          CONTAINER_ID=$(docker ps -aq --filter "ancestor=talawa-api")
+          docker cp $CONTAINER_ID:/home/talawa/api/coverage ./coverage
+          
+      #######################################################################
+      # DO NOT DELETE ANY references to env.CODECOV_UNIQUE_NAME in this
+      # section. They are required for accurate calculations
+      #######################################################################
+      - name: Present and upload coverage to Codecov as ${{env.CODECOV_UNIQUE_NAME}}
+        uses: codecov/codecov-action@v5
+        with:
+          name: "${{env.CODECOV_UNIQUE_NAME}}"
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: false
+          verbose: true
+          exclude: 'docs/'
+          gcov_ignore: 'docs/'
+          path: "./coverage/lcov.info"
+>>>>>>> upstream
 

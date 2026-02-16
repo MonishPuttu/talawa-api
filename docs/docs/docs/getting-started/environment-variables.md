@@ -20,6 +20,7 @@ The `NODE_ENV` variable is extremely sparsely used.
 
 In an environment where one capability is needed but the other is not, using a single environment variable to control all of them at once wouldn't work.
 
+<<<<<<< HEAD
 ## Variable Naming Convention
 
 This information will be important to both end users and developers alike.
@@ -55,6 +56,8 @@ Environment variables:
 
 This approach reduces the risk of duplicated names being used by multiple containers that could create instability.
 
+=======
+>>>>>>> upstream
 ## talawa api (standalone)
 
 At runtime, talawa api requires certain environment variables to be defined in its execution context. Some of these environment variables must be provided by you and some are optional to be provided because they might be using a default value or their requirement is dependent on the environment in which talawa api is running.
@@ -133,6 +136,7 @@ When talawa api debugger is run within a container environment this variable mus
 
 - More information can be found at [this](https://developer.mozilla.org/en-US/docs/Web/API/URL/port) link.
 
+<<<<<<< HEAD
 ### API_EMAIL_PROVIDER
 
 This environment variable is used to configure the email provider to be used by the talawa api. Supported values are:
@@ -155,6 +159,8 @@ This environment variable is used to configure the secret key for hashing email 
 
 This environment variable is used to configure the frontend base URL used by talawa api for CORS and frontend links in email workflows.
 
+=======
+>>>>>>> upstream
 ### API_HOST
 
 This environment variable is used to configure the host ip that can access the host port on which talawa api listens to at runtime.
@@ -186,6 +192,7 @@ This environment variable is used to configure the time in milli-seconds it take
 
 ### API_JWT_SECRET
 
+<<<<<<< HEAD
 This environment variable is used to configure the secret for signing and verifying the authentication JSON web tokens used by the **GraphQL API** (via `fastify-jwt`). It is separate from `API_AUTH_JWT_SECRET`, which is used only for REST auth. This secret must be at least 64 characters in length.
 
 - More information can be found at [this](https://github.com/fastify/fastify-jwt?tab=readme-ov-file##secret-required) link.
@@ -206,12 +213,19 @@ Optional. REST auth access token TTL in seconds; used for JWT expiry and cookie 
 
 Optional. REST auth refresh token TTL in seconds; used for refresh JWT and cookie maxAge. Default: 2592000 (30 days).
 
+=======
+This environment variable is used to configure the secret used for signing and verifying the authentication json web tokens issued by talawa api. This secret must be at least 64 characters in length.
+
+- More information can be found at [this](https://github.com/fastify/fastify-jwt?tab=readme-ov-file##secret-required) link.
+
+>>>>>>> upstream
 ### API_LOG_LEVEL
 
 This environment variable is used to configure the [log level](https://github.com/pinojs/pino/blob/main/docs/api.md##logger-level) for talawa api's [pino.js](https://github.com/pinojs/pino) logger. Possible values are `debug`, `error`, `fatal`, `info`, `trace` and `warn`.
 
 - More information can be found at [this](https://github.com/pinojs/pino/blob/main/docs/api.md##logger-level) link.
 
+<<<<<<< HEAD
 ### API_METRICS_ENABLED
 
 This environment variable is used as a master switch to enable or disable metrics collection and aggregation in talawa api. When disabled, metrics collection is skipped entirely. Default value is `true`.
@@ -248,6 +262,8 @@ This environment variable is used to configure the maximum number of performance
 
 This environment variable is used to configure the API key for protecting the `/metrics/perf` endpoint. When set, requests to this endpoint must include a valid `Authorization: Bearer <API_KEY>` header. If not set, the endpoint is unprotected.
 
+=======
+>>>>>>> upstream
 ### API_MINIO_ACCESS_KEY
 
 This environment variable is used to configure the access key to the minio server for talawa api's minio client to connect with.
@@ -278,6 +294,7 @@ This environment variable is used to configure the ssl mode on the connection be
 
 - More information can be found at [this](https://min.io/docs/minio/linux/developers/javascript/API.html##constructor) link.
 
+<<<<<<< HEAD
 ### API_OLD_EVENT_INSTANCES_CLEANUP_CRON_SCHEDULE
 
 This environment variable is used to configure the cron schedule for cleanup of old recurring event instances.
@@ -319,6 +336,8 @@ Use this environment variable only when exporting metric data to an external Ope
 
 - Its values should be `talawa-api`
 
+=======
+>>>>>>> upstream
 ### API_PORT
 
 This environment variable is used to configure the host port on which talawa api listens to at runtime.
@@ -391,6 +410,7 @@ This environment variable is used to configure the host ip of the redis server f
 
 - More information can be found at [this](https://github.com/redis/redis) link.
 
+<<<<<<< HEAD
 ### AWS (SES)
 
 Listed below are the environment variables for configuring AWS Simple Email Service (SES).
@@ -502,6 +522,8 @@ This environment variable is used to configure custom TTL (time-to-live) values 
 
 This allows operators to tune cache behavior based on their specific read/write patterns and data freshness requirements.
 
+=======
+>>>>>>> upstream
 ### API_GRAPHQL_SCALAR_FIELD_COST
 
 This environment variable defines the cost assigned to scalar fields in GraphQL queries. Scalars are basic data types like String, Int, Boolean, etc.
@@ -843,6 +865,7 @@ This environment variable is used to enable or disable container services to be 
 This environment variable is used to configure the prefix for identifiers of all the container services to be run by docker compose.
 
 - More information can be found at [this](https://docs.docker.com/compose/environment-variables/envvars/##compose_project_name) link.
+<<<<<<< HEAD
 
 ## OAuth Configuration
 
@@ -873,3 +896,5 @@ This environment variable is used to configure the OAuth Redirect URI for GitHub
 ### API_OAUTH_REQUEST_TIMEOUT_MS
 
 This environment variable is used to configure the request timeout in milliseconds for OAuth provider API calls. Default value is `10000` milliseconds (10 seconds).
+=======
+>>>>>>> upstream

@@ -1,10 +1,19 @@
 import { createMockGraphQLContext } from "test/_Mocks_/mockContextCreator/mockContextCreator";
+<<<<<<< HEAD
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { GraphQLContext } from "~/src/graphql/context";
 import { OrganizationCreatorResolver } from "~/src/graphql/types/Organization/creator";
 import type { Organization as OrganizationType } from "~/src/graphql/types/Organization/Organization";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 
+=======
+import { beforeEach, describe, expect, it } from "vitest";
+import { vi } from "vitest";
+import type { GraphQLContext } from "~/src/graphql/context";
+import type { Organization as OrganizationType } from "~/src/graphql/types/Organization/Organization";
+import { OrganizationCreatorResolver } from "~/src/graphql/types/Organization/creator";
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+>>>>>>> upstream
 type MockUser = {
 	id: string;
 	role: string;
@@ -244,7 +253,11 @@ describe("Organization Creator Resolver Tests", () => {
 
 			try {
 				await OrganizationCreatorResolver(mockOrganization, {}, ctx);
+<<<<<<< HEAD
 			} catch (_error) {
+=======
+			} catch (error) {
+>>>>>>> upstream
 				// Expected error
 			}
 
@@ -285,7 +298,11 @@ describe("Organization Creator Resolver Tests", () => {
 
 			try {
 				await OrganizationCreatorResolver(mockOrganization, {}, ctx);
+<<<<<<< HEAD
 			} catch (_error) {
+=======
+			} catch (error) {
+>>>>>>> upstream
 				// Expected error
 			}
 
@@ -315,7 +332,11 @@ describe("Organization Creator Resolver Tests", () => {
 
 			try {
 				await OrganizationCreatorResolver(mockOrganization, {}, ctx);
+<<<<<<< HEAD
 			} catch (_error) {
+=======
+			} catch (error) {
+>>>>>>> upstream
 				// Expected error
 			}
 

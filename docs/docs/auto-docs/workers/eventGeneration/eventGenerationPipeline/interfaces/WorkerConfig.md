@@ -6,6 +6,11 @@
 
 Defined in: [src/workers/eventGeneration/eventGenerationPipeline.ts:21](https://github.com/PalisadoesFoundation/talawa-api/tree/mainsrc/workers/eventGeneration/eventGenerationPipeline.ts#L21)
 
+<<<<<<< HEAD
+=======
+## Description
+
+>>>>>>> upstream
 Configuration for the materialization worker, specifying concurrency and processing limits.
 
 ## Properties

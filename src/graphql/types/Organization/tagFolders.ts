@@ -1,4 +1,8 @@
 import {
+<<<<<<< HEAD
+=======
+	type SQL,
+>>>>>>> upstream
 	and,
 	asc,
 	desc,
@@ -8,7 +12,10 @@ import {
 	isNull,
 	lt,
 	or,
+<<<<<<< HEAD
 	type SQL,
+=======
+>>>>>>> upstream
 } from "drizzle-orm";
 import type { z } from "zod";
 import {
@@ -16,19 +23,32 @@ import {
 	tagFoldersTableInsertSchema,
 } from "~/src/drizzle/tables/tagFolders";
 import { TagFolder } from "~/src/graphql/types/TagFolder/TagFolder";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+>>>>>>> upstream
 import {
 	defaultGraphQLConnectionArgumentsSchema,
 	transformDefaultGraphQLConnectionArguments,
 	transformToDefaultGraphQLConnection,
+<<<<<<< HEAD
 } from "~/src/utilities/graphqlConnection";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+=======
+} from "~/src/utilities/defaultGraphQLConnection";
+import envConfig from "~/src/utilities/graphqLimits";
+>>>>>>> upstream
 import { Organization } from "./Organization";
 
 const tagFoldersArgumentsSchema = defaultGraphQLConnectionArgumentsSchema
 	.transform(transformDefaultGraphQLConnectionArguments)
 	.transform((arg, ctx) => {
+<<<<<<< HEAD
 		let cursor: z.infer<typeof cursorSchema> | undefined;
+=======
+		let cursor: z.infer<typeof cursorSchema> | undefined = undefined;
+>>>>>>> upstream
 
 		try {
 			if (arg.cursor !== undefined) {
@@ -36,7 +56,11 @@ const tagFoldersArgumentsSchema = defaultGraphQLConnectionArgumentsSchema
 					JSON.parse(Buffer.from(arg.cursor, "base64url").toString("utf-8")),
 				);
 			}
+<<<<<<< HEAD
 		} catch (_error) {
+=======
+		} catch (error) {
+>>>>>>> upstream
 			ctx.addIssue({
 				code: "custom",
 				message: "Not a valid cursor.",
@@ -236,10 +260,20 @@ Organization.implement({
 					}
 
 					return transformToDefaultGraphQLConnection({
+<<<<<<< HEAD
 						createCursor: (tag) => ({
 							id: tag.id,
 							name: tag.name,
 						}),
+=======
+						createCursor: (tag) =>
+							Buffer.from(
+								JSON.stringify({
+									id: tag.id,
+									name: tag.name,
+								}),
+							).toString("base64url"),
+>>>>>>> upstream
 						createNode: (tag) => tag,
 						parsedArgs,
 						rawNodes: tagFolders,

@@ -1,6 +1,13 @@
+<<<<<<< HEAD
 import envSchema from "env-schema";
 import { type Static, Type } from "typebox";
 import { envConfigSchema, envSchemaAjv } from "~/src/envConfigSchema";
+=======
+import { type Static, Type } from "@sinclair/typebox";
+import envSchema from "env-schema";
+import { envConfigSchema } from "~/src/envConfigSchema";
+import { envSchemaAjv } from "~/src/envConfigSchema";
+>>>>>>> upstream
 /**
  * JSON schema of a record of environment variables accessible to the talawa api tests at runtime.
  */
@@ -21,6 +28,7 @@ export const testEnvConfigSchema = Type.Object({
 		envConfigSchema.properties.API_ENABLE_EMAIL_QUEUE,
 	),
 	MINIO_ROOT_USER: envConfigSchema.properties.MINIO_ROOT_USER,
+<<<<<<< HEAD
 	/**
 	 * Test-only secret for cookie signing.
 	 * This default value ensures tests can run without explicitly setting API_COOKIE_SECRET.
@@ -29,6 +37,8 @@ export const testEnvConfigSchema = Type.Object({
 		minLength: 32,
 		default: "test-cookie-secret-must-be-at-least-32-characters-long",
 	}),
+=======
+>>>>>>> upstream
 });
 export const testEnvConfig = envSchema<TestEnvConfig>({
 	ajv: envSchemaAjv,

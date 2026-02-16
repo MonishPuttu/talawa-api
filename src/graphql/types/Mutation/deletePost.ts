@@ -7,9 +7,14 @@ import {
 	mutationDeletePostInputSchema,
 } from "~/src/graphql/inputs/MutationDeletePostInput";
 import { Post } from "~/src/graphql/types/Post/Post";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+>>>>>>> upstream
 const mutationDeletePostArgumentsSchema = z.object({
 	input: mutationDeletePostInputSchema,
 });

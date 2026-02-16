@@ -73,21 +73,28 @@ export const Details = ({
 
 ```graphql
 input MutationUpdateAgendaItemInput {
+<<<<<<< HEAD
   attachments: [FileMetadataInput!]
   categoryId: ID
+=======
+>>>>>>> upstream
   description: String
   duration: String
   folderId: ID
   id: ID!
   key: String
   name: String
+<<<<<<< HEAD
   notes: String
   url: [UpdateAgendaItemUrlInput!]
+=======
+>>>>>>> upstream
 }
 ```
 
 ### Fields
 
+<<<<<<< HEAD
 #### [<code style={{ fontWeight: 'normal' }}>MutationUpdateAgendaItemInput.<b>attachments</b></code>](#)<Bullet />[<code style={{ fontWeight: 'normal' }}><b>[FileMetadataInput!]</b></code>](/auto-schema/types/inputs/file-metadata-input.mdx) <Badge class="badge badge--secondary " text="list"/> <Badge class="badge badge--secondary " text="input"/>
 
 File metadata for attachments uploaded via MinIO presigned URLs.
@@ -96,6 +103,8 @@ File metadata for attachments uploaded via MinIO presigned URLs.
 
 Global identifier of the associated agenda category.
 
+=======
+>>>>>>> upstream
 #### [<code style={{ fontWeight: 'normal' }}>MutationUpdateAgendaItemInput.<b>description</b></code>](#)<Bullet />[<code style={{ fontWeight: 'normal' }}><b>String</b></code>](/auto-schema/types/scalars/string.mdx) <Badge class="badge badge--secondary " text="scalar"/>
 
 Custom information about the agenda item.
@@ -120,12 +129,15 @@ Key of the agenda item if it's of a "song" type. More information at [this](<htt
 
 Name of the agenda item.
 
+<<<<<<< HEAD
 #### [<code style={{ fontWeight: 'normal' }}>MutationUpdateAgendaItemInput.<b>notes</b></code>](#)<Bullet />[<code style={{ fontWeight: 'normal' }}><b>String</b></code>](/auto-schema/types/scalars/string.mdx) <Badge class="badge badge--secondary " text="scalar"/>
 
 Notes of the agenda item.
 
 #### [<code style={{ fontWeight: 'normal' }}>MutationUpdateAgendaItemInput.<b>url</b></code>](#)<Bullet />[<code style={{ fontWeight: 'normal' }}><b>[UpdateAgendaItemUrlInput!]</b></code>](/auto-schema/types/inputs/update-agenda-item-url-input.mdx) <Badge class="badge badge--secondary " text="list"/> <Badge class="badge badge--secondary " text="input"/>
 
+=======
+>>>>>>> upstream
 ### Member Of
 
 [`updateAgendaItem`](/auto-schema/operations/mutations/update-agenda-item.mdx) <Badge class="badge badge--secondary badge--relation" text="mutation"/>

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { envSchema } from "env-schema";
 import { type Static, Type } from "typebox";
 import { envConfigSchema, envSchemaAjv } from "../envConfigSchema";
@@ -27,3 +28,15 @@ export const rawEmailEnvConfig = envSchema<EmailEnvConfig>({
 	dotenv: true,
 	schema,
 });
+=======
+import type { EmailConfig } from "~/src/services/ses/EmailService";
+
+/**
+ * Email configuration from environment variables
+ */
+export const emailConfig: EmailConfig = {
+	region: process.env.AWS_SES_REGION || "ap-south-1",
+	fromEmail: process.env.AWS_SES_FROM_EMAIL as string,
+	fromName: process.env.AWS_SES_FROM_NAME || "Talawa",
+};
+>>>>>>> upstream

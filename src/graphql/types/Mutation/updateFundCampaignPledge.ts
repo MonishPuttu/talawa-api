@@ -1,16 +1,27 @@
+<<<<<<< HEAD
 import { eq, sql } from "drizzle-orm";
 import { z } from "zod";
 import { fundCampaignPledgesTable } from "~/src/drizzle/tables/fundCampaignPledges";
 import { fundCampaignsTable } from "~/src/drizzle/tables/fundCampaigns";
+=======
+import { eq } from "drizzle-orm";
+import { z } from "zod";
+import { fundCampaignPledgesTable } from "~/src/drizzle/tables/fundCampaignPledges";
+>>>>>>> upstream
 import { builder } from "~/src/graphql/builder";
 import {
 	MutationUpdateFundCampaignPledgeInput,
 	mutationUpdateFundCampaignPledgeInputSchema,
 } from "~/src/graphql/inputs/MutationUpdateFundCampaignPledgeInput";
 import { FundCampaignPledge } from "~/src/graphql/types/FundCampaignPledge/FundCampaignPledge";
+<<<<<<< HEAD
 import envConfig from "~/src/utilities/graphqLimits";
 import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
 
+=======
+import { TalawaGraphQLError } from "~/src/utilities/TalawaGraphQLError";
+import envConfig from "~/src/utilities/graphqLimits";
+>>>>>>> upstream
 const mutationUpdateFundCampaignPledgeArgumentsSchema = z.object({
 	input: mutationUpdateFundCampaignPledgeInputSchema,
 });
@@ -65,8 +76,11 @@ builder.mutationField("updateFundCampaignPledge", (t) =>
 				ctx.drizzleClient.query.fundCampaignPledgesTable.findFirst({
 					columns: {
 						pledgerId: true,
+<<<<<<< HEAD
 						amount: true,
 						campaignId: true,
+=======
+>>>>>>> upstream
 					},
 					with: {
 						campaign: {
@@ -146,6 +160,7 @@ builder.mutationField("updateFundCampaignPledge", (t) =>
 				});
 			}
 
+<<<<<<< HEAD
 			const updatedFundCampaignPledge = await ctx.drizzleClient.transaction(
 				async (tx) => {
 					const [updatedPledge] = await tx
@@ -189,6 +204,17 @@ builder.mutationField("updateFundCampaignPledge", (t) =>
 					return updatedPledge;
 				},
 			);
+=======
+			const [updatedFundCampaignPledge] = await ctx.drizzleClient
+				.update(fundCampaignPledgesTable)
+				.set({
+					amount: parsedArgs.input.amount,
+					note: parsedArgs.input.note,
+					updaterId: currentUserId,
+				})
+				.where(eq(fundCampaignPledgesTable.id, parsedArgs.input.id))
+				.returning();
+>>>>>>> upstream
 
 			// Updated fund campaign pledge not being returned means that either it was deleted or its `id` column was changed by external entities before this update operation could take place.
 			if (updatedFundCampaignPledge === undefined) {

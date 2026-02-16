@@ -8,16 +8,22 @@ import { startBackgroundWorkers, stopBackgroundWorkers } from "~/src/workers";
  * This plugin:
  * - Initializes the background worker service
  * - Starts the materialization and cleanup workers
+<<<<<<< HEAD
  * - Starts metrics aggregation worker if enabled (requires performance plugin)
  * - Handles graceful shutdown of workers
  * - Provides worker status endpoints
  *
  * **Dependencies:** The performance plugin must be registered before this plugin.
  * This is enforced via the `dependencies` array in the plugin configuration.
+=======
+ * - Handles graceful shutdown of workers
+ * - Provides worker status endpoints
+>>>>>>> upstream
  */
 const backgroundWorkersPlugin = async (fastify: FastifyInstance) => {
 	fastify.log.info("Initializing background workers...");
 
+<<<<<<< HEAD
 	// Get snapshot getter from the required performance plugin
 	// Runtime guard: verify the dependency is properly registered
 	const getMetricsSnapshots = fastify.getMetricsSnapshots;
@@ -38,6 +44,10 @@ const backgroundWorkersPlugin = async (fastify: FastifyInstance) => {
 		fastify.log,
 		getMetricsSnapshots,
 	);
+=======
+	// Start the background workers
+	await startBackgroundWorkers(fastify.drizzleClient, fastify.log);
+>>>>>>> upstream
 
 	fastify.log.info("Background workers started successfully");
 
@@ -52,5 +62,9 @@ const backgroundWorkersPlugin = async (fastify: FastifyInstance) => {
 // Export as fastify plugin
 export default fastifyPlugin(backgroundWorkersPlugin, {
 	name: "backgroundWorkers",
+<<<<<<< HEAD
 	dependencies: ["drizzleClient", "performance"], // Depends on drizzle client and performance plugin
+=======
+	dependencies: ["drizzleClient"], // Depends on drizzle client being available
+>>>>>>> upstream
 });

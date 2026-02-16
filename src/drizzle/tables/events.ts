@@ -81,10 +81,13 @@ export const eventsTable = pgTable(
 		 */
 		allDay: boolean("all_day").notNull().default(false),
 		/**
+<<<<<<< HEAD
 		 * Indicates if the event is invite-only.
 		 */
 		isInviteOnly: boolean("is_invite_only").notNull().default(false),
 		/**
+=======
+>>>>>>> upstream
 		 * Indicates if the event is publicly visible.
 		 */
 		isPublic: boolean("is_public").notNull().default(false),
@@ -134,7 +137,10 @@ export const eventsTable = pgTable(
 		),
 		startAtIdx: index("events_start_at_idx").on(self.startAt),
 		allDayIdx: index("events_all_day_idx").on(self.allDay),
+<<<<<<< HEAD
 		isInviteOnlyIdx: index("events_is_invite_only_idx").on(self.isInviteOnly),
+=======
+>>>>>>> upstream
 		isPublicIdx: index("events_is_public_idx").on(self.isPublic),
 		isRegisterableIdx: index("events_is_registerable_idx").on(
 			self.isRegisterable,
@@ -193,6 +199,7 @@ export const eventsTableRelations = relations(eventsTable, ({ many, one }) => ({
 	}),
 }));
 
+<<<<<<< HEAD
 export const EVENT_DESCRIPTION_MAX_LENGTH = 2048;
 export const EVENT_NAME_MAX_LENGTH = 256;
 export const EVENT_LOCATION_MAX_LENGTH = 1024;
@@ -206,6 +213,15 @@ export const eventsTableInsertSchema = createInsertSchema(eventsTable, {
 	isPublic: (schema) => schema.optional(),
 	isRegisterable: (schema) => schema.optional(),
 	location: (schema) => schema.min(1).max(EVENT_LOCATION_MAX_LENGTH).optional(),
+=======
+export const eventsTableInsertSchema = createInsertSchema(eventsTable, {
+	description: (schema) => schema.min(1).max(2048).optional(),
+	name: (schema) => schema.min(1).max(256),
+	allDay: (schema) => schema.optional(),
+	isPublic: (schema) => schema.optional(),
+	isRegisterable: (schema) => schema.optional(),
+	location: (schema) => schema.min(1).max(1024).optional(),
+>>>>>>> upstream
 	// Recurring event fields validation
 	isRecurringEventTemplate: z.boolean().optional(),
 });

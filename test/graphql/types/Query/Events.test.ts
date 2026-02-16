@@ -1,10 +1,26 @@
 import { faker } from "@faker-js/faker";
 import { expect, suite, test } from "vitest";
+<<<<<<< HEAD
+=======
+import { assertToBeNonNullish } from "../../../helpers";
+import { server } from "../../../server";
+import { mercuriusClient } from "../client";
+import {
+	Mutation_createEvent,
+	Mutation_createOrganization,
+	Mutation_createOrganizationMembership,
+	Query_getRecurringEvents,
+} from "../documentNodes";
+
+import { Query_eventsByIds, Query_signIn } from "../documentNodes";
+
+>>>>>>> upstream
 import type {
 	InvalidArgumentsExtensions,
 	TalawaGraphQLFormattedError,
 	UnauthenticatedExtensions,
 } from "~/src/utilities/TalawaGraphQLError";
+<<<<<<< HEAD
 import { assertToBeNonNullish } from "../../../helpers";
 import { server } from "../../../server";
 import { mercuriusClient } from "../client";
@@ -17,6 +33,8 @@ import {
 	Query_getRecurringEvents,
 	Query_signIn,
 } from "../documentNodes";
+=======
+>>>>>>> upstream
 
 /**
  * Updated test suite with partial matching for error messages
@@ -122,7 +140,12 @@ suite("Query eventsByIds", () => {
 						issues: expect.arrayContaining([
 							expect.objectContaining({
 								argumentPath: ["ids"],
+<<<<<<< HEAD
 								message: expect.stringContaining("expected array to have"),
+=======
+								// The actual message might differ in capitalization
+								message: expect.stringContaining("least 1 element"),
+>>>>>>> upstream
 							}),
 						]),
 					}),
@@ -192,9 +215,12 @@ suite("Query eventsByIds", () => {
 		});
 
 		assertToBeNonNullish(adminSignIn.data?.signIn);
+<<<<<<< HEAD
 		assertToBeNonNullish(adminSignIn.data.signIn.user);
 
 		assertToBeNonNullish(adminSignIn.data?.signIn?.user);
+=======
+>>>>>>> upstream
 
 		const adminUserId = adminSignIn.data.signIn.user.id;
 		const adminToken = adminSignIn.data.signIn.authenticationToken;
@@ -213,6 +239,7 @@ suite("Query eventsByIds", () => {
 
 		const organizationId = orgResult.data.createOrganization.id;
 
+<<<<<<< HEAD
 		const inputObject: {
 			organizationId: string;
 			memberId: string;
@@ -221,6 +248,12 @@ suite("Query eventsByIds", () => {
 			organizationId: organizationId,
 			memberId: adminUserId,
 			role: "administrator" as const,
+=======
+		const inputObject = {
+			organizationId: organizationId,
+			memberId: adminUserId,
+			role: "administrator",
+>>>>>>> upstream
 		};
 
 		const membershipResult = await mercuriusClient.mutate(
@@ -295,7 +328,10 @@ suite("Query eventsByIds", () => {
 			throw new Error("No generated event instances found.");
 		}
 
+<<<<<<< HEAD
 		assertToBeNonNullish(generatedInstances[0]);
+=======
+>>>>>>> upstream
 		const generatedEventId = generatedInstances[0].id;
 		assertToBeNonNullish(generatedEventId);
 
@@ -318,6 +354,7 @@ suite("Query eventsByIds", () => {
 		);
 		mercuriusClient.setHeaders({});
 	});
+<<<<<<< HEAD
 
 	// 5. INVITE-ONLY FILTERING
 	test("should filter out invite-only events for non-invited users", async () => {
@@ -557,4 +594,6 @@ suite("Query eventsByIds", () => {
 
 		mercuriusClient.setHeaders({});
 	});
+=======
+>>>>>>> upstream
 });

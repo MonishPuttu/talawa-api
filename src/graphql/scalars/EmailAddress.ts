@@ -15,8 +15,13 @@ export const EmailAddress = builder.addScalarType(
  * `EmailAddress` scalar type for pothos schema.
  * The underscore prefix indicates this is an internal type definition.
  * @example
+<<<<<<< HEAD
  * Valid: user\\@example.com
  * Invalid: user\\@, user\\@.com, \\@example.com
+=======
+ * Valid: user@example.com
+ * Invalid: user@, user@.com, @example.com
+>>>>>>> upstream
  */
 export type _EmailAddress = {
 	Input: string;
